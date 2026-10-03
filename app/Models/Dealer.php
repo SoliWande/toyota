@@ -13,6 +13,10 @@ class Dealer extends Model
 
     protected $fillable = ['code', 'name'];
 
+    protected $casts = ['is_active' => 'boolean'];
+
+    protected $attributes = ['is_active' => true];
+
     public function sales(): HasMany
     {
         return $this->hasMany(User::class)->where('role', UserRole::Sales->value);

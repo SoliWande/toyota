@@ -9,8 +9,14 @@ class DealerFactory extends Factory
     public function definition(): array
     {
         return [
+            'is_active' => true,
             'code' => fake()->unique()->bothify('DEMO-????-####'),
             'name' => 'Demo dealer '.fake()->company(),
         ];
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(fn () => ['is_active' => false]);
     }
 }

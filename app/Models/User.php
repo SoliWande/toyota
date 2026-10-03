@@ -70,6 +70,15 @@ class User extends Authenticatable
         return $this->belongsTo(Dealer::class);
     }
 
+    public function homeRoute(): string
+    {
+        if ($this->status !== UserStatus::Active) {
+            return 'account.status';
+        }
+
+        return $this->role === UserRole::Admin ? 'admin.dashboard' : 'sales.dashboard';
+    }
+
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(self::class, 'reviewed_by');

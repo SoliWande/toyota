@@ -24,6 +24,10 @@ Sales không được đọc/sửa/xóa submissions của sales khác; không đ
 ## 3. Tài khoản và state transitions
 
 - Sales tự đăng ký và phải chọn dealer Toyota hợp lệ.
+- Form đăng ký tối giản gồm họ tên, email, dealer, mật khẩu và xác nhận mật khẩu. Dealer phải đang active và được kiểm tra lại ở backend; dealer ngừng hoạt động không xuất hiện trong form.
+- Đăng ký thành công xác thực session và chuyển tới trang trạng thái chờ duyệt. Pending/rejected/blocked có thể đăng nhập để xem trạng thái và đăng xuất, nhưng không được truy cập dashboard nghiệp vụ.
+- Login chuyển admin active tới Admin dashboard, sales active tới Sales dashboard; tài khoản chưa active tới trang trạng thái. Logout dùng POST + CSRF, hủy session và tạo lại CSRF token.
+- Login giới hạn 5 request/phút cho email + IP và 30 request/phút cho IP; đăng ký giới hạn 5 request/giờ cho IP. Client không được gửi role/status để chọn quyền tài khoản.
 - Role của tài khoản tự đăng ký luôn là `sales`; status ban đầu là `pending`.
 - Admin duyệt: `pending → active`; từ chối: `pending → rejected`.
 - Admin có thể block tài khoản: `active → blocked`.
@@ -93,7 +97,7 @@ Giới hạn: URL username và URL numeric ID của cùng người không thể 
 | Entity | Dữ liệu/quan hệ chính |
 | --- | --- |
 | `users` | Role, status, dealer nullable (sales bắt buộc có), thông tin đăng nhập, thông tin review cuối; belongsTo dealer/reviewer, hasMany submissions/reviews |
-| `dealers` | Mã dealer duy nhất, tên; hasMany sales |
+| `dealers` | Mã dealer duy nhất, tên, `is_active` (mặc định true); hasMany sales |
 | `customer_submissions` | Sales, thông tin khách, URL gốc/normalized, submitted/reviewed timestamps, trạng thái và ghi chú; belongsTo sales/reviewer |
 | `awards` | Weekly/monthly, khoảng kỳ, tên, published timestamp/publisher; hasMany winners |
 | `award_winners` | Sales hoặc dealer, hạng, điểm và snapshot tên/dealer; belongsTo award và đối tượng tham chiếu |
@@ -101,7 +105,7 @@ Giới hạn: URL username và URL numeric ID của cùng người không thể 
 
 Foundation dùng MySQL 8.0.16 trở lên để CHECK constraints được enforce; môi trường đã kiểm tra là MySQL 8.0.30. Migrations này không dùng SQLite. Index phục vụ filter status, sales/dealer, submitted_at và khoảng awards. FK hạn chế xóa dữ liệu đã được tham chiếu; không cascade xóa lịch sử. Approved profile có unique constraint có điều kiện thông qua generated column. Review history cần bảng riêng vì trường review cuối không đáp ứng lịch sử duyệt.
 
-Foundation chỉ cung cấp schema, model/relationship, enum, factory, seeder và tests; chưa implement authentication flow, approval actions, leaderboard queries, award publication hoặc UI.
+Đã có database foundation và authentication bằng session Laravel, Blade/Tailwind; có đăng ký sales, login/logout, trang trạng thái và dashboard cơ bản được bảo vệ theo role/status. Chưa implement approval actions, leaderboard queries hoặc award publication.
 
 Tests chạy trên database MySQL riêng `toyota_testing`; không chạy RefreshDatabase vào database `toyota`. Development seeder đọc `DEV_ADMIN_NAME`, `DEV_ADMIN_EMAIL`, `DEV_ADMIN_PASSWORD` từ environment; `.env.example` không chứa email/mật khẩu mặc định. Dealer demo được đánh dấu rõ, không đại diện danh sách đại lý Toyota chính thức. Snapshot và moderation history được bảo vệ khỏi sửa/xóa qua model events; các thao tác bulk query/raw SQL bỏ qua model events, nên workflows sau này phải dùng model/actions có authorization và transaction phù hợp.
 
@@ -138,6 +142,6 @@ Tests chạy trên database MySQL riêng `toyota_testing`; không chạy Refresh
 3. Hòa điểm, chốt kỳ, duyệt muộn sau công bố, sửa/hủy/công bố lại awards.
 4. Chuyển dealer của sales: có cho phép không và quy tắc tính điểm dealer quá khứ. Foundation chưa cung cấp thao tác chuyển dealer hoặc tự chốt attribution lịch sử.
 5. Reopen rejected, unblock, revoke approved và quy trình chống gian lận thủ công/alias Facebook.
-6. Thông tin bắt buộc khi đăng ký ngoài dealer, dữ liệu public của sales/dealer, chính sách lưu trữ/xóa dữ liệu khách.
+6. Dữ liệu public của sales/dealer, chính sách lưu trữ/xóa dữ liệu khách.
 
 Các mục chưa chốt không được tự biến thành requirement mới. Schema foundation không đồng nghĩa đã implement workflows hoặc đã xác nhận các quyết định này.
