@@ -17,7 +17,7 @@
     <section aria-label="Chương trình qua những con số" class="public-container">
         <dl class="grid grid-cols-3 divide-x divide-stone-200 rounded-2xl border border-stone-200 bg-white text-center sm:text-left">
             <x-public.stat :value="$stats['sales']" label="Sales đang hoạt động" detail="Cùng lan tỏa tinh thần cộng đồng" />
-            <x-public.stat :value="$stats['dealers']" label="Dealer đang hoạt động" detail="Mạng lưới cùng đồng hành" />
+            <x-public.stat :value="$stats['dealers']" label="Đại Lý đang hoạt động" detail="Mạng lưới cùng đồng hành" />
             <x-public.stat :value="$stats['members']" label="Thành viên đã ghi nhận" detail="Khai báo đã được xác minh và duyệt" />
         </dl>
     </section>
@@ -25,7 +25,7 @@
     <section id="hanh-trinh" class="public-container public-section" aria-labelledby="journey-heading">
         <div class="max-w-2xl"><p class="public-eyebrow">Cùng bắt đầu</p><h2 id="journey-heading" class="public-heading mt-4">Từ lời mời nhỏ.<br>Đến cộng đồng lớn.</h2></div>
         <div class="mt-10 grid gap-8 sm:grid-cols-3 sm:gap-10">
-            @foreach ([['01', 'Đăng ký tham gia', 'Tạo tài khoản Sales, chọn đại lý Toyota và chờ admin duyệt tài khoản.'], ['02', 'Kết nối thành viên', 'Mời khách hàng tham gia cộng đồng Facebook, sau đó khai báo thông tin thành viên.'], ['03', 'Ghi nhận & vinh danh', 'Admin xác minh khai báo. Thành tích đã duyệt được tính vào bảng xếp hạng Sales và Dealer.']] as [$number, $title, $description])
+            @foreach ([['01', 'Đăng ký tham gia', 'Tạo tài khoản Sales, chọn đại lý Toyota và chờ admin duyệt tài khoản.'], ['02', 'Kết nối thành viên', 'Mời khách hàng tham gia cộng đồng Facebook, sau đó khai báo thông tin thành viên.'], ['03', 'Ghi nhận & vinh danh', 'Admin xác minh khai báo. Thành tích đã duyệt được tính vào bảng xếp hạng Sales và Đại Lý.']] as [$number, $title, $description])
                 <div class="border-t border-stone-300 pt-5"><span class="text-xs font-semibold tracking-widest text-red-700">{{ $number }}</span><h3 class="mt-4 text-lg font-semibold">{{ $title }}</h3><p class="mt-3 text-sm leading-7 text-stone-600">{{ $description }}</p></div>
             @endforeach
         </div>
@@ -34,14 +34,14 @@
     <section id="xep-hang" class="border-y border-stone-200 bg-[#f0efea]" aria-labelledby="ranking-heading">
         <div class="public-container public-section">
             <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-                <div><p class="public-eyebrow">Những người dẫn nhịp</p><h2 id="ranking-heading" class="public-heading mt-4">Kết nối tạo nên thành tích.</h2><p class="mt-4 max-w-lg text-sm leading-7 text-stone-600">Ghi nhận nỗ lực của những Sales và Dealer đang lan tỏa cộng đồng. Chỉ thành viên đã được duyệt mới tính vào điểm số.</p></div>
+                <div><p class="public-eyebrow">Những người dẫn nhịp</p><h2 id="ranking-heading" class="public-heading mt-4">Kết nối tạo nên thành tích.</h2><p class="mt-4 max-w-lg text-sm leading-7 text-stone-600">Ghi nhận nỗ lực của những Sales và Đại Lý đang lan tỏa cộng đồng. Chỉ thành viên đã được duyệt mới tính vào điểm số.</p></div>
                 <nav aria-label="Kỳ xếp hạng xem trước" class="flex shrink-0 self-start rounded-full border border-stone-300 bg-white p-1">
                     @foreach ([\App\Enums\LeaderboardPeriod::Week, \App\Enums\LeaderboardPeriod::Month] as $option)
                         <a href="{{ route('home', ['period' => $option->value]) }}#xep-hang" @if ($period === $option) aria-current="page" @endif class="rounded-full px-5 py-3 text-sm font-semibold {{ $period === $option ? 'bg-stone-900 text-white' : 'text-stone-600 hover:text-stone-900' }}">{{ $option->label() }}</a>
                     @endforeach
                 </nav>
             </div>
-            <div class="mt-8 grid gap-5 lg:grid-cols-2"><x-public.ranking-preview title="Top Sales" :leaders="$topSales" type="sales" /><x-public.ranking-preview title="Top Dealer" :leaders="$topDealers" type="dealer" /></div>
+            <div class="mt-8 grid gap-5 lg:grid-cols-2"><x-public.ranking-preview title="Top Sales" :leaders="$topSales" type="sales" /><x-public.ranking-preview title="Top Đại Lý" :leaders="$topDealers" type="dealer" /></div>
             <div class="mt-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><p class="text-xs text-stone-500">Theo ngày khai báo · Múi giờ {{ config('app.timezone') }}</p><a href="{{ route('leaderboard', ['period' => $period->value]) }}" class="inline-flex min-h-12 items-center gap-3 text-sm font-semibold">Xem bảng xếp hạng đầy đủ <x-public.arrow /></a></div>
         </div>
     </section>
@@ -60,7 +60,7 @@
     <section id="the-le" class="public-container border-t border-stone-200 pb-16 pt-12 sm:pb-20 sm:pt-16" aria-labelledby="rules-heading">
         <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]"><div><p class="public-eyebrow">Minh bạch & công bằng</p><h2 id="rules-heading" class="public-heading mt-4">Thể lệ chương trình.</h2><p class="mt-4 max-w-sm text-sm leading-7 text-stone-600">Những nguyên tắc để mỗi kết nối được ghi nhận đúng người, đúng thời điểm.</p></div>
             <div class="divide-y divide-stone-200 border-y border-stone-200">
-                @foreach (['Ai có thể tham gia?' => 'Nhân viên kinh doanh các đại lý Toyota đăng ký tài khoản, chọn đại lý và được admin duyệt trước khi sử dụng hệ thống. Khai báo khách hàng cần thông tin xe Toyota và 1 ảnh bằng chứng, không giới hạn dòng Veloz/Hilux.', 'Thành tích được ghi nhận thế nào?' => 'Sales khai báo thành viên đã tham gia cộng đồng Facebook. Admin xác minh thủ công; mỗi khai báo approved được tính một điểm. Một Facebook profile chỉ được approved một lần toàn hệ thống.', 'Điểm thuộc tuần hoặc tháng nào?' => 'Điểm tính theo thời điểm khai báo, không theo ngày admin duyệt. Điểm Dealer là tổng khai báo approved của Sales thuộc Dealer đó. Khi bằng điểm, ưu tiên người đạt điểm sớm hơn theo thời điểm khai báo.', 'Tôi có thể sửa khai báo không?' => 'Sales được sửa hoặc xóa khai báo của mình khi đang chờ duyệt. Sau khi đã được duyệt hoặc từ chối, khai báo chỉ được xem. Kết quả vinh danh đã công bố được giữ nguyên lịch sử.'] as $question => $answer)
+                @foreach (['Ai có thể tham gia?' => 'Nhân viên kinh doanh các đại lý Toyota đăng ký tài khoản, chọn đại lý và được admin duyệt trước khi sử dụng hệ thống. Khai báo khách hàng cần thông tin xe Toyota và 1 ảnh bằng chứng, không giới hạn dòng Veloz/Hilux.', 'Thành tích được ghi nhận thế nào?' => 'Sales khai báo thành viên đã tham gia cộng đồng Facebook. Admin xác minh thủ công; mỗi khai báo approved được tính một điểm. Một Facebook profile chỉ được approved một lần toàn hệ thống.', 'Điểm thuộc tuần hoặc tháng nào?' => 'Điểm tính theo thời điểm khai báo, không theo ngày admin duyệt. Điểm Đại Lý là tổng khai báo approved của Sales thuộc Đại Lý đó. Khi bằng điểm, ưu tiên người đạt điểm sớm hơn theo thời điểm khai báo.', 'Tôi có thể sửa khai báo không?' => 'Sales được sửa hoặc xóa khai báo của mình khi đang chờ duyệt. Sau khi đã được duyệt hoặc từ chối, khai báo chỉ được xem. Kết quả vinh danh đã công bố được giữ nguyên lịch sử.'] as $question => $answer)
                     <details class="group py-5"><summary class="flex min-h-6 cursor-pointer list-none items-center justify-between gap-5 text-sm font-semibold">{{ $question }}<span class="text-xl font-normal text-stone-500 group-open:hidden" aria-hidden="true">+</span><span class="hidden text-xl font-normal text-stone-500 group-open:inline" aria-hidden="true">−</span></summary><p class="mt-4 max-w-xl text-sm leading-7 text-stone-600">{{ $answer }}</p></details>
                 @endforeach
             </div>

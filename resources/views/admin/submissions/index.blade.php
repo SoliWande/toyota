@@ -9,9 +9,9 @@
             <input id="q" name="q" value="{{ $filters['q'] ?? '' }}" maxlength="255" placeholder="Tên, điện thoại hoặc Facebook" class="form-input">
         </div>
         <div>
-            <label for="dealer_id" class="text-sm font-medium">Dealer</label>
+            <label for="dealer_id" class="text-sm font-medium">Đại Lý</label>
             <select id="dealer_id" name="dealer_id" class="form-input">
-                <option value="">Tất cả Dealer</option>
+                <option value="">Tất cả Đại Lý</option>
                 @foreach ($dealers as $dealer)
                     <option value="{{ $dealer->id }}" @selected((string) ($filters['dealer_id'] ?? '') === (string) $dealer->id)>{{ $dealer->name }}</option>
                 @endforeach

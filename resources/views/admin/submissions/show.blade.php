@@ -8,7 +8,7 @@
                 <h2 class="font-bold">Facebook profile đã được duyệt trước đó</h2>
                 <p class="mt-2 text-sm leading-6">Không thể ghi nhận thêm thành tích cho profile này, kể cả cùng Sales. Khai báo hiện tại vẫn chờ duyệt.</p>
                 <p class="mt-3 break-words text-sm">Sales: <strong>{{ $duplicate->sales->name }}</strong></p>
-                <p class="mt-1 break-words text-sm">Dealer: <strong>{{ $duplicate->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }}</strong> ({{ $duplicate->dealer?->code ?? '—' }})</p>
+                <p class="mt-1 break-words text-sm">Đại Lý: <strong>{{ $duplicate->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }}</strong> ({{ $duplicate->dealer?->code ?? '—' }})</p>
                 <a href="{{ route('admin.submissions.show', $duplicate) }}" class="mt-3 inline-block py-2 text-sm font-semibold underline">Xem record đã duyệt #{{ $duplicate->id }}</a>
             </div>
         @endif
@@ -16,7 +16,7 @@
             <x-submission-status :status="$submission->status" />
             <dl class="mt-6 space-y-4 text-sm">
                 <div><dt class="text-slate-500">Sales</dt><dd class="mt-1 break-words">{{ $submission->sales->name }}</dd></div>
-                <div><dt class="text-slate-500">Dealer</dt><dd class="mt-1 break-words">{{ $submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }} · {{ $submission->dealer?->code ?? '—' }}</dd></div>
+                <div><dt class="text-slate-500">Đại Lý</dt><dd class="mt-1 break-words">{{ $submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }} · {{ $submission->dealer?->code ?? '—' }}</dd></div>
                 <div><dt class="text-slate-500">Facebook URL</dt><dd class="mt-1 break-all">{{ $submission->facebook_url }}</dd></div>
                 @if ($submission->phone)<div><dt class="text-slate-500">Điện thoại</dt><dd class="mt-1">{{ $submission->phone }}</dd></div>@endif
                 <div><dt class="text-slate-500">Ghi chú Sales</dt><dd class="mt-1 whitespace-pre-wrap break-words">{{ $submission->notes ?? 'Không có' }}</dd></div>

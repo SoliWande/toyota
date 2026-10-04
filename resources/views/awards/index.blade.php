@@ -1,7 +1,7 @@
 <x-layout title="Lịch sử vinh danh">
     <p class="text-xs font-bold uppercase tracking-widest text-red-600">Toyota Veloz & Hilux</p>
     <h1 class="mt-3 text-3xl font-bold sm:text-4xl">Lịch sử vinh danh</h1>
-    <p class="mt-3 text-sm leading-6 text-slate-600">Các kết quả tuần và tháng đã được công bố, ghi nhận thành tích của Sales và Dealer trong cộng đồng.</p>
+    <p class="mt-3 text-sm leading-6 text-slate-600">Các kết quả tuần và tháng đã được công bố, ghi nhận thành tích của Sales và Đại Lý trong cộng đồng.</p>
     <nav aria-label="Loại kỳ vinh danh" class="mt-6 flex flex-wrap gap-3">
         @foreach (['' => 'Tất cả', 'weekly' => 'Tuần', 'monthly' => 'Tháng'] as $value => $label)
             <a href="{{ route('awards.index', $value === '' ? [] : ['period_type' => $value]) }}" @if ($periodType === $value) aria-current="page" @endif class="rounded-xl border px-4 py-3 text-sm font-semibold {{ $periodType === $value ? 'border-red-200 bg-red-50 text-red-700' : 'border-slate-200 bg-white text-slate-600' }}">{{ $label }}</a>

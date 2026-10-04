@@ -17,7 +17,7 @@
         <div class="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
             <table class="w-full text-left text-sm">
                 <caption class="sr-only">{{ $title }} — bảng thứ hạng đầy đủ</caption>
-                <thead class="bg-slate-100 text-slate-600"><tr><th scope="col" class="p-4">Hạng</th><th scope="col" class="p-4">{{ $type === 'sales' ? 'Sales' : 'Dealer' }}</th><th scope="col" class="p-4">{{ $type === 'sales' ? 'Dealer' : 'Mã Dealer' }}</th><th scope="col" class="p-4 text-right">Điểm</th></tr></thead>
+                <thead class="bg-slate-100 text-slate-600"><tr><th scope="col" class="p-4">Hạng</th><th scope="col" class="p-4">{{ $type === 'sales' ? 'Sales' : 'Đại Lý' }}</th><th scope="col" class="p-4">{{ $type === 'sales' ? 'Đại Lý' : 'Mã Đại Lý' }}</th><th scope="col" class="p-4 text-right">Điểm</th></tr></thead>
                 <tbody class="divide-y divide-slate-100">
                     @foreach ($rows as $row)
                         <tr class="{{ (int) $row->rank <= 3 ? 'bg-red-50/40' : '' }}">

@@ -22,7 +22,7 @@
             </a>
         </div>
         <nav aria-label="Thao tác nhanh" class="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-            <a href="{{ route('admin.dealers.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Quản lý Dealer</a>
+            <a href="{{ route('admin.dealers.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Quản lý Đại Lý</a>
             <a href="{{ route('leaderboard') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Xem Leaderboard</a>
             <a href="{{ route('admin.awards.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Tạo vinh danh</a>
         </nav>
@@ -32,7 +32,7 @@
         <h2 id="stats-title" class="text-lg font-bold">Tổng quan chương trình</h2>
         <dl class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             @foreach ([
-                'dealers' => 'Tổng Dealer',
+                'dealers' => 'Tổng Đại Lý',
                 'active_sales' => 'Sales đang hoạt động',
                 'pending_sales' => 'Sales chờ duyệt',
                 'approved_submissions' => 'Khách hàng đã duyệt',
@@ -80,7 +80,7 @@
         </div>
         <div class="mt-4 grid gap-4 lg:grid-cols-2">
             <x-public.ranking-preview title="Top 3 Sales" :leaders="$topSales" type="sales" />
-            <x-public.ranking-preview title="Top 3 Dealer" :leaders="$topDealers" type="dealers" />
+            <x-public.ranking-preview title="Top 3 Đại Lý" :leaders="$topDealers" type="dealers" />
         </div>
     </section>
 </x-layout>

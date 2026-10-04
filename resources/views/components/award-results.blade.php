@@ -1,6 +1,6 @@
 @props(['sales', 'dealers'])
 <div class="space-y-8">
-    @foreach (['Top 3 Sales' => $sales, 'Top 3 Dealer' => $dealers] as $title => $winners)
+    @foreach (['Top 3 Sales' => $sales, 'Top 3 Đại Lý' => $dealers] as $title => $winners)
         <section>
             <h2 class="text-xl font-bold">{{ $title }}</h2>
             <div class="mt-4 grid gap-4 sm:grid-cols-3">
