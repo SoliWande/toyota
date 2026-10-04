@@ -1,0 +1,5 @@
+# Application source, logs, tests and secrets must never be served directly.
+# Apache deployments should point DocumentRoot to this project's public directory.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

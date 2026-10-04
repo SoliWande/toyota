@@ -25,6 +25,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $request->session()->forget('url.intended');
+        $request->session()->forget('password_hash_web');
 
         return redirect()->route($request->user()->homeRoute());
     }

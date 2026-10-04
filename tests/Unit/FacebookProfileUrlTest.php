@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Support\FacebookProfileUrl;
+use App\Services\FacebookUrlNormalizer;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +11,9 @@ class FacebookProfileUrlTest extends TestCase
     /** @dataProvider validProfiles */
     public function test_profile_normalization(string $url, string $expected): void
     {
-        $this->assertSame($expected, FacebookProfileUrl::normalize($url));
+        $normalizer = new FacebookUrlNormalizer;
+        $this->assertSame($expected, $normalizer->normalize($url));
+        $this->assertSame($expected, $normalizer->normalize($expected));
     }
 
     public static function validProfiles(): array
@@ -21,6 +23,8 @@ class FacebookProfileUrlTest extends TestCase
             [' https://FACEBOOK.com/Alice.Example ', 'https://www.facebook.com/alice.example'],
             ['https://mbasic.facebook.com/profile.php?ref=share&id=00123456', 'https://www.facebook.com/profile.php?id=123456'],
             ['https://web.facebook.com/profile.php?id=123456&ref=share#about', 'https://www.facebook.com/profile.php?id=123456'],
+            ['https://mobile.facebook.com/Alice.Example/?utm_source=test', 'https://www.facebook.com/alice.example'],
+            ['https://www.facebook.com/123456', 'https://www.facebook.com/123456'],
         ];
     }
 
@@ -28,7 +32,7 @@ class FacebookProfileUrlTest extends TestCase
     public function test_invalid_or_ambiguous_urls_are_rejected(string $url): void
     {
         $this->expectException(InvalidArgumentException::class);
-        FacebookProfileUrl::normalize($url);
+        (new FacebookUrlNormalizer)->normalize($url);
     }
 
     public static function invalidProfiles(): array
@@ -48,6 +52,13 @@ class FacebookProfileUrlTest extends TestCase
             'https://www.facebook.com/profile.php?id[]=123',
             'https://www.facebook.com/profile.php?id=notnumeric',
             'https://www.facebook.com/',
+            'ftp://facebook.com/alice',
+            '//facebook.com/alice',
+            'https://www.facebook.com/profile.php?id=123&%69d=456',
+            'https://www.facebook.com/profile.php?id=123&id%5B%5D=456',
+            'https://www.facebook.com/alice%2Fphotos',
+            'https://www.facebook.com/'.str_repeat('a', 101),
+            'https://www.facebook.com/alice?tracking='.str_repeat('a', 2048),
         ]);
     }
 }

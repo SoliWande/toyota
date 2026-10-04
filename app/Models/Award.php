@@ -51,6 +51,11 @@ class Award extends Model
         return $this->hasMany(AwardWinner::class);
     }
 
+    public function getStatusAttribute(): string
+    {
+        return $this->published_at === null ? 'draft' : 'published';
+    }
+
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'published_by');

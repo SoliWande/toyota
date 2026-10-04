@@ -10,6 +10,9 @@ class DealerFactory extends Factory
     {
         return [
             'is_active' => true,
+            'province' => null,
+            'phone' => null,
+            'address' => null,
             'code' => fake()->unique()->bothify('DEMO-????-####'),
             'name' => 'Demo dealer '.fake()->company(),
         ];

@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(ToyotaDealerSeeder::class);
+
         if (app()->environment(['local', 'testing'])) {
             $this->call([
                 DevelopmentAdminSeeder::class,

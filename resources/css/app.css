@@ -8,3 +8,18 @@
         @apply inline-flex min-h-12 items-center justify-center rounded-xl bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:cursor-not-allowed disabled:bg-slate-300;
     }
 }
+
+@layer components {
+    .public-container { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+    .public-section { @apply py-16 sm:py-20; }
+    .public-eyebrow { @apply text-[10px] font-semibold uppercase tracking-[0.2em] text-red-700 sm:text-xs; }
+    .public-heading { @apply text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl; }
+    .public-button { @apply inline-flex min-h-12 items-center justify-center gap-5 rounded-full bg-red-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-800; }
+}
+
+.public-site :where(a, button, summary, input):focus-visible { outline: 2px solid #b91c1c; outline-offset: 5px; }
+.public-site summary::-webkit-details-marker { display: none; }
+.public-site :where(section[id]) { scroll-margin-top: 2rem; }
+@media (prefers-reduced-motion: reduce) {
+    .public-site *, .public-site *::before, .public-site *::after { transition: none !important; animation: none !important; }
+}

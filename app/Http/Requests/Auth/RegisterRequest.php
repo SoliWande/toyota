@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
+            'email' => ['bail', 'required', 'string', 'not_regex:/[\x00-\x1F\x7F]/', 'email', 'max:255', Rule::unique('users', 'email')],
             'password' => ['required', 'string', 'max:255', 'confirmed', Password::min(8)],
             'dealer_id' => ['required', 'integer', Rule::exists('dealers', 'id')->where('is_active', true)],
             'role' => ['prohibited'],

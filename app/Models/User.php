@@ -35,6 +35,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'admin_note',
+        'rejection_reason',
     ];
 
     /**
@@ -57,6 +59,12 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
+        static::updating(function (self $user) {
+            if ($user->isDirty('email')) {
+                throw new \LogicException('Account email is immutable. Create a new account to use another email.');
+            }
+        });
+
         static::saving(function (self $user) {
             if ($user->reviewed_by !== null
                 && ! self::whereKey($user->reviewed_by)->where('role', UserRole::Admin->value)->exists()) {

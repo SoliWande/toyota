@@ -16,6 +16,10 @@ class CustomerSubmissionFactory extends Factory
             'facebook_url' => 'https://www.facebook.com/profile.php?id='.fake()->unique()->numerify('10#############'),
             'phone' => null,
             'notes' => null,
+            'vehicle_model' => 'veloz',
+            'first_registration_year' => 2022,
+            'vehicle_color' => 'Trắng',
+            'license_plate' => fake()->numerify('29D-###.##'),
             'submitted_at' => now(),
             'status' => SubmissionStatus::Pending,
         ];

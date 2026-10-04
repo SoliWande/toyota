@@ -22,7 +22,7 @@ class AwardFactory extends Factory
     public function weekly(): static
     {
         return $this->state(function () {
-            $start = now()->startOfWeek(); // Fixture only; business calendar remains unconfirmed.
+            $start = now()->startOfWeek(\Carbon\CarbonInterface::MONDAY);
 
             return [
                 'title' => 'Weekly community awards',

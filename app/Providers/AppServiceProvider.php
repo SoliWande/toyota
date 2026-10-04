@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if ($this->app->environment('production')) {
+            // Fail safe even if deployment accidentally reuses local environment settings.
+            config(['app.debug' => false, 'session.secure' => true]);
+        }
     }
 }

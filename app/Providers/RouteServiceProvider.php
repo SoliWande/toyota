@@ -35,6 +35,14 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('registration', fn (Request $request) => Limit::perHour(5)->by('register-ip:'.$request->ip()));
+        RateLimiter::for('password-email', fn (Request $request) => Limit::perMinute(5)->by('password-email:'.$request->ip()));
+        RateLimiter::for('password-reset', fn (Request $request) => Limit::perMinute(10)->by('password-reset:'.$request->ip()));
+        RateLimiter::for('profile-writes', fn (Request $request) => Limit::perMinute(20)->by('profile:'.$request->user()->id));
+        RateLimiter::for('password-change', fn (Request $request) => Limit::perMinute(5)->by('password-change:'.$request->user()->id));
+        RateLimiter::for('submissions', fn (Request $request) => Limit::perMinute(20)->by('submissions-user:'.$request->user()->id));
+        RateLimiter::for('admin-writes', fn (Request $request) => $request->isMethod('GET') || $request->isMethod('HEAD')
+            ? Limit::none()
+            : Limit::perMinute(60)->by('admin-writes:'.$request->user()->id));
 
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
