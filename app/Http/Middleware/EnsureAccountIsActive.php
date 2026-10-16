@@ -11,7 +11,7 @@ class EnsureAccountIsActive
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->status !== UserStatus::Active) {
+        if (($request->user()?->getAttributes()['status'] ?? null) !== UserStatus::Active->value) {
             if ($request->expectsJson()) {
                 abort(403, 'Tài khoản chưa được phép sử dụng hệ thống.');
             }

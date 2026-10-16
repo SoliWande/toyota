@@ -4,13 +4,13 @@
         <x-admin-feedback />
         <form method="POST" action="{{ route('profile.update') }}" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
             @csrf @method('PATCH')
-            <div><p class="text-sm font-medium">Email</p><p class="mt-1 break-all">{{ $user->email }}</p><p class="mt-2 text-sm text-slate-500">Email cố định. Để sử dụng email khác, vui lòng đăng ký tài khoản mới.</p></div>
+            <div><p class="text-sm font-medium">Email</p><p class="mt-1 break-all">{{ $user->email }}</p><p class="mt-2 text-sm text-slate-500">Email cố định. Vui lòng liên hệ quản trị viên khi cần hỗ trợ tài khoản.</p></div>
             <label class="block text-sm font-medium" for="name">Họ tên</label>
             <input id="name" name="name" class="form-input" value="{{ old('name', $user->name) }}" required maxlength="255" autocomplete="name">
-            @if ($user->role === \App\Enums\UserRole::Sales)
+            @if ($user->role === \App\Enums\UserRole::Dealer)
                 <label class="block text-sm font-medium" for="phone">Điện thoại</label>
                 <input id="phone" name="phone" type="tel" class="form-input" value="{{ old('phone', $user->phone) }}" maxlength="30" autocomplete="tel">
-                <p class="text-sm text-slate-600">Đại lý hiện tại: {{ $user->dealer->name }}</p>
+                <p class="text-sm text-slate-600">Đại lý: {{ $user->dealer->name }} · {{ $user->dealer->code }}. Tài khoản gắn cố định với đại lý này.</p>
             @endif
             <button class="button-primary w-full" type="submit">Lưu hồ sơ</button>
         </form>

@@ -1,11 +1,10 @@
 @props(['title' => 'Kết nối cộng đồng Toyota Veloz & Hilux'])
-@php($joinUrl = auth()->check() ? route(auth()->user()->homeRoute()) : route('register'))
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Cùng Sales và đại lý Toyota kết nối thành viên cộng đồng Veloz & Hilux. Theo dõi thành tích, bảng xếp hạng và những kỳ vinh danh.">
+    <meta name="description" content="Cùng các đại lý Toyota kết nối thành viên cộng đồng Veloz & Hilux. Theo dõi thành tích, bảng xếp hạng đại lý và những kỳ vinh danh.">
     <title>{{ $title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -16,8 +15,7 @@
             <x-public.brand />
             <nav aria-label="Điều hướng chính" class="hidden items-center gap-6 lg:flex"><x-public.navigation /></nav>
             <div class="hidden items-center gap-5 lg:flex">
-                <a href="{{ auth()->check() ? route(auth()->user()->homeRoute()) : route('login') }}" class="py-3 text-sm font-semibold">{{ auth()->check() ? 'Tài khoản' : 'Đăng nhập' }}</a>
-                <a href="{{ $joinUrl }}" class="public-button">Tham gia <x-public.arrow /></a>
+                <x-public.account-controls />
             </div>
             <details class="public-menu group lg:hidden">
                 <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-stone-300" aria-label="Mở menu điều hướng">
@@ -26,8 +24,7 @@
                 <nav aria-label="Điều hướng mobile" class="absolute inset-x-0 top-full border-b border-stone-200 bg-[#faf9f6] px-6 pb-6 shadow-lg">
                     <x-public.navigation :mobile="true" />
                     <div class="mt-5 flex items-center justify-between gap-4">
-                        <a href="{{ auth()->check() ? route(auth()->user()->homeRoute()) : route('login') }}" class="py-3 text-sm font-semibold">{{ auth()->check() ? 'Tài khoản' : 'Đăng nhập' }}</a>
-                        <a href="{{ $joinUrl }}" class="public-button">Tham gia <x-public.arrow /></a>
+                        <x-public.account-controls />
                     </div>
                 </nav>
             </details>

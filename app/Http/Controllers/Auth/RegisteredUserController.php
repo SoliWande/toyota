@@ -21,7 +21,8 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         return view('auth.register', [
-            'dealers' => Dealer::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'dealers' => Dealer::where('is_active', true)
+                ->whereDoesntHave('loginAccount')->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -36,12 +37,16 @@ class RegisteredUserController extends Controller
                     throw ValidationException::withMessages(['dealer_id' => 'Đại lý đang ngừng nhận đăng ký.']);
                 }
 
+                if (User::where('role', UserRole::Dealer->value)->where('dealer_id', $dealer->id)->exists()) {
+                    throw ValidationException::withMessages(['dealer_id' => 'Đại lý đã có tài khoản. Vui lòng liên hệ quản trị viên.']);
+                }
+
                 $user = new User([
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'password' => $data['password'],
                 ]);
-                $user->role = UserRole::Sales;
+                $user->role = UserRole::Dealer;
                 $user->status = UserStatus::Pending;
                 $user->dealer()->associate($dealer);
                 $user->save();
@@ -53,6 +58,9 @@ class RegisteredUserController extends Controller
                 throw $exception;
             }
 
+            if (str_contains($exception->errorInfo[2] ?? '', 'users_one_dealer_account_unique')) {
+                throw ValidationException::withMessages(['dealer_id' => 'Đại lý đã có tài khoản. Vui lòng liên hệ quản trị viên.']);
+            }
             throw ValidationException::withMessages(['email' => 'Email này đã được đăng ký.']);
         }
 

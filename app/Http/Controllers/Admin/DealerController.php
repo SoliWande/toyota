@@ -17,7 +17,7 @@ class DealerController extends Controller
     {
         $this->authorize('viewAny', Dealer::class);
         $filters = $request->validate(['q' => ['nullable', 'string', 'max:255'], 'page' => ['nullable', 'integer', 'min:1']]);
-        $query = Dealer::withCount('sales');
+        $query = Dealer::with('loginAccount:id,dealer_id,name,status');
         if (isset($filters['q']) && $filters['q'] !== '') {
             $search = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $filters['q']).'%';
             $query->where(function ($query) use ($search) {

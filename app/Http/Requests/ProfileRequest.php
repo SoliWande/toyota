@@ -16,7 +16,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => $this->user()->role === UserRole::Sales ? ['nullable', 'string', 'max:30'] : ['missing'],
+            'phone' => $this->user()->role === UserRole::Dealer ? ['nullable', 'string', 'max:30'] : ['missing'],
             'email' => ['missing'], 'dealer_id' => ['missing'], 'role' => ['missing'], 'status' => ['missing'],
             'password' => ['missing'], 'user_id' => ['missing'], 'id' => ['missing'],
         ];

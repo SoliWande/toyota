@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\AwardWinnerType;
-use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +13,7 @@ class AwardWinner extends Model
 {
     use HasFactory;
 
-    // Snapshot fields are assigned explicitly by the future publication action.
+    // Snapshot fields are assigned explicitly by the publication action.
     protected $guarded = ['*'];
 
     protected $casts = [
@@ -36,9 +35,9 @@ class AwardWinner extends Model
         static::saving($ensureDraft);
         static::deleting($ensureDraft);
         static::saving(function (self $winner) {
-            if ($winner->winner_type === AwardWinnerType::Sales
-                && ! User::whereKey($winner->sales_id)->where('role', UserRole::Sales->value)->exists()) {
-                throw new InvalidArgumentException('A sales award winner must be a sales account.');
+            if ($winner->winner_type !== AwardWinnerType::Dealer || $winner->sales_id !== null
+                || $winner->sales_dealer_id_snapshot !== null || $winner->dealer_id === null) {
+                throw new InvalidArgumentException('New award winners must be Dealers.');
             }
         });
     }
@@ -50,7 +49,7 @@ class AwardWinner extends Model
 
     public function sales(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sales_id');
+        return $this->belongsTo(LegacySalesAccount::class, 'sales_id');
     }
 
     public function dealer(): BelongsTo

@@ -1,7 +1,7 @@
 <x-layout title="Bảng xếp hạng">
     <p class="text-xs font-bold uppercase tracking-widest text-red-600">Toyota Veloz & Hilux</p>
     <h1 class="mt-3 text-3xl font-bold sm:text-4xl">Bảng xếp hạng cộng đồng</h1>
-    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Vinh danh Sales và Đại Lý mời thành viên tham gia cộng đồng. Mỗi khai báo đã duyệt được tính một điểm, theo ngày khai báo.</p>
+    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Vinh danh Đại lý mời thành viên tham gia cộng đồng. Mỗi khai báo đã duyệt được tính một điểm cho đại lý tại thời điểm khai báo.</p>
     <nav aria-label="Chọn kỳ xếp hạng" class="mt-7 grid grid-cols-3 gap-2 rounded-2xl bg-slate-200 p-2 sm:max-w-xl">
         @foreach (\App\Enums\LeaderboardPeriod::cases() as $option)
             <a href="{{ route('leaderboard', ['period' => $option->value]) }}" @if ($period === $option) aria-current="page" @endif
@@ -14,9 +14,8 @@
         @endif
         Múi giờ {{ config('app.timezone') }}
     </p>
-    <p class="mt-2 text-xs text-slate-500">Bằng điểm: ưu tiên người đạt điểm sớm hơn theo thời điểm khai báo.</p>
+    <p class="mt-2 text-xs text-slate-500">Bằng điểm: ưu tiên đại lý đạt tổng điểm sớm hơn theo thời điểm khai báo; nếu vẫn bằng nhau, xếp theo ID đại lý tăng dần.</p>
     <div class="mt-9 space-y-12">
-        <x-leaderboard-section title="Top Sales" :leaders="$topSales" :rows="$sales" type="sales" />
-        <x-leaderboard-section title="Top Đại Lý" :leaders="$topDealers" :rows="$dealers" type="dealer" />
+        <x-leaderboard-section title="Top Đại lý" :leaders="$topDealers" :rows="$dealers" type="dealer" />
     </div>
 </x-layout>

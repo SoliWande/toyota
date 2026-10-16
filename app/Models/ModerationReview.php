@@ -24,9 +24,12 @@ class ModerationReview extends Model
                 throw new InvalidArgumentException('A moderation reviewer must be an admin.');
             }
 
-            if ($review->sales_id !== null
-                && ! User::whereKey($review->sales_id)->where('role', UserRole::Sales->value)->exists()) {
-                throw new InvalidArgumentException('An account review must target a sales account.');
+            if ($review->sales_id !== null) {
+                throw new InvalidArgumentException('Legacy Sales review history is closed.');
+            }
+            if ($review->account_user_id !== null
+                && ! User::whereKey($review->account_user_id)->where('role', UserRole::Dealer->value)->exists()) {
+                throw new InvalidArgumentException('An account review must target a Dealer account.');
             }
         });
 
@@ -36,7 +39,7 @@ class ModerationReview extends Model
 
     public function sales(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sales_id');
+        return $this->belongsTo(LegacySalesAccount::class, 'sales_id');
     }
 
     public function submission(): BelongsTo

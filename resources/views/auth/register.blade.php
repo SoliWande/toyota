@@ -1,13 +1,13 @@
-<x-layout title="Đăng ký Sales">
+<x-layout title="Đăng ký đại lý">
     <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2 md:gap-14">
         <div class="md:pt-8">
             <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-600">Toyota Veloz & Hilux</p>
             <h1 class="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Kết nối cộng đồng.<br>Cùng nhau tiến xa.</h1>
-            <p class="mt-5 max-w-sm text-sm leading-7 text-slate-600">Tham gia chương trình dành cho nhân viên kinh doanh tại các đại lý Toyota. Mỗi kết nối là một bước đưa cộng đồng đến gần nhau hơn.</p>
+            <p class="mt-5 max-w-sm text-sm leading-7 text-slate-600">Tham gia chương trình dành cho các đại lý Toyota. Mỗi kết nối là một bước đưa cộng đồng đến gần nhau hơn.</p>
             <p class="mt-5 rounded-xl border border-red-100 bg-red-50 p-4 text-sm leading-6 text-red-800">Sau khi đăng ký, tài khoản sẽ được quản trị viên xét duyệt trước khi sử dụng hệ thống.</p>
         </div>
         <div>
-            <h2 class="mb-5 text-xl font-semibold">Đăng ký tài khoản Sales</h2>
+            <h2 class="mb-5 text-xl font-semibold">Đăng ký tài khoản đại lý</h2>
             <form method="POST" action="{{ route('register') }}" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                 @csrf
                 <x-form-input name="name" label="Họ tên" autocomplete="name" maxlength="255" required autofocus />

@@ -27,11 +27,10 @@ class LandingPageController extends Controller
         return view('welcome', [
             'period' => $period,
             'stats' => [
-                'sales' => User::where('role', UserRole::Sales->value)->where('status', UserStatus::Active->value)->count(),
+                'accounts' => User::where('role', UserRole::Dealer->value)->where('status', UserStatus::Active->value)->count(),
                 'dealers' => Dealer::where('is_active', true)->count(),
                 'members' => CustomerSubmission::where('status', SubmissionStatus::Approved->value)->count(),
             ],
-            'topSales' => $leaderboard->sales($period, $at)->limit(3)->get(),
             'topDealers' => $leaderboard->dealers($period, $at)->limit(3)->get(),
             'latestAward' => Award::whereNotNull('published_at')->with(['winners' => fn ($query) => $query->orderBy('rank')])
                 ->orderByDesc('published_at')->orderByDesc('id')->first(),

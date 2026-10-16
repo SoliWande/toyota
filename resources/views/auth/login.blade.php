@@ -11,6 +11,6 @@
         </form>
         <x-admin-feedback />
         <p class="mt-4 text-center text-sm"><a class="text-red-600 hover:underline" href="{{ route('password.request') }}">Quên mật khẩu?</a></p>
-        <p class="mt-6 text-center text-sm text-slate-600">Chưa có tài khoản? <a href="{{ route('register') }}" class="font-semibold text-red-600 hover:underline">Đăng ký Sales</a></p>
+        <p class="mt-6 text-center text-sm text-slate-600">Chưa có tài khoản? <a href="{{ route('register') }}" class="font-semibold text-red-600 hover:underline">Đăng ký tài khoản đại lý</a></p>
     </div>
 </x-layout>

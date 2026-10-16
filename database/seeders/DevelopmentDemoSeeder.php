@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Actions\PublishDealerAward;
 use App\Enums\AwardPeriod;
 use App\Enums\SubmissionStatus;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Award;
-use App\Models\AwardWinner;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\ModerationReview;
@@ -172,7 +172,7 @@ class DevelopmentDemoSeeder extends Seeder
                 $at = $type === AwardPeriod::Monthly ? $now->startOfMonth()->subMonths($offset) : $now->startOfWeek(CarbonImmutable::MONDAY)->subWeeks($offset);
                 [$start, $end] = $leaderboard->bounds($type->leaderboardPeriod(), $at);
                 if (Award::where('period_type', $type->value)->where('period_start', $start)->where('period_end', $end)->exists()
-                    || $leaderboard->salesForRange($start, $end)->limit(3)->get()->count() < 3
+                    || CustomerSubmission::where('status', SubmissionStatus::Pending->value)->where('submitted_at', '>=', $start)->where('submitted_at', '<', $end)->exists()
                     || $leaderboard->dealersForRange($start, $end)->limit(3)->get()->count() < 3) {
                     continue;
                 }
@@ -181,10 +181,7 @@ class DevelopmentDemoSeeder extends Seeder
                     'period_type' => $type, 'period_start' => $start, 'period_end' => $end,
                 ]);
                 $results = app(AwardResults::class)->preview($award);
-                foreach ($results['sales']->concat($results['dealers']) as $winner) {
-                    AwardWinner::factory()->create($winner + ['award_id' => $award->id]);
-                }
-                $award->forceFill(['published_by' => $admin->id, 'published_at' => $now])->save();
+                app(PublishDealerAward::class)->execute($admin, $award, app(AwardResults::class)->fingerprint($award, $results));
                 $created++;
             }
         }

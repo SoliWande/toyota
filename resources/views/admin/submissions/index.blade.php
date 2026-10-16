@@ -9,20 +9,11 @@
             <input id="q" name="q" value="{{ $filters['q'] ?? '' }}" maxlength="255" placeholder="Tên, điện thoại hoặc Facebook" class="form-input">
         </div>
         <div>
-            <label for="dealer_id" class="text-sm font-medium">Đại Lý</label>
+            <label for="dealer_id" class="text-sm font-medium">Đại lý</label>
             <select id="dealer_id" name="dealer_id" class="form-input">
-                <option value="">Tất cả Đại Lý</option>
+                <option value="">Tất cả Đại lý</option>
                 @foreach ($dealers as $dealer)
                     <option value="{{ $dealer->id }}" @selected((string) ($filters['dealer_id'] ?? '') === (string) $dealer->id)>{{ $dealer->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="sales_id" class="text-sm font-medium">Sales</label>
-            <select id="sales_id" name="sales_id" class="form-input">
-                <option value="">Tất cả Sales</option>
-                @foreach ($salesOptions as $sales)
-                    <option value="{{ $sales->id }}" @selected((string) ($filters['sales_id'] ?? '') === (string) $sales->id)>{{ $sales->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -55,7 +46,7 @@
                 <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div class="min-w-0">
                         <a href="{{ route('admin.submissions.show', $submission) }}" class="break-words font-semibold hover:text-red-600">{{ $submission->customer_name }}</a>
-                        <p class="mt-2 break-words text-sm text-slate-500">{{ $submission->sales->name }} · {{ $submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }}</p>
+                        <p class="mt-2 break-words text-sm text-slate-500">{{ $submission->creator?->name ?? $submission->legacySales?->name ?? 'Chưa xác minh người khai báo' }} · {{ $submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }}</p>
                         <p class="mt-1 text-sm text-slate-500">{{ $submission->submitted_at->format('d/m/Y H:i') }}</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-4">
@@ -73,7 +64,7 @@
                         <dl class="mb-5 space-y-3 text-sm">
                             @if ($submission->phone)<div><dt class="text-slate-500">Điện thoại</dt><dd>{{ $submission->phone }}</dd></div>@endif
                             <div><dt class="text-slate-500">Facebook URL</dt><dd class="break-all">{{ $submission->facebook_url }}</dd></div>
-                            <div><dt class="text-slate-500">Ghi chú Sales</dt><dd class="whitespace-pre-wrap break-words">{{ $submission->notes ?? 'Không có' }}</dd></div>
+                            <div><dt class="text-slate-500">Ghi chú đại lý</dt><dd class="whitespace-pre-wrap break-words">{{ $submission->notes ?? 'Không có' }}</dd></div>
                         </dl>
                         <x-submission-vehicle-details :submission="$submission" />
                         <x-submission-review-form :submission="$submission" :duplicate="(bool) $submission->duplicate_approved_id" :queue="true" :filters="$filters" />

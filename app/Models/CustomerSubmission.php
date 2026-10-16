@@ -35,24 +35,22 @@ class CustomerSubmission extends Model
     {
         static::creating(function (self $submission) {
             $submission->submitted_at ??= now();
-            $submission->dealer_id = User::whereKey($submission->sales_id)->value('dealer_id');
-            if ($submission->dealer_id === null) {
-                throw new InvalidArgumentException('A new submission requires its sales dealer snapshot.');
+            $creator = User::whereKey($submission->created_by_user_id)->where('role', UserRole::Dealer->value)->first();
+            if ($creator === null || $creator->dealer_id === null || $submission->sales_id !== null) {
+                throw new InvalidArgumentException('A new submission requires a Dealer account.');
             }
+            $submission->dealer_id = $creator->dealer_id;
         });
 
         static::updating(function (self $submission) {
-            if ($submission->isDirty('dealer_id') || $submission->isDirty('sales_id')) {
-                throw new \LogicException('Submission sales and dealer attribution are immutable.');
+            if ($submission->isDirty('dealer_id') || $submission->isDirty('sales_id')
+                || $submission->isDirty('created_by_user_id') || $submission->isDirty('submitted_at')) {
+                throw new \LogicException('Submission attribution and submitted time are immutable.');
             }
         });
 
         static::saving(function (self $submission) {
             $submission->facebook_url_normalized = app(FacebookUrlNormalizer::class)->normalize($submission->facebook_url);
-
-            if (! User::whereKey($submission->sales_id)->where('role', UserRole::Sales->value)->exists()) {
-                throw new InvalidArgumentException('A submission must belong to a sales account.');
-            }
 
             if ($submission->reviewed_by !== null
                 && ! User::whereKey($submission->reviewed_by)->where('role', UserRole::Admin->value)->exists()) {
@@ -63,7 +61,18 @@ class CustomerSubmission extends Model
 
     public function sales(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sales_id');
+        // Historical audit compatibility; never used to authorize a Dealer.
+        return $this->legacySales();
+    }
+
+    public function legacySales(): BelongsTo
+    {
+        return $this->belongsTo(LegacySalesAccount::class, 'sales_id');
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
     public function dealer(): BelongsTo

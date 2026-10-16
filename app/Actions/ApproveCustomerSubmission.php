@@ -22,6 +22,7 @@ class ApproveCustomerSubmission
 
         try {
             DB::transaction(function () use ($admin, $submission, $note) {
+                $admin = User::whereKey($admin->id)->lockForUpdate()->firstOrFail();
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 Gate::forUser($admin)->authorize('review', $locked);
 

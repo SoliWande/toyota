@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $now = CarbonImmutable::now(config('app.timezone'));
         [$weekStart, $weekEnd] = $leaderboard->bounds(LeaderboardPeriod::Week, $now);
         [$monthStart, $monthEnd] = $leaderboard->bounds(LeaderboardPeriod::Month, $now);
-        $salesCounts = User::query()->where('role', UserRole::Sales->value)
+        $accountCounts = User::query()->where('role', UserRole::Dealer->value)
             ->select('status')->selectRaw('COUNT(*) AS total')
             ->groupBy('status')->pluck('total', 'status');
         $submissionCounts = CustomerSubmission::query()->toBase()
@@ -37,19 +37,18 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'stats' => [
                 'dealers' => Dealer::query()->count(),
-                'active_sales' => (int) $salesCounts->get(UserStatus::Active->value, 0),
-                'pending_sales' => (int) $salesCounts->get(UserStatus::Pending->value, 0),
+                'active_accounts' => (int) $accountCounts->get(UserStatus::Active->value, 0),
+                'pending_accounts' => (int) $accountCounts->get(UserStatus::Pending->value, 0),
                 'approved_submissions' => (int) $submissionCounts->approved,
                 'pending_submissions' => (int) $submissionCounts->pending,
                 'week_submissions' => (int) $submissionCounts->week,
                 'month_submissions' => (int) $submissionCounts->month,
             ],
             'recentPendingSubmissions' => CustomerSubmission::query()
-                ->select(['id', 'sales_id', 'dealer_id', 'customer_name', 'submitted_at'])
+                ->select(['id', 'sales_id', 'created_by_user_id', 'dealer_id', 'customer_name', 'submitted_at'])
                 ->where('status', SubmissionStatus::Pending->value)
-                ->with(['sales:id,name,dealer_id', 'dealer:id,name'])
+                ->with(['creator:id,name,dealer_id', 'legacySales:id,name,dealer_id', 'dealer:id,name'])
                 ->orderByDesc('submitted_at')->orderByDesc('id')->limit(5)->get(),
-            'topSales' => $leaderboard->sales(LeaderboardPeriod::Week, $now)->limit(3)->get(),
             'topDealers' => $leaderboard->dealers(LeaderboardPeriod::Week, $now)->limit(3)->get(),
             'weekStart' => $weekStart,
             'weekEnd' => $weekEnd,

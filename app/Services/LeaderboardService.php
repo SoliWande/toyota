@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Enums\LeaderboardPeriod;
 use App\Enums\SubmissionStatus;
-use App\Enums\UserRole;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -23,31 +22,20 @@ class LeaderboardService
         };
     }
 
-    public function sales(LeaderboardPeriod $period, ?CarbonImmutable $at = null): Builder
-    {
-        return $this->ranked($this->salesScores(...$this->bounds($period, $at)), ['id', 'name', 'dealer_name', 'score']);
-    }
-
     public function dealers(LeaderboardPeriod $period, ?CarbonImmutable $at = null): Builder
     {
         return $this->ranked($this->dealerScores(...$this->bounds($period, $at)), ['id', 'name', 'code', 'score']);
     }
 
-    public function salesRank(int $salesId, LeaderboardPeriod $period = LeaderboardPeriod::AllTime, ?CarbonImmutable $at = null): ?int
-    {
-        $rank = DB::query()->fromSub($this->sales($period, $at), 'ranked_sales')->where('id', $salesId)->value('rank');
-
-        return $rank === null ? null : (int) $rank;
-    }
-
-    public function salesForRange(CarbonImmutable $start, CarbonImmutable $end): Builder
-    {
-        return $this->ranked($this->salesScores($start, $end), ['id', 'name', 'dealer_id', 'dealer_name', 'dealer_code', 'score']);
-    }
-
     public function dealersForRange(CarbonImmutable $start, CarbonImmutable $end): Builder
     {
         return $this->ranked($this->dealerScores($start, $end), ['id', 'name', 'code', 'score']);
+    }
+
+    public function dealerStanding(int $dealerId, LeaderboardPeriod $period = LeaderboardPeriod::AllTime, ?CarbonImmutable $at = null): ?\stdClass
+    {
+        // Filter after computing the global window rank, never before it.
+        return DB::query()->fromSub($this->dealers($period, $at), 'ranked_dealers')->where('id', $dealerId)->first();
     }
 
     private function ranked(Builder $scores, array $columns): Builder
@@ -57,22 +45,13 @@ class LeaderboardService
             ->orderBy('rank');
     }
 
-    public function salesScores(?CarbonImmutable $start = null, ?CarbonImmutable $end = null): Builder
-    {
-        return $this->approvedSubmissions($start, $end)
-            ->join('dealers', 'dealers.id', '=', 'users.dealer_id')
-            ->select(['users.id', 'users.name', 'dealers.id as dealer_id', 'dealers.name as dealer_name', 'dealers.code as dealer_code'])
-            ->selectRaw('COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at')
-            ->groupBy('users.id', 'users.name', 'dealers.id', 'dealers.name', 'dealers.code');
-    }
-
     public function dealerScores(?CarbonImmutable $start = null, ?CarbonImmutable $end = null): Builder
     {
         return $this->approvedSubmissions($start, $end)
             ->join('dealers', 'dealers.id', '=', 'submissions.dealer_id')
-            ->select(['dealers.id', 'dealers.name', 'dealers.code'])
+            ->select(['submissions.dealer_id as id', 'dealers.name', 'dealers.code'])
             ->selectRaw('COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at')
-            ->groupBy('dealers.id', 'dealers.name', 'dealers.code');
+            ->groupBy('submissions.dealer_id', 'dealers.name', 'dealers.code');
     }
 
     private function approvedSubmissions(?CarbonImmutable $start, ?CarbonImmutable $end): Builder
@@ -82,8 +61,6 @@ class LeaderboardService
         }
 
         $query = DB::table('customer_submissions as submissions')
-            ->join('users', 'users.id', '=', 'submissions.sales_id')
-            ->where('users.role', UserRole::Sales->value)
             ->where('submissions.status', SubmissionStatus::Approved->value);
 
         if ($start !== null) {

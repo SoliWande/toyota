@@ -3,313 +3,317 @@
 namespace Tests\Feature;
 
 use App\Enums\UserRole;
-use App\Enums\UserStatus;
-use App\Models\Dealer;
+use App\Models\CustomerSubmission;
+use App\Models\LegacySalesAccount;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use LogicException;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
+use Tests\Concerns\UsesMigratedDealerDatabase;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
+    use UsesMigratedDealerDatabase;
 
-    protected function beforeRefreshingDatabase(): void
+    private function asAccount(User $user): static
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
+        $this->flushSession();
+        auth()->forgetGuards();
+
+        return $this->actingAs($user, 'web');
+    }
+
+    private function submission(User $account, string $status = 'pending'): CustomerSubmission
+    {
+        $id = DB::table('customer_submissions')->insertGetId([
+            'created_by_user_id' => $account->id, 'dealer_id' => $account->dealer_id,
+            'customer_name' => 'Private customer '.$account->id,
+            'facebook_url' => 'https://facebook.com/auth.fixture.'.$account->id.'.'.$status,
+            'facebook_url_normalized' => 'https://www.facebook.com/auth.fixture.'.$account->id.'.'.$status,
+            'submitted_at' => now(), 'evidence_image_path' => 'auth-'.$account->id.'.png',
+        ]);
+        if ($status !== 'pending') {
+            DB::table('customer_submissions')->where('id', $id)->update([
+                'status' => $status, 'reviewed_by' => User::where('role', 'admin')->value('id'), 'reviewed_at' => now(),
+            ]);
+        }
+        $submission = CustomerSubmission::findOrFail($id);
+        Storage::disk('submission_evidence')->put($submission->evidence_image_path, 'private-evidence');
+
+        return $submission;
+    }
+
+    public function test_only_two_login_roles_and_dealer_login_rotates_session_and_redirects(): void
+    {
+        $this->assertSame(['admin', 'dealer'], array_map(fn ($role) => $role->value, UserRole::cases()));
+        $this->assertNull(UserRole::tryFrom('sales'));
+        $dealer = User::factory()->active()->create();
+        $this->get('/login')->assertOk()->assertSee('Đăng ký tài khoản đại lý');
+        $session = session()->getId();
+        $this->withSession(['url.intended' => '/admin/dashboard'])->post('/login', ['email' => strtoupper($dealer->email), 'password' => 'password'])
+            ->assertRedirect(route('dealer.dashboard'))->assertSessionMissing('url.intended');
+        $this->assertAuthenticatedAs($dealer);
+        $this->assertNotSame($session, session()->getId());
+        $this->get(route('dealer.dashboard'))->assertOk();
+        $this->get('/sales/dashboard')->assertNotFound();
+    }
+
+    public function test_registration_creates_one_pending_dealer_and_protected_fields_are_not_assignable(): void
+    {
+        $dealerId = DB::table('dealers')->value('id');
+        $data = ['name' => 'Dealer account', 'email' => ' NEW-DEALER@EXAMPLE.TEST ', 'dealer_id' => $dealerId,
+            'password' => 'testing-password', 'password_confirmation' => 'testing-password'];
+        $this->post('/register', $data + ['role' => 'admin', 'status' => 'active'])->assertSessionHasErrors(['role', 'status']);
+        $this->post('/register', $data)->assertRedirect(route('account.status'))->assertSessionHasNoErrors();
+        $account = User::where('email', 'new-dealer@example.test')->sole();
+        $this->assertSame(UserRole::Dealer, $account->role);
+        $this->assertSame('pending', $account->status->value);
+        $this->assertTrue(Hash::check('testing-password', $account->password));
+        $this->assertAuthenticatedAs($account);
+        $this->get(route('dealer.submissions.index'))->assertRedirect(route('account.status'));
+        $this->post('/logout');
+        $this->post('/register', array_replace($data, ['email' => 'second@example.test']))->assertSessionHasErrors('dealer_id');
+        $this->assertSame(1, User::where('dealer_id', $dealerId)->where('role', 'dealer')->count());
+        $this->get('/register')->assertViewHas('dealers', fn ($rows) => ! $rows->contains('id', $dealerId));
+    }
+
+    public function test_registration_rejects_inactive_dealer_and_duplicate_account_in_every_status(): void
+    {
+        $account = User::factory()->create();
+        $data = ['name' => 'Duplicate', 'email' => 'duplicate@example.test', 'dealer_id' => $account->dealer_id,
+            'password' => 'testing-password', 'password_confirmation' => 'testing-password'];
+        foreach (['pending', 'active', 'rejected', 'blocked'] as $status) {
+            DB::table('users')->where('id', $account->id)->update(['status' => $status]);
+            $this->post('/register', $data)->assertSessionHasErrors('dealer_id');
+        }
+        DB::table('dealers')->where('id', $account->dealer_id)->update(['is_active' => false]);
+        $this->post('/register', $data)->assertSessionHasErrors('dealer_id');
+    }
+
+    public function test_role_status_gates_keep_dealers_out_of_every_admin_area(): void
+    {
+        $account = User::factory()->active()->create();
+        $target = $this->submission(User::factory()->active()->create());
+        foreach (['pending', 'active', 'rejected', 'blocked'] as $status) {
+            DB::table('users')->where('id', $account->id)->update(['status' => $status]);
+            $this->post('/login', ['email' => $account->email, 'password' => 'password'])
+                ->assertRedirect(route($status === 'active' ? 'dealer.dashboard' : 'account.status'));
+            foreach (['/admin/dashboard', '/admin/dealers', '/admin/dealer-accounts', '/admin/submissions', '/admin/awards'] as $url) {
+                $this->getJson($url)->assertForbidden();
+            }
+            $this->postJson(route('admin.submissions.approve', $target))->assertForbidden();
+            $this->postJson(route('admin.submissions.reject', $target))->assertForbidden();
+            if ($status !== 'active') {
+                $this->getJson('/dealer/submissions')->assertForbidden();
+                $this->patchJson('/profile', ['name' => 'Denied'])->assertForbidden();
+            }
+            $this->post('/logout');
         }
     }
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Cache::flush();
-    }
-
-    private function registrationData(array $overrides = []): array
-    {
-        return array_merge([
-            'name' => 'Nguyễn Minh Anh',
-            'email' => 'minhanh@example.test',
-            'dealer_id' => Dealer::factory()->create()->id,
-            'password' => 'test-password-123',
-            'password_confirmation' => 'test-password-123',
-        ], $overrides);
-    }
-
-    public function test_guests_can_view_auth_forms_and_only_active_dealers_are_offered(): void
-    {
-        $active = Dealer::factory()->create(['name' => 'Active dealer']);
-        $inactive = Dealer::factory()->inactive()->create(['name' => 'Inactive dealer']);
-
-        $this->get('/login')->assertOk()->assertSee('Đăng nhập');
-        $this->get('/register')->assertOk()->assertSee($active->name)->assertDontSee($inactive->name);
-    }
-
-    public function test_no_active_dealers_disables_registration_form(): void
-    {
-        Dealer::factory()->inactive()->create();
-        $this->get('/register')->assertOk()->assertSee('Hiện chưa có đại lý nhận đăng ký.')->assertSee('disabled');
-    }
-
-    public function test_registration_creates_pending_sales_with_hashed_password_and_selected_dealer(): void
-    {
-        $data = $this->registrationData(['email' => ' MINHANH@EXAMPLE.TEST ', 'name' => ' Nguyễn Minh Anh ']);
-        $this->post('/register', $data)->assertRedirect(route('account.status'));
-        $user = User::where('email', 'minhanh@example.test')->sole();
-
-        $this->assertSame('Nguyễn Minh Anh', $user->name);
-        $this->assertSame(UserRole::Sales, $user->role);
-        $this->assertSame(UserStatus::Pending, $user->status);
-        $this->assertEquals($data['dealer_id'], $user->dealer_id);
-        $this->assertTrue(Hash::check($data['password'], $user->password));
-        $this->assertNull($user->email_verified_at);
-        $this->assertNull($user->reviewed_by);
-        $this->assertAuthenticatedAs($user);
-        $this->get('/sales/dashboard')->assertRedirect(route('account.status'));
-        $this->get('/account/status')->assertOk()->assertSee('Tài khoản đang chờ duyệt');
-    }
-
-    /** @dataProvider invalidRegistrationFields */
-    public function test_registration_validation(string $field, mixed $value): void
-    {
-        $this->post('/register', $this->registrationData([$field => $value]))->assertSessionHasErrors($field);
-        $this->assertSame(0, User::count());
-        $this->assertGuest();
-    }
-
-    public static function invalidRegistrationFields(): array
-    {
-        return [
-            ['name', '   '],
-            ['name', str_repeat('a', 256)],
-            ['email', 'invalid-email'],
-            ['email', ['invalid']],
-            ['password', 'short'],
-            ['password', ['invalid']],
-            ['dealer_id', null],
-            ['dealer_id', 'not-an-id'],
-            ['dealer_id', 999999999],
-            ['role', 'admin'],
-            ['status', 'active'],
-        ];
-    }
-
-    public function test_registration_rejects_inactive_dealer(): void
-    {
-        $inactive = Dealer::factory()->inactive()->create();
-        $this->post('/register', $this->registrationData(['dealer_id' => $inactive->id]))->assertSessionHasErrors('dealer_id');
-        $this->assertSame(0, User::count());
-    }
-
-    public function test_registration_rejects_password_confirmation_mismatch_without_flashing_passwords(): void
-    {
-        $this->from('/register')->post('/register', $this->registrationData(['password_confirmation' => 'different-password']))
-            ->assertRedirect('/register')->assertSessionHasErrors('password');
-        $this->assertNull(session()->getOldInput('password'));
-        $this->assertNull(session()->getOldInput('password_confirmation'));
-    }
-
-    public function test_registration_rejects_duplicate_email_case_insensitively(): void
-    {
-        User::factory()->create(['email' => 'minhanh@example.test']);
-        $this->post('/register', $this->registrationData(['email' => 'MINHANH@EXAMPLE.TEST']))->assertSessionHasErrors('email');
-        $this->assertSame(1, User::count());
-    }
-
-    public function test_registration_ignores_forged_review_fields(): void
+    public function test_admin_login_and_management_remain_protected_and_dealer_review_is_atomic(): void
     {
         $admin = User::factory()->admin()->create();
-        $this->post('/register', $this->registrationData([
-            'reviewed_by' => $admin->id,
-            'reviewed_at' => '2026-10-01 00:00:00',
-            'email_verified_at' => '2026-10-01 00:00:00',
-            'admin_note' => 'Forged approval',
-        ]))->assertRedirect(route('account.status'));
-
-        $user = User::where('email', 'minhanh@example.test')->sole();
-        $this->assertNull($user->reviewed_by);
-        $this->assertNull($user->reviewed_at);
-        $this->assertNull($user->email_verified_at);
-        $this->assertNull($user->admin_note);
+        $target = User::factory()->create();
+        $this->post('/login', ['email' => $admin->email, 'password' => 'password'])->assertRedirect(route('admin.dashboard'));
+        $this->get('/admin/dashboard')->assertOk();
+        $this->get('/admin/dealer-accounts')->assertOk()->assertSee($target->email);
+        $this->post(route('admin.dealer-accounts.review', [$target, 'approve']))->assertSessionHasNoErrors();
+        $this->assertSame('active', $target->fresh()->status->value);
+        $this->assertSame(1, DB::table('moderation_reviews')->where('account_user_id', $target->id)->count());
+        $this->post(route('admin.dealer-accounts.review', [$target, 'approve']))->assertSessionHasErrors('action');
+        $this->assertSame(1, DB::table('moderation_reviews')->where('account_user_id', $target->id)->count());
+        $this->get('/dealer/submissions')->assertForbidden();
+        $this->get('/admin/sales')->assertNotFound();
     }
 
-    /** @dataProvider loginDestinations */
-    public function test_login_redirects_by_role_and_status(string $role, string $status, string $destination): void
+    public function test_dealer_cannot_change_identity_through_profile_password_or_admin_routes(): void
     {
-        $factory = $role === 'admin' ? User::factory()->admin() : User::factory();
-        $user = $factory->create(['status' => $status]);
-        $this->withSession(['url.intended' => 'https://example.test/unsafe'])->post('/login', [
-            'email' => strtoupper($user->email), 'password' => 'password',
-        ])->assertRedirect(route($destination))->assertSessionMissing('url.intended');
-        $this->assertAuthenticatedAs($user);
-    }
-
-    public static function loginDestinations(): array
-    {
-        return [
-            ['sales', 'active', 'sales.dashboard'],
-            ['sales', 'pending', 'account.status'],
-            ['sales', 'rejected', 'account.status'],
-            ['sales', 'blocked', 'account.status'],
-            ['admin', 'active', 'admin.dashboard'],
-            ['admin', 'blocked', 'account.status'],
-        ];
-    }
-
-    public function test_invalid_login_is_rejected_without_exposing_account_existence(): void
-    {
-        $user = User::factory()->active()->create();
-        foreach ([$user->email, 'unknown@example.test'] as $email) {
-            $this->post('/login', ['email' => $email, 'password' => 'wrong-password'])
-                ->assertSessionHasErrors(['email' => 'Email hoặc mật khẩu không đúng.']);
-            $this->assertGuest();
+        $dealer = User::factory()->active()->create();
+        $other = User::factory()->active()->create();
+        $before = $dealer->refresh()->getRawOriginal();
+        $this->asAccount($dealer)->get('/profile')->assertOk()->assertDontSee('name="email"', false)->assertDontSee('name="dealer_id"', false);
+        foreach (['email' => 'attack@example.test', 'dealer_id' => $other->dealer_id, 'role' => 'admin', 'status' => 'active', 'id' => $other->id, 'user_id' => $other->id] as $field => $value) {
+            $this->patch('/profile', ['name' => 'Attack', $field => $value])->assertSessionHasErrors($field);
         }
-        $this->assertNull(session()->getOldInput('password'));
+        $this->patch('/profile', ['name' => 'Attack', 'email' => null, 'dealer_id' => null, 'role' => null, 'status' => null])
+            ->assertSessionHasErrors(['email', 'dealer_id', 'role', 'status']);
+        $this->put('/profile/password', ['current_password' => 'password', 'password' => 'changed-password', 'password_confirmation' => 'changed-password', 'dealer_id' => $other->dealer_id])->assertSessionHasErrors('dealer_id');
+        $this->get(route('admin.dealer-accounts.show', $other))->assertForbidden()->assertDontSee($other->email);
+        $this->patch(route('admin.dealer-accounts.update', $other), ['name' => 'Attack'])->assertForbidden();
+        $this->patch('/profile/'.$other->id, ['name' => 'Attack'])->assertNotFound();
+        $this->assertSame($before, $dealer->fresh()->getRawOriginal());
+        $this->patch('/profile', ['name' => 'Updated name', 'phone' => '0901234567'])->assertSessionHasNoErrors();
+        $this->assertSame('Updated name', $dealer->fresh()->name);
     }
 
-    public function test_login_validates_missing_and_malformed_credentials(): void
+    public function test_dealer_list_details_edits_and_evidence_are_scoped_to_historical_dealer(): void
     {
-        $this->post('/login', [])->assertSessionHasErrors(['email', 'password']);
-        $this->post('/login', ['email' => ['not-string'], 'password' => ['not-string']])->assertSessionHasErrors(['email', 'password']);
-    }
-
-    public function test_login_rotates_session_id(): void
-    {
-        $user = User::factory()->active()->create();
-        $this->get('/login');
-        $sessionId = session()->getId();
-        $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect(route('sales.dashboard'));
-        $this->assertNotSame($sessionId, session()->getId());
-    }
-
-    public function test_logout_invalidates_session_and_rotates_csrf_token(): void
-    {
-        $user = User::factory()->active()->create();
-        $this->actingAs($user)->withSession(['private_session_data' => 'secret', '_token' => 'old-token']);
-        $this->post('/logout')->assertRedirect(route('login'))->assertSessionMissing('private_session_data');
-        $this->assertGuest();
-        $this->assertNotSame('old-token', session()->token());
-        $this->get('/sales/dashboard')->assertRedirect(route('login'));
-        $this->get('/logout')->assertStatus(405);
-    }
-
-    public function test_auth_mutations_require_csrf_outside_testing_bypass(): void
-    {
-        // Laravel skips CSRF automatically in testing; enable the real middleware path.
-        app()->detectEnvironment(fn () => 'local');
-        $this->post('/register', $this->registrationData())->assertStatus(419);
-        $this->post('/login', ['email' => 'unknown@example.test', 'password' => 'wrong'])->assertStatus(419);
-        $this->assertSame(0, User::count());
-
-        $user = User::factory()->active()->create();
-        $this->actingAs($user)->withSession(['_token' => 'csrf-fixture-token']);
-        $this->post('/logout')->assertStatus(419);
-        $this->assertAuthenticatedAs($user);
-        $this->post('/logout', ['_token' => 'csrf-fixture-token'])->assertRedirect(route('login'));
-        $this->assertGuest();
-    }
-
-    public function test_guest_cannot_access_protected_areas(): void
-    {
-        foreach (['sales.dashboard', 'admin.dashboard', 'account.status'] as $route) {
-            $this->get(route($route))->assertRedirect(route('login'));
+        $a = User::factory()->active()->create();
+        $b = User::factory()->active()->create();
+        $own = $this->submission($a);
+        $foreign = $this->submission($b);
+        $this->asAccount($a)->get(route('dealer.submissions.index', ['dealer_id' => $b->dealer_id, 'user_id' => $b->id, 'sales_id' => $b->id]))
+            ->assertOk()->assertSee($own->customer_name)->assertDontSee($foreign->customer_name)
+            ->assertViewHas('submissions', fn ($rows) => $rows->modelKeys() === [$own->id]);
+        $this->get(route('dealer.submissions.show', $own))->assertOk();
+        $this->get(route('submissions.evidence', $own))->assertOk()->assertHeader('Cache-Control', 'no-store, private');
+        foreach (['show', 'edit'] as $action) {
+            $this->get(route('dealer.submissions.'.$action, $foreign))->assertForbidden()->assertDontSee($foreign->customer_name);
         }
+        $this->put(route('dealer.submissions.update', $foreign), [])->assertForbidden();
+        $this->delete(route('dealer.submissions.destroy', $foreign))->assertForbidden();
+        $this->get(route('submissions.evidence', $foreign))->assertForbidden();
+        $legacy = CustomerSubmission::whereNotNull('sales_id')->whereNotNull('dealer_id')->firstOrFail();
+        $legacyOwner = User::factory()->active()->create(['dealer_id' => $legacy->dealer_id]);
+        $this->asAccount($legacyOwner)->get(route('dealer.submissions.show', $legacy))->assertOk();
+        $unknown = CustomerSubmission::whereNull('dealer_id')->firstOrFail();
+        $this->get(route('dealer.submissions.show', $unknown))->assertForbidden();
+        $this->get(route('submissions.evidence', $unknown))->assertForbidden();
     }
 
-    public function test_active_sales_can_access_only_sales_dashboard(): void
+    public function test_admin_can_read_private_evidence_but_reviewed_submission_cannot_be_changed_by_dealer(): void
     {
-        $sales = User::factory()->active()->create();
-        $this->actingAs($sales)->get('/sales/dashboard')->assertOk()->assertSee($sales->name)->assertSee($sales->dealer->name);
-        $this->get('/admin/dashboard')->assertForbidden();
-        $this->get('/account/status')->assertRedirect(route('sales.dashboard'));
+        $dealer = User::factory()->active()->create();
+        $approved = $this->submission($dealer, 'approved');
+        $this->asAccount($dealer)->get(route('dealer.submissions.show', $approved))->assertOk();
+        $this->get(route('dealer.submissions.edit', $approved))->assertForbidden();
+        $this->delete(route('dealer.submissions.destroy', $approved))->assertForbidden();
+        $this->asAccount(User::factory()->admin()->create())->get(route('submissions.evidence', $approved))->assertOk();
     }
 
-    public function test_active_admin_can_access_only_admin_dashboard(): void
+    public function test_submission_writes_ignore_forged_identity_and_keep_dealer_attribution(): void
     {
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin)->get('/admin/dashboard')->assertOk()->assertSee($admin->name);
-        $this->get('/sales/dashboard')->assertForbidden();
-        $this->get('/account/status')->assertRedirect(route('admin.dashboard'));
+        $dealer = User::factory()->active()->create();
+        $other = User::factory()->active()->create();
+        $data = ['customer_name' => 'Own new customer', 'facebook_url' => 'https://facebook.com/auth.submission.write',
+            'vehicle_model' => 'hilux', 'first_registration_year' => 2022, 'vehicle_color' => 'White', 'license_plate' => '29D-428.12',
+            'evidence_image' => \Illuminate\Http\UploadedFile::fake()->image('evidence.png'),
+            'dealer_id' => $other->dealer_id, 'sales_id' => LegacySalesAccount::value('id'), 'created_by_user_id' => $other->id,
+            'role' => 'admin', 'status' => 'approved'];
+        $this->asAccount($dealer)->post(route('dealer.submissions.store'), $data)->assertSessionHasNoErrors();
+        $submission = $dealer->submissions()->sole();
+        $this->assertSame($dealer->id, $submission->created_by_user_id);
+        $this->assertSame($dealer->dealer_id, $submission->dealer_id);
+        $this->assertNull($submission->sales_id);
+        $this->assertSame('pending', $submission->status->value);
+        $this->assertSame('dealer', $dealer->fresh()->role->value);
+        unset($data['evidence_image']);
+        $this->put(route('dealer.submissions.update', $submission), $data)->assertSessionHasNoErrors();
+        $this->assertSame($dealer->dealer_id, $submission->fresh()->dealer_id);
+        $this->asAccount($other)->get(route('dealer.submissions.show', $submission))->assertForbidden();
+        $this->asAccount(User::factory()->admin()->create())->get('/admin/dashboard')->assertOk();
+        $this->get(route('admin.submissions.show', $submission))->assertOk();
+        $this->post(route('admin.submissions.approve', $submission))->assertSessionHasNoErrors();
+        $this->assertSame('approved', $submission->fresh()->status->value);
     }
 
-    /** @dataProvider inactiveSalesStatuses */
-    public function test_inactive_sales_can_only_view_status(string $status, string $message): void
+    public function test_change_password_requires_current_password_and_preserves_all_identity_fields(): void
     {
-        $sales = User::factory()->create(['status' => $status]);
-        $this->actingAs($sales)->get('/sales/dashboard')->assertRedirect(route('account.status'));
-        $this->getJson('/sales/dashboard')->assertForbidden();
-        $this->get('/admin/dashboard')->assertForbidden();
-        $this->get('/account/status')->assertOk()->assertSee($message);
+        $dealer = User::factory()->active()->create();
+        $identity = $dealer->only(['email', 'dealer_id', 'role', 'status']);
+        $this->asAccount($dealer)->get('/profile')->assertOk();
+        $password = ['current_password' => 'wrong', 'password' => 'changed-password', 'password_confirmation' => 'changed-password'];
+        $this->put('/profile/password', $password)->assertSessionHasErrors('current_password');
+        $this->put('/profile/password', array_replace($password, ['current_password' => 'password']))->assertSessionHasNoErrors();
+        $this->assertSame($identity, $dealer->fresh()->only(['email', 'dealer_id', 'role', 'status']));
+        $this->assertTrue(Hash::check('changed-password', $dealer->fresh()->password));
+        $this->get('/profile')->assertOk();
+    }
+
+    public function test_blocking_a_logged_in_dealer_revokes_web_and_token_access(): void
+    {
+        $dealer = User::factory()->active()->create();
+        $this->post('/login', ['email' => $dealer->email, 'password' => 'password'])->assertRedirect();
+        DB::table('users')->where('id', $dealer->id)->update(['status' => 'blocked']);
+        auth()->forgetGuards();
+        $this->get('/dealer/submissions')->assertRedirect(route('account.status'));
+        Sanctum::actingAs($dealer);
+        $this->getJson('/api/user')->assertForbidden();
+    }
+
+    public function test_api_returns_only_the_current_dealer_and_forged_query_ids_do_not_change_it(): void
+    {
+        $dealer = User::factory()->active()->create();
+        $other = User::factory()->active()->create();
+        $token = $dealer->createToken('authentication-test')->plainTextToken;
+        $this->getJson('/api/user?dealer_id='.$other->dealer_id.'&user_id='.$other->id, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertExactJson(['id' => $dealer->id, 'name' => $dealer->name, 'email' => $dealer->email,
+                'role' => 'dealer', 'status' => 'active', 'dealer_id' => $dealer->dealer_id])
+            ->assertDontSee($other->email)->assertHeader('Cache-Control', 'no-store, private');
+    }
+
+    public function test_invalid_registration_and_login_inputs_do_not_create_accounts_or_expose_credentials(): void
+    {
+        $before = User::count();
+        $this->post('/register', ['name' => ' ', 'email' => "invalid\r\n@example.test", 'dealer_id' => 999999999,
+            'password' => 'short', 'password_confirmation' => 'mismatch', 'role' => 'sales', 'status' => 'active'])
+            ->assertSessionHasErrors(['name', 'email', 'dealer_id', 'password', 'role', 'status']);
+        $this->assertSame($before, User::count());
+        $this->post('/login', ['email' => ['bad'], 'password' => ['bad']])->assertSessionHasErrors(['email', 'password']);
+        $this->post('/login', ['email' => 'missing@example.test', 'password' => 'wrong'])
+            ->assertSessionHasErrors(['email' => 'Email hoặc mật khẩu không đúng.']);
+        $this->assertGuest();
+        $this->assertArrayNotHasKey('password', session()->getOldInput());
+    }
+
+    public function test_legacy_accounts_have_no_login_session_recovery_or_api_access(): void
+    {
+        $legacy = LegacySalesAccount::firstOrFail();
+        $this->assertNotInstanceOf(\Illuminate\Contracts\Auth\Authenticatable::class, $legacy);
+        $provider = auth()->getProvider();
+        $this->assertNull($provider->retrieveById($legacy->id));
+        $this->assertNull($provider->retrieveByToken($legacy->id, 'legacy-remember-token'));
+        $this->post('/login', ['email' => $legacy->getRawOriginal('email'), 'password' => 'password'])->assertSessionHasErrors('email');
+        $this->assertGuest();
+        $this->withSession([auth()->guard('web')->getName() => $legacy->id])->get('/dealer/submissions')->assertRedirect(route('login'));
+        $forged = new User;
+        $forged->setRawAttributes(['id' => $legacy->id, 'role' => 'sales', 'status' => 'active', 'dealer_id' => $legacy->dealer_id]);
+        $this->asAccount($forged)->getJson('/profile')->assertForbidden();
+        Sanctum::actingAs($forged);
+        $this->getJson('/api/user')->assertForbidden();
+        auth()->forgetGuards();
+        $this->flushSession();
+        Notification::fake();
+        $this->post('/forgot-password', ['email' => $legacy->getRawOriginal('email')])->assertSessionHasNoErrors();
+        Notification::assertNothingSent();
+    }
+
+    public function test_password_recovery_and_change_preserve_dealer_identity_and_status(): void
+    {
+        Notification::fake();
+        $dealer = User::factory()->create(['status' => 'blocked']);
+        $identity = $dealer->only(['email', 'role', 'status', 'dealer_id']);
+        $this->post('/forgot-password', ['email' => $dealer->email])->assertSessionHasNoErrors();
+        Notification::assertSentTo($dealer, ResetPassword::class);
+        $token = Password::createToken($dealer);
+        $data = ['email' => $dealer->email, 'token' => $token, 'password' => 'reset-password', 'password_confirmation' => 'reset-password'];
+        $this->post('/reset-password', $data + ['dealer_id' => 999, 'role' => 'admin', 'status' => 'active'])->assertSessionHasErrors(['dealer_id', 'role', 'status']);
+        $this->post('/reset-password', $data)->assertSessionHasNoErrors()->assertRedirect(route('login'));
+        $this->assertSame($identity, $dealer->fresh()->only(['email', 'role', 'status', 'dealer_id']));
+        $this->assertTrue(Hash::check('reset-password', $dealer->fresh()->password));
+        $this->post('/reset-password', $data)->assertSessionHasErrors('email');
+        $this->post('/login', ['email' => $dealer->email, 'password' => 'reset-password'])->assertRedirect(route('account.status'));
+    }
+
+    public function test_login_logout_throttle_and_csrf_still_apply(): void
+    {
+        $dealer = User::factory()->active()->create();
+        for ($i = 0; $i < 5; $i++) {
+            $this->post('/login', ['email' => $dealer->email, 'password' => 'wrong'])->assertSessionHasErrors('email');
+        }
+        $this->post('/login', ['email' => strtoupper($dealer->email), 'password' => 'password'])->assertStatus(429);
+        $this->asAccount($dealer)->get('/profile')->assertOk();
         $this->post('/logout')->assertRedirect(route('login'));
         $this->assertGuest();
-    }
-
-    public static function inactiveSalesStatuses(): array
-    {
-        return [
-            ['pending', 'Tài khoản đang chờ duyệt'],
-            ['rejected', 'Đăng ký chưa được chấp nhận'],
-            ['blocked', 'Tài khoản đã bị khóa'],
-        ];
-    }
-
-    public function test_blocked_admin_cannot_access_admin_dashboard(): void
-    {
-        $admin = User::factory()->admin()->create(['status' => UserStatus::Blocked]);
-        $this->actingAs($admin)->get('/admin/dashboard')->assertRedirect(route('account.status'));
-    }
-
-    public function test_blocking_an_existing_session_revokes_dashboard_access(): void
-    {
-        $sales = User::factory()->active()->create();
-        $this->post('/login', ['email' => $sales->email, 'password' => 'password']);
-        $sales->status = UserStatus::Blocked;
-        $sales->save();
-        // Simulate the next request loading its user from the session provider.
-        auth()->forgetGuards();
-        $this->get('/sales/dashboard')->assertRedirect(route('account.status'));
-    }
-
-    public function test_authenticated_users_are_redirected_away_from_auth_forms(): void
-    {
-        $sales = User::factory()->create();
-        $this->actingAs($sales)->get('/login')->assertRedirect(route('account.status'));
-        $this->get('/register')->assertRedirect(route('account.status'));
-        $admin = User::factory()->admin()->create();
-        $this->actingAs($admin)->get('/register')->assertRedirect(route('admin.dashboard'));
-    }
-
-    public function test_login_rate_limit_normalizes_email_and_returns_retry_header(): void
-    {
-        $user = User::factory()->active()->create();
-        for ($attempt = 0; $attempt < 5; $attempt++) {
-            $this->post('/login', ['email' => $user->email, 'password' => 'wrong'])->assertSessionHasErrors('email');
-        }
-        $this->post('/login', ['email' => ' '.strtoupper($user->email).' ', 'password' => 'password'])
-            ->assertStatus(429)->assertHeader('Retry-After');
-        $this->assertGuest();
-    }
-
-    public function test_login_ip_limit_cannot_be_bypassed_by_changing_email(): void
-    {
-        for ($attempt = 0; $attempt < 30; $attempt++) {
-            $this->post('/login', ['email' => 'unknown'.$attempt.'@example.test', 'password' => 'wrong'])->assertSessionHasErrors('email');
-        }
-        $this->post('/login', ['email' => 'different@example.test', 'password' => 'wrong'])->assertStatus(429);
-    }
-
-    public function test_registration_is_rate_limited(): void
-    {
-        for ($attempt = 0; $attempt < 5; $attempt++) {
-            $this->post('/register', [])->assertSessionHasErrors();
-        }
-        $this->post('/register', [])->assertStatus(429)->assertHeader('Retry-After');
-        $this->assertSame(0, User::count());
+        $this->get('/dealer/submissions')->assertRedirect(route('login'));
+        app()->detectEnvironment(fn () => 'local');
+        $this->post('/login', ['email' => $dealer->email, 'password' => 'password'])->assertStatus(419);
+        $this->actingAs($dealer)->patch('/profile', ['name' => 'Missing csrf'])->assertStatus(419);
     }
 }

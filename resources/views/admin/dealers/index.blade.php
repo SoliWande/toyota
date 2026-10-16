@@ -18,14 +18,14 @@
     </form>
     <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
         <table class="w-full text-left text-sm">
-            <thead class="bg-slate-100 text-slate-600"><tr><th class="p-4" scope="col">Đại lý</th><th class="p-4" scope="col">Liên hệ</th><th class="p-4" scope="col">Sales</th><th class="p-4" scope="col">Trạng thái</th><th class="p-4" scope="col">Thao tác</th></tr></thead>
+            <thead class="bg-slate-100 text-slate-600"><tr><th class="p-4" scope="col">Đại lý</th><th class="p-4" scope="col">Liên hệ</th><th class="p-4" scope="col">Tài khoản đại lý</th><th class="p-4" scope="col">Trạng thái</th><th class="p-4" scope="col">Thao tác</th></tr></thead>
             <tbody class="divide-y divide-slate-100">
                 @forelse ($dealers as $dealer)
                     <tr>
                         <td class="p-4"><a class="font-semibold hover:text-red-600" href="{{ route('admin.dealers.edit', $dealer) }}">{{ $dealer->name }}</a><p class="mt-1 text-slate-500">{{ $dealer->code }}</p></td>
                         <td class="p-4"><p>{{ $dealer->province ?? 'Chưa có tỉnh/thành phố' }}</p><p class="mt-1 text-slate-500">{{ $dealer->phone ?? 'Chưa có điện thoại' }}</p></td>
-                        <td class="p-4">{{ $dealer->sales_count }}</td>
-                        <td class="whitespace-nowrap p-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $dealer->is_active ? 'bg-green-50 text-green-800' : 'bg-slate-100 text-slate-700' }}">{{ $dealer->is_active ? 'Active' : 'Inactive' }}</span></td>
+                        <td class="p-4">@if ($dealer->loginAccount)<a href="{{ route('admin.dealer-accounts.show', $dealer->loginAccount) }}" class="font-medium text-red-600 hover:underline">{{ $dealer->loginAccount->name }}</a>@else<span class="text-slate-500">Chưa có tài khoản</span>@endif</td>
+                        <td class="whitespace-nowrap p-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $dealer->is_active ? 'bg-green-50 text-green-800' : 'bg-slate-100 text-slate-700' }}">{{ $dealer->is_active ? 'Hoạt động' : 'Ngừng hoạt động' }}</span></td>
                         <td class="p-4"><div class="flex items-center gap-4 whitespace-nowrap">
                             <a href="{{ route('admin.dealers.edit', $dealer) }}" class="py-2 font-medium text-red-600 hover:underline">Sửa</a>
                             <form method="POST" action="{{ route('admin.dealers.status', $dealer) }}">

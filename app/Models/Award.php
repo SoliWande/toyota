@@ -17,6 +17,8 @@ class Award extends Model
 
     protected $fillable = ['title', 'period_type', 'period_start', 'period_end'];
 
+    protected $attributes = ['competition_scope' => 'dealer'];
+
     protected $casts = [
         'period_type' => AwardPeriod::class,
         'period_start' => 'immutable_datetime',

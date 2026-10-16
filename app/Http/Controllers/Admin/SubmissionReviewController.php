@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\ApproveCustomerSubmission;
 use App\Actions\RejectCustomerSubmission;
 use App\Enums\SubmissionStatus;
-use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReviewSubmissionRequest;
 use App\Http\Requests\Admin\SubmissionIndexRequest;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
-use App\Models\User;
 use App\Services\ApprovedSubmissionFinder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -26,7 +24,7 @@ class SubmissionReviewController extends Controller
         $filters = $request->validated();
         $status = $request->has('status') ? ($filters['status'] ?? '') : SubmissionStatus::Pending->value;
         $filters['status'] = $status;
-        $query = CustomerSubmission::with(['sales:id,name,dealer_id', 'dealer:id,name'])->select('customer_submissions.*')
+        $query = CustomerSubmission::with(['creator:id,name,dealer_id', 'legacySales:id,name,dealer_id', 'dealer:id,name,code'])->select('customer_submissions.*')
             ->addSelect(['duplicate_approved_id' => DB::table('customer_submissions as approved')
                 ->select('approved.id')->whereColumn('approved.approved_facebook_identity', 'customer_submissions.facebook_url_normalized')->limit(1)]);
         if ($status !== '') {
@@ -34,9 +32,6 @@ class SubmissionReviewController extends Controller
         }
         if (! empty($filters['dealer_id'])) {
             $query->where('customer_submissions.dealer_id', $filters['dealer_id']);
-        }
-        if (! empty($filters['sales_id'])) {
-            $query->where('sales_id', $filters['sales_id']);
         }
         if (isset($filters['q']) && $filters['q'] !== '') {
             $search = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $filters['q']).'%';
@@ -58,14 +53,13 @@ class SubmissionReviewController extends Controller
             'status' => $status,
             'filters' => $filters,
             'dealers' => Dealer::orderBy('name')->get(['id', 'name']),
-            'salesOptions' => User::where('role', UserRole::Sales->value)->orderBy('name')->get(['id', 'name', 'dealer_id']),
         ]);
     }
 
     public function show(CustomerSubmission $submission, ApprovedSubmissionFinder $duplicates): View
     {
         $this->authorize('review', $submission);
-        $submission->load('sales', 'dealer', 'reviewer');
+        $submission->load('creator:id,name,dealer_id', 'legacySales:id,name,dealer_id', 'dealer', 'reviewer');
 
         return view('admin.submissions.show', [
             'submission' => $submission,

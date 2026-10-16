@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -53,7 +54,7 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
-        'role' => 'sales',
+        'role' => 'dealer',
         'status' => 'pending',
     ];
 
@@ -78,13 +79,30 @@ class User extends Authenticatable
         return $this->belongsTo(Dealer::class);
     }
 
+    public function scopeLoginAccounts(Builder $query): Builder
+    {
+        return $query->where(function (Builder $query) {
+            $query->where('role', UserRole::Admin->value)
+                ->orWhere(function (Builder $query) {
+                    $query->where('role', UserRole::Dealer->value)->whereNotNull('dealer_id')->whereHas('dealer');
+                });
+        });
+    }
+
+    public function hasActiveRole(UserRole $role): bool
+    {
+        return ($this->getAttributes()['role'] ?? null) === $role->value
+            && ($this->getAttributes()['status'] ?? null) === UserStatus::Active->value
+            && ($role !== UserRole::Dealer || $this->dealer_id !== null);
+    }
+
     public function homeRoute(): string
     {
         if ($this->status !== UserStatus::Active) {
             return 'account.status';
         }
 
-        return $this->role === UserRole::Admin ? 'admin.dashboard' : 'sales.dashboard';
+        return $this->role === UserRole::Admin ? 'admin.dashboard' : 'dealer.dashboard';
     }
 
     public function reviewer(): BelongsTo
@@ -94,7 +112,7 @@ class User extends Authenticatable
 
     public function submissions(): HasMany
     {
-        return $this->hasMany(CustomerSubmission::class, 'sales_id');
+        return $this->hasMany(CustomerSubmission::class, 'dealer_id', 'dealer_id');
     }
 
     public function reviewedSubmissions(): HasMany
@@ -109,7 +127,7 @@ class User extends Authenticatable
 
     public function moderationReviews(): HasMany
     {
-        return $this->hasMany(ModerationReview::class, 'sales_id');
+        return $this->hasMany(ModerationReview::class, 'account_user_id');
     }
 
     public function performedReviews(): HasMany

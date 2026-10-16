@@ -19,6 +19,7 @@ class RejectCustomerSubmission
 
         try {
             DB::transaction(function () use ($admin, $submission, $reason, $note) {
+                $admin = User::whereKey($admin->id)->lockForUpdate()->firstOrFail();
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 Gate::forUser($admin)->authorize('review', $locked);
                 if ($locked->status !== SubmissionStatus::Pending) {

@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'account.login' => \App\Http\Middleware\EnsureLoginAccount::class,
         'account.active' => \App\Http\Middleware\EnsureAccountIsActive::class,
         'role' => \App\Http\Middleware\EnsureUserHasRole::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

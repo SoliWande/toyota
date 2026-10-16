@@ -15,12 +15,9 @@
                 <span class="h-8 w-1 rounded-full bg-red-600" aria-hidden="true"></span>
                 <span class="text-sm font-bold tracking-wide">TOYOTA <span class="block text-xs font-normal tracking-normal text-slate-500">Veloz & Hilux · Kết nối cộng đồng</span></span>
             </a>
-            <a href="{{ route('leaderboard') }}" class="py-2 text-sm font-medium hover:text-red-600">Bảng xếp hạng</a>
-            <a href="{{ route('awards.index') }}" class="py-2 text-sm font-medium hover:text-red-600">Vinh danh</a>
+            <a href="{{ route('leaderboard') }}" class="py-2 text-sm font-medium hover:text-red-600">Bảng xếp hạng đại lý</a>
+            <a href="{{ route('awards.index') }}" class="py-2 text-sm font-medium hover:text-red-600">Lịch sử vinh danh</a>
             @auth
-                @if (auth()->user()->status === \App\Enums\UserStatus::Active)
-                    <a href="{{ route('profile.edit') }}" class="py-2 text-sm font-medium hover:text-red-600">Hồ sơ cá nhân</a>
-                @endif
                 <div class="flex items-center gap-4 text-sm">
                     <a href="{{ route(auth()->user()->homeRoute()) }}" class="font-medium hover:text-red-600">Tài khoản</a>
                     <form method="POST" action="{{ route('logout') }}">
@@ -28,6 +25,9 @@
                         <button type="submit" class="rounded-lg px-2 py-2 text-slate-600 hover:text-red-600 focus-visible:outline-red-600">Đăng xuất</button>
                     </form>
                 </div>
+                @if (auth()->user()->status === \App\Enums\UserStatus::Active)
+                    <x-account-navigation />
+                @endif
             @else
                 <a href="{{ route('login') }}" class="py-2 text-sm font-medium hover:text-red-600">Đăng nhập</a>
             @endauth

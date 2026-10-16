@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\CreateAwardDraft;
+use App\Actions\PublishDealerAward;
 use App\Enums\AwardPeriod;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AwardDraftRequest;
+use App\Http\Requests\Admin\PublishAwardRequest;
 use App\Models\Award;
 use App\Services\AwardResults;
 use Carbon\CarbonImmutable;
@@ -36,15 +38,27 @@ class AwardController extends Controller
         return redirect()->route('admin.awards.show', $award);
     }
 
-    public function show(Award $award, AwardResults $results): View
+    public function show(Request $request, Award $award, AwardResults $results): View
     {
         $this->authorize('view', $award);
-        $preview = $award->published_at === null ? $results->preview($award) : null;
+        $preview = $award->published_at === null && $award->competition_scope === 'dealer' ? $results->preview($award) : null;
+        $hash = $preview === null ? null : $results->fingerprint($award, $preview);
+        if ($hash !== null) {
+            $request->session()->put('awards.preview.'.$award->id, $hash);
+        }
 
         return view('admin.awards.show', [
             'award' => $award->load(['winners' => fn ($query) => $query->orderBy('rank'), 'publisher']),
             'preview' => $preview,
-            'previewHash' => $preview === null ? null : $results->fingerprint($award, $preview),
+            'previewHash' => $hash,
         ]);
+    }
+
+    public function publish(PublishAwardRequest $request, Award $award, PublishDealerAward $publish): RedirectResponse
+    {
+        $publish->execute($request->user(), $award, $request->validated('preview_hash'));
+        $request->session()->forget('awards.preview.'.$award->id);
+
+        return redirect()->route('admin.awards.show', $award)->with('success', 'Đã công bố Top 3 đại lý và lưu snapshot.');
     }
 }

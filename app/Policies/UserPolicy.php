@@ -3,19 +3,23 @@
 namespace App\Policies;
 
 use App\Enums\UserRole;
-use App\Enums\UserStatus;
 use App\Models\User;
 
 class UserPolicy
 {
     public function viewAny(User $admin): bool
     {
-        return $admin->role === UserRole::Admin && $admin->status === UserStatus::Active;
+        return $admin->hasActiveRole(UserRole::Admin);
+    }
+
+    public function create(User $admin): bool
+    {
+        return $this->viewAny($admin);
     }
 
     public function view(User $admin, User $sales): bool
     {
-        return $this->viewAny($admin) && $sales->role === UserRole::Sales;
+        return $this->viewAny($admin) && ($sales->getAttributes()['role'] ?? null) === UserRole::Dealer->value;
     }
 
     public function moderate(User $admin, User $sales): bool

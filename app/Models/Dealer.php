@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use LogicException;
 
 class Dealer extends Model
@@ -31,6 +32,11 @@ class Dealer extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(User::class)->where('role', UserRole::Sales->value);
+    }
+
+    public function loginAccount(): HasOne
+    {
+        return $this->hasOne(User::class)->where('role', UserRole::Dealer->value);
     }
 
     public function awardWins(): HasMany

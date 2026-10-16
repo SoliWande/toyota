@@ -3,18 +3,18 @@
 use App\Http\Controllers\AccountStatusController;
 use App\Http\Controllers\Admin\AwardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DealerAccountController;
 use App\Http\Controllers\Admin\DealerController;
-use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\SubmissionReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AwardHistoryController;
+use App\Http\Controllers\Dealer\DashboardController as DealerDashboardController;
+use App\Http\Controllers\Dealer\SubmissionController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Sales\DashboardController;
-use App\Http\Controllers\Sales\SubmissionController;
 use App\Http\Controllers\SubmissionEvidenceController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,7 +45,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('throttle:registration');
 });
 
-Route::middleware(['auth', 'auth.session'])->group(function () {
+Route::middleware(['auth', 'account.login', 'auth.session'])->group(function () {
     Route::middleware('account.active')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->middleware('throttle:profile-writes')->name('profile.update');
@@ -55,8 +55,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/account/status', AccountStatusController::class)->name('account.status');
     Route::get('/submissions/{submission}/evidence', SubmissionEvidenceController::class)
         ->whereNumber('submission')->middleware('account.active')->name('submissions.evidence');
-    Route::get('/sales/dashboard', DashboardController::class)->middleware(['role:sales', 'account.active'])->name('sales.dashboard');
-    Route::prefix('sales')->name('sales.')->middleware(['role:sales', 'account.active'])->group(function () {
+    Route::get('/dealer/dashboard', DealerDashboardController::class)
+        ->middleware(['role:dealer', 'account.active'])->name('dealer.dashboard');
+    Route::prefix('dealer')->name('dealer.')->middleware(['role:dealer', 'account.active'])->group(function () {
         Route::resource('submissions', SubmissionController::class)->except(['store', 'update', 'destroy']);
         Route::middleware('throttle:submissions')->group(function () {
             Route::post('submissions', [SubmissionController::class, 'store'])->name('submissions.store');
@@ -69,17 +70,20 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('/awards', [AwardController::class, 'index'])->name('awards.index');
         Route::post('/awards', [AwardController::class, 'store'])->name('awards.store');
         Route::get('/awards/{award}', [AwardController::class, 'show'])->whereNumber('award')->name('awards.show');
+        Route::post('/awards/{award}/publish', [AwardController::class, 'publish'])->whereNumber('award')->name('awards.publish');
         Route::get('/submissions', [SubmissionReviewController::class, 'index'])->name('submissions.index');
         Route::get('/submissions/{submission}', [SubmissionReviewController::class, 'show'])->whereNumber('submission')->name('submissions.show');
         Route::post('/submissions/{submission}/approve', [SubmissionReviewController::class, 'approve'])->whereNumber('submission')->name('submissions.approve');
         Route::post('/submissions/{submission}/reject', [SubmissionReviewController::class, 'reject'])->whereNumber('submission')->name('submissions.reject');
         Route::resource('dealers', DealerController::class)->except(['show', 'destroy']);
         Route::patch('/dealers/{dealer}/status', [DealerController::class, 'status'])->whereNumber('dealer')->name('dealers.status');
-        Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
-        Route::get('/sales/{sales}/edit', [SalesController::class, 'edit'])->whereNumber('sales')->name('sales.edit');
-        Route::patch('/sales/{sales}', [SalesController::class, 'update'])->whereNumber('sales')->name('sales.update');
-        Route::get('/sales/{sales}', [SalesController::class, 'show'])->whereNumber('sales')->name('sales.show');
-        Route::post('/sales/{sales}/{action}', [SalesController::class, 'review'])
-            ->whereNumber('sales')->whereIn('action', ['approve', 'reject', 'block', 'reactivate'])->name('sales.review');
+        Route::get('/dealer-accounts', [DealerAccountController::class, 'index'])->name('dealer-accounts.index');
+        Route::get('/dealer-accounts/create', [DealerAccountController::class, 'create'])->name('dealer-accounts.create');
+        Route::post('/dealer-accounts', [DealerAccountController::class, 'store'])->name('dealer-accounts.store');
+        Route::get('/dealer-accounts/{account}/edit', [DealerAccountController::class, 'edit'])->whereNumber('account')->name('dealer-accounts.edit');
+        Route::patch('/dealer-accounts/{account}', [DealerAccountController::class, 'update'])->whereNumber('account')->name('dealer-accounts.update');
+        Route::get('/dealer-accounts/{account}', [DealerAccountController::class, 'show'])->whereNumber('account')->name('dealer-accounts.show');
+        Route::post('/dealer-accounts/{account}/{action}', [DealerAccountController::class, 'review'])
+            ->whereNumber('account')->whereIn('action', ['activate', 'approve', 'reject', 'block', 'reactivate'])->name('dealer-accounts.review');
     });
 });

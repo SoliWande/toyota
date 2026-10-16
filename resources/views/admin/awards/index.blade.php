@@ -1,6 +1,6 @@
 <x-layout title="Quản lý vinh danh">
     <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
-    <h1 class="mt-3 text-3xl font-bold">Awards / Vinh danh</h1>
+    <h1 class="mt-3 text-3xl font-bold">Vinh danh đại lý</h1>
     <x-admin-feedback />
     <form method="POST" action="{{ route('admin.awards.store') }}" class="mt-6 grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2">
         @csrf
@@ -32,6 +32,7 @@
                 <div class="min-w-0">
                     <a href="{{ route('admin.awards.show', $award) }}" class="break-words font-semibold hover:text-red-600">{{ $award->title }}</a>
                     <p class="mt-2 text-sm text-slate-500">{{ $award->period_type->label() }} · {{ $award->period_start->format('d/m/Y') }} – {{ $award->period_end->subDay()->format('d/m/Y') }}</p>
+                    @if ($award->competition_scope === 'legacy_mixed')<p class="mt-2 text-xs text-slate-500">Kỳ lịch sử · Giữ nguyên kết quả</p>@endif
                 </div>
                 <span class="self-start rounded-full px-3 py-1 text-xs font-semibold {{ $award->published_at ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-800' }}">{{ $award->published_at ? 'Đã công bố' : 'Bản nháp' }}</span>
             </li>

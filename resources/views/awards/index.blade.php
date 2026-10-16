@@ -1,7 +1,7 @@
 <x-layout title="Lịch sử vinh danh">
     <p class="text-xs font-bold uppercase tracking-widest text-red-600">Toyota Veloz & Hilux</p>
     <h1 class="mt-3 text-3xl font-bold sm:text-4xl">Lịch sử vinh danh</h1>
-    <p class="mt-3 text-sm leading-6 text-slate-600">Các kết quả tuần và tháng đã được công bố, ghi nhận thành tích của Sales và Đại Lý trong cộng đồng.</p>
+    <p class="mt-3 text-sm leading-6 text-slate-600">Các kết quả tuần và tháng đã công bố của đại lý. Các kỳ lịch sử được lưu nguyên vẹn để tra cứu.</p>
     <nav aria-label="Loại kỳ vinh danh" class="mt-6 flex flex-wrap gap-3">
         @foreach (['' => 'Tất cả', 'weekly' => 'Tuần', 'monthly' => 'Tháng'] as $value => $label)
             <a href="{{ route('awards.index', $value === '' ? [] : ['period_type' => $value]) }}" @if ($periodType === $value) aria-current="page" @endif class="rounded-xl border px-4 py-3 text-sm font-semibold {{ $periodType === $value ? 'border-red-200 bg-red-50 text-red-700' : 'border-slate-200 bg-white text-slate-600' }}">{{ $label }}</a>
@@ -14,6 +14,7 @@
                 <h2 class="mt-3 break-words text-lg font-bold"><a href="{{ route('awards.show', $award) }}" class="hover:text-red-600">{{ $award->title }}</a></h2>
                 <p class="mt-3 text-sm text-slate-500">{{ $award->period_start->format('d/m/Y') }} – {{ $award->period_end->subDay()->format('d/m/Y') }}</p>
                 <p class="mt-2 text-xs text-slate-500">Công bố {{ $award->published_at->format('d/m/Y H:i') }}</p>
+                @if ($award->competition_scope === 'legacy_mixed')<p class="mt-2 text-xs text-slate-500">Kỳ lịch sử · Giữ nguyên kết quả</p>@endif
                 <a href="{{ route('awards.show', $award) }}" class="mt-5 inline-block py-2 text-sm font-semibold text-red-600">Xem kết quả →</a>
             </li>
         @empty

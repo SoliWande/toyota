@@ -20,10 +20,10 @@
             <div>
                 <label for="is_active" class="text-sm font-medium">Trạng thái</label>
                 <select id="is_active" name="is_active" class="form-input" required>
-                    <option value="1" @selected((bool) old('is_active', $dealer->is_active))>Active — nhận đăng ký Sales</option>
-                    <option value="0" @selected(! (bool) old('is_active', $dealer->is_active))>Inactive — ngừng nhận đăng ký Sales</option>
+                    <option value="1" @selected((bool) old('is_active', $dealer->is_active))>Hoạt động — cho phép tạo tài khoản đại lý</option>
+                    <option value="0" @selected(! (bool) old('is_active', $dealer->is_active))>Ngừng hoạt động — ngừng tạo tài khoản đại lý</option>
                 </select>
-                <p class="mt-2 text-sm text-slate-500">Ngừng hoạt động sẽ giữ nguyên tài khoản Sales và lịch sử của đại lý.</p>
+                <p class="mt-2 text-sm text-slate-500">Ngừng hoạt động sẽ giữ nguyên tài khoản và lịch sử của đại lý.</p>
             </div>
             <div class="flex flex-wrap items-center gap-5">
                 <button type="submit" class="button-primary">{{ $dealer->exists ? 'Lưu thay đổi' : 'Tạo đại lý' }}</button>

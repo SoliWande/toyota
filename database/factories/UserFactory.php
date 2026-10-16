@@ -27,7 +27,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'role' => UserRole::Sales,
+            'role' => UserRole::Dealer,
             'status' => UserStatus::Pending,
             'dealer_id' => DealerFactory::new(),
             'email' => fake()->unique()->safeEmail(),

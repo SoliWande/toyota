@@ -29,7 +29,7 @@ class ProfileController extends Controller
             $user = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
             abort_unless($user->status === UserStatus::Active, 403);
             $user->name = $request->validated('name');
-            if ($user->role === UserRole::Sales) {
+            if ($user->role === UserRole::Dealer) {
                 $user->phone = $request->validated('phone');
             }
             $user->save();

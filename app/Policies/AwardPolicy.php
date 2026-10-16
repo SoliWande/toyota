@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Enums\UserRole;
-use App\Enums\UserStatus;
 use App\Models\Award;
 use App\Models\User;
 
@@ -11,7 +10,7 @@ class AwardPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->role === UserRole::Admin && $user->status === UserStatus::Active;
+        return $user->hasActiveRole(UserRole::Admin);
     }
 
     public function create(User $user): bool

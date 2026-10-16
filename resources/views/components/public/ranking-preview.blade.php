@@ -8,7 +8,7 @@
         @forelse ($leaders as $leader)
             <li class="flex items-center gap-4 py-5">
                 <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold {{ (int) $leader->rank === 1 ? 'bg-red-50 text-red-700' : 'bg-stone-100 text-stone-500' }}" aria-label="Hạng {{ $leader->rank }}">{{ sprintf('%02d', $leader->rank) }}</span>
-                <div class="min-w-0 grow"><p class="break-words text-sm font-semibold sm:text-base">{{ $leader->name }}</p><p class="mt-1 break-words text-xs text-stone-500">{{ $type === 'sales' ? $leader->dealer_name : $leader->code }}</p></div>
+                <div class="min-w-0 grow"><p class="break-words text-sm font-semibold sm:text-base">{{ $leader->name }}</p><p class="mt-1 break-words text-xs text-stone-500">{{ $leader->code }}</p></div>
                 <div class="shrink-0 text-right"><p class="text-xl font-semibold tracking-tight">{{ number_format($leader->score, 0, ',', '.') }}</p><p class="mt-1 text-[10px] uppercase tracking-widest text-stone-500">điểm</p></div>
             </li>
         @empty

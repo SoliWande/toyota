@@ -10,7 +10,7 @@ class ApprovedSubmissionFinder
 
     public function find(string $facebookUrl): ?CustomerSubmission
     {
-        return CustomerSubmission::with(['sales', 'dealer'])
+        return CustomerSubmission::with(['creator:id,name,dealer_id', 'legacySales:id,name,dealer_id', 'dealer'])
             ->where('approved_facebook_identity', $this->normalizer->normalize($facebookUrl))
             ->first();
     }

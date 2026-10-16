@@ -15,7 +15,7 @@ class SecurityHeaders
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-        if ($request->user() !== null || $request->is('login', 'register', 'forgot-password', 'reset-password', 'reset-password/*', 'account/*', 'sales/*', 'admin/*', 'api/user')) {
+        if ($request->user() !== null || $request->is('login', 'register', 'forgot-password', 'reset-password', 'reset-password/*', 'account/*', 'dealer/*', 'sales/*', 'admin/*', 'api/user')) {
             $response->headers->set('Cache-Control', 'private, no-store');
         }
 

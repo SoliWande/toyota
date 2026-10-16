@@ -11,7 +11,8 @@ class CustomerSubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'sales_id' => User::factory()->active(),
+            'sales_id' => null,
+            'created_by_user_id' => User::factory()->active(),
             'customer_name' => fake()->name(),
             'facebook_url' => 'https://www.facebook.com/profile.php?id='.fake()->unique()->numerify('10#############'),
             'phone' => null,

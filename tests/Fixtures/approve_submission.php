@@ -12,12 +12,18 @@ require __DIR__.'/../../vendor/autoload.php';
 $app = require __DIR__.'/../../bootstrap/app.php';
 $app->make(Kernel::class)->bootstrap();
 
-if (! $app->environment('testing') || config('database.default') !== 'mysql'
-    || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-    throw new LogicException('Race fixture may only use toyota_testing.');
+$database = getenv('DEALER_SUBMISSION_TEST_DATABASE');
+if (! $app->environment('testing') || ! preg_match('/^toyota_dealer_integrity_test_[a-f0-9]{16}$/D', $database ?: '')) {
+    throw new LogicException('Approval race fixture requires an isolated restored database.');
 }
+config(['database.default' => 'mysql', 'database.connections.mysql.database' => $database, 'database.connections.mysql.url' => null]);
+DB::purge('mysql');
 
 [$script, $adminId, $submissionId, $barrier] = $argv;
+if (realpath(dirname($barrier)) !== realpath(base_path('.laravel-tools'))
+    || ! preg_match('/^submission-approval-race-[a-f0-9]{16}$/D', basename($barrier))) {
+    throw new LogicException('Invalid approval race barrier.');
+}
 CustomerSubmission::saving(function (CustomerSubmission $submission) use ($barrier) {
     if ($submission->status !== SubmissionStatus::Approved) {
         return;
