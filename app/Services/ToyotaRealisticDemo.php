@@ -79,8 +79,8 @@ class ToyotaRealisticDemo
             // Spread activity across the directory instead of selecting one region only.
             $dealers = collect(range(0, 24))->map(fn ($i) => $dealers[(int) floor($i * $dealers->count() / 25)]);
             $password = config('realistic_demo.password');
-            if (! is_string($password) || strlen($password) < 16) {
-                throw new LogicException('Set TOYOTA_DEMO_PASSWORD to a secret of at least 16 characters.');
+            if (! is_string($password) || strlen($password) < 8) {
+                throw new LogicException('Set TOYOTA_DEMO_PASSWORD to a secret of at least 8 characters.');
             }
             $hash = Hash::make($password);
             $now = CarbonImmutable::now()->startOfSecond();
