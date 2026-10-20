@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\RegistrationPhone;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -35,6 +36,12 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('registration', fn (Request $request) => Limit::perHour(5)->by('register-ip:'.$request->ip()));
+        RateLimiter::for('dealer-registrations', fn (Request $request) => [
+            Limit::perMinute(5)->by('dealer-qr-minute:'.RegistrationPhone::key($request->ip())),
+            Limit::perHour(20)->by('dealer-qr-hour:'.RegistrationPhone::key($request->ip())),
+        ]);
+        RateLimiter::for('dealer-address', fn (Request $request) => Limit::perMinute(60)->by('dealer-address:'.$request->ip()));
+        RateLimiter::for('public-sales', fn (Request $request) => Limit::perMinute(120)->by('public-sales:'.$request->ip()));
         RateLimiter::for('password-email', fn (Request $request) => Limit::perMinute(5)->by('password-email:'.$request->ip()));
         RateLimiter::for('password-reset', fn (Request $request) => Limit::perMinute(10)->by('password-reset:'.$request->ip()));
         RateLimiter::for('profile-writes', fn (Request $request) => Limit::perMinute(20)->by('profile:'.$request->user()->id));

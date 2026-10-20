@@ -8,6 +8,7 @@
             <dl class="mt-6 space-y-5 text-sm">
                 <div><dt class="text-slate-500">Facebook</dt><dd class="mt-1 break-all"><a href="{{ $submission->facebook_url_normalized }}" target="_blank" rel="noopener noreferrer" class="font-medium text-red-600 hover:underline">{{ $submission->facebook_url }}</a></dd></div>
                 <div><dt class="text-slate-500">Số điện thoại</dt><dd class="mt-1">{{ $submission->phone ?? 'Chưa cung cấp' }}</dd></div>
+                <x-submission-address-details :submission="$submission" />
                 <div><dt class="text-slate-500">Ghi chú</dt><dd class="mt-1 whitespace-pre-wrap break-words">{{ $submission->notes ?? 'Không có' }}</dd></div>
                 <div><dt class="text-slate-500">Thời điểm khai báo</dt><dd class="mt-1">{{ $submission->submitted_at->format('d/m/Y H:i') }}</dd></div>
                 @if ($submission->reviewed_at)

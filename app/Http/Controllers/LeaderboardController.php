@@ -15,20 +15,20 @@ class LeaderboardController extends Controller
     {
         $data = $request->validate([
             'period' => ['nullable', Rule::enum(LeaderboardPeriod::class)],
-            'sales_page' => ['nullable', 'integer', 'min:1'],
             'dealers_page' => ['nullable', 'integer', 'min:1'],
         ]);
-        $period = LeaderboardPeriod::from($data['period'] ?? LeaderboardPeriod::Week->value);
+        $period = LeaderboardPeriod::from($data['period'] ?? LeaderboardPeriod::Month->value);
+        if ($period === LeaderboardPeriod::Week) {
+            $period = LeaderboardPeriod::Month;
+        }
         $at = CarbonImmutable::now(config('app.timezone'));
-        $sales = $leaderboard->sales($period, $at)->paginate(20, ['*'], 'sales_page')->withQueryString();
-        $dealers = $leaderboard->dealers($period, $at)->paginate(20, ['*'], 'dealers_page')->withQueryString();
+        $dealers = $leaderboard->dealers($period, $at)->paginate(20, ['*'], 'dealers_page')
+            ->appends(['period' => $period->value]);
 
         return view('leaderboard.index', [
             'period' => $period,
             'bounds' => $leaderboard->bounds($period, $at),
-            'sales' => $sales,
             'dealers' => $dealers,
-            'topSales' => $sales->currentPage() === 1 ? $sales->getCollection()->take(3) : $leaderboard->sales($period, $at)->limit(3)->get(),
             'topDealers' => $dealers->currentPage() === 1 ? $dealers->getCollection()->take(3) : $leaderboard->dealers($period, $at)->limit(3)->get(),
         ]);
     }

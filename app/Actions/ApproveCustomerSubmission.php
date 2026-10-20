@@ -7,6 +7,8 @@ use App\Models\CustomerSubmission;
 use App\Models\ModerationReview;
 use App\Models\User;
 use App\Services\ApprovedSubmissionFinder;
+use App\Services\FacebookUrlNormalizer;
+use App\Services\SubmissionIntegrity;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -16,17 +18,34 @@ class ApproveCustomerSubmission
 {
     public function __construct(private ApprovedSubmissionFinder $duplicates) {}
 
-    public function execute(User $admin, CustomerSubmission $submission, ?string $note = null): void
+    public function execute(User $admin, CustomerSubmission $submission, ?string $note = null, ?string $verifiedFacebookUrl = null): void
     {
         Gate::forUser($admin)->authorize('review', $submission);
 
         try {
-            DB::transaction(function () use ($admin, $submission, $note) {
+            DB::transaction(function () use ($admin, $submission, $note, $verifiedFacebookUrl) {
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 Gate::forUser($admin)->authorize('review', $locked);
 
                 if ($locked->status !== SubmissionStatus::Pending) {
                     throw ValidationException::withMessages(['submission' => 'Khai báo không còn chờ duyệt. Vui lòng kiểm tra lại trạng thái.']);
+                }
+
+                $locked->load(['dealer:id', 'sales:id,role']);
+                if ($warning = app(SubmissionIntegrity::class)->warning($locked)) {
+                    throw ValidationException::withMessages(['submission' => $warning]);
+                }
+
+                if ($locked->source === 'dealer_qr') {
+                    if (! filled($verifiedFacebookUrl)) {
+                        throw ValidationException::withMessages(['verified_facebook_url' => 'Admin cần xác minh và bổ sung Facebook trước khi duyệt đăng ký QR.']);
+                    }
+                    try {
+                        app(FacebookUrlNormalizer::class)->normalize($verifiedFacebookUrl);
+                    } catch (\InvalidArgumentException) {
+                        throw ValidationException::withMessages(['verified_facebook_url' => 'URL Facebook cá nhân không hợp lệ.']);
+                    }
+                    $locked->facebook_url = $verifiedFacebookUrl;
                 }
 
                 if ($this->duplicates->find($locked->facebook_url)) {

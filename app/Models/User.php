@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -37,6 +38,8 @@ class User extends Authenticatable
         'remember_token',
         'admin_note',
         'rejection_reason',
+        'avatar_path',
+        'dealer_manager_key',
     ];
 
     /**
@@ -59,7 +62,15 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
+        static::creating(function (self $user) {
+            if ($user->role === UserRole::Sales) {
+                $user->public_slug = 's-'.str_replace('-', '', (string) Str::uuid());
+            }
+        });
         static::updating(function (self $user) {
+            if ($user->isDirty('public_slug')) {
+                throw new \LogicException('Sales public slug is immutable.');
+            }
             if ($user->isDirty('email')) {
                 throw new \LogicException('Account email is immutable. Create a new account to use another email.');
             }
@@ -84,7 +95,11 @@ class User extends Authenticatable
             return 'account.status';
         }
 
-        return $this->role === UserRole::Admin ? 'admin.dashboard' : 'sales.dashboard';
+        return match ($this->role) {
+            UserRole::Admin => 'admin.dashboard',
+            UserRole::Dealer => 'dealer.dashboard',
+            UserRole::Sales => 'sales.dashboard',
+        };
     }
 
     public function reviewer(): BelongsTo

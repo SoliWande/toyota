@@ -10,9 +10,8 @@ use App\Services\LeaderboardService;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use LogicException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class V1WorkflowTest extends TestCase
@@ -21,10 +20,7 @@ class V1WorkflowTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_registration_through_review_and_period_rankings_using_real_http_endpoints(): void

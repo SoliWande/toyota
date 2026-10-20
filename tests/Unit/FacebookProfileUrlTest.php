@@ -4,11 +4,12 @@ namespace Tests\Unit;
 
 use App\Services\FacebookUrlNormalizer;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FacebookProfileUrlTest extends TestCase
 {
-    /** @dataProvider validProfiles */
+    #[DataProvider('validProfiles')]
     public function test_profile_normalization(string $url, string $expected): void
     {
         $normalizer = new FacebookUrlNormalizer;
@@ -28,7 +29,7 @@ class FacebookProfileUrlTest extends TestCase
         ];
     }
 
-    /** @dataProvider invalidProfiles */
+    #[DataProvider('invalidProfiles')]
     public function test_invalid_or_ambiguous_urls_are_rejected(string $url): void
     {
         $this->expectException(InvalidArgumentException::class);

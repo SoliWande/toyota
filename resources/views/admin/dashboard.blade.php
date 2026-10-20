@@ -33,6 +33,9 @@
         <dl class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             @foreach ([
                 'dealers' => 'Tổng Đại Lý',
+                'active_dealers' => 'Đại Lý đang hoạt động',
+                'sales' => 'Tổng Sales',
+                'submissions' => 'Tổng khách hàng',
                 'active_sales' => 'Sales đang hoạt động',
                 'pending_sales' => 'Sales chờ duyệt',
                 'approved_submissions' => 'Khách hàng đã duyệt',
@@ -40,9 +43,11 @@
                 'week_submissions' => 'Khai báo tuần này',
                 'month_submissions' => 'Khai báo tháng này',
             ] as $key => $label)
-                <div class="rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
+                <div class="relative rounded-xl border border-slate-200 bg-white p-4 hover:border-red-400 sm:p-5">
                     <dt class="text-sm text-slate-600">{{ $label }}</dt>
-                    <dd class="mt-3 text-3xl font-bold tabular-nums">{{ number_format($stats[$key]) }}</dd>
+                    <dd class="mt-3 text-3xl font-bold tabular-nums text-red-700">
+                        <a href="{{ $statLinks[$key] }}" data-stat="{{ $key }}" aria-label="Xem danh sách {{ $label }}" class="rounded focus-visible:outline-red-600"><span class="absolute inset-0 rounded-xl" aria-hidden="true"></span>{{ number_format($stats[$key]) }}</a>
+                    </dd>
                 </div>
             @endforeach
         </dl>
@@ -58,8 +63,8 @@
             @forelse ($recentPendingSubmissions as $submission)
                 <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <div class="min-w-0">
-                        <p class="font-semibold break-words">{{ $submission->customer_name }}</p>
-                        <p class="mt-1 text-sm text-slate-600 break-words">{{ $submission->sales->name }} · {{ $submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử' }}</p>
+                        <p class="font-semibold break-words"><a href="{{ route('admin.submissions.show', $submission) }}" class="rounded hover:text-red-700 hover:underline focus-visible:outline-red-600">{{ $submission->customer_name }}</a></p>
+                        <p class="mt-1 text-sm text-slate-600 break-words"><x-sales-link :sales="$submission->sales" /> · <x-dealer-link :dealer-id="$submission->dealer_id" :name="$submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử'" /></p>
                         <p class="mt-1 text-xs text-slate-500">Khai báo {{ $submission->submitted_at->format('d/m/Y H:i') }}</p>
                     </div>
                     <a href="{{ route('admin.submissions.show', $submission) }}" aria-label="Xem và duyệt {{ $submission->customer_name }}" class="shrink-0 self-start rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 hover:bg-red-100 focus-visible:outline-red-600">Xem và duyệt →</a>
@@ -73,14 +78,14 @@
     <section aria-labelledby="ranking-title" class="mt-8">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-                <h2 id="ranking-title" class="text-lg font-bold">Dẫn đầu tuần này</h2>
-                <p class="mt-1 text-sm text-slate-500">{{ $weekStart->format('d/m/Y') }} – {{ $weekEnd->subDay()->format('d/m/Y') }} · Chỉ tính khai báo đã duyệt theo submitted_at.</p>
+                <h2 id="ranking-title" class="text-lg font-bold">Dẫn đầu tháng này</h2>
+                <p class="mt-1 text-sm text-slate-500">{{ $monthStart->format('d/m/Y') }} – {{ $monthEnd->subDay()->format('d/m/Y') }} · Chỉ tính khai báo đã duyệt theo submitted_at.</p>
             </div>
-            <a href="{{ route('leaderboard', ['period' => 'week']) }}" class="py-2 text-sm font-semibold text-red-600 hover:underline">Xem bảng xếp hạng →</a>
+            <a href="{{ route('leaderboard', ['period' => 'month']) }}" class="py-2 text-sm font-semibold text-red-600 hover:underline">Xem bảng xếp hạng →</a>
         </div>
         <div class="mt-4 grid gap-4 lg:grid-cols-2">
-            <x-public.ranking-preview title="Top 3 Sales" :leaders="$topSales" type="sales" />
-            <x-public.ranking-preview title="Top 3 Đại Lý" :leaders="$topDealers" type="dealers" />
+            <x-public.ranking-preview title="Top 3 Sales" :leaders="$topSales" type="sales" detail-route="admin.sales.show" :avatars="$salesAvatars" :dealer-ids="$salesDealerIds" :public-slugs="$salesPublicSlugs" />
+            <x-public.ranking-preview title="Top 3 Đại Lý" :leaders="$topDealers" type="dealers" detail-route="admin.dealers.show" />
         </div>
     </section>
 </x-layout>

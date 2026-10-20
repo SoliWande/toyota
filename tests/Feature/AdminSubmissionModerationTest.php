@@ -11,9 +11,10 @@ use App\Models\ModerationReview;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use LogicException;
+use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class AdminSubmissionModerationTest extends TestCase
@@ -22,10 +23,7 @@ class AdminSubmissionModerationTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_queue_combines_customer_dealer_sales_status_date_filters_and_pagination(): void
@@ -85,7 +83,7 @@ class AdminSubmissionModerationTest extends TestCase
         $this->get(route('admin.submissions.index', ['sales_id' => $admin->id]))->assertSessionHasErrors('sales_id');
     }
 
-    /** @dataProvider invalidFilters */
+    #[DataProvider('invalidFilters')]
     public function test_invalid_filters_are_rejected(array $filters, string $field): void
     {
         $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index', $filters))->assertSessionHasErrors($field);
@@ -110,7 +108,7 @@ class AdminSubmissionModerationTest extends TestCase
             ->assertSee($target->sales->name)->assertSee($target->sales->dealer->name)
             ->assertSee($target->submitted_at->format('d/m/Y H:i'))->assertSee($target->notes)
             ->assertSee('Mở Facebook')->assertSee('rel="noopener noreferrer"', false)
-            ->assertSee('confirm(', false)->assertSee('data-confirm=', false)
+            ->assertDontSee('confirm(', false)->assertSee('data-inline-confirmation', false)->assertSee('Xác nhận duyệt')
             ->assertSee(route('admin.submissions.reject', $target));
         $this->get(route('admin.submissions.index'))->assertOk()->assertSee('Kiểm tra và duyệt nhanh')
             ->assertSee($target->phone)->assertSee($target->notes)->assertSee('return_to_queue');
@@ -156,7 +154,7 @@ class AdminSubmissionModerationTest extends TestCase
         $this->assertNull($target->fresh()->admin_note);
     }
 
-    /** @dataProvider invalidReviewData */
+    #[DataProvider('invalidReviewData')]
     public function test_review_input_validation_prevents_mutation(string $action, array $data, string $field): void
     {
         $target = CustomerSubmission::factory()->create();
@@ -177,7 +175,7 @@ class AdminSubmissionModerationTest extends TestCase
         ];
     }
 
-    /** @dataProvider reviewedStates */
+    #[DataProvider('reviewedStates')]
     public function test_reviewed_record_cannot_be_rejected_again_even_with_stale_model(string $state): void
     {
         $admin = User::factory()->admin()->create();
@@ -188,7 +186,7 @@ class AdminSubmissionModerationTest extends TestCase
         $this->assertSame($state, $stale->fresh()->status->value);
         $this->assertNull($stale->fresh()->admin_note);
         $this->assertDatabaseCount('moderation_reviews', 0);
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        $this->expectException(ValidationException::class);
         app(RejectCustomerSubmission::class)->execute($admin, $stale);
     }
 
@@ -211,7 +209,7 @@ class AdminSubmissionModerationTest extends TestCase
         $this->assertSame(SubmissionStatus::Approved, $approved->fresh()->status);
     }
 
-    /** @dataProvider actions */
+    #[DataProvider('actions')]
     public function test_quick_review_keeps_filters_page_and_returns_to_queue(string $action): void
     {
         $target = CustomerSubmission::factory()->create(['customer_name' => 'Queue Customer']);

@@ -5,11 +5,12 @@ namespace Tests\Unit;
 use App\Enums\LeaderboardPeriod;
 use App\Services\LeaderboardService;
 use Carbon\CarbonImmutable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class LeaderboardPeriodTest extends TestCase
 {
-    /** @dataProvider boundaries */
+    #[DataProvider('boundaries')]
     public function test_calendar_boundaries(LeaderboardPeriod $period, string $instant, string $expectedStart, string $expectedEnd): void
     {
         config(['app.timezone' => 'UTC']);

@@ -8,7 +8,7 @@
             @foreach ($leaders as $leader)
                 <div class="rounded-2xl border p-5 {{ (int) $leader->rank === 1 ? 'border-red-200 bg-red-50' : 'border-slate-200 bg-white' }}">
                     <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg font-bold text-red-600 ring-1 ring-red-100">{{ $leader->rank }}</span>
-                    <h3 class="mt-4 break-words text-lg font-bold">{{ $leader->name }}</h3>
+                    <h3 class="mt-4 break-words text-lg font-bold">@if ($type !== 'sales')<a href="{{ route('dealers.show', $leader->id) }}" class="hover:text-red-700 hover:underline">{{ $leader->name }}</a>@else{{ $leader->name }}@endif</h3>
                     <p class="mt-1 break-words text-sm text-slate-500">{{ $type === 'sales' ? $leader->dealer_name : $leader->code }}</p>
                     <p class="mt-5 text-3xl font-bold text-red-600">{{ number_format($leader->score, 0, ',', '.') }} <span class="text-sm font-normal text-slate-600">điểm</span></p>
                 </div>
@@ -22,7 +22,7 @@
                     @foreach ($rows as $row)
                         <tr class="{{ (int) $row->rank <= 3 ? 'bg-red-50/40' : '' }}">
                             <td class="p-4 font-bold">{{ $row->rank }}</td>
-                            <td class="p-4 font-semibold">{{ $row->name }}</td>
+                            <td class="p-4 font-semibold">@if ($type !== 'sales')<a href="{{ route('dealers.show', $row->id) }}" class="hover:text-red-700 hover:underline">{{ $row->name }}</a>@else{{ $row->name }}@endif</td>
                             <td class="p-4 text-slate-500">{{ $type === 'sales' ? $row->dealer_name : $row->code }}</td>
                             <td class="p-4 text-right font-bold">{{ number_format($row->score, 0, ',', '.') }}</td>
                         </tr>

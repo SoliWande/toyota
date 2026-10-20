@@ -11,8 +11,10 @@ use App\Http\Requests\Admin\SalesIndexRequest;
 use App\Http\Requests\Admin\UpdateSalesRequest;
 use App\Models\Dealer;
 use App\Models\User;
+use App\Services\SalesAvatars;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SalesController extends Controller
@@ -69,16 +71,31 @@ class SalesController extends Controller
         return view('admin.sales.edit', ['sales' => $sales, 'dealers' => Dealer::orderBy('name')->get()]);
     }
 
-    public function update(UpdateSalesRequest $request, User $sales): RedirectResponse
+    public function update(UpdateSalesRequest $request, User $sales, SalesAvatars $avatars): RedirectResponse
     {
-        DB::transaction(function () use ($request, $sales) {
-            $locked = User::whereKey($sales->id)->lockForUpdate()->firstOrFail();
-            $this->authorize('update', $locked);
-            $locked->name = $request->validated('name');
-            $locked->phone = $request->validated('phone');
-            $locked->dealer_id = $request->validated('dealer_id');
-            $locked->save();
-        });
+        $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getRealPath()) : null;
+        try {
+            DB::transaction(function () use ($request, $sales, $avatar) {
+                $locked = User::whereKey($sales->id)->lockForUpdate()->firstOrFail();
+                $this->authorize('update', $locked);
+                $locked->name = $request->validated('name');
+                $locked->phone = $request->validated('phone');
+                $locked->dealer_id = $request->validated('dealer_id');
+                if ($avatar !== null) {
+                    $previous = $locked->avatar_path;
+                    $locked->avatar_path = $avatar;
+                    if ($previous) {
+                        DB::afterCommit(fn () => rescue(fn () => Storage::disk('sales_avatars')->delete($previous)));
+                    }
+                }
+                $locked->save();
+            });
+        } catch (\Throwable $error) {
+            if ($avatar !== null) {
+                Storage::disk('sales_avatars')->delete($avatar);
+            }
+            throw $error;
+        }
 
         return redirect()->route('admin.sales.show', $sales)->with('success', 'Đã cập nhật Sales. Thành tích lịch sử giữ nguyên đại lý.');
     }

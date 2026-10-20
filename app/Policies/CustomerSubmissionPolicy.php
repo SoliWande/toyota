@@ -22,12 +22,14 @@ class CustomerSubmissionPolicy
 
     public function view(User $user, CustomerSubmission $submission): bool
     {
-        return $this->viewAny($user) && $submission->sales_id === $user->id;
+        return ($this->viewAny($user) && $submission->sales_id === $user->id)
+            || ($user->role === UserRole::Dealer && $user->status === UserStatus::Active
+                && $user->dealer_id !== null && $submission->dealer_id === $user->dealer_id);
     }
 
     public function update(User $user, CustomerSubmission $submission): bool
     {
-        return $this->view($user, $submission) && $submission->status === SubmissionStatus::Pending;
+        return $this->viewAny($user) && $this->view($user, $submission) && $submission->status === SubmissionStatus::Pending;
     }
 
     public function delete(User $user, CustomerSubmission $submission): bool

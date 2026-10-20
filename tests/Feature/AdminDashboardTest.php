@@ -6,9 +6,11 @@ use App\Enums\UserStatus;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class AdminDashboardTest extends TestCase
@@ -17,17 +19,15 @@ class AdminDashboardTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_empty_dashboard_has_zero_stats_and_all_quick_actions(): void
     {
         $this->actingAs(User::factory()->admin()->create())->get(route('admin.dashboard'))
             ->assertOk()->assertViewHas('stats', [
-                'dealers' => 0, 'active_sales' => 0, 'pending_sales' => 0,
+                'dealers' => 0, 'active_dealers' => 0, 'active_sales' => 0, 'pending_sales' => 0,
+                'sales' => 0, 'submissions' => 0,
                 'approved_submissions' => 0, 'pending_submissions' => 0,
                 'week_submissions' => 0, 'month_submissions' => 0,
             ])->assertSee('0 mục chờ duyệt')->assertSee('Đã xử lý hết hàng chờ.')
@@ -59,7 +59,8 @@ class AdminDashboardTest extends TestCase
 
         $this->actingAs($admin)->get(route('admin.dashboard'))->assertOk()
             ->assertViewHas('stats', [
-                'dealers' => 2, 'active_sales' => 1, 'pending_sales' => 2,
+                'dealers' => 2, 'active_dealers' => 1, 'active_sales' => 1, 'pending_sales' => 2,
+                'sales' => 5, 'submissions' => 6,
                 'approved_submissions' => 2, 'pending_submissions' => 3,
                 'week_submissions' => 4, 'month_submissions' => 4,
             ])->assertSee('5 mục chờ duyệt');
@@ -68,7 +69,7 @@ class AdminDashboardTest extends TestCase
     public function test_period_counts_use_submitted_at_and_application_timezone_with_exclusive_end_boundaries(): void
     {
         config(['app.timezone' => 'Asia/Ho_Chi_Minh']);
-        $this->travelTo(\Carbon\Carbon::parse('2026-11-02 12:00:00', 'Asia/Ho_Chi_Minh'));
+        $this->travelTo(Carbon::parse('2026-11-02 12:00:00', 'Asia/Ho_Chi_Minh'));
         $admin = User::factory()->admin()->create();
         $sales = User::factory()->active()->create();
         foreach (['2026-10-31 23:59:59', '2026-11-01 00:00:00', '2026-11-01 23:59:59',
@@ -83,7 +84,7 @@ class AdminDashboardTest extends TestCase
         $this->actingAs($admin)->get(route('admin.dashboard'))->assertOk()
             ->assertViewHas('stats', fn ($stats) => $stats['week_submissions'] === 2
                 && $stats['month_submissions'] === 6 && $stats['approved_submissions'] === 8)
-            ->assertViewHas('topSales', fn ($items) => $items->sole()->score === 2)
+            ->assertViewHas('topSales', fn ($items) => $items->sole()->score === 6)
             ->assertSee('Asia/Ho_Chi_Minh');
     }
 
@@ -106,15 +107,15 @@ class AdminDashboardTest extends TestCase
         }
     }
 
-    public function test_weekly_summary_uses_existing_ranking_and_limits_each_list_to_three(): void
+    public function test_monthly_summary_uses_existing_ranking_and_limits_each_list_to_three(): void
     {
-        $this->travelTo(now()->startOfWeek()->addDays(2));
+        $this->travelTo(Carbon::parse('2026-11-20 12:00:00', config('app.timezone')));
         $admin = User::factory()->admin()->create();
         $sales = User::factory()->active()->count(4)->create();
         foreach ($sales as $i => $user) {
             CustomerSubmission::factory()->approved()->create([
                 'sales_id' => $user->id, 'reviewed_by' => $admin->id,
-                'submitted_at' => now()->startOfWeek()->addHours($i + 1),
+                'submitted_at' => now()->startOfMonth()->addHours($i + 1),
             ]);
         }
         CustomerSubmission::factory()->count(5)->create(['sales_id' => $sales[3]->id]);
@@ -152,7 +153,7 @@ class AdminDashboardTest extends TestCase
         $this->get(route('admin.dashboard'))->assertRedirect(route('login'));
     }
 
-    /** @dataProvider salesStatuses */
+    #[DataProvider('salesStatuses')]
     public function test_sales_cannot_access_admin_dashboard(UserStatus $status): void
     {
         $this->actingAs(User::factory()->create(['status' => $status]))
@@ -164,7 +165,7 @@ class AdminDashboardTest extends TestCase
         return array_map(fn ($status) => [$status], UserStatus::cases());
     }
 
-    /** @dataProvider inactiveStatuses */
+    #[DataProvider('inactiveStatuses')]
     public function test_inactive_admin_cannot_access_dashboard(UserStatus $status): void
     {
         $this->actingAs(User::factory()->admin()->create(['status' => $status]))

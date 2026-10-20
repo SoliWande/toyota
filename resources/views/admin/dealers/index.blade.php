@@ -13,6 +13,7 @@
             <label for="q" class="text-sm font-medium">Tìm kiếm đại lý</label>
             <input id="q" name="q" value="{{ $filters['q'] ?? '' }}" maxlength="255" placeholder="Tên, mã, tỉnh/thành phố, điện thoại hoặc địa chỉ" class="form-input">
         </div>
+        <div><label for="status" class="text-sm font-medium">Trạng thái</label><select id="status" name="status" class="form-input"><option value="">Tất cả</option><option value="active" @selected(($filters['status'] ?? '') === 'active')>Đang hoạt động</option><option value="inactive" @selected(($filters['status'] ?? '') === 'inactive')>Ngừng hoạt động</option></select></div>
         <button class="button-primary" type="submit">Tìm kiếm</button>
         <a href="{{ route('admin.dealers.index') }}" class="py-3 text-sm text-slate-600 hover:underline">Bỏ lọc</a>
     </form>
@@ -22,7 +23,7 @@
             <tbody class="divide-y divide-slate-100">
                 @forelse ($dealers as $dealer)
                     <tr>
-                        <td class="p-4"><a class="font-semibold hover:text-red-600" href="{{ route('admin.dealers.edit', $dealer) }}">{{ $dealer->name }}</a><p class="mt-1 text-slate-500">{{ $dealer->code }}</p></td>
+                        <td class="p-4"><a class="font-semibold hover:text-red-600" href="{{ route('admin.dealers.show', $dealer) }}">{{ $dealer->name }}</a><p class="mt-1 text-slate-500">{{ $dealer->code }}</p></td>
                         <td class="p-4"><p>{{ $dealer->province ?? 'Chưa có tỉnh/thành phố' }}</p><p class="mt-1 text-slate-500">{{ $dealer->phone ?? 'Chưa có điện thoại' }}</p></td>
                         <td class="p-4">{{ $dealer->sales_count }}</td>
                         <td class="whitespace-nowrap p-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $dealer->is_active ? 'bg-green-50 text-green-800' : 'bg-slate-100 text-slate-700' }}">{{ $dealer->is_active ? 'Active' : 'Inactive' }}</span></td>

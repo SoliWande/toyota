@@ -7,8 +7,8 @@ use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class SalesDashboardTest extends TestCase
@@ -17,10 +17,7 @@ class SalesDashboardTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_empty_dashboard_shows_sales_dealer_zero_counts_and_rank_placeholder(): void
@@ -99,7 +96,7 @@ class SalesDashboardTest extends TestCase
         $this->actingAs(User::factory()->admin()->create())->get(route('sales.dashboard'))->assertForbidden();
     }
 
-    /** @dataProvider inactiveStatuses */
+    #[DataProvider('inactiveStatuses')]
     public function test_inactive_sales_cannot_access_dashboard(UserStatus $status): void
     {
         $sales = User::factory()->create(['status' => $status]);

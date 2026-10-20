@@ -8,9 +8,9 @@ use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -19,10 +19,7 @@ class AuthenticationTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     protected function setUp(): void
@@ -75,7 +72,7 @@ class AuthenticationTest extends TestCase
         $this->get('/account/status')->assertOk()->assertSee('Tài khoản đang chờ duyệt');
     }
 
-    /** @dataProvider invalidRegistrationFields */
+    #[DataProvider('invalidRegistrationFields')]
     public function test_registration_validation(string $field, mixed $value): void
     {
         $this->post('/register', $this->registrationData([$field => $value]))->assertSessionHasErrors($field);
@@ -139,7 +136,7 @@ class AuthenticationTest extends TestCase
         $this->assertNull($user->admin_note);
     }
 
-    /** @dataProvider loginDestinations */
+    #[DataProvider('loginDestinations')]
     public function test_login_redirects_by_role_and_status(string $role, string $status, string $destination): void
     {
         $factory = $role === 'admin' ? User::factory()->admin() : User::factory();
@@ -215,6 +212,26 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_cross_site_logout_without_a_csrf_token_preserves_the_session(): void
+    {
+        $user = User::factory()->active()->create();
+        $this->actingAs($user);
+        app()->detectEnvironment(fn () => 'local');
+
+        $this->withHeader('Sec-Fetch-Site', 'cross-site')->post('/logout')->assertStatus(419);
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_same_origin_logout_uses_laravel_13_origin_verification(): void
+    {
+        $user = User::factory()->active()->create();
+        $this->actingAs($user);
+        app()->detectEnvironment(fn () => 'local');
+
+        $this->withHeader('Sec-Fetch-Site', 'same-origin')->post('/logout')->assertRedirect(route('login'));
+        $this->assertGuest();
+    }
+
     public function test_guest_cannot_access_protected_areas(): void
     {
         foreach (['sales.dashboard', 'admin.dashboard', 'account.status'] as $route) {
@@ -238,7 +255,7 @@ class AuthenticationTest extends TestCase
         $this->get('/account/status')->assertRedirect(route('admin.dashboard'));
     }
 
-    /** @dataProvider inactiveSalesStatuses */
+    #[DataProvider('inactiveSalesStatuses')]
     public function test_inactive_sales_can_only_view_status(string $status, string $message): void
     {
         $sales = User::factory()->create(['status' => $status]);

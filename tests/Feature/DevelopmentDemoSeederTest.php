@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AwardWinnerType;
 use App\Enums\LeaderboardPeriod;
 use App\Models\Award;
 use App\Models\AwardWinner;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use LogicException;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class DevelopmentDemoSeederTest extends TestCase
@@ -27,10 +29,7 @@ class DevelopmentDemoSeederTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     protected function setUp(): void
@@ -63,12 +62,16 @@ class DevelopmentDemoSeederTest extends TestCase
         $service = app(LeaderboardService::class);
         foreach (LeaderboardPeriod::cases() as $period) {
             $rows = $service->sales($period)->get();
+            $dealerRows = $service->dealers($period)->get();
+            $this->assertGreaterThan(1, $dealerRows->count());
+            $this->assertSame($rows->sum('score'), $dealerRows->sum('score'));
             $this->assertGreaterThan(3, $rows->count());
             $this->assertGreaterThan($rows->last()->score, $rows->first()->score);
             $this->get(route('leaderboard', ['period' => $period->value]))->assertOk();
         }
         $this->get(route('leaderboard', ['period' => 'all', 'sales_page' => 2]))->assertOk()
-            ->assertViewHas('sales', fn ($items) => $items->first()->rank === 21);
+            ->assertViewMissing('sales')->assertViewMissing('topSales')
+            ->assertViewHas('dealers', fn ($items) => $items->first()->rank === 1);
         $this->actingAs($admin)->get(route('admin.dashboard'))->assertOk()->assertViewHas('stats', fn ($stats) => $stats['approved_submissions'] === 300 && $stats['pending_submissions'] === 150);
         $queue = $this->get(route('admin.submissions.index'))->assertOk();
         $this->assertSame(150, $queue->viewData('submissions')->total());
@@ -83,12 +86,13 @@ class DevelopmentDemoSeederTest extends TestCase
         $this->assertDatabaseCount('award_winners', 24);
         $this->get(route('awards.index'))->assertOk()->assertViewHas('awards', fn ($items) => $items->total() === 4);
         foreach (Award::with('winners')->get() as $award) {
-            $this->get(route('awards.show', $award))->assertOk()->assertSee('[DEMO]');
+            $this->get(route('awards.show', $award))->assertOk()
+                ->assertSee($award->winners->where('winner_type', AwardWinnerType::Dealer)->first()->dealer_name_snapshot);
             $this->get(route('admin.awards.show', $award))->assertOk();
             $preview = app(AwardResults::class)->preview(Award::factory()->make([
                 'period_type' => $award->period_type, 'period_start' => $award->period_start, 'period_end' => $award->period_end,
             ]));
-            $this->assertSame($preview['sales']->pluck('score')->all(), $award->winners->where('winner_type', \App\Enums\AwardWinnerType::Sales)->sortBy('rank')->pluck('score')->all());
+            $this->assertSame($preview['sales']->pluck('score')->all(), $award->winners->where('winner_type', AwardWinnerType::Sales)->sortBy('rank')->pluck('score')->all());
         }
         $this->post(route('logout'));
         $this->actingAs($sales)->get(route('sales.dashboard'))->assertOk();

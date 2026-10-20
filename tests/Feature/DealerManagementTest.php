@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class DealerManagementTest extends TestCase
@@ -19,10 +21,7 @@ class DealerManagementTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function data(array $overrides = []): array
@@ -62,7 +61,7 @@ class DealerManagementTest extends TestCase
         $this->assertNotSame('2000-01-01', $dealer->created_at->toDateString());
     }
 
-    /** @dataProvider invalidFields */
+    #[DataProvider('invalidFields')]
     public function test_validation_on_create_and_update(string $field, mixed $value): void
     {
         $admin = User::factory()->admin()->create();
@@ -94,7 +93,7 @@ class DealerManagementTest extends TestCase
         $this->assertSame(2, Dealer::count());
     }
 
-    /** @dataProvider searchFields */
+    #[DataProvider('searchFields')]
     public function test_search_fields_are_supported(string $field, string $value, string $search): void
     {
         $admin = User::factory()->admin()->create();
@@ -123,7 +122,7 @@ class DealerManagementTest extends TestCase
                 && $page->first()->sales_count === 2 && str_contains($page->nextPageUrl(), 'q=Matching'));
     }
 
-    /** @dataProvider actors */
+    #[DataProvider('actors')]
     public function test_unauthorized_actors_cannot_access_any_dealer_endpoint(?string $role, string $status): void
     {
         $dealer = Dealer::factory()->create();
@@ -212,7 +211,7 @@ class DealerManagementTest extends TestCase
         return $dealer;
     }
 
-    /** @dataProvider references */
+    #[DataProvider('references')]
     public function test_model_blocks_deletion_of_referenced_dealer(string $relation): void
     {
         $dealer = $this->referencedDealer($relation);
@@ -220,7 +219,7 @@ class DealerManagementTest extends TestCase
         $dealer->delete();
     }
 
-    /** @dataProvider references */
+    #[DataProvider('references')]
     public function test_database_blocks_raw_deletion_of_referenced_dealer(string $relation): void
     {
         $dealer = $this->referencedDealer($relation);

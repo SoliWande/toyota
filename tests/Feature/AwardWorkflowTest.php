@@ -8,8 +8,8 @@ use App\Models\CustomerSubmission;
 use App\Models\User;
 use App\Services\AwardResults;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class AwardWorkflowTest extends TestCase
@@ -18,13 +18,10 @@ class AwardWorkflowTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
-    /** @dataProvider draftPeriods */
+    #[DataProvider('draftPeriods')]
     public function test_admin_creates_canonical_draft_period_without_trusting_publication_or_winners(string $type, string $date, string $start, string $end): void
     {
         $this->actingAs(User::factory()->admin()->create())->post(route('admin.awards.store'), [
@@ -120,16 +117,17 @@ class AwardWorkflowTest extends TestCase
         $draft = Award::factory()->weekly()->create(['title' => 'Secret draft']);
         $winner = AwardWinner::factory()->create(['winner_name_snapshot' => 'Historic Sales', 'dealer_name_snapshot' => 'Historic Dealer']);
         $award = $winner->award;
+        $dealerWinner = AwardWinner::factory()->dealer()->create(['award_id' => $award->id, 'dealer_name_snapshot' => 'Historic Dealer']);
         $award->forceFill(['published_at' => now(), 'published_by' => User::factory()->admin()->create()->id])->save();
         CustomerSubmission::factory()->approved()->create([
             'sales_id' => $winner->sales_id, 'customer_name' => 'PrivateCustomerName', 'phone' => 'PrivateCustomerPhone',
             'notes' => 'PrivateCustomerNote', 'facebook_url' => 'https://facebook.com/private.customer',
         ]);
         $winner->sales->update(['name' => 'Live Sales renamed']);
-        $winner->sales->dealer->update(['name' => 'Live Dealer renamed']);
-        $this->get(route('awards.index'))->assertOk()->assertSee($award->title)->assertDontSee($draft->title);
+        $dealerWinner->dealer->update(['name' => 'Live Dealer renamed']);
+        $this->get(route('awards.index'))->assertOk()->assertSee(route('awards.show', $award))->assertDontSee($draft->title);
         $this->get(route('awards.show', $draft))->assertNotFound();
-        $this->get(route('awards.show', $award))->assertOk()->assertSee('Historic Sales')->assertSee('Historic Dealer')
+        $this->get(route('awards.show', $award))->assertOk()->assertDontSee('Historic Sales')->assertSee('Historic Dealer')
             ->assertDontSee('Live Sales renamed')->assertDontSee('Live Dealer renamed')
             ->assertDontSee('PrivateCustomerName')->assertDontSee('PrivateCustomerPhone')->assertDontSee('PrivateCustomerNote')
             ->assertDontSee('https://facebook.com/private.customer');
@@ -161,10 +159,11 @@ class AwardWorkflowTest extends TestCase
         $admin = User::factory()->admin()->create();
         for ($index = 0; $index < 13; $index++) {
             $start = now()->startOfMonth()->subMonths($index);
-            Award::factory()->create([
+            $award = Award::factory()->create([
                 'period_start' => $start, 'period_end' => $start->copy()->addMonth(),
-                'published_at' => now(), 'published_by' => $admin->id,
             ]);
+            AwardWinner::factory()->dealer()->create(['award_id' => $award->id]);
+            $award->forceFill(['published_at' => now(), 'published_by' => $admin->id])->save();
         }
         $this->get(route('awards.index', ['period_type' => 'monthly']))->assertOk()
             ->assertViewHas('awards', fn ($items) => $items->total() === 13 && $items->count() === 12);

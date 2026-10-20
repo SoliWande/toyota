@@ -15,16 +15,18 @@ class UserPolicy
 
     public function view(User $admin, User $sales): bool
     {
-        return $this->viewAny($admin) && $sales->role === UserRole::Sales;
+        return $sales->role === UserRole::Sales && ($this->viewAny($admin)
+            || ($admin->role === UserRole::Dealer && $admin->status === UserStatus::Active
+                && $admin->dealer_id !== null && $admin->dealer_id === $sales->dealer_id));
     }
 
     public function moderate(User $admin, User $sales): bool
     {
-        return $this->view($admin, $sales);
+        return $this->viewAny($admin) && $sales->role === UserRole::Sales;
     }
 
     public function update(User $admin, User $sales): bool
     {
-        return $this->view($admin, $sales);
+        return $this->moderate($admin, $sales);
     }
 }

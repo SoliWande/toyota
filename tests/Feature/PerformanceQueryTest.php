@@ -8,7 +8,8 @@ use App\Models\User;
 use App\Services\AwardResults;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class PerformanceQueryTest extends TestCase
@@ -17,10 +18,7 @@ class PerformanceQueryTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function captureQueries(callable $callback): array
@@ -54,8 +52,8 @@ class PerformanceQueryTest extends TestCase
                     $this->assertArrayNotHasKey('password', $submission->sales->getAttributes());
                 }
             });
-            // Count + page with indexed duplicate subquery + eager Sales/Dealers + two filter lists.
-            $this->assertCount(6, $queries);
+            // Count + page + eager Sales/Dealers + filter lists + audit-schema preflight; constant per page.
+            $this->assertCount(7, $queries);
         }
     }
 
@@ -99,7 +97,7 @@ class PerformanceQueryTest extends TestCase
         $this->assertCount(4, $queries);
     }
 
-    /** @dataProvider awardPeriods */
+    #[DataProvider('awardPeriods')]
     public function test_award_preview_uses_two_aggregate_queries_and_loads_only_top_three(string $period): void
     {
         $award = $period === 'weekly' ? Award::factory()->weekly()->create() : Award::factory()->create();

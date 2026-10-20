@@ -15,6 +15,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use LogicException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class DealerHistoryTest extends TestCase
@@ -23,9 +24,7 @@ class DealerHistoryTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Dealer history tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function data(string $identity): array
@@ -96,13 +95,15 @@ class DealerHistoryTest extends TestCase
         $sales = User::factory()->active()->create();
         $award = Award::factory()->create();
         $winner = AwardWinner::factory()->create(['award_id' => $award->id, 'sales_id' => $sales->id]);
+        $dealerWinner = AwardWinner::factory()->dealer()->create(['award_id' => $award->id, 'dealer_id' => $sales->dealer_id]);
         $award->forceFill(['published_at' => now(), 'published_by' => $admin->id])->save();
         $before = $winner->refresh()->getAttributes();
         $this->actingAs($admin)->patch(route('admin.sales.update', $sales), ['name' => 'New Name', 'phone' => '0901234567', 'dealer_id' => Dealer::factory()->create()->id])->assertSessionHasNoErrors();
         $this->post(route('admin.sales.review', [$sales, 'block']))->assertSessionHasNoErrors();
         $this->assertSame($before, $winner->fresh()->getAttributes());
         $this->post(route('logout'));
-        $this->get(route('awards.show', $award))->assertOk()->assertSee($winner->winner_name_snapshot)->assertSee($winner->dealer_name_snapshot)->assertDontSee('New Name');
+        $this->get(route('awards.show', $award))->assertOk()->assertDontSee($winner->winner_name_snapshot)
+            ->assertSee($dealerWinner->dealer_name_snapshot)->assertDontSee('New Name');
     }
 
     public function test_model_rejects_modifying_submission_attribution(): void

@@ -1,10 +1,14 @@
 <x-layout :title="'Sales · '.$sales->name">
     <a href="{{ route('admin.sales.index') }}" class="text-sm font-medium text-slate-500 hover:text-red-600">← Danh sách Sales</a>
     <div class="mb-7 mt-4 flex flex-wrap items-center gap-4">
+        <x-sales-avatar :sales-id="$sales->id" :has-avatar="(bool) $sales->avatar_path" />
         <h1 class="text-3xl font-bold">{{ $sales->name }}</h1>
         <x-user-status :status="$sales->status" />
     </div>
     <x-admin-feedback />
+    @if ($sales->status === \App\Enums\UserStatus::Active && $sales->public_slug)
+        <a href="{{ route('sales.public.show', ['slug' => $sales->public_slug]) }}" class="mb-6 inline-block rounded text-sm font-semibold text-red-700 hover:underline focus-visible:outline-red-600">Xem profile công khai</a>
+    @endif
     <a href="{{ route('admin.sales.edit', $sales) }}" class="button-primary mb-6 inline-flex">Chỉnh sửa thông tin / Chuyển đại lý</a>
     <div class="grid gap-6 lg:grid-cols-2">
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
@@ -12,7 +16,7 @@
             <dl class="mt-5 space-y-4 text-sm">
                 <div><dt class="text-slate-500">Email</dt><dd class="mt-1 break-all">{{ $sales->email }}</dd></div>
                 <div><dt class="text-slate-500">Điện thoại</dt><dd class="mt-1">{{ $sales->phone ?? 'Chưa có' }}</dd></div>
-                <div><dt class="text-slate-500">Đại lý</dt><dd class="mt-1">{{ $sales->dealer->name }}</dd></div>
+                <div><dt class="text-slate-500">Đại lý</dt><dd class="mt-1"><x-dealer-link :dealer-id="$sales->dealer_id" :name="$sales->dealer->name" /></dd></div>
                 <div><dt class="text-slate-500">Đăng ký lúc</dt><dd class="mt-1">{{ $sales->created_at->format('d/m/Y H:i') }}</dd></div>
                 @if ($sales->reviewed_at)
                     <div><dt class="text-slate-500">Review gần nhất</dt><dd class="mt-1">{{ $sales->reviewer->name }} · {{ $sales->reviewed_at->format('d/m/Y H:i') }}</dd></div>

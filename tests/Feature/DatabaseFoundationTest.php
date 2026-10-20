@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use InvalidArgumentException;
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class DatabaseFoundationTest extends TestCase
@@ -29,10 +31,7 @@ class DatabaseFoundationTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh the dedicated toyota_testing MySQL database.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_sales_defaults_and_dealer_relationship_and_admin_without_dealer(): void
@@ -59,7 +58,7 @@ class DatabaseFoundationTest extends TestCase
     {
         $user = User::factory()->create();
         $this->expectException(QueryException::class);
-        DB::table('users')->where('id', $user->id)->update(['role' => 'dealer']);
+        DB::table('users')->where('id', $user->id)->update(['role' => 'unknown_role']);
     }
 
     public function test_submission_normalizes_url_and_preserves_submitted_date_after_review(): void
@@ -96,7 +95,7 @@ class DatabaseFoundationTest extends TestCase
         $this->assertSame(4, CustomerSubmission::where('facebook_url_normalized', $url)->count());
     }
 
-    /** @dataProvider duplicateOwners */
+    #[DataProvider('duplicateOwners')]
     public function test_database_prevents_second_approval_even_when_bypassing_model_events(bool $sameSales): void
     {
         $first = CustomerSubmission::factory()->approved()->create([

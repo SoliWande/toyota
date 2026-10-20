@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\Sanctum;
-use LogicException;
 use PDOException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class SecurityAuditTest extends TestCase
@@ -28,10 +29,7 @@ class SecurityAuditTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     protected function setUp(): void
@@ -59,7 +57,7 @@ class SecurityAuditTest extends TestCase
         $this->assertArrayNotHasKey('rejection_reason', $user->toArray());
     }
 
-    /** @dataProvider inactiveStatuses */
+    #[DataProvider('inactiveStatuses')]
     public function test_inactive_accounts_cannot_bypass_status_protection_through_api(UserStatus $status): void
     {
         Sanctum::actingAs(User::factory()->create(['status' => $status, 'admin_note' => 'private-review-note']));
@@ -96,7 +94,7 @@ class SecurityAuditTest extends TestCase
         }
     }
 
-    /** @dataProvider unsafeEmails */
+    #[DataProvider('unsafeEmails')]
     public function test_email_control_characters_are_rejected_at_registration_and_login(string $email): void
     {
         $dealer = Dealer::factory()->create();
@@ -244,7 +242,7 @@ class SecurityAuditTest extends TestCase
     {
         app()->detectEnvironment(fn () => 'production');
         config(['app.url' => 'https://toyota.example.test', 'app.debug' => false]);
-        $this->get('https://attacker.example.test/login')->assertNotFound()->assertDontSee('name="password"', false);
+        $this->get('https://attacker.example.test/login')->assertStatus(400)->assertDontSee('name="password"', false);
     }
 
     public function test_debug_solution_endpoints_are_unavailable_in_production(): void
@@ -284,7 +282,7 @@ class SecurityAuditTest extends TestCase
         $this->assertSame($winner->sales_dealer_id_snapshot, $winner->fresh()->sales_dealer_id_snapshot);
     }
 
-    /** @dataProvider exceptionWrapping */
+    #[DataProvider('exceptionWrapping')]
     public function test_database_reporting_omits_bindings_messages_and_nested_exception_traces(bool $wrapped): void
     {
         $previous = new PDOException('Duplicate entry private-customer@example.test');

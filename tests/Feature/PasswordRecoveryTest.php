@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class PasswordRecoveryTest extends TestCase
@@ -19,9 +20,7 @@ class PasswordRecoveryTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Password tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function data(User $user, string $token): array
@@ -48,7 +47,7 @@ class PasswordRecoveryTest extends TestCase
         $this->assertSame($known->getStatusCode(), 302);
     }
 
-    /** @dataProvider accountKinds */
+    #[DataProvider('accountKinds')]
     public function test_reset_preserves_email_dealer_role_status_and_token_is_one_time(string $kind): void
     {
         $user = $kind === 'admin' ? User::factory()->admin()->create() : User::factory()->create(['status' => $kind]);
@@ -101,6 +100,18 @@ class PasswordRecoveryTest extends TestCase
         $oldHash = session('password_hash_web');
         $user->forceFill(['password' => Hash::make('reset-password-123')])->save();
         $this->actingAs($user->fresh())->withSession(['password_hash_web' => $oldHash])->get(route('profile.edit'))->assertRedirect(route('login'));
+        $this->assertGuest();
+    }
+
+    public function test_reset_invalidates_existing_json_session_without_redirecting(): void
+    {
+        $user = User::factory()->active()->create();
+        $this->actingAs($user)->get(route('profile.edit'))->assertOk();
+        $oldHash = session('password_hash_web');
+        $user->forceFill(['password' => Hash::make('reset-password-123')])->save();
+
+        $this->actingAs($user->fresh())->withSession(['password_hash_web' => $oldHash])
+            ->getJson(route('profile.edit'))->assertUnauthorized()->assertHeaderMissing('Location');
         $this->assertGuest();
     }
 

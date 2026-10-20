@@ -12,7 +12,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use LogicException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class LeaderboardServiceTest extends TestCase
@@ -21,10 +21,7 @@ class LeaderboardServiceTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_only_approved_submissions_count_and_dealer_score_sums_its_sales(): void

@@ -1,8 +1,8 @@
 @props(['submission'])
 <section class="mt-6 border-t border-slate-100 pt-6" aria-labelledby="vehicle-title-{{ $submission->id }}">
-    <h2 id="vehicle-title-{{ $submission->id }}" class="font-semibold">Thông tin xe Toyota</h2>
+    <h2 id="vehicle-title-{{ $submission->id }}" class="font-semibold">Thông tin xe</h2>
     <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2">
-        <div><dt class="text-slate-500">Dòng xe</dt><dd class="mt-1 break-words">{{ config('vehicles.toyota_models.'.$submission->vehicle_model, 'Chưa cung cấp') }}</dd></div>
+        <div><dt class="text-slate-500">Dòng xe</dt><dd class="mt-1 break-words">{{ $submission->vehicle_description ?? config('vehicles.toyota_models.'.$submission->vehicle_model, 'Chưa cung cấp') }}</dd></div>
         <div><dt class="text-slate-500">Năm đăng ký lần đầu</dt><dd class="mt-1">{{ $submission->first_registration_year ?? 'Chưa cung cấp' }}</dd></div>
         <div><dt class="text-slate-500">Màu xe</dt><dd class="mt-1 break-words">{{ $submission->vehicle_color ?? 'Chưa cung cấp' }}</dd></div>
         <div><dt class="text-slate-500">Biển số xe</dt><dd class="mt-1 break-words">{{ $submission->license_plate ?? 'Chưa cung cấp' }}</dd></div>
@@ -14,6 +14,6 @@
         </a>
         <p class="mt-2 text-xs text-slate-500">Ảnh riêng tư. Chọn ảnh để xem kích thước đầy đủ.</p>
     @else
-        <p class="mt-2 text-sm text-amber-800">Khai báo cũ chưa có ảnh bằng chứng.</p>
+        <p class="mt-2 text-sm text-amber-800">{{ $submission->source === 'dealer_qr' ? 'Đăng ký QR không yêu cầu tải ảnh bằng chứng.' : 'Khai báo cũ chưa có ảnh bằng chứng.' }}</p>
     @endif
 </section>

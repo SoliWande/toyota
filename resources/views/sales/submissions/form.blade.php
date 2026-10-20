@@ -15,6 +15,7 @@
                     @error($field)<p id="{{ $field }}-error" class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
                 </div>
             @endforeach
+            <x-customer-address-fields :submission="$submission" />
             <fieldset class="space-y-5 border-t border-slate-100 pt-5">
                 <legend class="px-1 text-base font-semibold">Thông tin xe Toyota (bắt buộc)</legend>
                 <div>

@@ -19,6 +19,12 @@ class DealerPolicy
         return $this->viewAny($user);
     }
 
+    public function view(User $user, Dealer $dealer): bool
+    {
+        return $this->viewAny($user) || ($user->role === UserRole::Dealer
+            && $user->status === UserStatus::Active && $user->dealer_id === $dealer->id);
+    }
+
     public function update(User $user, Dealer $dealer): bool
     {
         return $this->viewAny($user);

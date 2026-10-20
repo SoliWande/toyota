@@ -1,12 +1,13 @@
-@props(['title' => 'Kết nối cộng đồng Toyota Veloz & Hilux'])
+@props(['title' => 'Kết nối cộng đồng Toyota Veloz & Hilux', 'canonical' => null])
 @php($joinUrl = auth()->check() ? route(auth()->user()->homeRoute()) : route('register'))
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Cùng Sales và đại lý Toyota kết nối thành viên cộng đồng Veloz & Hilux. Theo dõi thành tích, bảng xếp hạng và những kỳ vinh danh.">
+    <meta name="description" content="Cùng các đại lý Toyota kết nối thành viên cộng đồng Veloz & Hilux. Theo dõi thành tích, bảng xếp hạng và những kỳ vinh danh.">
     <title>{{ $title }}</title>
+    @if ($canonical)<link rel="canonical" href="{{ $canonical }}">@endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="public-site bg-[#faf9f6] text-stone-900 antialiased">

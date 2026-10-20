@@ -9,9 +9,9 @@ use App\Models\ModerationReview;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class AdminSalesManagementTest extends TestCase
@@ -20,10 +20,7 @@ class AdminSalesManagementTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_admin_list_excludes_admin_accounts_and_paginates(): void
@@ -38,7 +35,7 @@ class AdminSalesManagementTest extends TestCase
             ->assertViewHas('sales', fn ($sales) => $sales->count() === 3);
     }
 
-    /** @dataProvider salesStatuses */
+    #[DataProvider('salesStatuses')]
     public function test_admin_can_filter_every_status(string $status): void
     {
         $admin = User::factory()->admin()->create();
@@ -54,7 +51,7 @@ class AdminSalesManagementTest extends TestCase
         return [['pending'], ['active'], ['rejected'], ['blocked']];
     }
 
-    /** @dataProvider searchableFields */
+    #[DataProvider('searchableFields')]
     public function test_admin_can_search_name_email_and_phone(string $field, string $value, string $search): void
     {
         $admin = User::factory()->admin()->create();
@@ -113,7 +110,7 @@ class AdminSalesManagementTest extends TestCase
         $this->assertSame(0, ModerationReview::count());
     }
 
-    /** @dataProvider salesStatuses */
+    #[DataProvider('salesStatuses')]
     public function test_sales_of_any_status_cannot_access_admin_endpoints(string $status): void
     {
         $actor = User::factory()->create(['status' => $status]);
@@ -158,7 +155,7 @@ class AdminSalesManagementTest extends TestCase
         app(ReviewSalesAccount::class)->execute($sales, $target, 'approve', []);
     }
 
-    /** @dataProvider allTransitions */
+    #[DataProvider('allTransitions')]
     public function test_all_state_transitions_are_enforced(string $from, string $action, ?string $to): void
     {
         $admin = User::factory()->admin()->create();

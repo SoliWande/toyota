@@ -7,9 +7,8 @@ use App\Models\Dealer;
 use App\Models\User;
 use Database\Seeders\ToyotaDealerSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use LogicException;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class ToyotaDealerSeederTest extends TestCase
@@ -18,10 +17,7 @@ class ToyotaDealerSeederTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function snapshot(): array

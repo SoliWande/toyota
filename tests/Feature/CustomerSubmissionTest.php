@@ -12,10 +12,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use LogicException;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class CustomerSubmissionTest extends TestCase
@@ -24,10 +24,7 @@ class CustomerSubmissionTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     private function data(array $overrides = []): array
@@ -87,7 +84,7 @@ class CustomerSubmissionTest extends TestCase
         $this->assertNull($sales->submissions()->first()->notes);
     }
 
-    /** @dataProvider invalidInputs */
+    #[DataProvider('invalidInputs')]
     public function test_validation_rejects_invalid_input_without_creating_records(array $overrides, string $field): void
     {
         $sales = User::factory()->active()->create();
@@ -154,7 +151,7 @@ class CustomerSubmissionTest extends TestCase
         $this->assertModelMissing($submission);
     }
 
-    /** @dataProvider reviewedStatuses */
+    #[DataProvider('reviewedStatuses')]
     public function test_reviewed_submissions_are_read_only(string $status): void
     {
         $submission = CustomerSubmission::factory()->$status()->create(['admin_note' => 'Hidden internal note']);
@@ -233,7 +230,7 @@ class CustomerSubmissionTest extends TestCase
         }
     }
 
-    /** @dataProvider mutations */
+    #[DataProvider('mutations')]
     public function test_mutation_rechecks_status_when_bound_model_is_stale(string $method): void
     {
         $stale = CustomerSubmission::factory()->create();

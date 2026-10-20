@@ -6,15 +6,18 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
+use App\Services\SalesAvatars;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Throwable;
 
 class ProfileController extends Controller
 {
@@ -23,17 +26,32 @@ class ProfileController extends Controller
         return view('profile.edit', ['user' => $request->user()->load('dealer')]);
     }
 
-    public function update(ProfileRequest $request): RedirectResponse
+    public function update(ProfileRequest $request, SalesAvatars $avatars): RedirectResponse
     {
-        DB::transaction(function () use ($request) {
-            $user = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
-            abort_unless($user->status === UserStatus::Active, 403);
-            $user->name = $request->validated('name');
-            if ($user->role === UserRole::Sales) {
-                $user->phone = $request->validated('phone');
+        $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getRealPath()) : null;
+        try {
+            DB::transaction(function () use ($request, $avatar) {
+                $user = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
+                abort_unless($user->status === UserStatus::Active, 403);
+                $user->name = $request->validated('name');
+                if ($user->role === UserRole::Sales) {
+                    $user->phone = $request->validated('phone');
+                    if ($avatar !== null) {
+                        $previous = $user->avatar_path;
+                        $user->avatar_path = $avatar;
+                        if ($previous) {
+                            DB::afterCommit(fn () => rescue(fn () => Storage::disk('sales_avatars')->delete($previous)));
+                        }
+                    }
+                }
+                $user->save();
+            });
+        } catch (Throwable $exception) {
+            if ($avatar !== null) {
+                Storage::disk('sales_avatars')->delete($avatar);
             }
-            $user->save();
-        });
+            throw $exception;
+        }
 
         return back()->with('success', 'Đã cập nhật hồ sơ.');
     }

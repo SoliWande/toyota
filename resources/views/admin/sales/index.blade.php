@@ -44,7 +44,7 @@
                 @forelse ($sales as $account)
                     <tr>
                         <td class="p-4"><a href="{{ route('admin.sales.show', $account) }}" class="font-semibold hover:text-red-600">{{ $account->name }}</a><p class="mt-1 text-slate-500">{{ $account->email }}</p>@if ($account->phone)<p class="mt-1 text-slate-500">{{ $account->phone }}</p>@endif</td>
-                        <td class="p-4">{{ $account->dealer->name }}</td>
+                        <td class="p-4"><x-dealer-link :dealer-id="$account->dealer_id" :name="$account->dealer->name" /></td>
                         <td class="whitespace-nowrap p-4"><x-user-status :status="$account->status" /></td>
                         <td class="p-4">
                             <div class="flex items-center gap-4 whitespace-nowrap">

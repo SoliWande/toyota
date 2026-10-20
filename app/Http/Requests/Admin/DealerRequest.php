@@ -24,6 +24,9 @@ class DealerRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:30'],
             'address' => ['nullable', 'string', 'max:2000'],
             'is_active' => ['required', 'boolean'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120', 'dimensions:max_width=4096,max_height=4096'],
+            'photo_path' => ['missing'],
+            'slug' => ['missing'],
         ];
     }
 

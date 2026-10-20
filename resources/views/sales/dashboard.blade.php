@@ -2,8 +2,8 @@
     <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div class="min-w-0">
             <p class="text-xs font-bold uppercase tracking-widest text-red-600">Không gian Sales</p>
-            <h1 class="mt-3 break-words text-2xl font-bold sm:text-3xl">Xin chào, {{ $sales->name }}</h1>
-            <p class="mt-2 break-words text-sm text-slate-600">{{ $sales->dealer->name }} · {{ $sales->dealer->code }}</p>
+            <h1 class="mt-3 break-words text-2xl font-bold sm:text-3xl">Xin chào, <x-sales-link :sales="$sales" /></h1>
+            <p class="mt-2 break-words text-sm text-slate-600"><x-dealer-link :dealer-id="$sales->dealer_id" :name="$sales->dealer->name" /> · {{ $sales->dealer->code }}</p>
         </div>
         <div class="shrink-0">
             <a href="{{ route('sales.submissions.create') }}" class="button-primary w-full sm:w-auto">Thêm khách hàng</a>

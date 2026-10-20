@@ -5,9 +5,10 @@ namespace Tests\Feature;
 use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class ProfileManagementTest extends TestCase
@@ -16,9 +17,7 @@ class ProfileManagementTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Profile tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_sales_updates_name_and_phone_without_changing_identity(): void
@@ -30,7 +29,7 @@ class ProfileManagementTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => $sales->id, 'name' => 'Sales Updated', 'phone' => '0901234567', 'email' => $sales->email, 'dealer_id' => $sales->dealer_id]);
     }
 
-    /** @dataProvider forbiddenFields */
+    #[DataProvider('forbiddenFields')]
     public function test_sales_cannot_change_protected_fields(string $field, mixed $value): void
     {
         $sales = User::factory()->active()->create();
@@ -55,7 +54,7 @@ class ProfileManagementTest extends TestCase
         $this->assertSame($original, $other->fresh()->getAttributes());
     }
 
-    /** @dataProvider inactiveStatuses */
+    #[DataProvider('inactiveStatuses')]
     public function test_inactive_sales_cannot_access_or_update_profile(string $status): void
     {
         $sales = User::factory()->create(['status' => $status]);
@@ -82,7 +81,7 @@ class ProfileManagementTest extends TestCase
         $this->assertSame($sales->email, $sales->fresh()->email);
     }
 
-    /** @dataProvider invalidPasswords */
+    #[DataProvider('invalidPasswords')]
     public function test_change_password_rejects_invalid_attempts(array $override, string $error): void
     {
         $sales = User::factory()->active()->create();

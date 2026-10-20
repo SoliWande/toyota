@@ -18,6 +18,7 @@ class ReviewSubmissionRequest extends FormRequest
             'admin_note' => ['nullable', 'string', 'max:2000'],
             'rejection_reason' => ['nullable', 'string', 'max:2000'],
             'return_to_queue' => ['nullable', 'boolean'],
+            'verified_facebook_url' => ['nullable', 'string', 'max:2048'],
         ];
     }
 

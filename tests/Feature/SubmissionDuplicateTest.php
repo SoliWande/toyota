@@ -12,8 +12,9 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class SubmissionDuplicateTest extends TestCase
@@ -22,10 +23,7 @@ class SubmissionDuplicateTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     public function test_review_warns_with_previous_sales_dealer_and_record_link(): void
@@ -40,7 +38,7 @@ class SubmissionDuplicateTest extends TestCase
         $this->get(route('admin.submissions.show', $approved))->assertOk()->assertViewHas('duplicate', null);
     }
 
-    /** @dataProvider duplicateProfiles */
+    #[DataProvider('duplicateProfiles')]
     public function test_normalized_duplicates_cannot_be_approved(string $firstUrl, string $newUrl, bool $sameSales): void
     {
         $approved = CustomerSubmission::factory()->approved()->create(['facebook_url' => $firstUrl]);

@@ -30,6 +30,20 @@ return [
 
     'disks' => [
 
+        'dealer_photos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/dealer-photos'),
+            'visibility' => 'private',
+            'throw' => true,
+        ],
+
+        'sales_avatars' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/sales-avatars'),
+            'visibility' => 'private',
+            'throw' => true,
+        ],
+
         'submission_evidence' => [
             'driver' => 'local',
             'root' => storage_path('app/private/submission-evidence'),

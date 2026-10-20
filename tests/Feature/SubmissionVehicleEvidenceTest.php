@@ -8,10 +8,10 @@ use App\Models\CustomerSubmission;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
+use Tests\Support\TestDatabase;
 use Tests\TestCase;
 
 class SubmissionVehicleEvidenceTest extends TestCase
@@ -20,10 +20,7 @@ class SubmissionVehicleEvidenceTest extends TestCase
 
     protected function beforeRefreshingDatabase(): void
     {
-        if (! app()->environment('testing') || config('database.default') !== 'mysql'
-            || DB::connection()->getDatabaseName() !== 'toyota_testing') {
-            throw new LogicException('Database tests may only refresh toyota_testing.');
-        }
+        TestDatabase::assertIsolated();
     }
 
     protected function setUp(): void
@@ -79,7 +76,7 @@ class SubmissionVehicleEvidenceTest extends TestCase
         $this->get(route('admin.submissions.index'))->assertOk()->assertSee('29D-428.12');
     }
 
-    /** @dataProvider requiredFields */
+    #[DataProvider('requiredFields')]
     public function test_all_five_new_fields_are_required(string $field): void
     {
         $data = $this->data();
@@ -95,7 +92,7 @@ class SubmissionVehicleEvidenceTest extends TestCase
         return array_map(fn ($field) => [$field], ['vehicle_model', 'first_registration_year', 'vehicle_color', 'license_plate', 'evidence_image']);
     }
 
-    /** @dataProvider invalidVehicleData */
+    #[DataProvider('invalidVehicleData')]
     public function test_invalid_vehicle_data_is_rejected(array $overrides, string $field): void
     {
         $this->actingAs(User::factory()->active()->create())->post(route('sales.submissions.store'), $this->data($overrides))

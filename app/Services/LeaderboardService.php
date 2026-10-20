@@ -82,8 +82,9 @@ class LeaderboardService
         }
 
         $query = DB::table('customer_submissions as submissions')
-            ->join('users', 'users.id', '=', 'submissions.sales_id')
-            ->where('users.role', UserRole::Sales->value)
+            ->leftJoin('users', 'users.id', '=', 'submissions.sales_id')
+            ->where(fn ($query) => $query->where('users.role', UserRole::Sales->value)
+                ->orWhere(fn ($query) => $query->where('submissions.source', 'dealer_qr')->whereNull('submissions.sales_id')))
             ->where('submissions.status', SubmissionStatus::Approved->value);
 
         if ($start !== null) {

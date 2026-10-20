@@ -4,18 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\ApproveCustomerSubmission;
 use App\Actions\RejectCustomerSubmission;
+use App\Actions\UpdateCustomerSubmission;
 use App\Enums\SubmissionStatus;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReviewSubmissionRequest;
 use App\Http\Requests\Admin\SubmissionIndexRequest;
+use App\Http\Requests\Admin\UpdateSubmissionRequest;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
+use App\Services\AdministrativeDivisions;
 use App\Services\ApprovedSubmissionFinder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class SubmissionReviewController extends Controller
@@ -26,7 +32,7 @@ class SubmissionReviewController extends Controller
         $filters = $request->validated();
         $status = $request->has('status') ? ($filters['status'] ?? '') : SubmissionStatus::Pending->value;
         $filters['status'] = $status;
-        $query = CustomerSubmission::with(['sales:id,name,dealer_id', 'dealer:id,name'])->select('customer_submissions.*')
+        $query = CustomerSubmission::with(['sales:id,name,dealer_id,role', 'dealer:id,name'])->select('customer_submissions.*')
             ->addSelect(['duplicate_approved_id' => DB::table('customer_submissions as approved')
                 ->select('approved.id')->whereColumn('approved.approved_facebook_identity', 'customer_submissions.facebook_url_normalized')->limit(1)]);
         if ($status !== '') {
@@ -54,12 +60,31 @@ class SubmissionReviewController extends Controller
         }
 
         return view('admin.submissions.index', [
-            'submissions' => $query->orderBy('submitted_at')->orderBy('id')->paginate(20)->withQueryString(),
+            // Preserve the explicit all-status filter after empty-string middleware normalization.
+            'submissions' => $query->orderBy('submitted_at')->orderBy('id')->paginate(20)->withQueryString()->appends(['status' => $status]),
             'status' => $status,
             'filters' => $filters,
             'dealers' => Dealer::orderBy('name')->get(['id', 'name']),
             'salesOptions' => User::where('role', UserRole::Sales->value)->orderBy('name')->get(['id', 'name', 'dealer_id']),
+            'editingAvailable' => Schema::hasTable('submission_edits'),
         ]);
+    }
+
+    public function update(UpdateSubmissionRequest $request, CustomerSubmission $submission, UpdateCustomerSubmission $update): RedirectResponse
+    {
+        $filters = validator($request->query(), (new SubmissionIndexRequest)->rules())->validate();
+        $update->execute($request->user(), $submission, $request->validated());
+        $filters['status'] ??= '';
+
+        return redirect()->route('admin.submissions.index', $filters)->with('success', 'Đã lưu thay đổi. Trạng thái duyệt và lịch sử thành tích được giữ nguyên.');
+    }
+
+    public function wards(Request $request, string $province, AdministrativeDivisions $directory): JsonResponse
+    {
+        $this->authorize('review', new CustomerSubmission);
+        abort_unless($directory->province($province), 404);
+
+        return response()->json(['wards' => $directory->wards($province)]);
     }
 
     public function show(CustomerSubmission $submission, ApprovedSubmissionFinder $duplicates): View
@@ -77,7 +102,7 @@ class SubmissionReviewController extends Controller
     {
         $this->authorize('review', $submission);
         $data = $request->validated();
-        $approve->execute($request->user(), $submission, $data['admin_note'] ?? null);
+        $approve->execute($request->user(), $submission, $data['admin_note'] ?? null, $data['verified_facebook_url'] ?? null);
 
         return $this->reviewRedirect($request, $submission)->with('success', 'Đã duyệt khai báo và ghi nhận thành tích.');
     }

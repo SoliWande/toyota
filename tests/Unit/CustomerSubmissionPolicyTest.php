@@ -8,11 +8,12 @@ use App\Enums\UserStatus;
 use App\Models\CustomerSubmission;
 use App\Models\User;
 use App\Policies\CustomerSubmissionPolicy;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CustomerSubmissionPolicyTest extends TestCase
 {
-    /** @dataProvider permissions */
+    #[DataProvider('permissions')]
     public function test_policy_checks_role_account_status_ownership_and_submission_status(UserRole $role, UserStatus $accountStatus, int $owner, SubmissionStatus $status, bool $canView, bool $canChange): void
     {
         $user = new User;
