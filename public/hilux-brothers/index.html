@@ -21,6 +21,35 @@ img{max-width:100%}
 [hidden]{display:none!important}
 </style>
 <title>Hilux &amp; Brothers Đồng Mô</title>
+<!-- Meta Pixel -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}
+    (window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '203452283500459');
+    fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel -->
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-4WHK43ETS9');
+</script>
+<!-- End GA4 -->
 </head>
 <body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -833,7 +862,24 @@ footer{border-top:1px solid var(--rule);padding-block:30px 40px}
     if (!validate()) return;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Đang gửi…';
-    send(collect()).then(function () { finish(true); }, function () { finish(false); });
+      send(collect()).then(function () {
+          finish(true);
+
+          // Facebook Pixel
+          if (typeof fbq === 'function') {
+              fbq('track', 'Lead');
+          }
+
+          // Google Analytics 4
+          if (typeof gtag === 'function') {
+              gtag('event', 'generate_lead', {
+                  form_id: 'hilux_brothers_registration'
+              });
+          }
+
+      }, function () {
+          finish(false);
+      });
   });
 
   $('againBtn').addEventListener('click', function () {
