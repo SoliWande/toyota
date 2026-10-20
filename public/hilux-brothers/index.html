@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Mini Off HILUX &amp; BROTHERS - Kết sức mạnh, Nối hành trình. Sáng thứ Sáu 30/10/2026 tại Làng Văn hóa Đồng Mô, Hà Nội. Ra mắt Hội xe bán tải Hilux, lái thử Toyota Hilux Trailhunter và Land Cruiser FJ trên 800m cung đường off-road.">
+
+<!-- === DEV SỬA 2 DÒNG DƯỚI: thay bằng URL thật của trang === -->
+<meta property="og:url" content="https://otovietnam.com/hilux-brothers/">
+<meta property="og:image" content="https://otovietnam.com/hilux-brothers/kv-hilux-brothers.webp">
+<!-- ========================================================= -->
+
+<meta property="og:title" content="Mini Off HILUX &amp; BROTHERS - Đồng Mô 30.10.2026">
+<meta property="og:description" content="Ra mắt Hội xe bán tải Hilux. Lái thử Hilux Trailhunter và Land Cruiser FJ trên 800m cung đường off-road. Đăng ký ngay.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Hilux &amp; Brothers Đồng Mô</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Roboto+Mono:wght@500;700&display=swap">
+
+<style>
+/* Layout: roadbook — bìa đóng dấu, dải lộ trình theo mốc giờ, phiếu đăng ký cuối trang */
+/* Màu lấy từ áo polo & nón Hilux: đen — đỏ Toyota — trắng. Trang chạy một tông tối duy nhất. */
+:root{
+  --paper:#0C0C0E;
+  --paper-2:#141417;
+  --paper-3:#1A1A1E;
+  --ink:#F6F6F7;
+  --ink-2:#9B9BA3;
+  --rule:#2B2B31;
+  --accent:#E4002B;
+  --accent-2:#FF2347;
+  --accent-ink:#FFFFFF;
+  --field:#E4002B;
+  --shadow:0 1px 0 rgba(0,0,0,.5), 0 20px 48px -26px #000;
+
+  --d:"Nunito","Segoe UI",Roboto,Arial,sans-serif;
+  --b:"Nunito","Segoe UI",Roboto,Arial,sans-serif;
+  --m:"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--b);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:980px;
+  margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+section{padding-block:clamp(28px,4.5vw,50px)}
+h1,h2,h3{font-family:var(--d);text-wrap:balance;margin:0;line-height:1.05}
+p{margin:0}
+a{color:inherit}
+
+.eyebrow{
+  font-family:var(--d);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.eyebrow::before{content:"// "}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+#terrain{position:absolute;inset:auto 0 0 0;width:100%;height:58%;display:block;opacity:.8;pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-inner{padding-block:clamp(24px,3.5vw,38px) clamp(30px,5vw,52px)}
+
+.stamp{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:#FFFFFF;
+  padding:7px 25px 7px 14px;
+  clip-path:polygon(0 0,100% 0,calc(100% - 13px) 100%,0 100%);
+  font-family:var(--d);font-weight:800;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.stamp .dot{width:6px;height:6px;border-radius:50%;background:#FFFFFF}
+.stripes{display:flex;flex-direction:column;gap:4px;width:148px;margin-top:20px}
+.stripes i{display:block;height:3px;background:var(--accent)}
+
+.kv{
+  margin-top:16px;line-height:0;
+  border:1px solid var(--rule);border-radius:4px;
+  overflow:hidden;background:#000;
+}
+.kv img{display:block;width:100%;height:auto;max-width:100%}
+.motto{
+  font-family:var(--d);font-weight:700;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);margin-top:10px;
+}
+.lede{
+  max-width:60ch;margin-top:16px;
+  font-size:clamp(15px,2.6vw,18px);
+  color:var(--ink-2);
+}
+.lede strong{color:var(--ink);font-weight:600}
+
+.facts{
+  display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);
+  grid-template-columns:repeat(3,1fr);
+  margin-top:24px;border-radius:3px;overflow:hidden;
+}
+.fact{background:var(--paper);padding:14px 14px 16px;min-width:0}
+.fact dt{
+  font-family:var(--d);font-size:10px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+}
+.fact dd{margin:5px 0 0;font-weight:600;font-size:15px;line-height:1.35}
+.fact dd em{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.fact .num{font-family:var(--m);font-weight:700;font-variant-numeric:tabular-nums}
+
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:22px}
+.btn{
+  font-family:var(--d);font-weight:800;font-size:15px;
+  letter-spacing:.02em;
+  background:var(--accent);color:var(--accent-ink);
+  border:none;border-radius:3px;
+  padding:15px 28px;cursor:pointer;
+  text-decoration:none;display:inline-block;
+  transition:transform .12s ease, filter .12s ease;
+}
+.btn:hover{background:var(--accent-2)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--rule)}
+.btn.ghost:hover{border-color:var(--ink-2);filter:none}
+.countdown{font-size:14px;color:var(--ink-2)}
+.countdown b{font-family:var(--m);font-weight:700;color:var(--accent);font-size:17px}
+
+/* ---------- BLOCKS ---------- */
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+h2{font-size:clamp(24px,5vw,36px);font-weight:800;letter-spacing:-.02em}
+.sec-head .eyebrow{transform:translateY(-2px)}
+
+.photo{padding-block:clamp(18px,2.5vw,28px)}
+.shot{margin:0}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px}
+.shot figcaption{margin-top:10px;font-size:13px;color:var(--ink-2)}
+
+/* ---------- TRACK ---------- */
+.track{border-top:1px solid var(--rule);background:var(--paper-3)}
+.track-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:30px;align-items:start}
+.track-len{
+  font-family:var(--d);font-weight:900;
+  font-size:clamp(44px,9vw,76px);line-height:1;
+  letter-spacing:-.04em;color:var(--accent);
+}
+.track-len small{font-size:.32em;font-weight:700;letter-spacing:.02em;margin-left:4px}
+.track-lede{margin-top:16px;font-size:17px;max-width:48ch;color:var(--ink-2)}
+.track-lede b{color:var(--ink);font-weight:600}
+.track-note{margin-top:14px;font-size:14px;color:var(--ink-2);max-width:46ch}
+.obst{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:9px;align-content:flex-start}
+.obst li{
+  border:1px solid var(--rule);background:var(--paper);
+  border-radius:999px;padding:8px 15px;font-size:14px;font-weight:500;
+}
+.track-map{margin:24px 0 0}
+.map-btn{
+  display:block;width:100%;padding:0;
+  border:1px solid var(--rule);background:var(--paper);
+  border-radius:4px;overflow:hidden;cursor:zoom-in;
+}
+.map-btn img{display:block;width:100%;height:auto;max-width:100%}
+.track-map figcaption{margin-top:10px;font-size:13px;color:var(--ink-2)}
+.lightbox{
+  position:fixed;inset:0;z-index:50;overflow:auto;
+  background:rgba(0,0,0,.96);
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  display:flex;align-items:flex-start;justify-content:center;
+}
+.lightbox img{max-width:100%;height:auto;border-radius:3px;cursor:zoom-in}
+.lightbox.zoom img{max-width:none;width:1400px;cursor:zoom-out}
+.lb-close{
+  position:fixed;z-index:51;
+  top:calc(10px + env(safe-area-inset-top,0px));
+  right:calc(10px + env(safe-area-inset-right,0px));
+  width:42px;height:42px;border-radius:50%;border:none;
+  background:#FFFFFF;color:#0C0C0E;cursor:pointer;
+  font-family:var(--d);font-size:22px;font-weight:700;line-height:1;
+}
+
+/* ---------- ROADBOOK ---------- */
+.roadbook{border-top:1px solid var(--rule);background:var(--paper-2)}
+.rb-note{
+  margin:-8px 0 20px;padding:12px 15px;
+  border-left:3px solid var(--accent);
+  background:var(--paper);border-radius:0 3px 3px 0;
+  font-size:15px;color:var(--ink-2);max-width:62ch;
+}
+.rb-note b{color:var(--ink);font-weight:600}
+.leg{
+  display:grid;
+  grid-template-columns:104px 26px 1fr;
+  gap:0 18px;
+  align-items:start;
+}
+.leg .time{
+  font-family:var(--m);font-weight:700;font-size:13px;
+  font-variant-numeric:tabular-nums;
+  padding-top:13px;text-align:right;color:var(--ink);
+}
+.rail{position:relative;justify-self:center}
+.rail::before{
+  content:"";position:absolute;left:50%;top:0;bottom:0;
+  width:1px;background:var(--rule);transform:translateX(-50%);
+}
+.leg:first-child .rail::before{top:22px}
+.leg:last-child .rail::before{bottom:auto;height:22px}
+.pin{
+  position:relative;z-index:1;display:block;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--paper-2);border:2px solid #55555E;
+  margin:14px auto 0;
+}
+.leg.key .pin{background:var(--accent);border-color:var(--accent)}
+.leg .body{padding:11px 0 13px;border-bottom:1px solid var(--rule);min-width:0}
+.leg:last-child .body{border-bottom:none}
+.leg h3{font-size:17px;font-weight:700}
+.leg ul{margin:8px 0 0;padding-left:18px;color:var(--ink-2);font-size:15px}
+.leg li{margin-top:3px}
+
+/* ---------- TWO COL LISTS ---------- */
+.duo{display:grid;gap:26px;grid-template-columns:1fr 1fr}
+.listblock h3{font-size:19px;font-weight:700;margin-bottom:14px}
+.checklist{list-style:none;margin:0;padding:0}
+.checklist li{
+  position:relative;padding-left:26px;margin-top:11px;
+  color:var(--ink-2);font-size:15px;
+}
+.checklist li::before{
+  content:"";position:absolute;left:0;top:9px;
+  width:11px;height:2px;background:var(--accent);
+}
+.checklist li b{color:var(--ink);font-weight:600}
+
+/* ---------- PLACE ---------- */
+.place{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper-3)}
+.place-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start}
+.addr{font-size:17px;font-weight:600;line-height:1.5;max-width:30ch}
+.addr span{display:block;color:var(--ink-2);font-weight:400;font-size:15px;margin-top:6px}
+.coord{margin-top:12px;font-size:13px;color:var(--ink-2)}
+.coord span{font-family:var(--m);font-weight:700;color:var(--ink);user-select:all}
+
+/* ---------- FORM ---------- */
+.formwrap{
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  border-radius:5px;
+  box-shadow:var(--shadow);
+  padding:clamp(22px,4vw,38px);
+}
+.slip-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px}
+.slip-head h2{font-size:clamp(22px,4.4vw,32px)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f{display:flex;flex-direction:column;gap:7px;min-width:0}
+.f.span{grid-column:1/-1}
+label{
+  font-family:var(--d);font-size:11px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+label .req{color:var(--accent)}
+input[type=text],input[type=tel],select,textarea{
+  font-family:var(--b);font-size:16px;color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--rule);border-radius:3px;
+  padding:12px 13px;width:100%;
+  transition:border-color .12s ease, box-shadow .12s ease;
+}
+textarea{resize:vertical;min-height:84px;line-height:1.55}
+input::placeholder,textarea::placeholder{color:#6B6B75}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--field);box-shadow:0 0 0 3px color-mix(in srgb,var(--field) 18%,transparent)}
+.hint{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.err{font-size:12.5px;color:var(--accent);font-weight:600}
+.err:empty{display:none}
+input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--accent)}
+
+.check{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.check input{margin:3px 0 0;width:17px;height:17px;accent-color:var(--accent);flex:none}
+.check label{
+  font-family:var(--b);font-size:14.5px;font-weight:400;
+  letter-spacing:0;text-transform:none;color:var(--ink-2);cursor:pointer;
+}
+
+.submit-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:20px}
+.submit-row .btn{padding:16px 34px;font-size:16px}
+.cap-note{font-size:13px;color:var(--ink-2);max-width:34ch}
+
+/* ---------- SUCCESS ---------- */
+.done{text-align:left}
+.done h2{color:var(--accent)}
+.done-msg{margin-top:12px;color:var(--ink-2);max-width:56ch;font-size:16px}
+.done-hot{margin-top:14px;font-size:14px;color:var(--ink-2)}
+.contactline{
+  font-family:var(--m);font-size:16px;font-weight:700;
+  color:var(--ink);user-select:all;
+}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--rule);padding-block:30px 40px}
+.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.foot b{color:var(--ink);font-weight:600}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:760px){
+  .facts{grid-template-columns:1fr 1fr}
+  .facts .fact:last-child{grid-column:1/-1}
+  .duo{grid-template-columns:1fr;gap:28px}
+  .place-grid{grid-template-columns:1fr}
+  .track-grid{grid-template-columns:1fr;gap:24px}
+  .grid2{grid-template-columns:1fr}
+  .leg{grid-template-columns:76px 22px 1fr;gap:0 12px}
+
+  /* chữ to hơn khi xem trên điện thoại */
+  body{font-size:17px;line-height:1.7}
+  .eyebrow{font-size:12px}
+  .lede{font-size:17px}
+  .motto{font-size:12px}
+  .countdown{font-size:15px}
+  .fact dt{font-size:11px}
+  .fact dd{font-size:16px}
+  .fact dd em{font-size:13.5px}
+  .btn{font-size:16px;padding:16px 26px}
+  .shot figcaption{font-size:14px}
+  .track-lede{font-size:17px}
+  .track-note{font-size:15px}
+  .obst li{font-size:15px}
+  .track-map figcaption{font-size:14px}
+  .rb-note{font-size:16px}
+  .leg .time{font-size:13px;padding-top:13px}
+  .leg h3{font-size:18px}
+  .leg ul{font-size:16px}
+  .listblock h3{font-size:20px}
+  .checklist li{font-size:16px}
+  .addr{font-size:18px}
+  .addr span{font-size:16px}
+  .coord{font-size:14px}
+  label{font-size:12px}
+  .hint{font-size:14px}
+  .err{font-size:14px}
+  .check label{font-size:15.5px}
+  .cap-note{font-size:14px;max-width:none}
+  .done-msg{font-size:17px}
+  .done-hot{font-size:15px}
+  .foot{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<header class="hero">
+  <canvas id="terrain" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="stamp"><span class="dot"></span>Mini Offline #1 · Hội xe bán tải Hilux</div>
+
+      <h1 class="kv"><img src="kv-hilux-brothers.webp" width="1800" height="1012" alt="Mini Off — HILUX &amp; BROTHERS, Kết sức mạnh · Nối hành trình"></h1>
+
+      <p class="motto">Bền bỉ đa dụng · An toàn kỹ năng · Đồng hành cộng đồng</p>
+      <div class="stripes" aria-hidden="true"><i></i><i></i></div>
+
+      <p class="lede">Sáng thứ Sáu 30/10, anh em bán tải miền Bắc gặp nhau lần đầu tại thánh địa Đồng Mô: <strong>ra mắt Hội xe bán tải Hilux</strong>, nghe chuyện đèo dốc từ người đã chạy thật, rồi cầm lái <strong>Toyota Hilux Trailhunter</strong> và <strong>Toyota Land Cruiser FJ</strong> qua 800 m cung đường off-road.</p>
+
+      <dl class="facts">
+        <div class="fact"><dt>Thời gian</dt><dd><span class="num">08:30 – 11:30</span></dd></div>
+        <div class="fact"><dt>Ngày</dt><dd><span class="num">T6 · 30.10.2026</span></dd></div>
+        <div class="fact"><dt>Địa điểm</dt><dd>Làng Văn hóa Đồng Mô, Hà Nội</dd></div>
+      </dl>
+
+      <div class="cta-row">
+        <button class="btn" type="button" id="goForm">Đăng ký ngay</button>
+        <p class="countdown" id="countdown">Miễn phí tham dự</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="dangky">
+  <div class="wrap">
+    <div class="formwrap">
+
+      <form id="regForm" novalidate>
+        <div class="slip-head">
+          <div>
+            <span class="eyebrow">Phiếu giữ chỗ</span>
+            <h2 style="margin-top:8px">Đăng ký tham gia</h2>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="f">
+            <label for="hoten">Họ và tên <span class="req">*</span></label>
+            <input type="text" id="hoten" name="hoten" autocomplete="name" placeholder="Nguyễn Văn An">
+            <p class="err" id="e-hoten"></p>
+          </div>
+
+          <div class="f">
+            <label for="sdt">Số điện thoại <span class="req">*</span></label>
+            <input type="tel" id="sdt" name="sdt" inputmode="numeric" autocomplete="tel" placeholder="0901234567">
+            <p class="err" id="e-sdt"></p>
+          </div>
+
+          <div class="f">
+            <label for="xe">Bạn đi xe gì <span class="req">*</span></label>
+            <select id="xe" name="xe">
+              <option value="">— Chọn dòng xe —</option>
+              <option>Hilux</option>
+              <option>Fortuner</option>
+              <option>Land Cruiser</option>
+              <option>Land Cruiser Prado</option>
+              <option>Land Cruiser FJ</option>
+              <option>Toyota dòng khác</option>
+              <option>Xe hãng khác</option>
+              <option>Chưa có xe — đi cùng bạn</option>
+            </select>
+            <p class="err" id="e-xe"></p>
+          </div>
+
+          <div class="f">
+            <label for="songuoi">Đi mấy người</label>
+            <select id="songuoi" name="songuoi">
+              <option value="1">1 người</option>
+              <option value="2" selected>2 người</option>
+              <option value="3">3 người</option>
+              <option value="4">4 người</option>
+              <option value="5">5 người</option>
+            </select>
+          </div>
+
+          <div class="f span">
+            <label for="cauhoi">Câu muốn hỏi chuyên gia off-road</label>
+            <textarea id="cauhoi" name="cauhoi" placeholder="Ví dụ: đường đất mùa mưa nên xuống áp suất lốp bao nhiêu?"></textarea>
+            <p class="hint">BTC gom trước cho phần hỏi đáp.</p>
+          </div>
+
+          <div class="f span">
+            <div class="check">
+              <input type="checkbox" id="laithu" name="laithu">
+              <label for="laithu">Tôi muốn lái thử Hilux Trailhunter hoặc Land Cruiser FJ (nhớ mang bằng lái).</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button class="btn" type="submit" id="submitBtn">Gửi đăng ký</button>
+          <p class="cap-note">Số chỗ có hạn. BTC gọi xác nhận theo thứ tự đăng ký.</p>
+        </div>
+      </form>
+
+      <div class="done" id="done" hidden>
+        <span class="eyebrow" id="doneEyebrow">Đã nhận đăng ký</span>
+        <h2 style="margin-top:8px" id="doneTitle">Cảm ơn bạn</h2>
+        <p class="done-msg" id="doneMsg"></p>
+        <p class="done-hot">Cần hỏi thêm, nhắn Zalo <span class="contactline" id="hotline"></span> — Mỹ Dung</p>
+
+        <div class="submit-row">
+          <button class="btn ghost" type="button" id="againBtn">Đăng ký cho người khác</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="photo">
+  <div class="wrap">
+    <figure class="shot">
+      <img src="anh-cung-duong.webp" width="750" height="563" alt="Toyota Hilux màu trắng chạy trên cung đường đất giữa hai hàng cờ Toyota">
+      <figcaption>Toyota Hilux trên cung đường trải nghiệm.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="track">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Sân chơi</span>
+      <h2>Đường trải nghiệm Toyota</h2>
+    </div>
+
+    <div class="track-grid">
+      <div>
+        <p class="track-len">800<small>M</small></p>
+        <p class="track-lede">Dốc, bùn lầy, hố so le, đường đá, cua nghiêng. Đủ để thấy <b>Hilux Trailhunter</b> và <b>Land Cruiser FJ</b> vượt địa hình tới đâu.</p>
+        <p class="track-note">Chạy theo chiều mũi tên, có người hướng dẫn tại từng chướng ngại.</p>
+      </div>
+      <ul class="obst">
+        <li>Bùn lầy</li>
+        <li>Dốc</li>
+        <li>Đường đá</li>
+        <li>Cua nghiêng</li>
+        <li>Hố so le</li>
+      </ul>
+    </div>
+
+    <figure class="track-map">
+      <button type="button" class="map-btn" id="mapBtn" aria-label="Phóng to sơ đồ đường trải nghiệm">
+        <img src="so-do-duong-trai-nghiem.webp" width="1400" height="1219" alt="Sơ đồ đường trải nghiệm xe Toyota dài khoảng 800 m tại Đồng Mô, đánh dấu các đoạn bùn lầy, dốc, đường đá, cua nghiêng, hố so le cùng điểm xuất phát và về đích">
+      </button>
+      <figcaption>Sơ đồ chính thức — bấm vào ảnh để xem lớn.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button type="button" class="lb-close" id="lbClose" aria-label="Đóng sơ đồ">×</button>
+  <img src="so-do-duong-trai-nghiem.webp" id="lbImg" alt="Sơ đồ đường trải nghiệm xe Toyota tại Đồng Mô">
+</div>
+
+<section class="roadbook">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Lộ trình buổi sáng</span>
+      <h2>Cùng cộng đồng</h2>
+    </div>
+
+    <p class="rb-note">Lái thử mở xuyên suốt cả ngày.</p>
+
+    <div class="legs">
+      <div class="leg">
+        <div class="time">08:30 &ndash; 09:00</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Đón khách &amp; check-in</h3>
+          <ul>
+            <li>Đón tiếp thành viên, check-in</li>
+            <li>Mời thành viên quét mã QR gia nhập Hội</li>
+            <li>Lái thử xe</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg">
+        <div class="time">09:00 &ndash; 09:10</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Khai mạc chương trình</h3>
+          <ul>
+            <li>Đại diện TMV &amp; Otosaigon phát biểu chào mừng, giới thiệu về buổi mini offline</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg key">
+        <div class="time">09:10 &ndash; 09:20</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Ra mắt Hội xe bán tải Hilux</h3>
+          <ul>
+            <li>Chính thức công bố và ra mắt cộng đồng Hội xe bán tải Hilux</li>
+            <li>Chia sẻ định hướng sinh hoạt, meetup, hoạt động kết nối trong năm</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg">
+        <div class="time">09:20 &ndash; 09:40</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Giao lưu kết nối thành viên</h3>
+          <ul>
+            <li>Giao lưu thành viên</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg key">
+        <div class="time">09:40 &ndash; 10:10</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Chia sẻ kinh nghiệm off-road &amp; đường đèo dốc cùng chuyên gia</h3>
+          <ul>
+            <li>Kinh nghiệm thực tế off-road, đèo dốc từ thành viên và chuyên gia</li>
+            <li>Cảm nhận về xe Hilux và FJ mới (dành cho member đã lái thử)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg">
+        <div class="time">10:10 &ndash; 10:30</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Q&amp;A</h3>
+          <ul>
+            <li>Tương tác hỏi đáp cùng chuyên gia</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg">
+        <div class="time">10:30 &ndash; 10:40</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Chụp ảnh tập thể &amp; kết thúc</h3>
+          <ul>
+            <li>Kết thúc chương trình</li>
+            <li>Chụp ảnh lưu niệm toàn thể khách mời &amp; thành viên</li>
+            <li>Trao quà tặng tri ân (logo hội, nón…)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="leg key">
+        <div class="time">10:40 &ndash; 11:30</div>
+        <div class="rail"><span class="pin"></span></div>
+        <div class="body">
+          <h3>Lái thử xe &amp; tự do kết nối</h3>
+          <ul>
+            <li>Lái thử xe Hilux và các xe Toyota khác</li>
+            <li>Giao lưu tự do, kết nối cộng đồng</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="duo">
+      <div class="listblock">
+        <h3>Buổi này dành cho ai</h3>
+        <ul class="checklist">
+          <li><b>Chủ xe Hilux</b> — cả 4x2 lẫn 4x4</li>
+          <li><b>Chủ Fortuner, Land Cruiser, Prado, Land Cruiser FJ</b></li>
+          <li><b>Anh em mê xe Toyota</b>, muốn nghe người dùng thật nói trước khi mua</li>
+          <li><b>Mê off-road</b>, muốn có đoàn đi chung thay vì chạy một mình</li>
+        </ul>
+      </div>
+
+      <div class="listblock">
+        <h3>Mang theo gì</h3>
+        <ul class="checklist">
+          <li><b>Giấy tờ xe và bằng lái</b> — bắt buộc nếu muốn lái thử</li>
+          <li><b>Giày kín mũi</b> — sân có đất và cỏ, không đi dép lê</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="place">
+  <div class="wrap">
+    <div class="place-grid">
+      <div>
+        <span class="eyebrow">Điểm hẹn</span>
+        <p class="addr" style="margin-top:12px">Làng Văn hóa – Du lịch các dân tộc Việt Nam
+          <span>Đồng Mô, xã Đoài Phương, Hà Nội — 45 km từ trung tâm, đi Đại lộ Thăng Long.</span>
+        </p>
+        <p class="coord">Định vị: <span>21.0273655, 105.4629771</span></p>
+        <p style="margin-top:18px">
+          <a class="btn ghost" href="https://www.google.com/maps/place/%C4%90%E1%BB%93ng+M%C3%B4+Discovery/@21.0273655,105.4604022,1067m/data=!3m2!1e3!4b1!4m6!3m5!1s0x31345d455470c4fb:0xa3a91c2e99e91958!8m2!3d21.0273655!4d105.4629771!16s%2Fg%2F11mw896q_x" target="_blank" rel="noopener">Mở Google Maps</a>
+        </p>
+      </div>
+      <div>
+        <span class="eyebrow">Lưu ý khi tới</span>
+        <ul class="checklist" style="margin-top:12px">
+          <li>Có mặt trước <b>08:30</b> để kịp check-in và ghi tên lái thử</li>
+          <li>Suất lái thử xếp theo thứ tự check-in</li>
+          <li>Đoàn đi chung hẹn tại nút giao Đại lộ Thăng Long</li>
+          <li>Hỏi đường hoặc đăng ký gấp: <b>0981 474 736</b> — Mỹ Dung</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <p><b>Otosaigon</b> tổ chức · Đồng hành cùng <b>Toyota Việt Nam</b></p>
+    <p>Liên hệ BTC: <b>0981 474 736</b> — Mỹ Dung</p>
+    <p>Hội xe bán tải Hilux · Mini Offline #1 · Đồng Mô 30.10.2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================= SỬA Ở ĐÂY ================= */
+  var HOTLINE = '0981 474 736';     // số Zalo của BTC (Mỹ Dung)
+  var SHEET_ENDPOINT = '';          // dán link Google Apps Script Web App vào đây để đăng ký tự đổ về Google Sheet
+  var EVENT    = new Date('2026-10-30T08:30:00+07:00');
+  /* ============================================= */
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- đếm ngược ---------- */
+  (function countdown() {
+    var el = $('countdown');
+    if (!el) return;
+    var ms = EVENT.getTime() - Date.now();
+    // đếm theo ngày lịch ở giờ Việt Nam, không theo số giờ còn lại
+    var days;
+    try {
+      var vn = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Ho_Chi_Minh' });
+      days = Math.round((Date.parse('2026-10-30T00:00:00Z') - Date.parse(vn + 'T00:00:00Z')) / 86400000);
+    } catch (err) {
+      days = Math.floor(ms / 86400000);
+    }
+    if (days > 1) {
+      el.innerHTML = 'Còn <b>' + days + '</b> ngày · Miễn phí tham dự';
+    } else if (days === 1) {
+      el.innerHTML = '<b>Ngày mai</b> · Miễn phí tham dự';
+    } else if (ms > -4 * 3600000) {
+      el.innerHTML = '<b>Đang diễn ra</b> tại Đồng Mô';
+    } else {
+      el.textContent = 'Chương trình đã kết thúc. Hẹn anh em buổi offline tiếp theo.';
+    }
+  })();
+
+  $('hotline').textContent = HOTLINE;
+
+  /* ---------- cuộn tới form ---------- */
+  $('goForm').addEventListener('click', function () {
+    var target = $('dangky');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    setTimeout(function () { $('hoten').focus({ preventScroll: true }); }, reduce ? 0 : 500);
+  });
+
+  /* ---------- sơ đồ đường trải nghiệm ---------- */
+  (function mapZoom() {
+    var box = $('lightbox'), btn = $('mapBtn'), img = $('lbImg'), close = $('lbClose');
+    if (!box || !btn) return;
+    function open() { box.hidden = false; document.body.style.overflow = 'hidden'; close.focus(); }
+    function shut() { box.hidden = true; box.classList.remove('zoom'); document.body.style.overflow = ''; btn.focus(); }
+    btn.addEventListener('click', open);
+    close.addEventListener('click', shut);
+    img.addEventListener('click', function () { box.classList.toggle('zoom'); });
+    box.addEventListener('click', function (e) { if (e.target === box) shut(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) shut(); });
+  })();
+
+  /* ---------- kiểm tra ---------- */
+  var PHONE = /^0[35789]\d{8}$/;
+
+  function setErr(field, msgId, msg) {
+    $(msgId).textContent = msg || '';
+    if (field) field.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+
+  function validate() {
+    var ok = true, first = null;
+
+    var ten = $('hoten').value.trim();
+    if (ten.length < 2) { setErr($('hoten'), 'e-hoten', 'Nhập họ tên để BTC làm bảng tên.'); ok = false; first = first || $('hoten'); }
+    else setErr($('hoten'), 'e-hoten', '');
+
+    var sdt = $('sdt').value.replace(/[\s.\-()]/g, '');
+    if (!PHONE.test(sdt)) { setErr($('sdt'), 'e-sdt', 'Số di động 10 chữ số, bắt đầu bằng 03, 05, 07, 08 hoặc 09.'); ok = false; first = first || $('sdt'); }
+    else setErr($('sdt'), 'e-sdt', '');
+
+    if (!$('xe').value) { setErr($('xe'), 'e-xe', 'Chọn dòng xe đang chạy.'); ok = false; first = first || $('xe'); }
+    else setErr($('xe'), 'e-xe', '');
+
+    if (first) first.focus();
+    return ok;
+  }
+
+  /* ---------- gửi về Google Sheet ---------- */
+  var form = $('regForm');
+  var done = $('done');
+  var submitBtn = $('submitBtn');
+
+  function collect() {
+    return {
+      thoiDiem: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+      hoTen: $('hoten').value.trim(),
+      dienThoai: $('sdt').value.replace(/[\s.\-()]/g, ''),
+      xe: $('xe').value,
+      soNguoi: $('songuoi').value,
+      laiThu: $('laithu').checked ? 'Có' : 'Không',
+      cauHoi: $('cauhoi').value.trim(),
+      suKien: 'HILUX & BROTHERS — Đồng Mô 30/10/2026'
+    };
+  }
+
+  function send(data) {
+    // chưa cấu hình endpoint: chạy chế độ xem thử, vẫn hiện màn hình cảm ơn
+    if (!SHEET_ENDPOINT) return Promise.resolve('demo');
+    return fetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then(function () { return 'sent'; });
+  }
+
+  function finish(ok) {
+    $('doneEyebrow').textContent = ok ? 'Đã nhận đăng ký' : 'Chưa gửi được';
+    $('doneTitle').textContent = ok ? 'Cảm ơn bạn' : 'Gửi chưa thành công';
+    $('doneMsg').textContent = ok
+      ? 'Ban tổ chức sẽ gọi xác nhận trong vòng 48 giờ. Hẹn gặp bạn sáng thứ Sáu 30/10 tại Đồng Mô.'
+      : 'Đường truyền đang lỗi nên chưa lưu được. Bạn nhắn giúp họ tên và số điện thoại qua Zalo bên dưới để Ban tổ chức ghi nhận.';
+    form.hidden = true;
+    done.hidden = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Gửi đăng ký';
+    done.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start'
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Đang gửi…';
+    send(collect()).then(function () { finish(true); }, function () { finish(false); });
+  });
+
+  $('againBtn').addEventListener('click', function () {
+    form.reset();
+    ['e-hoten', 'e-sdt', 'e-xe'].forEach(function (k) { $(k).textContent = ''; });
+    done.hidden = true;
+    form.hidden = false;
+    $('hoten').focus();
+  });
+
+  /* ---------- nền địa hình ---------- */
+  (function terrain() {
+    var cv = $('terrain');
+    if (!cv) return;
+    var ctx = cv.getContext('2d');
+    if (!ctx) return;
+
+    function colors() {
+      var cs = getComputedStyle(document.documentElement);
+      return {
+        line: cs.getPropertyValue('--rule').trim() || '#ccc',
+        hi: cs.getPropertyValue('--field').trim() || '#777'
+      };
+    }
+
+    function draw() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = cv.clientWidth, h = cv.clientHeight;
+      if (!w || !h) return;
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      var c = colors();
+      var N = 15;
+      for (var i = 0; i < N; i++) {
+        var t = i / (N - 1);
+        ctx.beginPath();
+        for (var x = 0; x <= w; x += 4) {
+          var u = x / w;
+          var y = h * (0.18 + t * 0.9)
+            + Math.sin(u * 5.1 + i * 0.52) * (16 + i * 2.6)
+            + Math.sin(u * 11.7 + i * 1.31) * (7 + i * 0.9)
+            + Math.sin(u * 2.3 - i * 0.37) * (22 - i * 0.5);
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = (i % 5 === 0) ? c.hi : c.line;
+        ctx.globalAlpha = (i % 5 === 0) ? 0.5 : 0.95;
+        ctx.lineWidth = (i % 5 === 0) ? 1.4 : 1;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    draw();
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(draw, 150);
+    });
+    if (window.matchMedia) {
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      if (mq.addEventListener) mq.addEventListener('change', draw);
+    }
+    new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  })();
+})();
+</script>
+
+</body>
+</html>
