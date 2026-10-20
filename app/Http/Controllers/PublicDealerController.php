@@ -31,7 +31,7 @@ class PublicDealerController extends Controller
         }
 
         return view('dealers.index', [
-            'dealers' => $query->orderBy('dealers.name')->orderBy('dealers.id')->paginate(20)->appends($request->only('q')),
+            'dealers' => $query->orderByDesc('score')->orderBy('dealers.name')->orderBy('dealers.id')->paginate(20)->appends($request->only('q')),
             'filters' => $filters,
         ]);
     }
