@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\AdministrativeDivisions;
+use App\Services\ToyotaRealisticDemo;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(AdministrativeDivisions::class);
+        $this->app->singleton(ToyotaRealisticDemo::class);
     }
 
     /**
