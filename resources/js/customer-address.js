@@ -50,7 +50,7 @@ export function initCustomerAddressFields(root = document) {
                 ward.replaceChildren(new Option('Chọn Phường/Xã', ''),
                     ...cache.get(provinceCode).map((item) => new Option(item.name, item.code)));
                 ward.disabled = false;
-                status.textContent = 'Vui lòng chọn Phường/Xã.';
+                status.textContent = container.closest('[data-step-two]') ? '' : 'Vui lòng chọn Phường/Xã.';
             } catch (error) {
                 if (error.name === 'AbortError' || currentRequest !== requestId) return;
                 ward.replaceChildren(new Option('Chưa tải được Phường/Xã', ''));

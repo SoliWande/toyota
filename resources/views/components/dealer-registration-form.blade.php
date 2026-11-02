@@ -1,5 +1,5 @@
-@props(['dealer'])
-<section id="registration" class="mt-8 scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 sm:p-7" aria-labelledby="registration-title">
+@props(['dealer', 'sectionId' => 'registration'])
+<section id="{{ $sectionId }}" class="mt-8 scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 sm:p-7" aria-labelledby="registration-title">
     <h2 id="registration-title" class="text-2xl font-bold">Đăng ký cùng {{ $dealer->name }}</h2>
     <p class="mt-3 text-sm leading-6 text-stone-600">Để lại thông tin để đại lý liên hệ và xác minh đăng ký của bạn. Đăng ký chỉ được ghi nhận vào chiến dịch sau khi Admin duyệt.</p>
     @if (session('registration_success'))

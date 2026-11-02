@@ -17,6 +17,8 @@ use App\Http\Controllers\Dealer\DashboardController as DealerDashboardController
 use App\Http\Controllers\Dealer\SalesController as DealerSalesController;
 use App\Http\Controllers\DealerProfileMediaController;
 use App\Http\Controllers\DealerRegistrationController;
+use App\Http\Controllers\DealerRegistrationDraftController;
+use App\Http\Controllers\DealerRegistrationPreviewController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +51,14 @@ Route::get('/dealers/{dealer}/qr', [DealerProfileMediaController::class, 'qr'])-
 Route::get('/dealers/{dealer}/photo', [DealerProfileMediaController::class, 'photo'])->whereNumber('dealer')->name('dealers.photo');
 Route::get('/awards', [AwardHistoryController::class, 'index'])->name('awards.index');
 Route::get('/awards/{award}', [AwardHistoryController::class, 'show'])->whereNumber('award')->name('awards.show');
+
+// Read-only UI previews, registered only outside production; controller also checks the environment.
+if (app()->environment(['local', 'testing'])) {
+    Route::get('/_preview/dealer-registration/wards/{province}', [DealerRegistrationPreviewController::class, 'wards'])
+        ->where('province', '[0-9]{2}')->name('dealer-registration.preview.wards');
+    Route::get('/_preview/dealer-registration/{screen?}', [DealerRegistrationPreviewController::class, 'show'])
+        ->whereIn('screen', ['landing', 'step-two', 'success', 'inactive'])->name('dealer-registration.preview');
+}
 
 Route::middleware('guest')->group(function () {
     Route::get('/forgot-password', [PasswordResetController::class, 'request'])->name('password.request');
@@ -123,6 +133,10 @@ Route::get('/sales/{slug}', [PublicSalesProfileController::class, 'show'])
     ->where('slug', 's-[a-f0-9]{32}')->middleware('throttle:public-sales')->name('sales.public.show');
 Route::post('/{slug}/registrations', [DealerRegistrationController::class, 'store'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:dealer-registrations')->name('dealers.registrations.store');
+Route::post('/{slug}/registrations/step-one', [DealerRegistrationDraftController::class, 'store'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:dealer-registrations')->name('dealers.registrations.step-one');
+Route::get('/{slug}/registrations/step-two', [DealerRegistrationDraftController::class, 'show'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->name('dealers.registrations.step-two');
 Route::get('/{slug}/address/wards/{province}', [DealerRegistrationController::class, 'wards'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->where('province', '[0-9]{2}')
     ->middleware('throttle:dealer-address')->name('dealers.address.wards');

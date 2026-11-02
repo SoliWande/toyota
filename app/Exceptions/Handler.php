@@ -42,14 +42,14 @@ class Handler extends ExceptionHandler
                     return false;
                 }
             }
-            if (request()->routeIs('dealers.registrations.store')) {
+            if (request()->routeIs('dealers.registrations.*')) {
                 Log::error('Dealer registration failed.', ['exception_type' => $error::class]);
 
                 return false;
             }
         });
         $this->renderable(function (Throwable $error, $request) {
-            if (! $request->routeIs('dealers.registrations.store')
+            if (! $request->routeIs('dealers.registrations.*')
                 || $error instanceof HttpResponseException) {
                 return null;
             }

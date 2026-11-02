@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\LeaderboardPeriod;
 use App\Models\Dealer;
 use App\Services\DealerProfile;
+use App\Services\DealerRegistrationDraft;
 use App\Services\LeaderboardService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,12 +42,18 @@ class PublicDealerController extends Controller
         return redirect()->to($profile->url(Dealer::select(['id', 'slug'])->findOrFail($dealer)), 301);
     }
 
-    public function show(string $slug, LeaderboardService $leaderboard): Response
+    public function show(string $slug, LeaderboardService $leaderboard, Request $request, DealerRegistrationDraft $drafts): Response
     {
         // Historical ranking entries may belong to an inactive Dealer.
         $dealer = Dealer::query()->select([...self::PUBLIC_FIELDS, 'photo_path'])->where('slug', $slug)->firstOrFail();
         $standing = DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::AllTime), 'standing')->where('id', $dealer->id)->first();
 
-        return response()->view('dealers.show', compact('dealer', 'standing'))->header('Cache-Control', 'no-store, private');
+        $draft = $drafts->read($request, $dealer);
+
+        return response()->view('dealers.show', [
+            'dealer' => $dealer, 'standing' => $standing,
+            'stepOneValues' => $draft['values'] ?? [], 'stepOneErrors' => $draft['errors'] ?? [],
+            'duplicatePhone' => $draft['duplicate'] ?? false,
+        ])->header('Cache-Control', 'no-store, private');
     }
 }

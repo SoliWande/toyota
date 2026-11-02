@@ -1,0 +1,142 @@
+{
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "method": "Read-only Figma MCP isolated-node PNG render transferred as base64; native download_assets URLs were blocked by shell networking. No full-page screenshot used as a runtime asset.",
+  "assets": [
+    {
+      "path": "public/dealer-registration/hero-desktop.png",
+      "nodeId": "223:854",
+      "slot": "D01 hero, desktop",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/hero-mobile.png",
+      "nodeId": "123:342",
+      "slot": "M01 hero, mobile",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/logo.png",
+      "nodeId": "57:851",
+      "slot": "Header/footer Toyota logo",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/benefit-service.png",
+      "nodeId": "209:334",
+      "slot": "D01/M01 benefit service",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/benefit-caravan.png",
+      "nodeId": "209:342",
+      "slot": "D01/M01 benefit caravan",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/benefit-expert.png",
+      "nodeId": "209:351",
+      "slot": "D01/M01 benefit expert",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/group.png",
+      "nodeId": "212:419",
+      "slot": "D04 group image",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/group-mobile.png",
+      "nodeId": "99:574",
+      "slot": "M04 group cover",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/success.png",
+      "nodeId": "212:405",
+      "slot": "D04/M04 success illustration",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/qr-invalid.png",
+      "nodeId": "133:614",
+      "slot": "D06/M06 invalid QR illustration",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/dealer.png",
+      "nodeId": "209:281",
+      "slot": "Dealer chip",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/lock.png",
+      "nodeId": "209:293",
+      "slot": "Privacy hint",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/arrow.png",
+      "nodeId": "209:271",
+      "slot": "Primary CTA arrow",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/wrench.png",
+      "nodeId": "209:338",
+      "slot": "Service benefit icon",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/tent.png",
+      "nodeId": "209:346",
+      "slot": "Caravan benefit icon",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/chat.png",
+      "nodeId": "209:355",
+      "slot": "Expert benefit icon",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/location.png",
+      "nodeId": "209:475",
+      "slot": "Dealer address",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/clock.png",
+      "nodeId": "209:480",
+      "slot": "Dealer hours",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/phone.png",
+      "nodeId": "209:485",
+      "slot": "Dealer phone",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/search.png",
+      "nodeId": "212:471",
+      "slot": "Header lookup icon",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/info.png",
+      "nodeId": "212:425",
+      "slot": "Success group instructions",
+      "format": "png"
+    },
+    {
+      "path": "public/dealer-registration/car.png",
+      "nodeId": "211:351",
+      "slot": "Step-two selected car",
+      "format": "png"
+    }
+  ],
+  "missing": [
+    "Native SVG versions: HTTP downloads blocked; use_figma export requires unavailable approval.",
+    "Inter font files and Montserrat SemiBold/Bold font files not available locally; named font stacks use Arial fallback."
+  ]
+}
