@@ -30,7 +30,7 @@ class ToyotaDemoCommand extends Command
         $demo->assertEnabled();
         $database = DB::connection()->getDatabaseName();
         $this->warn("Database: {$database}; environment: ".app()->environment());
-        $this->warn($action === 'seed' ? 'Creates synthetic accounts/customers; affects live rankings.' : 'Deletes only manifest-owned demo records; external references cause rollback. Back up first.');
+        $this->warn($action === 'seed' ? 'Creates synthetic accounts/customers; real metrics exclude verified demo IDs. Demo metrics require TOYOTA_DEMO_INCLUDE_IN_METRICS.' : 'Deletes only manifest-owned demo records; external references cause rollback. Back up first.');
         if (! $this->input->isInteractive() || $this->ask("Type {$action}:{$database} to confirm") !== "{$action}:{$database}") {
             $this->error('Explicit interactive confirmation required.');
 

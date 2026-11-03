@@ -1,8 +1,13 @@
 <?php
 
-// Optional, confirmed campaign data only. Null values are deliberately not replaced by demo data.
+// Only the official Group is a valid destination; never substitute a Facebook Page.
+$officialGroupUrl = 'https://www.facebook.com/groups/376631239337942';
+$configuredGroupUrl = trim((string) env('TOYOTA_COMMUNITY_GROUP_URL', $officialGroupUrl));
+
+// Other campaign values remain optional and are not replaced by demo data.
 return [
-    'group_url' => env('TOYOTA_COMMUNITY_GROUP_URL'),
+    'receipt_cleanup_enabled' => env('TOYOTA_RECEIPT_CLEANUP_ENABLED', false),
+    'group_url' => rtrim($configuredGroupUrl, '/') === $officialGroupUrl ? $configuredGroupUrl : $officialGroupUrl,
     'group_name' => env('TOYOTA_COMMUNITY_GROUP_NAME'),
     'member_count' => env('TOYOTA_COMMUNITY_MEMBER_COUNT'),
     'campaign_start' => env('TOYOTA_COMMUNITY_CAMPAIGN_START'),

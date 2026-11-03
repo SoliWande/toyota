@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Sales\SubmissionRequest;
 use App\Models\CustomerSubmission;
 use App\Models\User;
+use App\Services\SubmissionIntake;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
 
@@ -56,7 +58,7 @@ class SubmissionController extends Controller
     {
         $newPath = null;
         try {
-            $submission = DB::transaction(function () use ($request, &$newPath) {
+            $submission = app(SubmissionIntake::class)->locked(function () use ($request, &$newPath) {
                 // Share the user row lock with dealer transfers so creation has one attribution.
                 $sales = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
                 abort_unless($sales->can('create', CustomerSubmission::class), 403);
@@ -64,7 +66,7 @@ class SubmissionController extends Controller
                 $submission->sales()->associate($sales);
                 $submission->status = SubmissionStatus::Pending;
                 $submission->submitted_at = now();
-                $newPath = $request->file('evidence_image')->store('', 'submission_evidence');
+                $newPath ??= $request->file('evidence_image')->store('', 'submission_evidence');
                 $submission->evidence_image_path = $newPath;
                 $submission->save();
 
@@ -72,6 +74,9 @@ class SubmissionController extends Controller
             });
         } catch (Throwable $error) {
             $this->removeEvidence($newPath);
+            if ($error instanceof ValidationException && isset($error->errors()['phone'])) {
+                throw ValidationException::withMessages(['customer_phone' => $error->errors()['phone']] + array_diff_key($error->errors(), ['phone' => true]));
+            }
             throw $error;
         }
 
@@ -97,11 +102,11 @@ class SubmissionController extends Controller
         $newPath = null;
         $oldPath = null;
         try {
-            DB::transaction(function () use ($request, $submission, &$newPath, &$oldPath) {
+            app(SubmissionIntake::class)->locked(function () use ($request, $submission, &$newPath, &$oldPath) {
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 $this->authorize('update', $locked);
                 if ($request->hasFile('evidence_image')) {
-                    $newPath = $request->file('evidence_image')->store('', 'submission_evidence');
+                    $newPath ??= $request->file('evidence_image')->store('', 'submission_evidence');
                     $oldPath = $locked->evidence_image_path;
                     $locked->evidence_image_path = $newPath;
                 }
@@ -109,6 +114,9 @@ class SubmissionController extends Controller
             });
         } catch (Throwable $error) {
             $this->removeEvidence($newPath);
+            if ($error instanceof ValidationException && isset($error->errors()['phone'])) {
+                throw ValidationException::withMessages(['customer_phone' => $error->errors()['phone']] + array_diff_key($error->errors(), ['phone' => true]));
+            }
             throw $error;
         }
         $this->removeEvidence($oldPath);

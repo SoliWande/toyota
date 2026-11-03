@@ -8,6 +8,7 @@ use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
 use App\Services\AdministrativeDivisions;
+use App\Services\SubmissionIntake;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -36,7 +37,7 @@ final class DealerRegistrationPhase2aDemoSeeder extends Seeder
         $credentials = $directory.'/credentials.json';
         $createdFile = false;
         try {
-            DB::transaction(function () use ($directory, $credentials, &$createdFile) {
+            app(SubmissionIntake::class)->locked(function () use ($directory, $credentials, &$createdFile) {
                 $codes = ['DEMO-P2A-ACTIVE', 'DEMO-P2A-INACTIVE'];
                 $emails = ['phase2a.admin@example.test', 'phase2a.dealer@example.test', 'phase2a.sales@example.test'];
                 $existing = Dealer::whereIn('code', $codes)->lockForUpdate()->get();

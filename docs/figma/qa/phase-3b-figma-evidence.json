@@ -1,0 +1,40 @@
+{
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "sessionId": "f1d82e8f-9ddf-4e80-a34e-5b4777240c60",
+  "date": "2026-11-03",
+  "discoveryPages": [
+    "207:332",
+    "57:801"
+  ],
+  "frames": [
+    {
+      "name": "D09",
+      "nodeId": "213:1447",
+      "textSections": "213:1487,213:1496,213:1505,213:1514,213:1523,213:1532,213:1541,213:1550",
+      "reference": "screenshots/phase-3a/figma-D09.png"
+    },
+    {
+      "name": "M09",
+      "nodeId": "57:963",
+      "textSections": "57:975,57:978,57:981,57:984,57:987,204:1250,57:990,57:993",
+      "reference": "screenshots/phase-3a/figma-M09.png"
+    },
+    {
+      "name": "D00",
+      "nodeId": "213:1650",
+      "sampleWarningNode": "213:1652"
+    }
+  ],
+  "linkNodes": [
+    "209:422",
+    "99:521"
+  ],
+  "designContext": true,
+  "screenshots": true,
+  "fonts": [
+    "Inter",
+    "Montserrat"
+  ],
+  "browser": "NOT VERIFIED; no browser connector",
+  "contentStatus": "unapproved Figma sample; full text rendered only in local/testing"
+}

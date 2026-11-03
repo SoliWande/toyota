@@ -1,0 +1,10 @@
+{
+  "browser_version": "156.0.8078.76",
+  "attempt": "Chrome headless=new, isolated workspace profile, loopback remote debugging, about:blank",
+  "timeout_seconds": 15,
+  "cdp_ready": false,
+  "browser_matrix_status": "NOT VERIFIED",
+  "application_screenshots": [],
+  "figma_reference_downloads": "D04/M04 URLs returned; downloads failed with URLError",
+  "owned_test_process_stopped": true
+}

@@ -2,7 +2,7 @@
     <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
     <h1 class="mt-3 text-3xl font-bold">Duyệt khai báo</h1>
     <p class="mt-2 text-sm text-slate-600">{{ $submissions->total() }} khai báo phù hợp · Ưu tiên khai báo cũ nhất.</p>
-    <x-admin-feedback />
+    <x-admin-feedback :exclude="['phone', 'license_plate']" />
     @if (! $editingAvailable)
         <p role="status" class="mt-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chức năng chỉnh sửa đang chờ áp dụng migration nhật ký. Chưa thể lưu chỉnh sửa; chức năng duyệt vẫn hoạt động theo phân quyền.</p>
     @endif
@@ -82,7 +82,7 @@
                     @if ($submission->duplicate_approved_id)
                         <p role="alert" class="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-800">Facebook profile đã được duyệt. <a href="{{ route('admin.submissions.show', $submission->duplicate_approved_id) }}" class="font-semibold underline">Xem record #{{ $submission->duplicate_approved_id }}</a></p>
                     @endif
-                    <details class="mt-4 border-t border-slate-100 pt-3" @if (is_scalar(old('review_submission_id')) && (string) old('review_submission_id') === (string) $submission->id) open @endif>
+                    <details class="mt-4 border-t border-slate-100 pt-3" @if (! empty($identityConflicts[$submission->id]) || (is_scalar(old('review_submission_id')) && (string) old('review_submission_id') === (string) $submission->id)) open @endif>
                         <summary class="min-h-12 cursor-pointer py-3 text-sm font-semibold text-slate-800">Kiểm tra và duyệt nhanh</summary>
                         <dl class="mb-5 space-y-3 text-sm">
                             @if ($submission->phone)<div><dt class="text-slate-500">Điện thoại</dt><dd>{{ $submission->phone }}</dd></div>@endif
@@ -90,7 +90,7 @@
                             <div><dt class="text-slate-500">Ghi chú Sales</dt><dd class="whitespace-pre-wrap break-words">{{ $submission->notes ?? 'Không có' }}</dd></div>
                         </dl>
                         <x-submission-vehicle-details :submission="$submission" />
-                        <x-submission-review-form :submission="$submission" :duplicate="(bool) $submission->duplicate_approved_id || (bool) $integrityWarning" :queue="true" :filters="$filters" />
+                        <x-submission-review-form :submission="$submission" :duplicate="(bool) $submission->duplicate_approved_id || (bool) $integrityWarning" :queue="true" :filters="$filters" :identity-conflicts="$identityConflicts[$submission->id] ?? []" />
                     </details>
                 @endif
             </li>

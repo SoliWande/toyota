@@ -6,6 +6,9 @@
         <div><dt class="text-slate-500">Năm đăng ký lần đầu</dt><dd class="mt-1">{{ $submission->first_registration_year ?? 'Chưa cung cấp' }}</dd></div>
         <div><dt class="text-slate-500">Màu xe</dt><dd class="mt-1 break-words">{{ $submission->vehicle_color ?? 'Chưa cung cấp' }}</dd></div>
         <div><dt class="text-slate-500">Biển số xe</dt><dd class="mt-1 break-words">{{ $submission->license_plate ?? 'Chưa cung cấp' }}</dd></div>
+        @if ($submission->odo !== null)
+            <div><dt class="text-slate-500">Số km (ODO)</dt><dd class="mt-1">{{ number_format($submission->odo, 0, ',', '.') }} km</dd></div>
+        @endif
     </dl>
     <h3 class="mt-5 text-sm font-medium">Ảnh bằng chứng</h3>
     @if ($submission->evidence_image_path)

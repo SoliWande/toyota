@@ -7,10 +7,12 @@ use App\Http\Controllers\Admin\DealerAccountController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\SubmissionReviewController;
+use App\Http\Controllers\Admin\SubmissionVerificationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AwardHistoryController;
+use App\Http\Controllers\CampaignRulesController;
 use App\Http\Controllers\Dealer\AwardController as DealerAwardController;
 use App\Http\Controllers\Dealer\CustomerController as DealerCustomerController;
 use App\Http\Controllers\Dealer\DashboardController as DealerDashboardController;
@@ -18,12 +20,15 @@ use App\Http\Controllers\Dealer\SalesController as DealerSalesController;
 use App\Http\Controllers\DealerProfileMediaController;
 use App\Http\Controllers\DealerRegistrationController;
 use App\Http\Controllers\DealerRegistrationDraftController;
+use App\Http\Controllers\DealerRegistrationFinalController;
 use App\Http\Controllers\DealerRegistrationPreviewController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicDealerController;
 use App\Http\Controllers\PublicSalesProfileController;
+use App\Http\Controllers\RegistrationLookupController;
+use App\Http\Controllers\RegistrationSupplementController;
 use App\Http\Controllers\Sales\AddressController;
 use App\Http\Controllers\Sales\DashboardController;
 use App\Http\Controllers\Sales\SubmissionController;
@@ -44,6 +49,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', LandingPageController::class)->name('home');
+// Two segments preserve every existing one-segment Dealer slug/printed QR, including "the-le".
+Route::get('/chuong-trinh/the-le', CampaignRulesController::class)->name('campaign.rules');
 Route::get('/leaderboard', LeaderboardController::class)->name('leaderboard');
 Route::get('/dealers', [PublicDealerController::class, 'index'])->name('dealers.index');
 Route::get('/dealers/{dealer}', [PublicDealerController::class, 'legacy'])->whereNumber('dealer')->name('dealers.show');
@@ -109,6 +116,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('/submissions/address/wards/{province}', [SubmissionReviewController::class, 'wards'])->where('province', '[0-9]{2}')->name('submissions.address.wards');
         Route::patch('/submissions/{submission}', [SubmissionReviewController::class, 'update'])->whereNumber('submission')->name('submissions.update');
         Route::get('/submissions/{submission}', [SubmissionReviewController::class, 'show'])->whereNumber('submission')->name('submissions.show');
+        Route::post('/submissions/{submission}/verification', [SubmissionVerificationController::class, 'update'])->whereNumber('submission')->name('submissions.verification');
         Route::post('/submissions/{submission}/approve', [SubmissionReviewController::class, 'approve'])->whereNumber('submission')->name('submissions.approve');
         Route::post('/submissions/{submission}/reject', [SubmissionReviewController::class, 'reject'])->whereNumber('submission')->name('submissions.reject');
         Route::resource('dealers', DealerController::class)->except(['destroy']);
@@ -133,10 +141,20 @@ Route::get('/sales/{slug}', [PublicSalesProfileController::class, 'show'])
     ->where('slug', 's-[a-f0-9]{32}')->middleware('throttle:public-sales')->name('sales.public.show');
 Route::post('/{slug}/registrations', [DealerRegistrationController::class, 'store'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:dealer-registrations')->name('dealers.registrations.store');
+Route::get('/{slug}/registrations/lookup', [RegistrationLookupController::class, 'show'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:lookup-page')->name('dealers.lookup.show');
+Route::post('/{slug}/registrations/lookup', [RegistrationLookupController::class, 'store'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:registration-lookup')->name('dealers.lookup.store');
+Route::post('/{slug}/registrations/lookup/supplement', [RegistrationSupplementController::class, 'store'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:lookup-supplement')->name('dealers.lookup.supplement');
+Route::get('/{slug}/registrations/lookup/supplemented', [RegistrationSupplementController::class, 'show'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:lookup-page')->name('dealers.lookup.supplemented');
 Route::post('/{slug}/registrations/step-one', [DealerRegistrationDraftController::class, 'store'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('throttle:dealer-registrations')->name('dealers.registrations.step-one');
 Route::get('/{slug}/registrations/step-two', [DealerRegistrationDraftController::class, 'show'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->name('dealers.registrations.step-two');
+Route::get('/{slug}/registrations/success', [DealerRegistrationFinalController::class, 'show'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->name('dealers.registrations.success');
 Route::get('/{slug}/address/wards/{province}', [DealerRegistrationController::class, 'wards'])
     ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')->where('province', '[0-9]{2}')
     ->middleware('throttle:dealer-address')->name('dealers.address.wards');

@@ -1,0 +1,146 @@
+{
+  "file_key": "yKmWQI6BYJ6dponEnidlsq",
+  "method": "Figma MCP get_design_context; not a browser rendering comparison",
+  "frames": [
+    {
+      "frame": "D01",
+      "design_context_received": false,
+      "fonts": [],
+      "text_characters": 0
+    },
+    {
+      "frame": "D02",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Regular",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold",
+        "Montserrat:Bold"
+      ],
+      "text_characters": 33368
+    },
+    {
+      "frame": "D03",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Regular",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold",
+        "Montserrat:Bold"
+      ],
+      "text_characters": 36531
+    },
+    {
+      "frame": "D04",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "text_characters": 23448
+    },
+    {
+      "frame": "D05",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Extra_Bold"
+      ],
+      "text_characters": 22182
+    },
+    {
+      "frame": "D06",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold"
+      ],
+      "text_characters": 10172
+    },
+    {
+      "frame": "M01",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Medium",
+        "Montserrat:SemiBold",
+        "Montserrat:Bold",
+        "Inter:Bold",
+        "Inter:Extra_Bold"
+      ],
+      "text_characters": 55469
+    },
+    {
+      "frame": "M02",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold"
+      ],
+      "text_characters": 17303
+    },
+    {
+      "frame": "M03",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold"
+      ],
+      "text_characters": 21619
+    },
+    {
+      "frame": "M04",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Regular",
+        "Inter:Bold"
+      ],
+      "text_characters": 19458
+    },
+    {
+      "frame": "M05",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Regular",
+        "Inter:Medium"
+      ],
+      "text_characters": 15633
+    },
+    {
+      "frame": "M06",
+      "design_context_received": true,
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Regular"
+      ],
+      "text_characters": 5342
+    }
+  ]
+}

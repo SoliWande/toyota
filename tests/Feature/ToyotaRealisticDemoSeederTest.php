@@ -35,7 +35,8 @@ class ToyotaRealisticDemoSeederTest extends TestCase
         }
         DB::beginTransaction();
         $this->transactionStarted = true;
-        config(['realistic_demo.enabled' => true, 'realistic_demo.password' => 'test-only-random-secret-12345']);
+        config(['realistic_demo.enabled' => true, 'realistic_demo.include_in_metrics' => true,
+            'realistic_demo.password' => 'test-only-random-secret-12345']);
         $this->travelTo(CarbonImmutable::parse('2026-10-20 14:30:00'));
     }
 
@@ -98,6 +99,18 @@ class ToyotaRealisticDemoSeederTest extends TestCase
         $this->assertSame($customers, CustomerSubmission::orderBy('id')->get()->map->getRawOriginal()->all());
         $this->assertSame($accounts, User::orderBy('id')->get()->map->getRawOriginal()->all());
         $this->assertSame($directory, Dealer::orderBy('id')->get()->map->getRawOriginal()->all());
+        config(['realistic_demo.include_in_metrics' => false]);
+        $this->assertSame(1500, count($demo->ownedSubmissionIds()));
+        $manifestAdmin = User::where('email', ToyotaRealisticDemo::EMAIL)->firstOrFail();
+        $signed = $manifestAdmin->admin_note;
+        $legacy = json_decode($signed, true);
+        unset($legacy['ownership']);
+        $manifestAdmin->forceFill(['admin_note' => json_encode($legacy, JSON_THROW_ON_ERROR)])->save();
+        $this->assertSame(1500, count($demo->ownedSubmissionIds()));
+        $manifestAdmin->forceFill(['admin_note' => $signed])->save();
+        $this->assertSame(0, $service->dealers(LeaderboardPeriod::AllTime)->count());
+        $this->assertSame(0, $service->sales(LeaderboardPeriod::AllTime)->count());
+        config(['realistic_demo.include_in_metrics' => true]);
         $customer = CustomerSubmission::first();
         $sales = User::where('role', 'sales')->first();
         foreach ([route('leaderboard'), route('sales.public.show', $sales->public_slug)] as $url) {
@@ -144,13 +157,13 @@ class ToyotaRealisticDemoSeederTest extends TestCase
     {
         $this->seed(ToyotaDealerSeeder::class);
         $real = User::factory()->admin()->create(['email' => ToyotaRealisticDemo::EMAIL]);
-        $original = $real->getRawOriginal();
+        $original = $real->refresh()->getRawOriginal();
         app(ToyotaRealisticDemo::class)->confirmed = true;
         try {
             $this->seed(ToyotaRealisticDemoSeeder::class);
             $this->fail('Must refuse reserved identity collision.');
         } catch (LogicException) {
-            $this->assertSame($original, $real->fresh()->getRawOriginal());
+            $this->assertTrue($original === $real->fresh()->getRawOriginal(), 'Reserved account was modified.');
             $this->assertDatabaseCount('users', 1);
             $this->assertDatabaseCount('customer_submissions', 0);
         }
@@ -164,6 +177,9 @@ class ToyotaRealisticDemoSeederTest extends TestCase
         $this->seed(ToyotaRealisticDemoSeeder::class);
         $customer = CustomerSubmission::first();
         $customer->forceFill(['customer_name' => 'Edited after demo'])->save();
+        config(['realistic_demo.include_in_metrics' => false]);
+        $this->assertSame(1500, count($demo->ownedSubmissionIds()));
+        $this->assertSame(0, app(LeaderboardService::class)->dealerScores()->count());
         try {
             $demo->cleanup();
             $this->fail('Must refuse modified records.');

@@ -19,11 +19,12 @@
         <input type="hidden" name="edit_submission_id" value="{{ $submission->id }}">
         <input type="hidden" name="edit_version" value="{{ $restore && is_string(old('edit_version')) ? old('edit_version') : \App\Actions\UpdateCustomerSubmission::version($submission) }}">
         @if ($restore && $errors->any())
-            <div role="alert" class="rounded-xl bg-red-50 p-4 text-sm text-red-800"><p class="font-semibold">Chưa lưu được thay đổi.</p><ul class="mt-2 list-inside list-disc">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
+            <p role="status" class="text-sm text-red-800">Chưa lưu được thay đổi. Kiểm tra thông tin cần sửa bên dưới.</p>
         @endif
         <div class="grid gap-4 sm:grid-cols-2">
             <div><label for="edit-name-{{ $submission->id }}" class="text-sm font-medium">Họ và tên</label><input id="edit-name-{{ $submission->id }}" name="customer_name" value="{{ $value('customer_name') }}" required maxlength="255" class="form-input"></div>
-            <div><label for="edit-phone-{{ $submission->id }}" class="text-sm font-medium">Số điện thoại</label><input id="edit-phone-{{ $submission->id }}" name="phone" value="{{ $value('phone') }}" type="tel" maxlength="20" @required($qr) class="form-input"></div>
+            <div><label for="edit-phone-{{ $submission->id }}" class="text-sm font-medium">Số điện thoại</label><input id="edit-phone-{{ $submission->id }}" name="phone" value="{{ $value('phone') }}" type="tel" maxlength="30" @required($qr) class="form-input" aria-invalid="{{ $restore && $errors->has('phone') ? 'true' : 'false' }}" aria-describedby="edit-phone-error-{{ $submission->id }}">@if ($restore && $errors->has('phone'))<p id="edit-phone-error-{{ $submission->id }}" role="alert" class="mt-1 text-sm text-red-700">{{ $errors->first('phone') }}</p>@else<span id="edit-phone-error-{{ $submission->id }}"></span>@endif</div>
+            <div><label for="edit-plate-{{ $submission->id }}" class="text-sm font-medium">Biển số xe</label><input id="edit-plate-{{ $submission->id }}" name="license_plate" value="{{ $value('license_plate') }}" maxlength="20" @required(filled($submission->license_plate)) class="form-input" aria-invalid="{{ $restore && $errors->has('license_plate') ? 'true' : 'false' }}" aria-describedby="edit-plate-error-{{ $submission->id }}">@if ($restore && $errors->has('license_plate'))<p id="edit-plate-error-{{ $submission->id }}" role="alert" class="mt-1 text-sm text-red-700">{{ $errors->first('license_plate') }}</p>@else<span id="edit-plate-error-{{ $submission->id }}"></span>@endif</div>
         </div>
         <fieldset data-customer-address data-wards-url="{{ route('admin.submissions.address.wards', ['province' => '__PROVINCE__']) }}" class="space-y-4">
             <legend class="text-sm font-semibold">Địa chỉ</legend>

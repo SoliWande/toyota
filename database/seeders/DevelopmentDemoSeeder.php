@@ -14,9 +14,9 @@ use App\Models\ModerationReview;
 use App\Models\User;
 use App\Services\AwardResults;
 use App\Services\LeaderboardService;
+use App\Services\SubmissionIntake;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -45,7 +45,7 @@ class DevelopmentDemoSeeder extends Seeder
         }
         $files = [];
         try {
-            DB::transaction(function () use ($password, &$files) {
+            app(SubmissionIntake::class)->locked(function () use ($password, &$files) {
                 $now = CarbonImmutable::now(config('app.timezone'))->startOfMinute();
                 $admin = User::where('role', UserRole::Admin->value)->where('status', UserStatus::Active->value)->first();
                 if (! $admin) {

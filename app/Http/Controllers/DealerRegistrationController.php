@@ -7,16 +7,21 @@ use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Services\AdministrativeDivisions;
 use App\Services\RegistrationPhone;
+use App\Services\SubmissionIntake;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class DealerRegistrationController extends Controller
 {
-    public function store(DealerRegistrationRequest $request, string $slug, AdministrativeDivisions $directory): RedirectResponse|JsonResponse
+    public function store(Request $request, string $slug, AdministrativeDivisions $directory): RedirectResponse|JsonResponse
     {
+        if ($request->input('_flow') === 'two-step' || $request->has('_draft')) {
+            return app()->call([app(DealerRegistrationFinalController::class), 'store'], ['request' => $request, 'slug' => $slug]);
+        }
+        $request = app(DealerRegistrationRequest::class);
         $data = $request->validated();
         // An atomic cache add suppresses repeats, including phone formatting variants.
         // This is a short spam cooldown, never a replacement for the approved Facebook identity rule.
@@ -25,7 +30,7 @@ class DealerRegistrationController extends Controller
         abort_unless(Cache::add($key, true, 600), 429);
 
         try {
-            DB::transaction(function () use ($dealer, $data, $directory) {
+            app(SubmissionIntake::class)->locked(function () use ($dealer, $data, $directory) {
                 // Serialize intake with Dealer activation changes without touching historical attribution.
                 Dealer::whereKey($dealer->id)->where('is_active', true)->lockForUpdate()->firstOrFail();
                 $submission = new CustomerSubmission;
@@ -39,7 +44,7 @@ class DealerRegistrationController extends Controller
                     'vehicle_description' => $data['vehicle_description'],
                     'consented_at' => now(), 'consent_version' => config('dealer.consent_version'),
                 ])->save();
-            }, 3);
+            });
         } catch (Throwable $error) {
             Cache::forget($key);
             throw $error;

@@ -19,7 +19,7 @@
                 <p>Bước 1/2 · mất khoảng 1 phút, miễn phí</p>
                 <small class="dr-privacy"><x-dealer-registration.icon name="lock" :size="16" />Chỉ dùng để xác nhận chủ xe, không công khai</small>
             </div>
-            <form method="{{ $preview ? 'dialog' : 'POST' }}" @unless ($preview) action="{{ route('dealers.registrations.step-one', $dealer->slug) }}" @endunless class="dr-step-one-fields" data-step-one data-ui-form novalidate aria-describedby="dr-phase-one-note">
+            <form method="{{ $preview ? 'dialog' : 'POST' }}" @unless ($preview) action="{{ route('dealers.registrations.step-one', $dealer->slug) }}" @endunless class="dr-step-one-fields" data-step-one data-ui-form novalidate>
                 @unless ($preview) @csrf @endunless
                 <div hidden aria-hidden="true"><label for="dr-website">Website</label><input id="dr-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
                 <div class="dr-field-row">
@@ -28,7 +28,7 @@
                 </div>
                 @if ($duplicatePhone)
                     <div class="dr-duplicate" role="alert"><div><strong>Số điện thoại này đã đăng ký tham gia cộng đồng.</strong><p>Bạn chưa từng đăng ký? Vui lòng liên hệ đại lý để kiểm tra.</p></div>
-                        <span role="link" aria-disabled="true" class="dr-unavailable">Xem trạng thái đăng ký</span>
+                        <a href="{{ route('dealers.lookup.show', $dealer->slug) }}" class="dr-text-link">Xem trạng thái đăng ký</a>
                         <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button dr-button-dark" />
                     </div>
                 @endif
@@ -41,9 +41,7 @@
                     </div>
                     <p id="dr-vehicle_description-error" class="dr-error" data-error-for="vehicle_description" @if (empty($validationErrors['vehicle_description'])) hidden @endif>{{ implode(' ', $validationErrors['vehicle_description'] ?? []) }}</p>
                 </fieldset>
-                <div class="dr-form-actions"><span class="dr-help">Đã đăng ký rồi? <span class="dr-text-link dr-unavailable" role="link" aria-disabled="true" title="Vui lòng liên hệ đại lý">Tra cứu trạng thái</span></span><button class="dr-button" type="submit" @if ($preview) disabled data-ui-submit @endif>Tiếp tục <x-dealer-registration.icon name="arrow" /></button></div>
-                <p id="dr-phase-one-note" class="dr-phase-note" @if ($preview) hidden @endif>Thông tin bước 1 được giữ trong 30 phút. Chưa gửi đăng ký ở bước này. Bạn vẫn có thể <a href="#registration-current" data-open-current>gửi đăng ký bằng biểu mẫu hiện tại</a>.</p>
-                <noscript><p class="dr-help">Vui lòng sử dụng biểu mẫu đăng ký hiện tại bên dưới.</p></noscript>
+                <div class="dr-form-actions"><span class="dr-help">Đã đăng ký rồi? <a class="dr-text-link" href="{{ route('dealers.lookup.show', $dealer->slug) }}">Tra cứu trạng thái</a></span><button class="dr-button" type="submit" @if ($preview) disabled data-ui-submit @endif>Tiếp tục <x-dealer-registration.icon name="arrow" /></button></div>
             </form>
         </div>
     @endif

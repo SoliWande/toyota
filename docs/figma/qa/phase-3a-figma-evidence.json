@@ -1,0 +1,507 @@
+{
+  "file_key": "yKmWQI6BYJ6dponEnidlsq",
+  "session": "d1009b9e-2ca5-42b1-8410-d782b266deaf",
+  "kind": "Figma reference screenshots, NOT application browser screenshots",
+  "frames": [
+    {
+      "frame": "D07",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D07.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#fff4e0",
+        "#9a5800",
+        "#bfe6cc",
+        "#fafafb"
+      ],
+      "node_id": "213:533",
+      "png_width": 1024,
+      "png_height": 628,
+      "sha256": "fc9b3209fc28e1bf675ef702f687af99818b6956bfeca0307c8e305264662fc6"
+    },
+    {
+      "frame": "D08",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D08.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#8e8e93",
+        "#f2f2f5",
+        "#eb0a1e"
+      ],
+      "node_id": "212:647",
+      "png_width": 1024,
+      "png_height": 544,
+      "sha256": "3c44022d00515029f6c302a8c5e0ab7e0be092e6dd087bb1f56445abd727a8a7"
+    },
+    {
+      "frame": "D09",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D09.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Montserrat:Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#8e8e93",
+        "#f2f2f5",
+        "#eb0a1e",
+        "#fff1f2"
+      ],
+      "node_id": "213:1447",
+      "png_width": 935,
+      "png_height": 1024,
+      "sha256": "90d1ae6982f1080dab3076877667a858bf878fb977388f1d36ba973402980425"
+    },
+    {
+      "frame": "D10",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D10.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c"
+      ],
+      "node_id": "213:636",
+      "png_width": 1024,
+      "png_height": 576,
+      "sha256": "245e03bb14523caac403adc53a20adea6b2b94b37d7cad950f70da7fa23ae9b6"
+    },
+    {
+      "frame": "D11",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D11.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#fafafb"
+      ],
+      "node_id": "213:702",
+      "png_width": 1024,
+      "png_height": 628,
+      "sha256": "58fa4a597025c0477783b6e245b3f3301b841bf1927f1db7b98b4f7c11447420"
+    },
+    {
+      "frame": "D12",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D12.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#eef4ff",
+        "#1d3f8f",
+        "#bfe6cc",
+        "#fafafb"
+      ],
+      "node_id": "213:797",
+      "png_width": 1024,
+      "png_height": 628,
+      "sha256": "f9640280e43da684f15d72abe0519e5bd9f4599f78f8d66e926ce8ba71971e68"
+    },
+    {
+      "frame": "D13",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D13.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#eef4ff",
+        "#1d3f8f",
+        "#bfe6cc"
+      ],
+      "node_id": "213:894",
+      "png_width": 1024,
+      "png_height": 614,
+      "sha256": "35ffc6f8e2e0338afcfe90224f77776525b746328b51580b698ecbcd73dade80"
+    },
+    {
+      "frame": "D14",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D14.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#e9f7ee",
+        "#1a7f3c",
+        "#bfe6cc",
+        "#fafafb"
+      ],
+      "node_id": "213:989",
+      "png_width": 1024,
+      "png_height": 628,
+      "sha256": "9814425b46ac251d1b3dd686dc37aead99b6931091fb7b0676fc0499dbb1d9bb"
+    },
+    {
+      "frame": "D15",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-D15.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ],
+      "colors": [
+        "#ededf0",
+        "#5e5e66",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#e3e3e8",
+        "#eb0a1e",
+        "#2f2e2c",
+        "#bfe6cc",
+        "#fafafb"
+      ],
+      "node_id": "213:1086",
+      "png_width": 1024,
+      "png_height": 628,
+      "sha256": "145f4fa795fc330cb56d94230c9194906c23619e77129aade0d74d4db4c649d5"
+    },
+    {
+      "frame": "M07",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M07.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#eb0a1e",
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#fff4e0",
+        "#9a5800",
+        "#bfe6cc",
+        "#e3e3e8",
+        "#f7f7f9"
+      ],
+      "node_id": "57:733",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "70295564385c142959976dceb35ac708a1eae173916771e1db6badee45b3360f"
+    },
+    {
+      "frame": "M08",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M08.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Regular"
+      ],
+      "colors": [
+        "#c7c7cc",
+        "#eb0a1e",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66"
+      ],
+      "node_id": "57:941",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "e4778850f2a20f459922a2cc3e459c3ed2b8cf1d674b26f4336948aae01d1091"
+    },
+    {
+      "frame": "M09",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M09.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Bold",
+        "Inter:Regular"
+      ],
+      "colors": [
+        "#eb0a1e",
+        "#ededf0",
+        "#8e8e93",
+        "#5e5e66"
+      ],
+      "node_id": "57:963",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "a8d5c2084745a82c275f8275975e607adb86fc0f4b8e8be730a7d7993fdaf3b2"
+    },
+    {
+      "frame": "M10",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M10.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#eb0a1e",
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66"
+      ],
+      "node_id": "204:366",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "956f58431862f57924c6560d96c8b10d240d384a96878f94dd89dd1ac3eb2027"
+    },
+    {
+      "frame": "M11",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M11.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#eb0a1e",
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#e3e3e8"
+      ],
+      "node_id": "204:446",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "d6090d3eb78ab9f12687069f8f5626ef8f27e20026f8cfeebd6a23615a770e34"
+    },
+    {
+      "frame": "M12",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M12.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#eb0a1e",
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#eef4ff",
+        "#1d3f8f",
+        "#bfe6cc",
+        "#e3e3e8"
+      ],
+      "node_id": "204:541",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "27af3e7ea661834e0265475576b0b154408618b992a4a025a62601041c93408f"
+    },
+    {
+      "frame": "M13",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M13.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#eef4ff",
+        "#1d3f8f",
+        "#bfe6cc"
+      ],
+      "node_id": "204:638",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "c7a82a2b531bfb40399bcb2f184a414b228077dd86627de9bdfae7a6ed21b13a"
+    },
+    {
+      "frame": "M14",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M14.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#e9f7ee",
+        "#1a7f3c",
+        "#bfe6cc"
+      ],
+      "node_id": "204:736",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "be19d4d2b4a2879dd42101ba7c5deea3b6a1da7f99cbea4cfa6cf1997247db52"
+    },
+    {
+      "frame": "M15",
+      "context_received": true,
+      "screenshot_embedded": true,
+      "screenshot": "screenshots/phase-3a/figma-M15.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ],
+      "colors": [
+        "#c7c7cc",
+        "#2f2e2c",
+        "#f2f2f5",
+        "#8e8e93",
+        "#f5f5f7",
+        "#ededf0",
+        "#5e5e66",
+        "#f7f7f9"
+      ],
+      "node_id": "204:833",
+      "png_width": 390,
+      "png_height": 844,
+      "sha256": "58efd46d564a53d1b162134ea233ec569dacbd0136785f4cc1ba8ccb7626c3f5"
+    }
+  ]
+}

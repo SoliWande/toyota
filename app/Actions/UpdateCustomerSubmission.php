@@ -9,6 +9,7 @@ use App\Models\SubmissionEdit;
 use App\Models\User;
 use App\Services\AdministrativeDivisions;
 use App\Services\RegistrationPhone;
+use App\Services\SubmissionIntake;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,7 @@ class UpdateCustomerSubmission
         $snapshot = [];
         foreach (['id', 'status', 'source', 'dealer_id', 'sales_id', 'customer_name', 'phone', 'phone_normalized',
             'address_line', 'province_code', 'ward_code', 'vehicle_model', 'vehicle_description',
-            'facebook_url', 'updated_at', 'reviewed_at'] as $field) {
+            'license_plate', 'facebook_url', 'updated_at', 'reviewed_at'] as $field) {
             $snapshot[$field] = $submission->getRawOriginal($field);
         }
 
@@ -40,7 +41,7 @@ class UpdateCustomerSubmission
             throw ValidationException::withMessages(['phone' => 'Có thao tác chỉnh sửa khác đang xử lý. Vui lòng thử lại.']);
         }
         try {
-            DB::transaction(function () use ($admin, $submission, $data, $phone) {
+            app(SubmissionIntake::class)->locked(function () use ($admin, $submission, $data, $phone) {
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 Gate::forUser($admin)->authorize('review', $locked);
                 if (! hash_equals(self::version($locked), $data['edit_version'])) {
@@ -70,19 +71,17 @@ class UpdateCustomerSubmission
                         }
                     }
                 }
-                if ($phone !== null && $phone !== RegistrationPhone::normalize($locked->phone ?? '')) {
-                    $digits = substr($phone, 1);
-                    $duplicate = CustomerSubmission::whereKeyNot($locked->id)->whereIn('status', ['pending', 'approved'])
-                        ->where(fn ($query) => $query->where('phone_normalized', $phone)
-                            ->orWhereRaw("REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(phone, ' ', ''), '-', ''), '.', ''), '(', ''), ')', '') IN (?, ?, ?)", [$phone, '+84'.$digits, '0084'.$digits]))->exists();
-                    if ($duplicate) {
-                        throw ValidationException::withMessages(['phone' => 'Số điện thoại đang thuộc một khai báo chờ duyệt hoặc đã duyệt khác. Vui lòng kiểm tra trùng khách hàng.']);
-                    }
-                }
                 $before = $locked->getAttributes();
                 $locked->customer_name = $data['customer_name'];
-                $locked->phone = $phone;
-                $locked->phone_normalized = $phone;
+                // A name/address edit must not rewrite historical phone formatting or backfill it.
+                if (array_key_exists('phone', $data) && ($phone ?? '') !== RegistrationPhone::normalize($locked->phone ?? '')) {
+                    $locked->phone = $phone;
+                    $locked->phone_normalized = $phone;
+                }
+                if (array_key_exists('license_plate', $data)
+                    && SubmissionIntake::plate($data['license_plate']) !== SubmissionIntake::plate($locked->license_plate)) {
+                    $locked->license_plate = filled($data['license_plate']) ? SubmissionIntake::plate($data['license_plate']) : null;
+                }
                 $locked->dealer_id = $dealerId;
                 $locked->sales_id = $salesId;
                 foreach (['vehicle_model', 'vehicle_description'] as $field) {
@@ -109,7 +108,7 @@ class UpdateCustomerSubmission
                 $edit = new SubmissionEdit;
                 $edit->forceFill(['customer_submission_id' => $locked->id, 'submission_id_snapshot' => $locked->id, 'edited_by' => $admin->id,
                     'changes' => $changes, 'edited_at' => now()])->save();
-            }, 3);
+            });
         } finally {
             DB::select('SELECT RELEASE_LOCK(?)', [$lock]);
         }

@@ -129,6 +129,10 @@ export function initStepTwoValidation(form) {
         renderValidation(form, errors, true);
         if (Object.keys(errors).length && notice) notice.textContent = initialNotice;
         if (!Object.keys(errors).length) {
+            if (form.method?.toLowerCase() === 'post') {
+                HTMLFormElement.prototype.submit.call(form);
+                return;
+            }
             notice.textContent = 'Thông tin hợp lệ trên giao diện. Chưa gửi đăng ký: biểu mẫu hai bước sẽ được kết nối ở giai đoạn tiếp theo.';
             notice.tabIndex = -1; notice.focus();
         }
@@ -147,9 +151,95 @@ export function collectStepOneErrors(form) {
     return errors;
 }
 
+export function collectLookupErrors(form) {
+    const errors = {};
+    const phone = form.elements.namedItem('phone')?.value.trim() || '';
+    const plate = form.elements.namedItem('license_plate')?.value.trim() || '';
+    if (!phone) errors.phone = 'Vui lòng nhập số điện thoại.';
+    else if (phone.length > 30 || !/^0[1-9][0-9]{8,9}$/.test(normalizePhone(phone))) errors.phone = 'Số điện thoại không hợp lệ.';
+    if (!plate) errors.license_plate = 'Vui lòng nhập biển số xe.';
+    else if (plate.length > 30 || !/^[A-Z0-9]{3,20}$/.test(plate.toUpperCase().replace(/[\s.\-]+/g, ''))) errors.license_plate = 'Biển số xe không hợp lệ.';
+    return errors;
+}
+
+export function initLookupValidation(form) {
+    const errors = {};
+    const touched = new Set();
+    const button = form.querySelector('[data-lookup-submit]');
+    const loading = form.querySelector('.dr-lookup-loading');
+    form.querySelectorAll('[data-error-for]').forEach((node) => {
+        if (!node.hidden && node.textContent.trim()) {
+            errors[node.dataset.errorFor] = node.textContent.trim(); touched.add(node.dataset.errorFor);
+        }
+    });
+    if (Object.keys(errors).length) renderValidation(form, errors, true);
+    else form.closest?.('[data-dealer-registration]')?.querySelector('[data-lookup-result-focus]')?.focus();
+    for (const type of ['input', 'change', 'focusout']) form.addEventListener(type, (event) => {
+        const name = event.target.name;
+        if (!['phone', 'license_plate'].includes(name)) return;
+        if (type !== 'input') touched.add(name);
+        if (!touched.has(name)) return;
+        const current = collectLookupErrors(form);
+        if (current[name]) errors[name] = current[name]; else delete errors[name];
+        renderValidation(form, errors);
+    });
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const current = collectLookupErrors(form);
+        Object.keys(errors).forEach((name) => delete errors[name]); Object.assign(errors, current);
+        ['phone', 'license_plate'].forEach((name) => touched.add(name));
+        renderValidation(form, errors, true);
+        if (Object.keys(errors).length || form.dataset.lookupSubmitting) return;
+        form.dataset.lookupSubmitting = 'true'; form.setAttribute('aria-busy', 'true');
+        if (button) button.disabled = true;
+        if (loading) loading.hidden = false;
+        HTMLFormElement.prototype.submit.call(form);
+    });
+    window.addEventListener('pageshow', () => {
+        delete form.dataset.lookupSubmitting; form.removeAttribute('aria-busy');
+        if (button) button.disabled = false;
+        if (loading) loading.hidden = true;
+    });
+}
+
+export function collectSupplementErrors(form) {
+    const value = String(new FormData(form).get('facebook_profile_url') || '').trim();
+    if (!value) return { facebook_profile_url: 'Vui lòng nhập liên kết Facebook cá nhân.' };
+    return value.length <= 2048 && /^https?:\/\//i.test(value) && isPersonalFacebook(value) ? {} : { facebook_profile_url: 'Liên kết Facebook không hợp lệ.' };
+}
+
+export function initSupplementValidation(form) {
+    let touched = false;
+    const input = form.elements.namedItem('facebook_profile_url');
+    const button = form.querySelector('[type=submit]');
+    const loading = form.querySelector('[data-supplement-loading]');
+    if (input?.getAttribute('aria-invalid') === 'true') { touched = true; input.focus(); }
+    for (const type of ['input', 'focusout']) input?.addEventListener(type, () => {
+        if (type === 'focusout') touched = true;
+        if (touched) renderValidation(form, collectSupplementErrors(form));
+    });
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); touched = true;
+        const errors = collectSupplementErrors(form); renderValidation(form, errors, true);
+        if (Object.keys(errors).length || form.dataset.submitting) return;
+        form.dataset.submitting = 'true'; form.setAttribute('aria-busy', 'true');
+        if (button) button.disabled = true;
+        if (loading) loading.hidden = false;
+        HTMLFormElement.prototype.submit.call(form);
+    });
+    window.addEventListener('pageshow', () => {
+        delete form.dataset.submitting; form.removeAttribute('aria-busy');
+        if (button) button.disabled = false;
+        if (loading) loading.hidden = true;
+    });
+}
+
 export function initDealerRegistration(root = document) {
     const site = root.querySelector('[data-dealer-registration]');
     if (!site) return;
+    site.querySelectorAll('[data-registration-lookup]').forEach(initLookupValidation);
+    site.querySelectorAll('[data-registration-supplement]').forEach(initSupplementValidation);
+    if (!site.querySelector('[data-registration-lookup]')) site.querySelector('[data-lookup-result-focus]')?.focus();
     initCustomerAddressFields(site);
     const first = site.querySelector('[data-step-one]');
     const second = site.querySelector('[data-step-two]');
@@ -167,19 +257,6 @@ export function initDealerRegistration(root = document) {
         if (!landingScreen) return;
         event.preventDefault(); showLanding();
     }));
-    const openCurrent = () => {
-        const current = site.querySelector('#registration-current');
-        if (!current) return;
-        current.open = true;
-        const data = first ? new FormData(first) : null;
-        for (const name of ['customer_name', 'phone', 'vehicle_description']) {
-            const input = current.querySelector(`[name="${name}"]`);
-            if (input && data?.get(name)) input.value = data.get(name);
-        }
-        current.scrollIntoView({ block:'start' }); current.querySelector('input:not([type=hidden])')?.focus();
-    };
-    site.querySelectorAll('[data-open-current]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); openCurrent(); }));
-    if (location.hash === '#registration' && site.querySelector('#registration-current[open]')) openCurrent();
     first?.addEventListener('submit', (event) => {
         event.preventDefault(); const errors = collectErrors(first); renderValidation(first, errors, true);
         if (Object.keys(errors).length) return;

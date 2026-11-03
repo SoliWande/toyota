@@ -94,6 +94,6 @@ class LeaderboardService
                 ->where('submissions.submitted_at', '<', $end->setTimezone($timezone)->format('Y-m-d H:i:s'));
         }
 
-        return $query;
+        return app(DemoSubmissionScope::class)->apply($query, 'submissions.id');
     }
 }

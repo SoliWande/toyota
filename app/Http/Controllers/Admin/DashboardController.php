@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
+use App\Services\DemoSubmissionScope;
 use App\Services\LeaderboardService;
 use Carbon\CarbonImmutable;
 use Illuminate\View\View;
@@ -24,7 +25,7 @@ class DashboardController extends Controller
         $salesCounts = User::query()->where('role', UserRole::Sales->value)
             ->select('status')->selectRaw('COUNT(*) AS total')
             ->groupBy('status')->pluck('total', 'status');
-        $submissionCounts = CustomerSubmission::query()->toBase()
+        $submissionCounts = app(DemoSubmissionScope::class)->apply(CustomerSubmission::query()->toBase())
             ->selectRaw('COUNT(*) AS total')
             ->selectRaw('COALESCE(SUM(status = ?), 0) AS approved', [SubmissionStatus::Approved->value])
             ->selectRaw('COALESCE(SUM(status = ?), 0) AS pending', [SubmissionStatus::Pending->value])

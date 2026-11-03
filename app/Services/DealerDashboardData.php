@@ -43,7 +43,7 @@ class DealerDashboardData
         return $dealer->submissions()->getQuery()->select([
             'id', 'dealer_id', 'sales_id', 'customer_name', 'phone', 'facebook_url', 'facebook_url_normalized',
             'status', 'submitted_at', 'reviewed_at', 'address_line', 'province_code', 'province_name', 'ward_code', 'ward_name',
-            'vehicle_model', 'vehicle_description', 'source', 'vehicle_color', 'first_registration_year', 'license_plate', 'evidence_image_path',
+            'vehicle_model', 'vehicle_description', 'source', 'vehicle_color', 'first_registration_year', 'license_plate', 'odo', 'evidence_image_path',
         ])->with('sales:id,name,dealer_id,status,public_slug');
     }
 

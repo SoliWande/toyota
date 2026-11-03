@@ -5,11 +5,15 @@ namespace App\Models;
 use App\Enums\SubmissionStatus;
 use App\Enums\UserRole;
 use App\Services\FacebookUrlNormalizer;
+use App\Services\RegistrationPhone;
+use App\Services\SubmissionIntake;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 
 class CustomerSubmission extends Model
@@ -44,12 +48,66 @@ class CustomerSubmission extends Model
     protected $attributes = ['status' => 'pending', 'source' => 'sales'];
 
     protected $casts = [
+        'odo' => 'integer',
         'status' => SubmissionStatus::class,
         'submitted_at' => 'immutable_datetime',
         'reviewed_at' => 'immutable_datetime',
         'first_registration_year' => 'integer',
         'consented_at' => 'immutable_datetime',
     ];
+
+    protected function performInsert(Builder $query)
+    {
+        return app(SubmissionIntake::class)->locked(function () use ($query) {
+            if (in_array($this->status, [SubmissionStatus::Pending, SubmissionStatus::Approved], true)) {
+                $errors = app(SubmissionIntake::class)->conflicts($this->phone, $this->license_plate, true,
+                    $this->getConnection(), null, [$this->phone_normalized ?? '']);
+                if ($errors) {
+                    throw ValidationException::withMessages($errors);
+                }
+            }
+
+            return parent::performInsert($query);
+        }, $this->getConnection());
+    }
+
+    protected function performUpdate(Builder $query)
+    {
+        $reactivating = $this->isDirty('status') && $this->getRawOriginal('status') === 'rejected'
+            && in_array($this->status, [SubmissionStatus::Pending, SubmissionStatus::Approved], true);
+        if (! $reactivating && ! $this->isDirty(['phone', 'phone_normalized', 'license_plate'])) {
+            return parent::performUpdate($query);
+        }
+
+        return app(SubmissionIntake::class)->locked(function () use ($query) {
+            $current = $this->getConnection()->table($this->getTable())->where('id', $this->getKey())->lockForUpdate()->first();
+            if ($current && in_array($this->isDirty('status') ? $this->status->value : $current->status, ['pending', 'approved'], true)) {
+                if ($current->status === 'rejected') {
+                    $errors = app(SubmissionIntake::class)->conflicts($this->phone, $this->license_plate, true,
+                        $this->getConnection(), $this->getKey(), [$this->phone_normalized ?? '']);
+                    if ($errors) {
+                        throw ValidationException::withMessages($errors);
+                    }
+                }
+                $oldPhones = array_map(RegistrationPhone::normalize(...), [$current->phone ?? '', $current->phone_normalized ?? '']);
+                $errors = [];
+                foreach (['phone', 'phone_normalized'] as $field) {
+                    $phone = RegistrationPhone::normalize($this->$field ?? '');
+                    if ($this->isDirty($field) && $phone !== '' && ! in_array($phone, $oldPhones, true)) {
+                        $errors += app(SubmissionIntake::class)->conflicts($phone, null, true, $this->getConnection(), $this->getKey());
+                    }
+                }
+                if ($this->isDirty('license_plate') && SubmissionIntake::plate($this->license_plate) !== SubmissionIntake::plate($current->license_plate)) {
+                    $errors += app(SubmissionIntake::class)->conflicts(null, $this->license_plate, true, $this->getConnection(), $this->getKey());
+                }
+                if ($errors) {
+                    throw ValidationException::withMessages($errors);
+                }
+            }
+
+            return parent::performUpdate($query);
+        }, $this->getConnection());
+    }
 
     protected static function booted(): void
     {

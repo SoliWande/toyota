@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-3xl">
         <a href="{{ route('admin.submissions.index') }}" class="text-sm text-slate-500 hover:text-red-600">← Duyệt khai báo</a>
         <h1 class="mb-6 mt-4 break-words text-3xl font-bold">{{ $submission->customer_name }}</h1>
-        <x-admin-feedback />
+        <x-admin-feedback :exclude="['phone', 'license_plate']" />
         @if ($duplicate)
             <div role="alert" class="mb-6 rounded-2xl border border-red-300 bg-red-50 p-5 text-red-900">
                 <h2 class="font-bold">Facebook profile đã được duyệt trước đó</h2>
@@ -31,13 +31,15 @@
                 @endif
             </dl>
             <x-submission-vehicle-details :submission="$submission" />
+            @if ($editingAvailable)<x-submission-inline-edit :submission="$submission" :dealers="$dealers" :sales-options="$salesOptions" :filters="['status' => $submission->status->value]" />@endif
             @if ($submission->facebook_url_normalized)<a href="{{ $submission->facebook_url_normalized }}" target="_blank" rel="noopener noreferrer" class="button-primary mt-6 w-full sm:w-auto">Mở Facebook</a>@endif
             @if ($submission->status === \App\Enums\SubmissionStatus::Pending)
                 <p class="mt-4 text-sm leading-6 text-slate-500">Xác minh thành viên trong Facebook Group trước khi duyệt. Hệ thống kiểm tra lại duplicate khi bạn bấm duyệt.</p>
                 <div class="mt-6 border-t border-slate-100 pt-6">
-                    <x-submission-review-form :submission="$submission" :duplicate="$duplicate !== null" />
+                    <x-submission-review-form :submission="$submission" :duplicate="$duplicate !== null" :identity-conflicts="$identityConflicts" />
                 </div>
             @endif
         </div>
+        <x-submission-verification :submission="$submission" :state="$verificationState" :audits="$verificationAudits" />
     </div>
 </x-layout>

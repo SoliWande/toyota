@@ -1,11 +1,29 @@
-@props(['submission', 'duplicate' => false, 'queue' => false, 'filters' => []])
+@props(['submission', 'duplicate' => false, 'queue' => false, 'filters' => [], 'identityConflicts' => []])
 @php
     $restoreInput = is_scalar(old('review_submission_id')) && (string) old('review_submission_id') === (string) $submission->id;
     $oldText = fn ($field) => $restoreInput && is_string(old($field)) ? old($field) : '';
     $parameters = ['submission' => $submission, ...$filters];
+    $editingThis = is_scalar(old('edit_submission_id')) && (string) old('edit_submission_id') === (string) $submission->id;
+    $identityErrors = [];
+    if (! $editingThis) {
+        foreach (['phone', 'license_plate'] as $field) {
+            $message = $restoreInput && $errors->has($field) ? $errors->first($field) : ($identityConflicts[$field] ?? null);
+            if ($message) $identityErrors[$field] = $message;
+        }
+    }
 @endphp
 <form method="POST" action="{{ route('admin.submissions.approve', $parameters) }}" class="space-y-4" data-prevent-double-submit>
     @csrf
+    @if ($identityErrors)
+        <div class="space-y-3" data-approval-identity-errors>
+            @foreach ($identityErrors as $field => $message)
+                <div><span class="text-sm font-medium">{{ $field === 'phone' ? 'Số điện thoại' : 'Biển số xe' }}</span>
+                    <p id="review-{{ $field }}-error-{{ $submission->id }}" role="alert" class="mt-1 text-sm text-red-700">{{ $message }}</p>
+                </div>
+            @endforeach
+            <p class="text-sm text-slate-600">Chỉnh sửa thông tin sai hoặc từ chối đăng ký trùng trước khi duyệt. Không có thao tác bỏ qua kiểm tra trùng.</p>
+        </div>
+    @endif
     @if ($submission->source === 'dealer_qr')
         <div class="rounded-xl bg-amber-50 p-4">
             <label for="facebook-{{ $submission->id }}" class="text-sm font-semibold">Facebook cá nhân đã được Admin xác minh (bắt buộc khi duyệt đăng ký QR)</label>
@@ -29,7 +47,7 @@
         <details data-inline-confirmation class="min-w-0 flex-1 rounded-xl border border-slate-200 p-3">
             <summary class="min-h-12 cursor-pointer py-3 font-semibold text-red-700">Duyệt khai báo</summary>
             <p class="my-3 break-words text-sm">Bạn có chắc muốn duyệt khai báo của {{ $submission->customer_name }} thuộc {{ $submission->dealer?->name ?? 'đại lý chưa xác minh' }}?</p>
-            <div class="flex flex-wrap gap-3"><button type="submit" class="button-primary" @disabled($duplicate)>Xác nhận duyệt</button><button type="button" data-cancel-inline class="rounded-xl border border-slate-300 px-4 py-3">Hủy</button></div>
+            <div class="flex flex-wrap gap-3"><button type="submit" class="button-primary" @disabled($duplicate || $identityConflicts !== [])>Xác nhận duyệt</button><button type="button" data-cancel-inline class="rounded-xl border border-slate-300 px-4 py-3">Hủy</button></div>
         </details>
         <details data-inline-confirmation class="min-w-0 flex-1 rounded-xl border border-slate-200 p-3">
             <summary class="min-h-12 cursor-pointer py-3 font-semibold text-red-700">Từ chối</summary>

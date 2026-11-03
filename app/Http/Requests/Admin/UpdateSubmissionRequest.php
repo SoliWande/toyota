@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Services\AdministrativeDivisions;
 use App\Services\RegistrationPhone;
+use App\Services\SubmissionIntake;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,6 +38,13 @@ class UpdateSubmissionRequest extends FormRequest
             }],
             'vehicle_model' => [$qr ? 'prohibited' : 'required', 'string', Rule::in(array_keys(config('vehicles.toyota_models')))],
             'vehicle_description' => [$qr ? 'required' : 'prohibited', 'string', 'max:255'],
+            'license_plate' => ['sometimes', filled($this->route('submission')->license_plate) ? 'required' : 'nullable', 'string', 'max:20', function ($attribute, $value, $fail) {
+                // Unchanged historical values are not forced through a new format rule.
+                if (SubmissionIntake::plate($value) !== SubmissionIntake::plate($this->route('submission')->license_plate)
+                    && ! preg_match('/^[A-Z0-9]{3,20}$/D', $value)) {
+                    $fail('Biển số xe không hợp lệ.');
+                }
+            }],
             'dealer_id' => ['nullable', 'integer', Rule::exists('dealers', 'id')],
             'sales_id' => ['nullable', 'integer', Rule::exists('users', 'id')->where('role', 'sales')],
             'edit_version' => ['required', 'string', 'regex:/^[a-f0-9]{64}$/D'],
@@ -51,6 +59,9 @@ class UpdateSubmissionRequest extends FormRequest
     {
         if (is_string($this->request->get('phone'))) {
             $this->merge(['phone' => RegistrationPhone::normalize($this->request->get('phone'))]);
+        }
+        if (is_string($this->request->get('license_plate'))) {
+            $this->merge(['license_plate' => SubmissionIntake::plate($this->request->get('license_plate'))]);
         }
     }
 

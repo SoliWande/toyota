@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Enums\UserStatus;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -10,7 +11,7 @@ class SalesIndexRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('viewAny', \App\Models\User::class);
+        return $this->user()->can('viewAny', User::class);
     }
 
     public function rules(): array

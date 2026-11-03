@@ -7,6 +7,7 @@ use App\Enums\SubmissionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DealerRequest;
 use App\Models\Dealer;
+use App\Services\DemoSubmissionScope;
 use App\Services\LeaderboardService;
 use App\Services\SalesAvatars;
 use Illuminate\Database\QueryException;
@@ -58,7 +59,8 @@ class DealerController extends Controller
         $customers = $dealer->submissions()->select(['id', 'sales_id', 'dealer_id', 'customer_name', 'phone', 'status', 'submitted_at'])
             ->with('sales:id,name')->orderByDesc('submitted_at')->orderByDesc('id')->paginate(20, ['*'], 'customers_page')
             ->appends($request->only('page'));
-        $approvedCustomers = $dealer->submissions()->where('status', SubmissionStatus::Approved->value)->count();
+        $approvedCustomers = app(DemoSubmissionScope::class)->apply($dealer->submissions())
+            ->where('status', SubmissionStatus::Approved->value)->count();
 
         return view('admin.dealers.show', compact('dealer', 'standing', 'sales', 'customers', 'approvedCustomers'));
     }

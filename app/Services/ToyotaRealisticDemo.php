@@ -9,6 +9,7 @@ use App\Models\Dealer;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -18,7 +19,7 @@ class ToyotaRealisticDemo
 {
     public const TAG = '[TOYOTA-REALISTIC-V1]';
 
-    public const EMAIL = 'dev-admin@toyota.test';
+    public const EMAIL = 'toyota.realistic.v1.admin@example.com';
 
     public bool $confirmed = false;
 
@@ -50,7 +51,7 @@ class ToyotaRealisticDemo
         if (! $this->confirmed) {
             throw new LogicException('Database confirmation required.');
         }
-        DB::transaction(function () {
+        app(SubmissionIntake::class)->locked(function () {
             // Serialize seed/cleanup and never edit the directory rows.
             $directory = Dealer::orderBy('id')->lockForUpdate()->get();
             $existing = User::where('email', self::EMAIL)->first();
@@ -161,7 +162,12 @@ class ToyotaRealisticDemo
             $admin->forceFill(['admin_note' => json_encode(['tag' => self::TAG, 'users' => $users,
                 'submissions' => $submissions, 'reviews' => $reviews, 'transfers' => $transfers,
                 'fingerprint' => $this->fingerprint($users, $submissions, $reviews),
-                'created_at' => $now->toIso8601String()], JSON_THROW_ON_ERROR), 'updated_at' => $now])->save();
+                'created_at' => $now->toIso8601String(),
+                'ownership' => Crypt::encryptString(json_encode([
+                    'dataset' => self::TAG, 'database' => DB::connection()->getDatabaseName(),
+                    'admin' => $admin->id, 'submissions' => $submissions,
+                ], JSON_THROW_ON_ERROR)),
+            ], JSON_THROW_ON_ERROR), 'updated_at' => $now])->save();
         });
     }
 
@@ -206,12 +212,46 @@ class ToyotaRealisticDemo
     private function manifest(User $admin): array
     {
         $manifest = json_decode($admin->admin_note ?? '', true);
-        if ($admin->role->value !== 'admin' || ($manifest['tag'] ?? null) !== self::TAG
-            || count($manifest['submissions'] ?? []) !== 1500 || ! in_array($admin->id, $manifest['users'] ?? [], true)) {
+        if ($admin->role->value !== 'admin' || ! is_array($manifest) || ($manifest['tag'] ?? null) !== self::TAG
+            || ! is_array($manifest['submissions'] ?? null) || count($manifest['submissions']) !== 1500
+            || ! is_array($manifest['users'] ?? null) || ! in_array($admin->id, $manifest['users'], true)
+            || (isset($manifest['reviews']) && ! is_array($manifest['reviews']))) {
             throw new LogicException('Demo manifest missing or conflicting. Manual inspection required.');
         }
 
         return $manifest;
+    }
+
+    /** Exact ownership only: never infer demo membership from customer/account labels. */
+    public function ownedSubmissionIds(): array
+    {
+        $admin = User::where('email', self::EMAIL)->first();
+        if (! $admin) {
+            return [];
+        }
+        $manifest = $this->manifest($admin);
+        $ids = $manifest['submissions'];
+        if (count(array_unique($ids)) !== 1500
+            || count(array_filter($ids, fn ($id) => is_int($id) && $id > 0)) !== 1500) {
+            throw new LogicException('Demo ownership cannot be verified; metrics require operator review.');
+        }
+        if (isset($manifest['ownership'])) {
+            try {
+                $owned = json_decode(Crypt::decryptString($manifest['ownership']), true, 512, JSON_THROW_ON_ERROR);
+                if ($owned === ['dataset' => self::TAG, 'database' => DB::connection()->getDatabaseName(),
+                    'admin' => $admin->id, 'submissions' => $ids]) {
+                    return $ids;
+                }
+            } catch (\Throwable) {
+                // Do not disclose the encrypted envelope or customer data in the error.
+            }
+        } elseif (is_string($manifest['fingerprint'] ?? null)
+            && hash_equals($manifest['fingerprint'], $this->fingerprint($manifest['users'], $ids, $manifest['reviews'] ?? []))) {
+            // Legacy manifests can only establish ownership while the entire dataset is unchanged.
+            return $ids;
+        }
+
+        throw new LogicException('Demo ownership cannot be verified; metrics require operator review.');
     }
 
     private function fingerprint(array $users, array $submissions, array $reviews): string
@@ -235,7 +275,7 @@ class ToyotaRealisticDemo
         if (! $this->confirmed) {
             throw new LogicException('Database confirmation required.');
         }
-        DB::transaction(function () {
+        app(SubmissionIntake::class)->locked(function () {
             Dealer::orderBy('id')->lockForUpdate()->get();
             $admin = User::where('email', self::EMAIL)->lockForUpdate()->first();
             if (! $admin) {

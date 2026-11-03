@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\AwardPeriod;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AwardFactory extends Factory
@@ -22,7 +23,7 @@ class AwardFactory extends Factory
     public function weekly(): static
     {
         return $this->state(function () {
-            $start = now()->startOfWeek(\Carbon\CarbonInterface::MONDAY);
+            $start = now()->startOfWeek(CarbonInterface::MONDAY);
 
             return [
                 'title' => 'Weekly community awards',

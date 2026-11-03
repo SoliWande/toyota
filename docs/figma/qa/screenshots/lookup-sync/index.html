@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đối chiếu Figma D7–D15</title>
+<style>
+body{margin:24px;font:16px/1.5 system-ui;color:#111;background:#f5f5f7}nav{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}button,select{font:inherit;padding:8px 12px}figure{margin:0}img{display:block;width:100%;height:auto;border:1px solid #ddd}main{display:grid;grid-template-columns:1fr 1fr;gap:20px}figcaption{padding:8px 0;font-weight:600}p{max-width:1000px}@media(max-width:800px){main{grid-template-columns:1fr}}
+</style>
+<h1>Đối chiếu Figma D7–D15</h1>
+<p>Ảnh ứng dụng được chụp bằng Chrome/Playwright, dùng Blade và CSS/JS build thực tế với fixture local. Đây là kiểm tra trình bày; không thay dữ liệu trên ứng dụng. Tên che, thông tin đại lý, số điện thoại và cam kết 48 giờ có thể khác thiết kế theo dữ liệu và nghiệp vụ hiện hành.</p>
+<nav aria-label="Chọn màn hình"><select id="screen" aria-label="Màn hình"></select><select id="version" aria-label="Phiên bản"><option value="final">Sau chỉnh sửa</option><option value="before">Trước chỉnh sửa</option></select></nav>
+<main><figure><figcaption id="figma-label"></figcaption><img id="figma" alt="Thiết kế Figma"></figure><figure><figcaption id="app-label"></figcaption><img id="app" alt="Ảnh ứng dụng local"></figure></main>
+<script>
+const screens=['D07','D08','D09','D10','D11','D12','D13','D14','D15'];
+const screen=document.querySelector('#screen'),version=document.querySelector('#version');
+screen.innerHTML=screens.map(s=>`<option>${s}</option>`).join('');
+function update(){document.querySelector('#figma').src=`figma/${screen.value}.png`;document.querySelector('#app').src=`${version.value}/${screen.value}.png`;document.querySelector('#figma-label').textContent=`${screen.value} · Figma`;document.querySelector('#app-label').textContent=`${screen.value} · ${version.selectedOptions[0].textContent}`;}
+screen.onchange=version.onchange=update;update();
+</script>
+</html>

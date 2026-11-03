@@ -8,9 +8,9 @@ use App\Models\ModerationReview;
 use App\Models\User;
 use App\Services\ApprovedSubmissionFinder;
 use App\Services\FacebookUrlNormalizer;
+use App\Services\SubmissionIntake;
 use App\Services\SubmissionIntegrity;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
@@ -23,12 +23,21 @@ class ApproveCustomerSubmission
         Gate::forUser($admin)->authorize('review', $submission);
 
         try {
-            DB::transaction(function () use ($admin, $submission, $note, $verifiedFacebookUrl) {
+            app(SubmissionIntake::class)->locked(function () use ($admin, $submission, $note, $verifiedFacebookUrl) {
                 $locked = CustomerSubmission::whereKey($submission->id)->lockForUpdate()->firstOrFail();
                 Gate::forUser($admin)->authorize('review', $locked);
 
                 if ($locked->status !== SubmissionStatus::Pending) {
                     throw ValidationException::withMessages(['submission' => 'Khai báo không còn chờ duyệt. Vui lòng kiểm tra lại trạng thái.']);
+                }
+
+                $conflicts = app(SubmissionIntake::class)->conflicts($locked->phone, $locked->license_plate, true,
+                    $locked->getConnection(), $locked->id, [$locked->phone_normalized ?? '']);
+                if ($conflicts) {
+                    throw ValidationException::withMessages(array_intersect_key([
+                        'phone' => ['Số điện thoại đã được sử dụng trong một đăng ký khác.'],
+                        'license_plate' => ['Biển số xe đã được sử dụng trong một đăng ký khác.'],
+                    ], $conflicts));
                 }
 
                 $locked->load(['dealer:id', 'sales:id,role']);
@@ -70,7 +79,7 @@ class ApproveCustomerSubmission
                     'admin_note' => $note,
                     'reviewed_at' => $time,
                 ])->save();
-            }, 3);
+            });
         } catch (QueryException $exception) {
             // The unique index is the final guard when two different records race.
             if (($exception->errorInfo[1] ?? null) === 1062

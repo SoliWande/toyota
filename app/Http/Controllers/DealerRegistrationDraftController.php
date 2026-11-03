@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Services\DealerRegistrationDraft;
 use App\Services\RegistrationPhone;
+use App\Services\SubmissionIntake;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -54,18 +54,12 @@ final class DealerRegistrationDraftController extends Controller
         }
         $duplicate = false;
         if (! isset($errors['phone'])) {
-            // Historical Sales rows can have missing/stale normalized phone values.
-            // Never expose matching rows or put raw phone into a query/cache key.
-            foreach (CustomerSubmission::whereIn('status', ['pending', 'approved'])->select(['id', 'phone', 'phone_normalized'])->lazyById(500) as $existing) {
-                if (RegistrationPhone::normalize($existing->phone ?? '') === $input['phone']
-                    || RegistrationPhone::normalize($existing->phone_normalized ?? '') === $input['phone']) {
-                    $duplicate = true;
-                    $errors['phone'] = ['Số điện thoại này đã đăng ký tham gia cộng đồng.'];
-                    break;
-                }
+            if (isset(app(SubmissionIntake::class)->conflicts($input['phone'])['phone'])) {
+                $duplicate = true;
+                $errors['phone'] = ['Số điện thoại này đã đăng ký tham gia cộng đồng.'];
             }
         }
-        $drafts->write($request, $dealer, $values, $errors, $duplicate);
+        app(SubmissionIntake::class)->locked(fn () => $drafts->write($request, $dealer, $values, $errors, $duplicate));
 
         return redirect()->to($errors ? route('dealers.profile', $slug).'#registration' : route('dealers.registrations.step-two', $slug))
             ->header('Cache-Control', 'no-store, private');
@@ -81,7 +75,9 @@ final class DealerRegistrationDraftController extends Controller
                 ->header('Cache-Control', 'no-store, private');
         }
 
-        return response()->view('dealers.registration.step-two', ['dealer' => $dealer, 'values' => $draft['values']])
+        return response()->view('dealers.registration.step-two', ['dealer' => $dealer,
+            'draftId' => $draft['id'] ?? '', 'values' => array_merge($draft['step_two']['values'] ?? [], $draft['values']),
+            'validationErrors' => $draft['step_two']['errors'] ?? []])
             ->header('Cache-Control', 'no-store, private');
     }
 }

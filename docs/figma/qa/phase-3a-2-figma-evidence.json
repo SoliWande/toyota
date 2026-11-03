@@ -1,0 +1,245 @@
+{
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "sessionId": "56f11b5a-fb9e-4da4-8af8-5388a30e1a3b",
+  "date": "2026-11-03",
+  "browser": "NOT VERIFIED; Figma references are not application screenshots",
+  "frames": [
+    {
+      "frame": "D07",
+      "nodeId": "213:533",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D07.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D08",
+      "nodeId": "212:647",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D08.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold"
+      ]
+    },
+    {
+      "frame": "D10",
+      "nodeId": "213:636",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D10.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D11",
+      "nodeId": "213:702",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D11.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D12",
+      "nodeId": "213:797",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D12.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D13",
+      "nodeId": "213:894",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D13.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D14",
+      "nodeId": "213:989",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D14.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "D15",
+      "nodeId": "213:1086",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-D15.png",
+      "fonts": [
+        "Inter:Regular",
+        "Inter:Medium",
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Bold"
+      ]
+    },
+    {
+      "frame": "M07",
+      "nodeId": "57:733",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M07.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M08",
+      "nodeId": "57:941",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M08.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Extra_Bold",
+        "Inter:Regular"
+      ]
+    },
+    {
+      "frame": "M10",
+      "nodeId": "204:366",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M10.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M11",
+      "nodeId": "204:446",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M11.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M12",
+      "nodeId": "204:541",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M12.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M13",
+      "nodeId": "204:638",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M13.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M14",
+      "nodeId": "204:736",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M14.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    },
+    {
+      "frame": "M15",
+      "nodeId": "204:833",
+      "designContext": true,
+      "embeddedScreenshot": true,
+      "getScreenshot": true,
+      "reference": "screenshots/phase-3a/figma-M15.png",
+      "fonts": [
+        "Inter:Semi_Bold",
+        "Inter:Regular",
+        "Inter:Bold",
+        "Inter:Extra_Bold",
+        "Inter:Medium"
+      ]
+    }
+  ]
+}

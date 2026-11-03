@@ -16,6 +16,8 @@ use App\Models\Dealer;
 use App\Models\User;
 use App\Services\AdministrativeDivisions;
 use App\Services\ApprovedSubmissionFinder;
+use App\Services\SubmissionCollisionAudit;
+use App\Services\SubmissionVerification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,9 +61,13 @@ class SubmissionReviewController extends Controller
             $query->where('submitted_at', '<', Carbon::parse($filters['submitted_to'])->addDay()->startOfDay());
         }
 
+        $submissions = $query->orderBy('submitted_at')->orderBy('id')->paginate(20)->withQueryString()->appends(['status' => $status]);
+        $pendingIds = $submissions->filter(fn ($row) => $row->status === SubmissionStatus::Pending)->pluck('id')->all();
+
         return view('admin.submissions.index', [
             // Preserve the explicit all-status filter after empty-string middleware normalization.
-            'submissions' => $query->orderBy('submitted_at')->orderBy('id')->paginate(20)->withQueryString()->appends(['status' => $status]),
+            'submissions' => $submissions,
+            'identityConflicts' => app(SubmissionCollisionAudit::class)->warningsFor($pendingIds),
             'status' => $status,
             'filters' => $filters,
             'dealers' => Dealer::orderBy('name')->get(['id', 'name']),
@@ -94,7 +100,16 @@ class SubmissionReviewController extends Controller
 
         return view('admin.submissions.show', [
             'submission' => $submission,
+            'verificationState' => app(SubmissionVerification::class)->state($submission->id),
+            'verificationAudits' => DB::table('submission_verification_audits as audit')->leftJoin('users', 'users.id', '=', 'audit.actor_id')
+                ->where('audit.submission_id', $submission->id)->orderByDesc('audit.id')->limit(20)
+                ->get(['audit.*', 'users.name as actor_name']),
             'duplicate' => $submission->status === SubmissionStatus::Pending ? $duplicates->find($submission->facebook_url) : null,
+            'identityConflicts' => $submission->status === SubmissionStatus::Pending
+                ? (app(SubmissionCollisionAudit::class)->warningsFor([$submission->id])[$submission->id] ?? []) : [],
+            'dealers' => Dealer::orderBy('name')->get(['id', 'name']),
+            'salesOptions' => User::where('role', UserRole::Sales->value)->orderBy('name')->get(['id', 'name', 'dealer_id']),
+            'editingAvailable' => Schema::hasTable('submission_edits'),
         ]);
     }
 

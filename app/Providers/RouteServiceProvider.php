@@ -41,6 +41,22 @@ class RouteServiceProvider extends ServiceProvider
             Limit::perHour(20)->by('dealer-qr-hour:'.RegistrationPhone::key($request->ip())),
         ]);
         RateLimiter::for('dealer-address', fn (Request $request) => Limit::perMinute(60)->by('dealer-address:'.$request->ip()));
+        RateLimiter::for('lookup-page', fn (Request $request) => Limit::perMinute(30)->by('lookup-page:'.RegistrationPhone::key($request->ip())));
+        RateLimiter::for('lookup-supplement', fn (Request $request) => [
+            Limit::perMinute(5)->by('lookup-supplement-ip:'.RegistrationPhone::key($request->ip())),
+            Limit::perHour(15)->by('lookup-supplement-session:'.RegistrationPhone::key($request->session()->getId())),
+        ]);
+        RateLimiter::for('registration-lookup', function (Request $request) {
+            $input = $request->input('phone');
+            $identity = is_string($input) ? RegistrationPhone::normalize(mb_substr($input, 0, 80)) : '';
+
+            return [
+                Limit::perMinute(5)->by('lookup-ip-minute:'.RegistrationPhone::key($request->ip())),
+                Limit::perHour(20)->by('lookup-ip-hour:'.RegistrationPhone::key($request->ip())),
+                Limit::perMinute(3)->by('lookup-identity-minute:'.RegistrationPhone::key($identity)),
+                Limit::perHour(10)->by('lookup-identity-hour:'.RegistrationPhone::key($identity)),
+            ];
+        });
         RateLimiter::for('public-sales', fn (Request $request) => Limit::perMinute(120)->by('public-sales:'.$request->ip()));
         RateLimiter::for('password-email', fn (Request $request) => Limit::perMinute(5)->by('password-email:'.$request->ip()));
         RateLimiter::for('password-reset', fn (Request $request) => Limit::perMinute(10)->by('password-reset:'.$request->ip()));

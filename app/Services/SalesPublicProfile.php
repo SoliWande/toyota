@@ -41,6 +41,7 @@ class SalesPublicProfile
     {
         $approved = DB::table('customer_submissions')->where('sales_id', $sales->id)
             ->where('source', 'sales')->where('status', SubmissionStatus::Approved->value);
+        app(DemoSubmissionScope::class)->apply($approved);
         $month = CarbonImmutable::now(config('app.timezone'))->startOfMonth();
         // DATETIME follows the application's timezone, like LeaderboardService.
         $counts = (clone $approved)->where('submitted_at', '>=', $month->subMonths(2)->format('Y-m-d H:i:s'))

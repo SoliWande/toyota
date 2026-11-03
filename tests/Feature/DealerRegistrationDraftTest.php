@@ -51,6 +51,23 @@ class DealerRegistrationDraftTest extends TestCase
         return $this->post(route('dealers.registrations.step-one', $dealer->slug), $this->payload($overrides));
     }
 
+    public function test_landing_excludes_extra_panels_but_preserves_the_real_form_and_runtime_notices(): void
+    {
+        $dealer = Dealer::factory()->create();
+        $response = $this->get(route('dealers.profile', $dealer->slug))->assertOk();
+        $response->assertDontSee('Gửi đăng ký với đại lý bằng biểu mẫu hiện tại')
+            ->assertDontSee('Hồ sơ và thành tích đại lý')
+            ->assertDontSee('dr-phase-one-note')
+            ->assertDontSee('registration-existing')
+            ->assertSee(route('dealers.registrations.step-one', $dealer->slug), false)
+            ->assertSee('name="_token"', false)
+            ->assertSee('name="website"', false);
+        $this->assertSame(1, substr_count($response->getContent(), 'method="POST"'));
+        $this->withSession(['dealer_draft_notice' => 'SYNTHETIC_DRAFT_EXPIRED_NOTICE'])
+            ->get(route('dealers.profile', $dealer->slug))->assertOk()
+            ->assertSee('SYNTHETIC_DRAFT_EXPIRED_NOTICE');
+    }
+
     public function test_valid_draft_refresh_edit_and_no_submission(): void
     {
         $dealer = Dealer::factory()->create();
@@ -181,9 +198,13 @@ class DealerRegistrationDraftTest extends TestCase
             }
         });
         $dealer = Dealer::factory()->create();
+        // Obtain a token persisted by StartSession, as the browser does when loading D01.
+        // withSession() alone only edits memory; the next request reloads persisted attributes.
+        $this->get(route('dealers.profile', $dealer->slug))->assertOk();
+        $token = session()->token();
         $this->submit($dealer)->assertStatus(419);
-        $this->withSession(['_token' => 'test-csrf-token']);
-        $this->submit($dealer, ['_token' => 'test-csrf-token'])->assertRedirect(route('dealers.registrations.step-two', $dealer->slug));
+        $this->submit($dealer, ['_token' => 'incorrect-csrf-token'])->assertStatus(419);
+        $this->submit($dealer, ['_token' => $token])->assertRedirect(route('dealers.registrations.step-two', $dealer->slug));
     }
 
     public function test_existing_routes_and_sales_vehicle_choices_are_unchanged(): void

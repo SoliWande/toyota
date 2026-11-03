@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Vite;
+use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
+
 // Local QA only: php -S 127.0.0.1:8765 -t public docs/figma/qa/router.php
 // Refuse external clients and any database connection. No application data is read or written.
 if (PHP_SAPI !== 'cli-server' || ! in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) {
@@ -33,17 +38,17 @@ putenv('SESSION_DRIVER=array');
 putenv('CACHE_DRIVER=array');
 require $root.'/vendor/autoload.php';
 $app = require $root.'/bootstrap/app.php';
-$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+$app->make(Kernel::class)->bootstrap();
 config(['database.default' => 'disabled-for-ui', 'session.driver' => 'array', 'cache.default' => 'array', 'app.key' => 'base64:'.base64_encode(str_repeat('q', 32))]);
-$app->instance(Illuminate\Foundation\Vite::class, new class extends Illuminate\Foundation\Vite
+$app->instance(Vite::class, new class extends Vite
 {
     public function __invoke($entrypoints, $buildDirectory = null)
     {
-        return new Illuminate\Support\HtmlString('<link rel="stylesheet" href="/resources/css/dealer-registration.css"><script type="module" src="/resources/js/dealer-registration.js"></script>');
+        return new HtmlString('<link rel="stylesheet" href="/resources/css/dealer-registration.css"><script type="module" src="/resources/js/dealer-registration.js"></script>');
     }
 });
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$request = Illuminate\Http\Request::capture();
+$request = Request::capture();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

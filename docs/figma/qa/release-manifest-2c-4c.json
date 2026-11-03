@@ -1,0 +1,2333 @@
+{
+  "phase": "2C.4C",
+  "decision": "NO-GO",
+  "base_commit": "64c3fc5357c41cd11e74b7c1ae4c7ff12cfaf477",
+  "kind": "source-and-built-assets; NOT deployable; vendor no-dev is absent",
+  "archive": "storage/app/private/release-qa/phase-2c-4c-source-NOT-DEPLOYABLE.zip",
+  "archive_sha256": "b5809cb0c5092cbd11d496f0582f9aa26137b693bfbc60b7449e87d117ba5619",
+  "archive_bytes": 3762408,
+  "file_count": 291,
+  "vendor_no_dev": "NOT VERIFIED; existing workspace vendor is not packaged",
+  "workspace_dev_packages_present": [
+    "fakerphp/faker",
+    "filp/whoops",
+    "hamcrest/hamcrest-php",
+    "laravel/pint",
+    "laravel/sail",
+    "mockery/mockery",
+    "myclabs/deep-copy",
+    "nunomaduro/collision",
+    "phar-io/manifest",
+    "phar-io/version",
+    "phpunit/php-code-coverage",
+    "phpunit/php-file-iterator",
+    "phpunit/php-invoker",
+    "phpunit/php-text-template",
+    "phpunit/php-timer",
+    "phpunit/phpunit",
+    "sebastian/cli-parser",
+    "sebastian/comparator",
+    "sebastian/complexity",
+    "sebastian/diff",
+    "sebastian/environment",
+    "sebastian/exporter",
+    "sebastian/global-state",
+    "sebastian/lines-of-code",
+    "sebastian/object-enumerator",
+    "sebastian/object-reflector",
+    "sebastian/recursion-context",
+    "sebastian/type",
+    "sebastian/version",
+    "spatie/backtrace",
+    "spatie/error-solutions",
+    "spatie/flare-client-php",
+    "spatie/ignition",
+    "spatie/laravel-ignition",
+    "staabm/side-effects-detector",
+    "symfony/yaml",
+    "theseer/tokenizer"
+  ],
+  "production_locked_packages": [
+    {
+      "name": "bacon/bacon-qr-code",
+      "version": "v3.1.1"
+    },
+    {
+      "name": "brick/math",
+      "version": "1.0.0"
+    },
+    {
+      "name": "carbonphp/carbon-doctrine-types",
+      "version": "3.2.1"
+    },
+    {
+      "name": "dasprid/enum",
+      "version": "1.0.7"
+    },
+    {
+      "name": "dflydev/dot-access-data",
+      "version": "v3.0.3"
+    },
+    {
+      "name": "doctrine/inflector",
+      "version": "2.1.0"
+    },
+    {
+      "name": "doctrine/lexer",
+      "version": "3.0.3"
+    },
+    {
+      "name": "dragonmantank/cron-expression",
+      "version": "v3.6.0"
+    },
+    {
+      "name": "egulias/email-validator",
+      "version": "4.0.4"
+    },
+    {
+      "name": "fruitcake/php-cors",
+      "version": "v1.4.0"
+    },
+    {
+      "name": "graham-campbell/result-type",
+      "version": "v1.2.0"
+    },
+    {
+      "name": "guzzlehttp/guzzle",
+      "version": "7.16.0"
+    },
+    {
+      "name": "guzzlehttp/promises",
+      "version": "2.6.0"
+    },
+    {
+      "name": "guzzlehttp/psr7",
+      "version": "2.13.2"
+    },
+    {
+      "name": "guzzlehttp/uri-template",
+      "version": "v2.0.1"
+    },
+    {
+      "name": "laravel/framework",
+      "version": "v13.37.0"
+    },
+    {
+      "name": "laravel/prompts",
+      "version": "v0.3.26"
+    },
+    {
+      "name": "laravel/sanctum",
+      "version": "v4.3.3"
+    },
+    {
+      "name": "laravel/serializable-closure",
+      "version": "v2.1.0"
+    },
+    {
+      "name": "laravel/tinker",
+      "version": "v3.0.2"
+    },
+    {
+      "name": "league/commonmark",
+      "version": "2.10.4"
+    },
+    {
+      "name": "league/config",
+      "version": "v1.2.0"
+    },
+    {
+      "name": "league/flysystem",
+      "version": "3.36.0"
+    },
+    {
+      "name": "league/flysystem-local",
+      "version": "3.35.3"
+    },
+    {
+      "name": "league/mime-type-detection",
+      "version": "1.17.0"
+    },
+    {
+      "name": "league/uri",
+      "version": "7.9.0"
+    },
+    {
+      "name": "league/uri-interfaces",
+      "version": "7.9.0"
+    },
+    {
+      "name": "monolog/monolog",
+      "version": "3.12.1"
+    },
+    {
+      "name": "nesbot/carbon",
+      "version": "3.15.0"
+    },
+    {
+      "name": "nette/schema",
+      "version": "v1.3.6"
+    },
+    {
+      "name": "nette/utils",
+      "version": "v4.1.5"
+    },
+    {
+      "name": "nikic/php-parser",
+      "version": "v5.9.0"
+    },
+    {
+      "name": "nunomaduro/termwind",
+      "version": "v2.4.0"
+    },
+    {
+      "name": "phpoption/phpoption",
+      "version": "1.10.0"
+    },
+    {
+      "name": "psr/clock",
+      "version": "1.0.0"
+    },
+    {
+      "name": "psr/container",
+      "version": "2.0.2"
+    },
+    {
+      "name": "psr/event-dispatcher",
+      "version": "1.0.0"
+    },
+    {
+      "name": "psr/http-client",
+      "version": "1.0.3"
+    },
+    {
+      "name": "psr/http-factory",
+      "version": "1.1.0"
+    },
+    {
+      "name": "psr/http-message",
+      "version": "2.0"
+    },
+    {
+      "name": "psr/log",
+      "version": "3.0.2"
+    },
+    {
+      "name": "psr/simple-cache",
+      "version": "3.0.0"
+    },
+    {
+      "name": "psy/psysh",
+      "version": "v0.12.24"
+    },
+    {
+      "name": "ralouphie/getallheaders",
+      "version": "3.0.3"
+    },
+    {
+      "name": "ramsey/collection",
+      "version": "2.1.1"
+    },
+    {
+      "name": "ramsey/uuid",
+      "version": "4.9.4"
+    },
+    {
+      "name": "symfony/clock",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/console",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/css-selector",
+      "version": "v8.1.6"
+    },
+    {
+      "name": "symfony/deprecation-contracts",
+      "version": "v3.7.1"
+    },
+    {
+      "name": "symfony/error-handler",
+      "version": "v8.1.8"
+    },
+    {
+      "name": "symfony/event-dispatcher",
+      "version": "v8.1.5"
+    },
+    {
+      "name": "symfony/event-dispatcher-contracts",
+      "version": "v3.7.1"
+    },
+    {
+      "name": "symfony/finder",
+      "version": "v8.1.8"
+    },
+    {
+      "name": "symfony/http-foundation",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/http-kernel",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/mailer",
+      "version": "v8.1.7"
+    },
+    {
+      "name": "symfony/mime",
+      "version": "v8.1.7"
+    },
+    {
+      "name": "symfony/polyfill-ctype",
+      "version": "v1.37.0"
+    },
+    {
+      "name": "symfony/polyfill-intl-grapheme",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-intl-idn",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-intl-normalizer",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-mbstring",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-php80",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-php84",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-php85",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-php86",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/polyfill-time",
+      "version": "v1.42.0"
+    },
+    {
+      "name": "symfony/polyfill-uuid",
+      "version": "v1.43.0"
+    },
+    {
+      "name": "symfony/process",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/routing",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/service-contracts",
+      "version": "v3.7.3"
+    },
+    {
+      "name": "symfony/string",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/translation",
+      "version": "v8.1.5"
+    },
+    {
+      "name": "symfony/translation-contracts",
+      "version": "v3.7.1"
+    },
+    {
+      "name": "symfony/uid",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "symfony/var-dumper",
+      "version": "v8.1.9"
+    },
+    {
+      "name": "tijsverkoyen/css-to-inline-styles",
+      "version": "v2.4.0"
+    },
+    {
+      "name": "vlucas/phpdotenv",
+      "version": "v5.7.0"
+    },
+    {
+      "name": "voku/portable-ascii",
+      "version": "2.1.1"
+    }
+  ],
+  "exclusions": [
+    ".env local/secrets",
+    "credentials",
+    ".git",
+    "vendor",
+    "node_modules",
+    "tests",
+    "docs/QA routers",
+    "storage",
+    "bootstrap/cache",
+    "public/hot",
+    "public/storage",
+    "database/seeders",
+    "database/factories",
+    "database/data/demo-avatars"
+  ],
+  "literal_secret_scan": "PASS for limited patterns; allowlist is the primary packaging boundary",
+  "migrations": [
+    {
+      "path": "database/migrations/2014_10_12_000000_create_users_table.php",
+      "bytes": 751,
+      "sha256": "cd605d03471c325b24b8d1e4f5f44e02369636142da6060c2a26ccbf316263cf"
+    },
+    {
+      "path": "database/migrations/2014_10_12_100000_create_password_reset_tokens_table.php",
+      "bytes": 641,
+      "sha256": "dca550bb71abdc837debddc9baa9e14f85dd121cd78dc811cdae07a54656252a"
+    },
+    {
+      "path": "database/migrations/2019_08_19_000000_create_failed_jobs_table.php",
+      "bytes": 768,
+      "sha256": "1b2dc826a38de3e6cdd351fc5e0b96689440086e8027454453347036f1860ef3"
+    },
+    {
+      "path": "database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php",
+      "bytes": 856,
+      "sha256": "5a9c64d94d29ec6c435625b8a4d0d3c898b9bad042b5a3ac64f11d39c2b3610f"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000001_create_dealers_table.php",
+      "bytes": 527,
+      "sha256": "508c599220fb30a276be5a4d3e47bc148ff47d4d034ec452bf5235e39b6e0128"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000002_add_business_fields_to_users_table.php",
+      "bytes": 1874,
+      "sha256": "9da6c0da8819e55ff430657970d919f139e92695e4d0d07fd789c40771008fcd"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000003_create_customer_submissions_table.php",
+      "bytes": 2291,
+      "sha256": "db340dcf5cde24efa7e7ea50b30b8f15dbfd2325969f12fd765ba195bc62f921"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000004_create_awards_table.php",
+      "bytes": 1284,
+      "sha256": "a3b2dca6b500f61781d2c4f7724b2baa1f99daacfae97d847798237fd5885512"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000005_create_award_winners_table.php",
+      "bytes": 2037,
+      "sha256": "4959457bef2a00fe70a2d7b42e96a861825ed90d8eccc5891949a12473b30a20"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000006_create_moderation_reviews_table.php",
+      "bytes": 1596,
+      "sha256": "907abb6a5af04647b402b41294445194356f66891c3e9d4ce3e9d1f7385b9f60"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000007_add_is_active_to_dealers_table.php",
+      "bytes": 571,
+      "sha256": "65fa61edd667f2d0042ae509f14f574ae9dd1d829409f6ebf50f10b248aa8022"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000008_add_phone_to_users_table.php",
+      "bytes": 504,
+      "sha256": "2b92a0b9b1e36ea01e7f918745eec79bb3784f3babb9e2b5b01e26818ec1b5c4"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000009_add_dealer_contact_fields.php",
+      "bytes": 894,
+      "sha256": "bb6fd121bcf55b0c59b7ed6b3b935f4ce7f67c60d5e36562c3162d9ffbe5d60d"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000010_add_vehicle_evidence_to_customer_submissions.php",
+      "bytes": 993,
+      "sha256": "ece279ab0042c2c122b63d9290a7e1917fdab87312596eec0e9b7fa6cc5997dd"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000011_add_submission_listing_indexes.php",
+      "bytes": 815,
+      "sha256": "29b38f9eb00783076b76e71e623cd9848ef6de86d986cc38b82fc7e32dba007b"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000012_add_toyota_directory_fields_to_dealers.php",
+      "bytes": 892,
+      "sha256": "3e6e56ed275b552192d1fbdb9be40497588aee4438fcd1170aa3846093010de2"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000013_add_dealer_snapshot_to_customer_submissions.php",
+      "bytes": 904,
+      "sha256": "83fdbde3f727cad7b933776ab112e148e1c4fdd3f1592dd7507f63bafaf43049"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000014_protect_account_email_updates.php",
+      "bytes": 674,
+      "sha256": "419e5ad1ec1ba15da09435303f291e9cf673e38913f38133409cbafe1e8c6d04"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000015_add_customer_address_to_customer_submissions.php",
+      "bytes": 919,
+      "sha256": "abba623b855c1dfb0f208ba421136cef2b62ccbd5b551a51141330a2658622ef"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000016_add_avatar_path_to_users.php",
+      "bytes": 484,
+      "sha256": "c0792c933e82f4857f42cd5421a98f127d1bc29fe688f0e4aa93991c1d2bdf35"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000017_add_photo_path_to_dealers.php",
+      "bytes": 458,
+      "sha256": "a12c1c2fe94595df3e3282ea1a88bf14e2fab1f42479d014c8fda35a1df64bbd"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000018_support_unique_dealer_accounts_on_users.php",
+      "bytes": 1439,
+      "sha256": "f7342872e5ce50bfc81708c8e66e4a5b0cf12fa7737148e311b3fca6502b7523"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000019_add_stable_slug_to_dealers.php",
+      "bytes": 2083,
+      "sha256": "ac75f1216fb20ccdc630024ce88157347db13309f58cce0cec39497148822d99"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000020_support_dealer_qr_registrations.php",
+      "bytes": 3330,
+      "sha256": "511f1f9cee97fe9319a334814ff55c7d5d3cfd9a4f294ced7a3812e29d512310"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000021_add_public_slug_to_sales_accounts.php",
+      "bytes": 1344,
+      "sha256": "24867a7e8e49c1e2da2a90c316a7298a8298308464072512dd27ad615508b002"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000022_create_submission_edits_table.php",
+      "bytes": 827,
+      "sha256": "2d0b24a2a70ec12bc19003a9ec81534bed0f6023612e58e2474e505e21ef0af7"
+    },
+    {
+      "path": "database/migrations/2026_11_03_000023_support_final_dealer_registration.php",
+      "bytes": 1626,
+      "sha256": "d5f4209f69a8b23cbe4d9d74998b13fdf7d47cf687b66e6b9f04ed3338853d83"
+    }
+  ],
+  "working_tree_changes": [
+    {
+      "status": " M",
+      "path": ".env.example"
+    },
+    {
+      "status": " M",
+      "path": "app/Actions/ApproveCustomerSubmission.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Actions/UpdateCustomerSubmission.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Console/Commands/ToyotaDemoCommand.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Console/Kernel.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Exceptions/Handler.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Admin/DashboardController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Admin/DealerController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Admin/SubmissionReviewController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Dealer/DashboardController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/DealerRegistrationController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/DealerRegistrationDraftController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Sales/DashboardController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Controllers/Sales/SubmissionController.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Kernel.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Middleware/RedirectIfAuthenticated.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Requests/Admin/SalesIndexRequest.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Http/Requests/Admin/UpdateSubmissionRequest.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Models/CustomerSubmission.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Services/DealerDashboardData.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Services/DealerRegistrationDraft.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Services/LeaderboardService.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Services/SalesPublicProfile.php"
+    },
+    {
+      "status": " M",
+      "path": "app/Services/ToyotaRealisticDemo.php"
+    },
+    {
+      "status": " M",
+      "path": "bootstrap/app.php"
+    },
+    {
+      "status": " M",
+      "path": "config/app.php"
+    },
+    {
+      "status": " M",
+      "path": "config/auth.php"
+    },
+    {
+      "status": " M",
+      "path": "config/dealer-registration.php"
+    },
+    {
+      "status": " M",
+      "path": "config/realistic_demo.php"
+    },
+    {
+      "status": " M",
+      "path": "database/factories/AwardFactory.php"
+    },
+    {
+      "status": " M",
+      "path": "database/seeders/DealerRegistrationPhase2aDemoSeeder.php"
+    },
+    {
+      "status": " M",
+      "path": "database/seeders/DevelopmentDemoSeeder.php"
+    },
+    {
+      "status": " M",
+      "path": "docs/figma/qa/asset-check.php"
+    },
+    {
+      "status": " M",
+      "path": "docs/figma/qa/render-check.php"
+    },
+    {
+      "status": " M",
+      "path": "docs/figma/qa/router.php"
+    },
+    {
+      "status": " M",
+      "path": "docs/figma/qa/step-two-validation-check.mjs"
+    },
+    {
+      "status": " M",
+      "path": "resources/css/dealer-registration.css"
+    },
+    {
+      "status": " M",
+      "path": "resources/js/dealer-registration.js"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/admin/submissions/index.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/admin/submissions/show.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/components/admin-feedback.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/components/dealer-registration/step-one.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/components/submission-inline-edit.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/components/submission-review-form.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/components/submission-vehicle-details.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/dealers/registration/step-two-content.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "resources/views/dealers/registration/success.blade.php"
+    },
+    {
+      "status": " M",
+      "path": "routes/web.php"
+    },
+    {
+      "status": " M",
+      "path": "tests/Feature/DealerRegistrationDraftTest.php"
+    },
+    {
+      "status": " M",
+      "path": "tests/Feature/ToyotaRealisticDemoSeederTest.php"
+    },
+    {
+      "status": " M",
+      "path": "tests/Fixtures/approve_submission.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Console/Commands/AuditSubmissionCollisions.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Console/Commands/PruneDealerRegistrationReceipts.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Http/Controllers/DealerRegistrationFinalController.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Services/DealerRegistrationReceipt.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Services/DemoSubmissionScope.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Services/SubmissionCollisionAudit.php"
+    },
+    {
+      "status": "??",
+      "path": "app/Services/SubmissionIntake.php"
+    },
+    {
+      "status": "??",
+      "path": "database/migrations/2026_11_03_000023_support_final_dealer_registration.php"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/d04-success-ui-refinement.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2b-implementation.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-1-integration.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-2-data-integrity.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-3-release-readiness.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-4a-controlled-approval.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-4b-demo-isolation.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/phase-2c-4c-final-readiness.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/browser-evidence-2c-4c.json"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/browser-manual-2c-4c.md"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/dependency-evidence-2c-4c.json"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/figma-reference-2c-4c.json"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/release-artifact-2c-4c.sha256"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/release-manifest-2c-4c.json"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/release-manifest.py"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/release-preflight.php"
+    },
+    {
+      "status": "??",
+      "path": "docs/figma/qa/screenshots/README.md"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/ControlledDuplicateApprovalTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/DealerRegistrationFinalTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/DealerRegistrationSuccessPresentationTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/DemoIsolationTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/RegistrationBusinessIntegrationTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/RegistrationHttpConcurrencyTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/RegistrationReceiptCleanupTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/SubmissionIntakeRetryTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Feature/SubmissionIntegrityUpdateTest.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Fixtures/registration_http_router.php"
+    },
+    {
+      "status": "??",
+      "path": "tests/Unit/SubmissionIntakeNormalizationTest.php"
+    }
+  ],
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 1404,
+      "sha256": "97551f6fcc8f37c01145fb1ea119e79fd1678a02c0eccdb6da644093ce28011a"
+    },
+    {
+      "path": "app/Actions/ApproveCustomerSubmission.php",
+      "bytes": 4888,
+      "sha256": "33d5bcf99a72ca43d06199a66adc518e4de8dfad898fc1891da0a51fd1803252"
+    },
+    {
+      "path": "app/Actions/CreateAwardDraft.php",
+      "bytes": 889,
+      "sha256": "319d26189dd32af6ea5294defd1fa8eedde71aa02820643a97043ab86cbbd7db"
+    },
+    {
+      "path": "app/Actions/RejectCustomerSubmission.php",
+      "bytes": 2280,
+      "sha256": "f9975f6351e252e88b17c0befec70c2e86eb3727762a263c362533176368a735"
+    },
+    {
+      "path": "app/Actions/ReviewSalesAccount.php",
+      "bytes": 2220,
+      "sha256": "4a59c29d470c5aa2aecff91ca7a9a441d9e664b87ba1aef3d3ccd60a337b851d"
+    },
+    {
+      "path": "app/Actions/UpdateCustomerSubmission.php",
+      "bytes": 7888,
+      "sha256": "901ee72f1c63d67bdae0b4e1e16b58c62c0cdbe55ac55acc64ae96826eea3a2d"
+    },
+    {
+      "path": "app/Console/Commands/AuditSubmissionCollisions.php",
+      "bytes": 1706,
+      "sha256": "ffd429dc4fbcb375372322b552bcbc4ee1231152ca9d09b18e21078ce190658a"
+    },
+    {
+      "path": "app/Console/Commands/PruneDealerRegistrationReceipts.php",
+      "bytes": 1904,
+      "sha256": "8fbf43437b27f12a121228977f09793da9e4a03f4ef44e0490c0f072d714b4e9"
+    },
+    {
+      "path": "app/Console/Commands/ToyotaDemoCommand.php",
+      "bytes": 1964,
+      "sha256": "ff96f749aba5d163e89f17259f85541e30a5f8dbf2fdafa82ed5e9832521bfff"
+    },
+    {
+      "path": "app/Console/Kernel.php",
+      "bytes": 798,
+      "sha256": "6f7653d0e248100aa5d4ace25098b391859ddeb6502497b8c20bbf669fe4433a"
+    },
+    {
+      "path": "app/Enums/AwardPeriod.php",
+      "bytes": 448,
+      "sha256": "d0b9253bd2602e67c453a5910a1ca0c0e49b11397e8bf57c2315e81b49643f22"
+    },
+    {
+      "path": "app/Enums/AwardWinnerType.php",
+      "bytes": 116,
+      "sha256": "ffc09e918d4374bc180504f934a284890b68b8191f9d3154e682b125810d7956"
+    },
+    {
+      "path": "app/Enums/LeaderboardPeriod.php",
+      "bytes": 368,
+      "sha256": "4fa3257bd8f2db9ef7bcc23feb8734eec0f48b04b3fbb9e1ea6912e20a216484"
+    },
+    {
+      "path": "app/Enums/SubmissionStatus.php",
+      "bytes": 385,
+      "sha256": "ef4c1bc240ec574654e547eac7391413381e3f70fe08d8c7c7e0f34b679cf8dd"
+    },
+    {
+      "path": "app/Enums/UserRole.php",
+      "bytes": 135,
+      "sha256": "5e7253174e24fb2b3d6c67bf908b2a045933b1e7355c421bfcb65c83ab149150"
+    },
+    {
+      "path": "app/Enums/UserStatus.php",
+      "bytes": 448,
+      "sha256": "530b94f4a5683f9cf14c60c28ddc6ab4a424f7259ff7349853b30724deaea34b"
+    },
+    {
+      "path": "app/Exceptions/Handler.php",
+      "bytes": 3209,
+      "sha256": "d4152875480d30fb9ee731aa7fa516bda9764900cf23c7e8fc73dfa3c93b3ec2"
+    },
+    {
+      "path": "app/Http/Controllers/AccountStatusController.php",
+      "bytes": 482,
+      "sha256": "5f8d27785f9e04b71d58280e8cf5aa40ec0a8dd733a8c7b3db9e8065bb263ec1"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/AwardController.php",
+      "bytes": 1903,
+      "sha256": "ba5cca0ff86692474341e8a718286e1e4c1cf28f1da889b338eec0eed36f5d24"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/DashboardController.php",
+      "bytes": 5198,
+      "sha256": "ec1bfac8b2baf56f1afd9aa2a68ea802c5dffb2dec21b4f2e84b7094631940fd"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/DealerAccountController.php",
+      "bytes": 2377,
+      "sha256": "f84b216c79065dc7f4e1ce5ad7150ec9c402c1adfabc3064d3142c99498e1ca3"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/DealerController.php",
+      "bytes": 5844,
+      "sha256": "ed02223842378681aaf15e8a546bda91133cc226b3398a6e39d5372d489eff12"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/SalesController.php",
+      "bytes": 4066,
+      "sha256": "be86fdf3afe2a324182cda5bbd5e2078990e2802e5d70edd5cdd26c8d2477e00"
+    },
+    {
+      "path": "app/Http/Controllers/Admin/SubmissionReviewController.php",
+      "bytes": 6916,
+      "sha256": "199685c1c159ac02701765afad5789d7b736ccebdb51a9ebbdcd48d15723d267"
+    },
+    {
+      "path": "app/Http/Controllers/Auth/AuthenticatedSessionController.php",
+      "bytes": 1168,
+      "sha256": "122be9f65ea447a34c27eaef669ae4d1d3b14bcdbf07986b08111de764a00981"
+    },
+    {
+      "path": "app/Http/Controllers/Auth/PasswordResetController.php",
+      "bytes": 2300,
+      "sha256": "eab85054affa4ce29cbe4134d49d70d5629125b60e38b99d07bdd7f3336eb67a"
+    },
+    {
+      "path": "app/Http/Controllers/Auth/RegisteredUserController.php",
+      "bytes": 2250,
+      "sha256": "4d8fca674c9a9dd775a1ff30a41f91a3094b378524b3a81de96e7895fad75baf"
+    },
+    {
+      "path": "app/Http/Controllers/AwardHistoryController.php",
+      "bytes": 1012,
+      "sha256": "eec34b7e0c8a0c98d1d8b0bfa3bc5e641690919d34339ffc0940e83d66839c2f"
+    },
+    {
+      "path": "app/Http/Controllers/Controller.php",
+      "bytes": 299,
+      "sha256": "663e9f40be59adb09c7acd871da814b78216e79120f10375da0a31a6cef968eb"
+    },
+    {
+      "path": "app/Http/Controllers/Dealer/AwardController.php",
+      "bytes": 562,
+      "sha256": "10ff9f2ebe90483dfd42ad3c37a2a8156fbc3757a1e9cf32ed0d6e2f4f785d2c"
+    },
+    {
+      "path": "app/Http/Controllers/Dealer/CustomerController.php",
+      "bytes": 1667,
+      "sha256": "d1f0a9e2f758dd581b8e21bbb45ee9d061c0d629dcb8b4bff7b56093f9f0ef23"
+    },
+    {
+      "path": "app/Http/Controllers/Dealer/DashboardController.php",
+      "bytes": 1021,
+      "sha256": "c46d6eb988316721f5ab165c192c6d5552db08fcaad09f94b8e57273902fb28a"
+    },
+    {
+      "path": "app/Http/Controllers/Dealer/SalesController.php",
+      "bytes": 1545,
+      "sha256": "916bd1631c3d9e4d5877b020b546a27a86928661604ab62a26f20976be98f9c9"
+    },
+    {
+      "path": "app/Http/Controllers/DealerProfileMediaController.php",
+      "bytes": 1257,
+      "sha256": "74bac2034cf6ec90ee718c48d3f89499bf8b631f73743f73f7b589e33beb347e"
+    },
+    {
+      "path": "app/Http/Controllers/DealerRegistrationController.php",
+      "bytes": 3545,
+      "sha256": "16b830b899e846473fecb499aa1b8bbdf79cce05ea6aec61d3cf29a286dcd25b"
+    },
+    {
+      "path": "app/Http/Controllers/DealerRegistrationDraftController.php",
+      "bytes": 4329,
+      "sha256": "86971fc1e87b98b85c407634a344e3abd83c1cad0b8d674519998ec6a90f48a8"
+    },
+    {
+      "path": "app/Http/Controllers/DealerRegistrationFinalController.php",
+      "bytes": 9485,
+      "sha256": "eaf60c00aa85c07e938ce4461ccb69c6212b0d7fb9a5435443bce56b88242982"
+    },
+    {
+      "path": "app/Http/Controllers/DealerRegistrationPreviewController.php",
+      "bytes": 1575,
+      "sha256": "a9d5f4acf15fc129e914dc0f709126b05f597db1fa1265458d1e8048da9be5e2"
+    },
+    {
+      "path": "app/Http/Controllers/LandingPageController.php",
+      "bytes": 1220,
+      "sha256": "48c3f651bb1326817ec835fb59653ff098b2235c0e2de16a83b77c5965ea0db4"
+    },
+    {
+      "path": "app/Http/Controllers/LeaderboardController.php",
+      "bytes": 1308,
+      "sha256": "bcfd96e626fc2044e966647f4878f5d2a4274d9e4bca03d7ee120b87834629ff"
+    },
+    {
+      "path": "app/Http/Controllers/ProfileController.php",
+      "bytes": 3278,
+      "sha256": "dc47b6a1bd4a073119bf4e4280995a34e621d483c2fe6d3b0b78b790a70ab297"
+    },
+    {
+      "path": "app/Http/Controllers/PublicDealerController.php",
+      "bytes": 2879,
+      "sha256": "eea88fab9101889252e15bf8d1976bd21b05e519dc71d95b82d621a04f05d7fe"
+    },
+    {
+      "path": "app/Http/Controllers/PublicSalesProfileController.php",
+      "bytes": 1136,
+      "sha256": "aa9e70871f73846d1bb034b32a0563661b934d5691c6fb07b6a738efb1b34fcf"
+    },
+    {
+      "path": "app/Http/Controllers/Sales/AddressController.php",
+      "bytes": 458,
+      "sha256": "c2ab9d80f7f553e94f3b2ba792d7e2ca1ed94a6805b54b8dd3c87ad83355d8d4"
+    },
+    {
+      "path": "app/Http/Controllers/Sales/DashboardController.php",
+      "bytes": 1445,
+      "sha256": "bd01bf7d58cb48c330df2e0cb6127bbddbd8341407c4fb46643beab21625a941"
+    },
+    {
+      "path": "app/Http/Controllers/Sales/SubmissionController.php",
+      "bytes": 6238,
+      "sha256": "97ae650d60dfb83fff527f1333cd366feac72e154f65074f831acef4afb63bf3"
+    },
+    {
+      "path": "app/Http/Controllers/SalesAvatarController.php",
+      "bytes": 849,
+      "sha256": "d521cdb8f8d2bc078889d7923dbf8290df54f8bb3811c839d7edcb7b1d06bb23"
+    },
+    {
+      "path": "app/Http/Controllers/SubmissionEvidenceController.php",
+      "bytes": 913,
+      "sha256": "16358956dbdcaeeaa21578ffdd2d8599261b4223c421db64f9537ae5af7f62c5"
+    },
+    {
+      "path": "app/Http/Kernel.php",
+      "bytes": 3519,
+      "sha256": "abb056bccc6b1825009493815d11c9f3cce4b125fc0734ecbe4395825fc68b6f"
+    },
+    {
+      "path": "app/Http/Middleware/Authenticate.php",
+      "bytes": 409,
+      "sha256": "c69d845968ffde805f6a18a062a42023ee921f990a0f41ff61bdd23de24f3394"
+    },
+    {
+      "path": "app/Http/Middleware/EncryptCookies.php",
+      "bytes": 307,
+      "sha256": "958e86e38afd4321b443b8c4aaef17fc956bbac93410d54af2f74213c52e9b87"
+    },
+    {
+      "path": "app/Http/Middleware/EnsureAccountIsActive.php",
+      "bytes": 580,
+      "sha256": "4f5aef243a2f7d7d5adf15aaf6e1bcde2cf7b5e5887610b85da302fb75bbdb5a"
+    },
+    {
+      "path": "app/Http/Middleware/EnsureUserHasRole.php",
+      "bytes": 354,
+      "sha256": "abccafb801c051577ec6fd8819125a80a332970d004dc7d67cc3d95da211623b"
+    },
+    {
+      "path": "app/Http/Middleware/PreventRequestsDuringMaintenance.php",
+      "bytes": 366,
+      "sha256": "63a907517beed52be7dad5dbda73e9ecd504b1cece86a80c007526998e146974"
+    },
+    {
+      "path": "app/Http/Middleware/RedirectIfAuthenticated.php",
+      "bytes": 691,
+      "sha256": "0695525070bcea658a5b7d4c5bb5a860a6f1a58ed3ae0b8bcf47005eb32f851c"
+    },
+    {
+      "path": "app/Http/Middleware/SecurityHeaders.php",
+      "bytes": 792,
+      "sha256": "633cf1df2222deb51708b2364bb6b60380071daceb99542b91b73d1bddc7625e"
+    },
+    {
+      "path": "app/Http/Middleware/TrimStrings.php",
+      "bytes": 381,
+      "sha256": "107bf2dc8b970b2956548ab63221b350587f1fb94792f786f047723da5e2c615"
+    },
+    {
+      "path": "app/Http/Middleware/TrustHosts.php",
+      "bytes": 379,
+      "sha256": "899cfaccd4420dfa7c15c0e650e22e5397bdc699344576518b8f972be45b17dc"
+    },
+    {
+      "path": "app/Http/Middleware/TrustProxies.php",
+      "bytes": 649,
+      "sha256": "9ba084335e120f472f21ced3e062e07dca6333e8ba91029e44dfec485f9c6485"
+    },
+    {
+      "path": "app/Http/Middleware/ValidateSignature.php",
+      "bytes": 460,
+      "sha256": "b63174bf5ac6fbb47dc97cc29e243d68500c27fa1845961a789df1587b8a35d4"
+    },
+    {
+      "path": "app/Http/Middleware/VerifyCsrfToken.php",
+      "bytes": 326,
+      "sha256": "afd92abbfb99b8dced84b7b3bd3bf3521dadc513526fc06905bbf49828071b5c"
+    },
+    {
+      "path": "app/Http/Requests/Admin/AwardDraftRequest.php",
+      "bytes": 599,
+      "sha256": "fa96775b0fc3ec5d8d156bb88b6098d86c66bf132a68937682cce2c963f261a8"
+    },
+    {
+      "path": "app/Http/Requests/Admin/DealerAccountRequest.php",
+      "bytes": 1083,
+      "sha256": "e8b26edf4c00f85f6af57f04f4ba2aeb4653f9c63958e350d2e3b5c5d915a706"
+    },
+    {
+      "path": "app/Http/Requests/Admin/DealerRequest.php",
+      "bytes": 1771,
+      "sha256": "0cc9a7cdbf3cf9b88d4e0ac8f20eb20a5a190a6439b0097f835868840db1b87c"
+    },
+    {
+      "path": "app/Http/Requests/Admin/ReviewSalesRequest.php",
+      "bytes": 869,
+      "sha256": "14b595bf3f01a2ef87cc26abcb17b1e2c034b14b5f20306e85487f19fe01681a"
+    },
+    {
+      "path": "app/Http/Requests/Admin/ReviewSubmissionRequest.php",
+      "bytes": 1088,
+      "sha256": "e3d20f54257c9a24bf8389ee20e56088af7882cfa1ef161e4bd2d36bd9905941"
+    },
+    {
+      "path": "app/Http/Requests/Admin/SalesIndexRequest.php",
+      "bytes": 662,
+      "sha256": "ad9693da52b05c74f7865a475e442230ee5da1367674b53ea86d1cf263365ef7"
+    },
+    {
+      "path": "app/Http/Requests/Admin/SubmissionIndexRequest.php",
+      "bytes": 1057,
+      "sha256": "4d2e009486250fc73f7dca72c9b5229904a77262990ba442447c92c38c8aea94"
+    },
+    {
+      "path": "app/Http/Requests/Admin/UpdateSalesRequest.php",
+      "bytes": 821,
+      "sha256": "a52e77c6b5fd0b55ecf99faab851ec7b4bcfc0863600a6212fb3f16c40f74ed2"
+    },
+    {
+      "path": "app/Http/Requests/Admin/UpdateSubmissionRequest.php",
+      "bytes": 4005,
+      "sha256": "96c5c5592d9a13506091e44bed17d37ae13042aea64082535567886bff961005"
+    },
+    {
+      "path": "app/Http/Requests/Auth/LoginRequest.php",
+      "bytes": 1208,
+      "sha256": "ba235e323f1a91322fcbfc070008e70d3ff2bbaadc7f6245b950c8e6d05a1a2a"
+    },
+    {
+      "path": "app/Http/Requests/Auth/RegisterRequest.php",
+      "bytes": 2445,
+      "sha256": "eb6c5abed95429034e433e35dce049df926b8d93573cbef7d687b6e195838712"
+    },
+    {
+      "path": "app/Http/Requests/Dealer/CustomerIndexRequest.php",
+      "bytes": 313,
+      "sha256": "8c4b7a1881b2d6fcd01a30a333c729dc3bec5b2b50d830b5f78d6b64276fe84c"
+    },
+    {
+      "path": "app/Http/Requests/Dealer/SalesIndexRequest.php",
+      "bytes": 659,
+      "sha256": "c8b2dfe286319c1c661ef2e78cd92ff6200d628e7ccc52dbc15a16145ff42378"
+    },
+    {
+      "path": "app/Http/Requests/DealerRegistrationRequest.php",
+      "bytes": 2729,
+      "sha256": "13e1cd64b4eeadf754e896c40164c751cbf625bdb0bc8d18a874c77c7259e974"
+    },
+    {
+      "path": "app/Http/Requests/ProfileRequest.php",
+      "bytes": 918,
+      "sha256": "b4cd6b9c693c2b6f2c65569b7e47ac43625c6bae194e8147503464da488db589"
+    },
+    {
+      "path": "app/Http/Requests/Sales/SubmissionRequest.php",
+      "bytes": 6877,
+      "sha256": "45eeff3d666ed382db1cfdeb3a683d270572d5207d9a0c3a1aa9331a955686fe"
+    },
+    {
+      "path": "app/Models/Award.php",
+      "bytes": 1839,
+      "sha256": "487efc268da822ed910269697469dd59cf8815512cae474df7cb060f1b9febef"
+    },
+    {
+      "path": "app/Models/AwardWinner.php",
+      "bytes": 1778,
+      "sha256": "95a646787eda939b6a60e14fccec74d9911dedb0692be554e7f725ba3a094241"
+    },
+    {
+      "path": "app/Models/CustomerSubmission.php",
+      "bytes": 7166,
+      "sha256": "10464109963a8a6694acbe2a0877b5cdb95ae13fdc11dc7aeba6ab21983dc960"
+    },
+    {
+      "path": "app/Models/Dealer.php",
+      "bytes": 1964,
+      "sha256": "0407ce1bd8462a4ea54a09b6a16d90ef381f6f7143584e848d692aa261b178e3"
+    },
+    {
+      "path": "app/Models/ModerationReview.php",
+      "bytes": 1585,
+      "sha256": "94d62c26ddc09029a45f70ef04076c3d91f0ef1c5b1ca15cce118853d82a5464"
+    },
+    {
+      "path": "app/Models/SubmissionEdit.php",
+      "bytes": 546,
+      "sha256": "803e86e5d52b61a652f784eff5573116647c63e5329f8989eda5353895e8e4d9"
+    },
+    {
+      "path": "app/Models/User.php",
+      "bytes": 3847,
+      "sha256": "be46bd83822c3ff2fb0b40fc175395b615cdcf35a55b4cabf0308d671231a2ff"
+    },
+    {
+      "path": "app/Policies/AwardPolicy.php",
+      "bytes": 609,
+      "sha256": "332aff3ae4e3958895036d49a5ba18363cf4ae7e6bd7dc2b2ae2c9e04fd71bd9"
+    },
+    {
+      "path": "app/Policies/CustomerSubmissionPolicy.php",
+      "bytes": 1331,
+      "sha256": "52d62aa8f5ba42c26ce46aa720926e907914287d7cf2ea7e440d0d7cb83d3fb5"
+    },
+    {
+      "path": "app/Policies/DealerPolicy.php",
+      "bytes": 874,
+      "sha256": "f7445f7b386c4d059b5406eef3f97312e0096f07cfa6553d0d743431db1d72c7"
+    },
+    {
+      "path": "app/Policies/UserPolicy.php",
+      "bytes": 871,
+      "sha256": "2a024e433e8082b92e125a855e8ca2d2887b9e68cea9cf1bd81ad3a1abca7c6c"
+    },
+    {
+      "path": "app/Providers/AppServiceProvider.php",
+      "bytes": 1059,
+      "sha256": "b27da29cdb2b3661059380d858d86d7b3a184993e4679d506b8a68d19c13302b"
+    },
+    {
+      "path": "app/Providers/AuthServiceProvider.php",
+      "bytes": 518,
+      "sha256": "5d44e4fac82838d15cbd319fdc152fc29f93945c09c2dbecf92132a18c6ab314"
+    },
+    {
+      "path": "app/Providers/BroadcastServiceProvider.php",
+      "bytes": 359,
+      "sha256": "1839af2f801cb9fff772430aa25aa7529b1e7937b2441555c70af4fae1541a99"
+    },
+    {
+      "path": "app/Providers/EventServiceProvider.php",
+      "bytes": 884,
+      "sha256": "c0f2d7d14531d8d92edbe4f1c5ed50973213cb4a119d79f8d2c1dfaf849bba78"
+    },
+    {
+      "path": "app/Providers/RouteServiceProvider.php",
+      "bytes": 3097,
+      "sha256": "6c64c977b3fea0316e6f60b531be0c20b70b26e892bccb8550bd7673464e757a"
+    },
+    {
+      "path": "app/Services/AdministrativeDivisions.php",
+      "bytes": 1162,
+      "sha256": "dbb35ad68dd7c31b77039719500f7a0b0bbb15f514a099db65d9fd7e6b32e485"
+    },
+    {
+      "path": "app/Services/ApprovedSubmissionFinder.php",
+      "bytes": 513,
+      "sha256": "7cf36313496f1f63da57e876ed953be3d1f3999b412a4060256d18b8122b71d8"
+    },
+    {
+      "path": "app/Services/AwardResults.php",
+      "bytes": 2616,
+      "sha256": "4c5185056f5da777b9c6727361bc79306f212127e0292524666e91e1e32e3b68"
+    },
+    {
+      "path": "app/Services/DealerDashboardData.php",
+      "bytes": 2410,
+      "sha256": "d326fdeeb2770f135cf179bab88cc3eab914e405de952ca6cf6f3f9493a48628"
+    },
+    {
+      "path": "app/Services/DealerProfile.php",
+      "bytes": 1132,
+      "sha256": "4eec0a69db1f941313eb65361f972c0887c4064d832010fccbbbc6bcf01051f0"
+    },
+    {
+      "path": "app/Services/DealerRegistrationDraft.php",
+      "bytes": 2370,
+      "sha256": "f5f1daf6304e779442c3c6ec9658464e0a2653b43b21e7bfcc9b5bb2e0cc451f"
+    },
+    {
+      "path": "app/Services/DealerRegistrationReceipt.php",
+      "bytes": 1149,
+      "sha256": "5b3791590bfeade2a891e59aec814890633ccd612d245d4668fa68fdfc212f13"
+    },
+    {
+      "path": "app/Services/DealerSlugs.php",
+      "bytes": 762,
+      "sha256": "4cf57eeac16d3382e7cec6650d0447263fa4964c9362350d5926a40d3ea1252b"
+    },
+    {
+      "path": "app/Services/DemoSubmissionScope.php",
+      "bytes": 865,
+      "sha256": "ac9f596afbbd46d0404adb9417610ff42ca02c132c9b75351eaad2966491a517"
+    },
+    {
+      "path": "app/Services/FacebookUrlNormalizer.php",
+      "bytes": 2421,
+      "sha256": "d93e0e01567a2c8691a0f06a535ada8829aa512c3cfda20f5ad221ebc0e14f2a"
+    },
+    {
+      "path": "app/Services/LeaderboardService.php",
+      "bytes": 4613,
+      "sha256": "55128a7d95e9d38cf688f5fdedbbae94d4f8ab0e8b59adfb3aa7bd333a088075"
+    },
+    {
+      "path": "app/Services/PublicAwardResults.php",
+      "bytes": 1273,
+      "sha256": "95e72ef15fa47e7ef0dd0c9dc7e9842eedda6ba5be9b3eeb579671576b3f5ec2"
+    },
+    {
+      "path": "app/Services/RegistrationPhone.php",
+      "bytes": 541,
+      "sha256": "65cf8989b20c90a1c7c7b77302d4dc949c9a3ec72b4a9687bc572981f69c39f3"
+    },
+    {
+      "path": "app/Services/SalesAvatars.php",
+      "bytes": 1659,
+      "sha256": "c0e7eaa81c48d392c93a8e3b588c3410924e06969ee57369c324580a2058cedc"
+    },
+    {
+      "path": "app/Services/SalesPublicProfile.php",
+      "bytes": 3032,
+      "sha256": "2da0cd3c0428097ef8981574a0d646834fe767044cb64dff56062101d95c2b93"
+    },
+    {
+      "path": "app/Services/SubmissionCollisionAudit.php",
+      "bytes": 4259,
+      "sha256": "a9e3673c0f4f83040de6227c932970423da783963176f16438a37604bc5a9a8d"
+    },
+    {
+      "path": "app/Services/SubmissionIntake.php",
+      "bytes": 2766,
+      "sha256": "63893ba6f2594ff895ad0d18a880e187efa1eb9e061d95895df30e2e80e7088b"
+    },
+    {
+      "path": "app/Services/SubmissionIntegrity.php",
+      "bytes": 1004,
+      "sha256": "7f1382ae42dd279fe77cf44ddfaa1b802732d86aa3fb05cbe9574b78b6d34053"
+    },
+    {
+      "path": "app/Services/ToyotaRealisticDemo.php",
+      "bytes": 17123,
+      "sha256": "b31f4350ae5db3400bed4b163bdb5f0e33c06061586f13e7076bdd705a27786b"
+    },
+    {
+      "path": "app/Support/FacebookProfileUrl.php",
+      "bytes": 238,
+      "sha256": "d282925433aebbed414f85a9ebf4ca355f314ab57dbfade1b25e9108b6c63586"
+    },
+    {
+      "path": "artisan",
+      "bytes": 1686,
+      "sha256": "f5645be808d32398cd215ef933c793d806ae56796190579dde4ca8888c584c1b"
+    },
+    {
+      "path": "bootstrap/app.php",
+      "bytes": 1685,
+      "sha256": "f82dffab765e6f32abbfac6fe354d70bbb35a1f3b8ab7ab945509a4ce955a491"
+    },
+    {
+      "path": "composer.json",
+      "bytes": 1920,
+      "sha256": "015dc9d4d0b9d0d15e234237be40379d3d4a737d4e3671a75a8ccea56e779610"
+    },
+    {
+      "path": "composer.lock",
+      "bytes": 328941,
+      "sha256": "f39457b7b511f2be49f032c3f598ae250f7ea77c7e71762355dad92f2e85839c"
+    },
+    {
+      "path": "config/app.php",
+      "bytes": 6555,
+      "sha256": "f7a92caef78cf3452c33e4fb295bb28b6eadfb144fa7ba514c34803c04ded3ae"
+    },
+    {
+      "path": "config/auth.php",
+      "bytes": 3908,
+      "sha256": "2fb9648cfa02277881c35bd392689598b020707ba15fd1067f2a057a54e3133b"
+    },
+    {
+      "path": "config/broadcasting.php",
+      "bytes": 2147,
+      "sha256": "d27413cc5203b58d5458541e9cf0573036a358584ebe4a06424ad05eef4f81ce"
+    },
+    {
+      "path": "config/cache.php",
+      "bytes": 3337,
+      "sha256": "51714aa452a89464d270b1f7afe570876423a792d83c304e682a8b78cd134df6"
+    },
+    {
+      "path": "config/cors.php",
+      "bytes": 846,
+      "sha256": "7a1b9af42b73b20126219eca484ea7eb02c25a5d179eab1ac00251779d808c49"
+    },
+    {
+      "path": "config/database.php",
+      "bytes": 5353,
+      "sha256": "401dfc30323d5ddd200c4fa69ac5d59b6c5606c6a5c6994ee33c33366beeb7f0"
+    },
+    {
+      "path": "config/dealer-registration.php",
+      "bytes": 940,
+      "sha256": "cbd1afdf417293f365456349c637c8fc0fc823d1b5bf6cb03ce2d1fa27552c34"
+    },
+    {
+      "path": "config/dealer.php",
+      "bytes": 574,
+      "sha256": "c9c80d834cba6b75f4df1c0dd04b03c5b5c288024f41409722eaa841b6c744cf"
+    },
+    {
+      "path": "config/development.php",
+      "bytes": 246,
+      "sha256": "18ffdc87236cee236bdbd4c3df0d2d5f549934fe097c42ec198e2ac73fbc9094"
+    },
+    {
+      "path": "config/filesystems.php",
+      "bytes": 3003,
+      "sha256": "2ffd8f6780a80d8d3028250a214ffddb43f33ae260fd41b631b7fc67fcbf8151"
+    },
+    {
+      "path": "config/hashing.php",
+      "bytes": 1624,
+      "sha256": "7040c9c4ca2e642bacf50a19e411d14cf438998e6c791e1f0d0176245f7688d6"
+    },
+    {
+      "path": "config/logging.php",
+      "bytes": 4173,
+      "sha256": "78d93d69386ab0dc2069713fd0c3c9f012d682e7f103ce0b4b59109ce077c618"
+    },
+    {
+      "path": "config/mail.php",
+      "bytes": 4042,
+      "sha256": "e2226a1bc7cd72287fe64929931e5720c309bd6093e0b254e37f9110853eb971"
+    },
+    {
+      "path": "config/queue.php",
+      "bytes": 3447,
+      "sha256": "8c6f5b82008318a67fbeee5a4bf6113b462d8fbe5d09babd79f71234f3f7089f"
+    },
+    {
+      "path": "config/realistic_demo.php",
+      "bytes": 355,
+      "sha256": "2f4acf8d1f534dc44e8e3df6eabb9810f997f5062139d83651e88c1bca94ffea"
+    },
+    {
+      "path": "config/sanctum.php",
+      "bytes": 3031,
+      "sha256": "7754ac696628c9ca61aea895063789a19b0e75e9dccddab1aeae11b988e949d1"
+    },
+    {
+      "path": "config/services.php",
+      "bytes": 979,
+      "sha256": "76f41873f7a25f3f91bcf5e8b5fecc4655b046fdefb4ab67d6f7e7ff56e73141"
+    },
+    {
+      "path": "config/session.php",
+      "bytes": 7597,
+      "sha256": "f33c9ba2a6e95f6b75e297ba8ce42e74719f41029b317cfb915ccdc2bb61c44b"
+    },
+    {
+      "path": "config/vehicles.php",
+      "bytes": 1143,
+      "sha256": "4d0b8cd488d9b144f232cd3e43c2059bbc94880ae79a329a4d4eb859cd1358a1"
+    },
+    {
+      "path": "config/view.php",
+      "bytes": 1053,
+      "sha256": "31296429fea0b7bc8392bdf63c5a664524c84634cdcd8d54c51d73d762c4b2ef"
+    },
+    {
+      "path": "database/data/toyota_dealers.json",
+      "bytes": 45379,
+      "sha256": "4b439594ad65fca121ffc0f0233e73f61d7296d09ff722c251e9b46ecc0bc205"
+    },
+    {
+      "path": "database/data/vietnam_administrative_units.json",
+      "bytes": 407380,
+      "sha256": "5dd8175d5d0c90e3c168a543606729a870f6e827533893dabe8cc434367e6b77"
+    },
+    {
+      "path": "database/migrations/2014_10_12_000000_create_users_table.php",
+      "bytes": 751,
+      "sha256": "cd605d03471c325b24b8d1e4f5f44e02369636142da6060c2a26ccbf316263cf"
+    },
+    {
+      "path": "database/migrations/2014_10_12_100000_create_password_reset_tokens_table.php",
+      "bytes": 641,
+      "sha256": "dca550bb71abdc837debddc9baa9e14f85dd121cd78dc811cdae07a54656252a"
+    },
+    {
+      "path": "database/migrations/2019_08_19_000000_create_failed_jobs_table.php",
+      "bytes": 768,
+      "sha256": "1b2dc826a38de3e6cdd351fc5e0b96689440086e8027454453347036f1860ef3"
+    },
+    {
+      "path": "database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php",
+      "bytes": 856,
+      "sha256": "5a9c64d94d29ec6c435625b8a4d0d3c898b9bad042b5a3ac64f11d39c2b3610f"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000001_create_dealers_table.php",
+      "bytes": 527,
+      "sha256": "508c599220fb30a276be5a4d3e47bc148ff47d4d034ec452bf5235e39b6e0128"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000002_add_business_fields_to_users_table.php",
+      "bytes": 1874,
+      "sha256": "9da6c0da8819e55ff430657970d919f139e92695e4d0d07fd789c40771008fcd"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000003_create_customer_submissions_table.php",
+      "bytes": 2291,
+      "sha256": "db340dcf5cde24efa7e7ea50b30b8f15dbfd2325969f12fd765ba195bc62f921"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000004_create_awards_table.php",
+      "bytes": 1284,
+      "sha256": "a3b2dca6b500f61781d2c4f7724b2baa1f99daacfae97d847798237fd5885512"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000005_create_award_winners_table.php",
+      "bytes": 2037,
+      "sha256": "4959457bef2a00fe70a2d7b42e96a861825ed90d8eccc5891949a12473b30a20"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000006_create_moderation_reviews_table.php",
+      "bytes": 1596,
+      "sha256": "907abb6a5af04647b402b41294445194356f66891c3e9d4ce3e9d1f7385b9f60"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000007_add_is_active_to_dealers_table.php",
+      "bytes": 571,
+      "sha256": "65fa61edd667f2d0042ae509f14f574ae9dd1d829409f6ebf50f10b248aa8022"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000008_add_phone_to_users_table.php",
+      "bytes": 504,
+      "sha256": "2b92a0b9b1e36ea01e7f918745eec79bb3784f3babb9e2b5b01e26818ec1b5c4"
+    },
+    {
+      "path": "database/migrations/2026_10_03_000009_add_dealer_contact_fields.php",
+      "bytes": 894,
+      "sha256": "bb6fd121bcf55b0c59b7ed6b3b935f4ce7f67c60d5e36562c3162d9ffbe5d60d"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000010_add_vehicle_evidence_to_customer_submissions.php",
+      "bytes": 993,
+      "sha256": "ece279ab0042c2c122b63d9290a7e1917fdab87312596eec0e9b7fa6cc5997dd"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000011_add_submission_listing_indexes.php",
+      "bytes": 815,
+      "sha256": "29b38f9eb00783076b76e71e623cd9848ef6de86d986cc38b82fc7e32dba007b"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000012_add_toyota_directory_fields_to_dealers.php",
+      "bytes": 892,
+      "sha256": "3e6e56ed275b552192d1fbdb9be40497588aee4438fcd1170aa3846093010de2"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000013_add_dealer_snapshot_to_customer_submissions.php",
+      "bytes": 904,
+      "sha256": "83fdbde3f727cad7b933776ab112e148e1c4fdd3f1592dd7507f63bafaf43049"
+    },
+    {
+      "path": "database/migrations/2026_10_04_000014_protect_account_email_updates.php",
+      "bytes": 674,
+      "sha256": "419e5ad1ec1ba15da09435303f291e9cf673e38913f38133409cbafe1e8c6d04"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000015_add_customer_address_to_customer_submissions.php",
+      "bytes": 919,
+      "sha256": "abba623b855c1dfb0f208ba421136cef2b62ccbd5b551a51141330a2658622ef"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000016_add_avatar_path_to_users.php",
+      "bytes": 484,
+      "sha256": "c0792c933e82f4857f42cd5421a98f127d1bc29fe688f0e4aa93991c1d2bdf35"
+    },
+    {
+      "path": "database/migrations/2026_10_19_000017_add_photo_path_to_dealers.php",
+      "bytes": 458,
+      "sha256": "a12c1c2fe94595df3e3282ea1a88bf14e2fab1f42479d014c8fda35a1df64bbd"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000018_support_unique_dealer_accounts_on_users.php",
+      "bytes": 1439,
+      "sha256": "f7342872e5ce50bfc81708c8e66e4a5b0cf12fa7737148e311b3fca6502b7523"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000019_add_stable_slug_to_dealers.php",
+      "bytes": 2083,
+      "sha256": "ac75f1216fb20ccdc630024ce88157347db13309f58cce0cec39497148822d99"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000020_support_dealer_qr_registrations.php",
+      "bytes": 3330,
+      "sha256": "511f1f9cee97fe9319a334814ff55c7d5d3cfd9a4f294ced7a3812e29d512310"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000021_add_public_slug_to_sales_accounts.php",
+      "bytes": 1344,
+      "sha256": "24867a7e8e49c1e2da2a90c316a7298a8298308464072512dd27ad615508b002"
+    },
+    {
+      "path": "database/migrations/2026_10_20_000022_create_submission_edits_table.php",
+      "bytes": 827,
+      "sha256": "2d0b24a2a70ec12bc19003a9ec81534bed0f6023612e58e2474e505e21ef0af7"
+    },
+    {
+      "path": "database/migrations/2026_11_03_000023_support_final_dealer_registration.php",
+      "bytes": 1626,
+      "sha256": "d5f4209f69a8b23cbe4d9d74998b13fdf7d47cf687b66e6b9f04ed3338853d83"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 85791,
+      "sha256": "55ca222f026d41a31cd7571bf63123d7ed39536768f0896faa6632b71a624fe3"
+    },
+    {
+      "path": "package.json",
+      "bytes": 353,
+      "sha256": "3cbcd1d4468078f4622aae4889cbdbfe1daa3f90fd8a9c8d439893caa37ab5de"
+    },
+    {
+      "path": "public/.htaccess",
+      "bytes": 668,
+      "sha256": "e3c3ff02654ae8ae2ddb317ff008c5d02440d7217fb337188ba31a919ad97b2d"
+    },
+    {
+      "path": "public/build/assets/app-DExZHxVs.js",
+      "bytes": 52988,
+      "sha256": "ca07af8971bd9d33aa59f657b1da62806937f05d856cd5f4b6403af33b91d6c9"
+    },
+    {
+      "path": "public/build/assets/app-ZhBfAzL2.css",
+      "bytes": 37569,
+      "sha256": "dc602786b097250058442a02c48aed511b6011298e225b5bf588a6c60a7dc898"
+    },
+    {
+      "path": "public/build/assets/customer-address-DZwHRxNn.js",
+      "bytes": 1835,
+      "sha256": "ea0e5195a7933c24cc1ff01b4699875999e5df4035507d698c1f9797b8dae58e"
+    },
+    {
+      "path": "public/build/assets/dealer-registration-C6gd-oKF.css",
+      "bytes": 63425,
+      "sha256": "2b706aa026ee8db7f1de0df53e9e2f821e741eb3736dbd0ad33237689304f382"
+    },
+    {
+      "path": "public/build/assets/dealer-registration-DorhllEH.js",
+      "bytes": 8573,
+      "sha256": "6e0559657fbb6d19902f71b7fa3d94f91dcab883bec630451ed59e0efcc5c786"
+    },
+    {
+      "path": "public/build/manifest.json",
+      "bytes": 906,
+      "sha256": "2f06ee86871c7567b368998428e6123491086630522a763d46a8a1011a48689c"
+    },
+    {
+      "path": "public/dealer-registration/arrow.png",
+      "bytes": 208,
+      "sha256": "3e95ab6ec70b2b2ae41ceaf3ce3e84253cc7ec89c0862a8810ace6affd76f67f"
+    },
+    {
+      "path": "public/dealer-registration/benefit-caravan.png",
+      "bytes": 199947,
+      "sha256": "222669ac1bb399fa7dfbba22e968cd4f820bbcc1c1d48907a27e416fb8d10a36"
+    },
+    {
+      "path": "public/dealer-registration/benefit-expert.png",
+      "bytes": 215129,
+      "sha256": "a34d8e110fa7412ff031da16cf8f3e15e1cd00ed98409f3e41f8c8ce67a36556"
+    },
+    {
+      "path": "public/dealer-registration/benefit-service.png",
+      "bytes": 186060,
+      "sha256": "657a94364c50cc98cafe4fbc834fec529cda9e1ef73db1e5caa3d249cc4e6868"
+    },
+    {
+      "path": "public/dealer-registration/car.png",
+      "bytes": 496,
+      "sha256": "6b853aeafc083eb1b877dd87db80716ffc0a03f8ed6c2ea34b889e33f90fedbd"
+    },
+    {
+      "path": "public/dealer-registration/chat.png",
+      "bytes": 592,
+      "sha256": "6004755837d2791db3c316c20b112d6b08b96f905c8a8fd9a942b4ec5730324f"
+    },
+    {
+      "path": "public/dealer-registration/clock.png",
+      "bytes": 503,
+      "sha256": "d3e3ef65496fd264f5df647a68f9c8fc42b1562e878c3fe79138e3dfbd9e11dc"
+    },
+    {
+      "path": "public/dealer-registration/dealer.png",
+      "bytes": 269,
+      "sha256": "fccec03712fee8e2c876fe7b37f5b81b045e117889c0a4b3ec006ba664355133"
+    },
+    {
+      "path": "public/dealer-registration/group-mobile.png",
+      "bytes": 83404,
+      "sha256": "fb1f6a1aad370b6bf31acac55a4b8ce678b433dedb0c5c394110debda7827498"
+    },
+    {
+      "path": "public/dealer-registration/group.png",
+      "bytes": 154990,
+      "sha256": "b0152d2a63a20d1d6b8374938e7c88b099f8f5ea8f2de7a11f38c5d2f6b1c8e9"
+    },
+    {
+      "path": "public/dealer-registration/hero-desktop.png",
+      "bytes": 1300789,
+      "sha256": "532379b12815fee8d028b9bb77654ad8c20cc9095e80873a543e81ec77784cb3"
+    },
+    {
+      "path": "public/dealer-registration/hero-mobile.png",
+      "bytes": 487113,
+      "sha256": "92db7a32f73609047020f4c9603c92aeda09971cde6add74d013fbd75df24bab"
+    },
+    {
+      "path": "public/dealer-registration/info.png",
+      "bytes": 552,
+      "sha256": "fb8d5f9f5e94bbdb5d2da60223e7609ed759d21cd4d973b43efa532238839d54"
+    },
+    {
+      "path": "public/dealer-registration/location.png",
+      "bytes": 537,
+      "sha256": "37c2b161c30e83a72db15160ee9b1a8dfc247685f44158871973d98970258c2c"
+    },
+    {
+      "path": "public/dealer-registration/lock.png",
+      "bytes": 394,
+      "sha256": "0ba3fe35361dda80943bb822184cde9cf8f9fed05d112a2016f81f00b7f39d4f"
+    },
+    {
+      "path": "public/dealer-registration/logo.png",
+      "bytes": 1743,
+      "sha256": "e1946729e49f72a594558876adb61cc6490a38514a8f49299bbff86a538b52ba"
+    },
+    {
+      "path": "public/dealer-registration/phone.png",
+      "bytes": 483,
+      "sha256": "21e58f3c89d56082431e87ae89afce051c80b89e48084206ed22c957dfd19a6a"
+    },
+    {
+      "path": "public/dealer-registration/qr-invalid.png",
+      "bytes": 4205,
+      "sha256": "07319a7b047cd8c7253a73d234a7e600aafb6449b4f48fc0a15ea4370d3673cb"
+    },
+    {
+      "path": "public/dealer-registration/search.png",
+      "bytes": 420,
+      "sha256": "d68d2db66b56c18023a21617b2f472ed44d255926c67261fd2399f7a90537c97"
+    },
+    {
+      "path": "public/dealer-registration/success.png",
+      "bytes": 5588,
+      "sha256": "273563a35f9984a4bdc3302508731fd81178ac2d8d4d1142688fb09876afa1d4"
+    },
+    {
+      "path": "public/dealer-registration/tent.png",
+      "bytes": 593,
+      "sha256": "f1d6125ee1b1170ce7a16c31ef1502ba12eabb85bab7e73cd9d1d0d5582cb574"
+    },
+    {
+      "path": "public/dealer-registration/wrench.png",
+      "bytes": 539,
+      "sha256": "4a96f960d8030296350ce62f0ab124511d8e94055d2375c1097169e7b7471b55"
+    },
+    {
+      "path": "public/favicon.ico",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "public/hilux-brothers/anh-cung-duong.webp",
+      "bytes": 88546,
+      "sha256": "c739ab86ecfa8a174e5ef08b6c2e93c6f555a0b5c8b0b128c50b087ed8abbce5"
+    },
+    {
+      "path": "public/hilux-brothers/apps-script-dang-ky.gs",
+      "bytes": 2372,
+      "sha256": "fdffbe7f78b25f1a8f438e9698f0a393a5d00d038d0293b33de2c659dacbee3b"
+    },
+    {
+      "path": "public/hilux-brothers/index.html",
+      "bytes": 37347,
+      "sha256": "cc01ef5c0cb74a44e840e591cc4188050cefe8b9cdee4644102b039f80dbcc4c"
+    },
+    {
+      "path": "public/hilux-brothers/kv-hilux-brothers.webp",
+      "bytes": 429172,
+      "sha256": "cc40fdb6111c0ef57f38a73f72cb9413454684afef32f634a79649d4b7159534"
+    },
+    {
+      "path": "public/hilux-brothers/so-do-duong-trai-nghiem.webp",
+      "bytes": 199910,
+      "sha256": "f204679b15919f6497867dbe26e6f015e886313260d55beb4048341c002fa741"
+    },
+    {
+      "path": "public/index.php",
+      "bytes": 1710,
+      "sha256": "c96ed6bbe80f9105534af4d1510dc79f0143e6843970dba7ddd4ec7d03097cab"
+    },
+    {
+      "path": "public/robots.txt",
+      "bytes": 24,
+      "sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f"
+    },
+    {
+      "path": "resources/css/app.css",
+      "bytes": 1546,
+      "sha256": "860094e2a3288494db29f2612128cc9193e1a9ccb64ded8b2852919989d77eb5"
+    },
+    {
+      "path": "resources/css/dealer-registration.css",
+      "bytes": 34022,
+      "sha256": "b184c7af30b146cc9a750eb85fa4a7e654f5e4dfc0b30bd4eb1976147546060a"
+    },
+    {
+      "path": "resources/js/app.js",
+      "bytes": 370,
+      "sha256": "d1eadc254e07ec1ff0fbaf1ad60a470f5d168f7e235447f8869da3467f33496c"
+    },
+    {
+      "path": "resources/js/bootstrap.js",
+      "bytes": 1248,
+      "sha256": "326ba857c524b23ca3b95a34cf26e9ad2e9c9a9e7605b3bb163d96b2e2b7b2aa"
+    },
+    {
+      "path": "resources/js/customer-address.js",
+      "bytes": 3470,
+      "sha256": "133e9a029ad007b12c4c3f46f7f6a84ebf94644a0af6aad6d084d6fdd7b1a894"
+    },
+    {
+      "path": "resources/js/dealer-registration.js",
+      "bytes": 13474,
+      "sha256": "997a70ea97ec7c6d8d0e409e9955ce8e1ff2dc9311c2217c3c1095e02db3130a"
+    },
+    {
+      "path": "resources/js/submission-inline.js",
+      "bytes": 1964,
+      "sha256": "cb034ec6a3d7c065b7d4fa7721993566adab3d0d4587ef9a4cbf2810b9169904"
+    },
+    {
+      "path": "resources/views/admin/awards/index.blade.php",
+      "bytes": 2959,
+      "sha256": "7604e3d91746f6b3b64c99f4d21f64a062734e171ad6b3764713ad65a2de13d3"
+    },
+    {
+      "path": "resources/views/admin/awards/show.blade.php",
+      "bytes": 1706,
+      "sha256": "a8eb55aafc516df411a7d8ec89da598d18305b1a3dc962d6192234c2488a3f14"
+    },
+    {
+      "path": "resources/views/admin/dashboard.blade.php",
+      "bytes": 7567,
+      "sha256": "c2d16c73d774cf00a221d80c197afa573ea50254622283ca695dfd2634990d6a"
+    },
+    {
+      "path": "resources/views/admin/dealers/account.blade.php",
+      "bytes": 2289,
+      "sha256": "58be585ce1dd2bd704ec7bd834c90a2b49db2290455a5a6f06b67d0319c27b2f"
+    },
+    {
+      "path": "resources/views/admin/dealers/form.blade.php",
+      "bytes": 3407,
+      "sha256": "3f0191456f11a714961165c7615d99b60dc4c42cb15cba16cdcf697864cbc05e"
+    },
+    {
+      "path": "resources/views/admin/dealers/index.blade.php",
+      "bytes": 4066,
+      "sha256": "a0e78a00704089e0f67847dda39da750d27e0af1466d88fbde8ea40457e88661"
+    },
+    {
+      "path": "resources/views/admin/dealers/show.blade.php",
+      "bytes": 3593,
+      "sha256": "c7284fa541912a021887c04985a3050078528f31de0563db03b0616887d5f4b8"
+    },
+    {
+      "path": "resources/views/admin/sales/edit.blade.php",
+      "bytes": 2633,
+      "sha256": "bb6e79dbb56623224285be5c280dbe4926dc57595285696b86ed4d2d1bb53e32"
+    },
+    {
+      "path": "resources/views/admin/sales/index.blade.php",
+      "bytes": 4439,
+      "sha256": "c6bc5021c7a16acc1a432d5d077747df5ae7afc30f1916e1c0b644008d824cae"
+    },
+    {
+      "path": "resources/views/admin/sales/show.blade.php",
+      "bytes": 6498,
+      "sha256": "68d7dd12526653ed120fe0d24c8d3b82b80dcbb178695901ec291eb19fb7c9e2"
+    },
+    {
+      "path": "resources/views/admin/submissions/index.blade.php",
+      "bytes": 8848,
+      "sha256": "035a41854174957172833d07ee411fd1d1d4c17a8a318f440c1c9de3855ff631"
+    },
+    {
+      "path": "resources/views/admin/submissions/show.blade.php",
+      "bytes": 4494,
+      "sha256": "11e96ba160c3fcae0a0dffbe1ad760fe7488c4f08d075cbba3369051ed788e9f"
+    },
+    {
+      "path": "resources/views/auth/account-status.blade.php",
+      "bytes": 1731,
+      "sha256": "b58818026b64de0e315444ed51b428919e60e686b89d3c28b8b01903f2ae77c6"
+    },
+    {
+      "path": "resources/views/auth/forgot-password.blade.php",
+      "bytes": 697,
+      "sha256": "a5b7e469e2d1cb81b6dc7780a100d6bcf8d332a36693a15d3f3200e8fb4f206c"
+    },
+    {
+      "path": "resources/views/auth/login.blade.php",
+      "bytes": 1350,
+      "sha256": "5212f221b073a5921d3527c3c29fc22dfc093abe652a1b1a65ea5dc010f77e22"
+    },
+    {
+      "path": "resources/views/auth/register.blade.php",
+      "bytes": 3488,
+      "sha256": "4e6981f428fa2f94887fcf2681c58dd050b30398555016446146d2043a592790"
+    },
+    {
+      "path": "resources/views/auth/reset-password.blade.php",
+      "bytes": 1004,
+      "sha256": "dfe6355fc94facec2aa72c2ae8a9d9e5cb910c0e3ffd8beddc369a99bdbe4d51"
+    },
+    {
+      "path": "resources/views/awards/index.blade.php",
+      "bytes": 2259,
+      "sha256": "b7a26de27913f7fbe31b354f3738bba598ce14a3b87f26f8728a86289f05b29f"
+    },
+    {
+      "path": "resources/views/awards/show.blade.php",
+      "bytes": 915,
+      "sha256": "cfe588fb795a51e30d2677f292cfe00239ee699472dbe81d827835ce8d38d118"
+    },
+    {
+      "path": "resources/views/components/admin-feedback.blade.php",
+      "bytes": 532,
+      "sha256": "1f2a40f82512888c439991ee9c3d00330dc827f820898c304ec114b4a3ea9dc0"
+    },
+    {
+      "path": "resources/views/components/award-results.blade.php",
+      "bytes": 2070,
+      "sha256": "c00e507940c062159fc7a7480bb3853f2c5ca850e743538f643396f719c68a0e"
+    },
+    {
+      "path": "resources/views/components/customer-address-fields.blade.php",
+      "bytes": 3870,
+      "sha256": "13296520e364b712aa3805306524f8c2361d511a7030983da534149137ca3fd4"
+    },
+    {
+      "path": "resources/views/components/dealer-awards.blade.php",
+      "bytes": 775,
+      "sha256": "5bd32f74c8d3ea1322605265dbc02e3c3867cdd9933bce52d00640c5b1bc395f"
+    },
+    {
+      "path": "resources/views/components/dealer-customer-list.blade.php",
+      "bytes": 793,
+      "sha256": "a6287cb1bdef26c57ed5aefbaa96339279d9a0163d05d231a444f505cf420246"
+    },
+    {
+      "path": "resources/views/components/dealer-details.blade.php",
+      "bytes": 1553,
+      "sha256": "f15a651e06be9ea77f172cf6e5e8e02e25028029d3e35f2c787bd5ee5270ed09"
+    },
+    {
+      "path": "resources/views/components/dealer-link.blade.php",
+      "bytes": 774,
+      "sha256": "d76b2d111a1be4a1fba363afed2730cf4d5abf40090ad19263846fdab0ba0e73"
+    },
+    {
+      "path": "resources/views/components/dealer-nav.blade.php",
+      "bytes": 628,
+      "sha256": "3ab13d23509a8ca771a2d6251933f0684b3b356c7b2eba8b5b70f80922d1111d"
+    },
+    {
+      "path": "resources/views/components/dealer-profile-media.blade.php",
+      "bytes": 1639,
+      "sha256": "7886534a3239a31df38f63a264476de03b31dc8e285da98fefab53d7d21afb14"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/dealer-card.blade.php",
+      "bytes": 1199,
+      "sha256": "b6d16a9863767488c6251c59e902d1da049d3ba5da714ebd638dba05b9776fbe"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/field.blade.php",
+      "bytes": 901,
+      "sha256": "7ec24327b79458d25e00e2ff23c7d50f90e77d4ecb27e003e1e7811340849d18"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/icon.blade.php",
+      "bytes": 197,
+      "sha256": "bc00247d662eb76b5247df853a696736c97ca8f5ed44670ff99f5baa2222999c"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/layout.blade.php",
+      "bytes": 4155,
+      "sha256": "359d99d96ca9e20cb480c3e1f4f2d0ce24ff0a541d4edc5ea2fc5eb55fbc8068"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/link.blade.php",
+      "bytes": 803,
+      "sha256": "dbba175863ff88c8de4c0096b4f23216d34a4ff185c6224342c31f6c80c751e8"
+    },
+    {
+      "path": "resources/views/components/dealer-registration/step-one.blade.php",
+      "bytes": 5385,
+      "sha256": "6042759e6a9108f04fdaea29601d753617caa06c3e530ebd375b00ced08113a5"
+    },
+    {
+      "path": "resources/views/components/dealer-registration-form.blade.php",
+      "bytes": 3598,
+      "sha256": "27112bb8e1d7ff4c56e6496dda0f6cc8d2d3a1626cc4878d49f123f37ae9b459"
+    },
+    {
+      "path": "resources/views/components/form-input.blade.php",
+      "bytes": 643,
+      "sha256": "3ebb206a12d1b9495548fb74e4ca94d464930cfc316fbbbf2e3f579d5eb233ac"
+    },
+    {
+      "path": "resources/views/components/layout.blade.php",
+      "bytes": 2439,
+      "sha256": "594e47f43b21ddc97afdbd30ced6ff68a348dcbc900fb8fc1f0c8817a5636e16"
+    },
+    {
+      "path": "resources/views/components/leaderboard-section.blade.php",
+      "bytes": 2944,
+      "sha256": "a7bc2e40a4c81e43371575fe483be82eb5e1b9b80d4a547774698f5cff90d563"
+    },
+    {
+      "path": "resources/views/components/public/arrow.blade.php",
+      "bytes": 232,
+      "sha256": "c8b628591f19055629aaf48b53aab31f0212d41716651ce57c203adeeaba389c"
+    },
+    {
+      "path": "resources/views/components/public/brand.blade.php",
+      "bytes": 448,
+      "sha256": "89b94ff48d786c0eac6807547843e48cd68b5620f249737d577543689616e15e"
+    },
+    {
+      "path": "resources/views/components/public/journey-art.blade.php",
+      "bytes": 1856,
+      "sha256": "ed0a07242dcb9b24d177ae6c2d00f0713cc518c047ff55a1f6a7074340a33b03"
+    },
+    {
+      "path": "resources/views/components/public/layout.blade.php",
+      "bytes": 3224,
+      "sha256": "40fe9d06d514be1a949083cfce57e80e4243249033267c3af7f3c7e927f2e2fc"
+    },
+    {
+      "path": "resources/views/components/public/navigation.blade.php",
+      "bytes": 512,
+      "sha256": "c43d2be0b7f72aaf3856580104ca2522ba4e571a6b1ee72d574f8e0b9891cc1c"
+    },
+    {
+      "path": "resources/views/components/public/ranking-preview.blade.php",
+      "bytes": 2989,
+      "sha256": "48be147e850ce4458cd68ac3c7252f8ec6f4165a3517e0e57bc5f5f5b707ccb4"
+    },
+    {
+      "path": "resources/views/components/public/stat.blade.php",
+      "bytes": 648,
+      "sha256": "0c0bffcbd3f5f200fa32719d4b23a2b0597be1f8f1c9b153d08ee80a1e0eeab3"
+    },
+    {
+      "path": "resources/views/components/sales-avatar.blade.php",
+      "bytes": 666,
+      "sha256": "d56b22e90ddfc75881889a9a5cacc8aa2608f0a8d77f9c12bd738cc72a535378"
+    },
+    {
+      "path": "resources/views/components/sales-link.blade.php",
+      "bytes": 951,
+      "sha256": "d296ab5acad23700891e4be46dde9ee7a09546511dd015f0a12c817080b1f3e7"
+    },
+    {
+      "path": "resources/views/components/submission-address-details.blade.php",
+      "bytes": 483,
+      "sha256": "b2387718fcf16d3fe72a06fb9f3377aba7f417bf4cd3590c9e839c6b766c06b8"
+    },
+    {
+      "path": "resources/views/components/submission-inline-edit.blade.php",
+      "bytes": 7401,
+      "sha256": "262597474e573e9e2a2161191f3298ab989eb67da9f06061ab9dc3a837ffde8e"
+    },
+    {
+      "path": "resources/views/components/submission-review-form.blade.php",
+      "bytes": 4959,
+      "sha256": "25ee620b8169814bf584c17fef43f8f8e293e7fc7b4682fe5be5f0cf5cf0b0f5"
+    },
+    {
+      "path": "resources/views/components/submission-status.blade.php",
+      "bytes": 434,
+      "sha256": "62f6946884173a772dba1e93a8543aec10da16264136209487bc4a03c5377724"
+    },
+    {
+      "path": "resources/views/components/submission-vehicle-details.blade.php",
+      "bytes": 2150,
+      "sha256": "850c05ab0ca38a9000d82fdf654b16cc80d4f3ae12e0fc7cb0bb28cc209f23c3"
+    },
+    {
+      "path": "resources/views/components/user-status.blade.php",
+      "bytes": 469,
+      "sha256": "2a428f316354e2d8862084fce327bce20460a24ea4012df9d0d8628021723c99"
+    },
+    {
+      "path": "resources/views/dealer/awards/index.blade.php",
+      "bytes": 502,
+      "sha256": "ce1f6a4ef24bd97c6e631a784b9074caa6b75a073a77acddda8cb85cd9d33c1e"
+    },
+    {
+      "path": "resources/views/dealer/customers/index.blade.php",
+      "bytes": 1482,
+      "sha256": "b7037209419b480e51b5583ec992681ba0f9a4c1cbe4bff1797879ff3b492c92"
+    },
+    {
+      "path": "resources/views/dealer/customers/show.blade.php",
+      "bytes": 1813,
+      "sha256": "8b67e5a36d7af1a689089fe646e32863e5c1c6b3348301f26328acd44451fe67"
+    },
+    {
+      "path": "resources/views/dealer/dashboard.blade.php",
+      "bytes": 2584,
+      "sha256": "5cd6a13a22ba7468a2900c64324d79d752621d8c09f8c6a7665114a772d2ced8"
+    },
+    {
+      "path": "resources/views/dealer/sales/index.blade.php",
+      "bytes": 1979,
+      "sha256": "44da9f33ec6fa21fef405fd05c992d63d22330be4a029feb32744a41bfaea336"
+    },
+    {
+      "path": "resources/views/dealer/sales/show.blade.php",
+      "bytes": 1280,
+      "sha256": "bd952f602a79ae3972123b71412f88a35aaa7f8ac42888173a75d2ad64067876"
+    },
+    {
+      "path": "resources/views/dealers/index.blade.php",
+      "bytes": 2035,
+      "sha256": "8b2e6986f7147ab415118f4b2c5ca15ace2dec564134315462657ed2f3ee597c"
+    },
+    {
+      "path": "resources/views/dealers/registration/landing-content.blade.php",
+      "bytes": 6316,
+      "sha256": "eaedae5ba51ad67f311fd20b0f49453113720b8742b34740ab1864940ffd6851"
+    },
+    {
+      "path": "resources/views/dealers/registration/step-two-content.blade.php",
+      "bytes": 11952,
+      "sha256": "8d386c50a215b4c6b939220546d9372411f6273291435d6b778e1a2b6671c0db"
+    },
+    {
+      "path": "resources/views/dealers/registration/step-two.blade.php",
+      "bytes": 309,
+      "sha256": "c78c226bc2cc3b2a3b7535f2d8b1da3c30e9e512c00bf287c31370ea20ec5494"
+    },
+    {
+      "path": "resources/views/dealers/registration/success.blade.php",
+      "bytes": 3428,
+      "sha256": "db8c9ee05e964bdff8533f5d462c62bd3ceef9ed1f4184f6885fcec5fae6bad1"
+    },
+    {
+      "path": "resources/views/dealers/show.blade.php",
+      "bytes": 531,
+      "sha256": "3acbf80b4b54185f4ab98ce3b42f4f03e7e13bbc5d8a952557514215c2691f8d"
+    },
+    {
+      "path": "resources/views/errors/dealer-registration.blade.php",
+      "bytes": 439,
+      "sha256": "2a47bfae0642527d0a492374ee7539bc4bce1d6b79131926477ada7b7cfa8eb4"
+    },
+    {
+      "path": "resources/views/leaderboard/index.blade.php",
+      "bytes": 1587,
+      "sha256": "4e62ff96432c274d7828fef5fcd6452eb6ac8fec03d5bcc0f1a8ef6833f8e951"
+    },
+    {
+      "path": "resources/views/profile/edit.blade.php",
+      "bytes": 3160,
+      "sha256": "05fe2b05bc93e1bfd9cb1d4be789e6dd7a4625a5c98f989b7be0eab5a5c95ead"
+    },
+    {
+      "path": "resources/views/sales/dashboard.blade.php",
+      "bytes": 3670,
+      "sha256": "fd0ede2403d52ca60e21d0cd085c68bbd30d6abbe756c78cbaeeb693196d7123"
+    },
+    {
+      "path": "resources/views/sales/public-profile.blade.php",
+      "bytes": 3204,
+      "sha256": "5a5e6693c603a2b3921764808e7f1554d0be3be9622e1fc6548c2ec3d39f0191"
+    },
+    {
+      "path": "resources/views/sales/submissions/form.blade.php",
+      "bytes": 6774,
+      "sha256": "c6b5377f66a4bebf1e5b93718145f8bbcb53be27348a595cc6a5da2674d6f533"
+    },
+    {
+      "path": "resources/views/sales/submissions/index.blade.php",
+      "bytes": 3211,
+      "sha256": "4aea1d3010ef9cd654d19180c5c97888a0cd68e650d9feb48574f3377d22b7b1"
+    },
+    {
+      "path": "resources/views/sales/submissions/show.blade.php",
+      "bytes": 2751,
+      "sha256": "0e79e7baa2860483e6cb03b24e9ceac8e415f1ae1f507bb195b885eb0038f1c6"
+    },
+    {
+      "path": "resources/views/welcome.blade.php",
+      "bytes": 10703,
+      "sha256": "bca032318628822deda042c9a3afd4528ae85617ecf2c2b5fe782fdc5859a5e7"
+    },
+    {
+      "path": "routes/api.php",
+      "bytes": 652,
+      "sha256": "87ff18c2c6afae211a24cf08938a259f8811cc1a5d5427d0ecc7358b23c9d29b"
+    },
+    {
+      "path": "routes/channels.php",
+      "bytes": 558,
+      "sha256": "5c776998675a7c7d3303b3cd0517e314755cd9d582c17b18238c3686b17d76ac"
+    },
+    {
+      "path": "routes/console.php",
+      "bytes": 592,
+      "sha256": "69ec50e361f429e7ffaf95011f9e3cab75481ad753405755580e8e89b1518b20"
+    },
+    {
+      "path": "routes/web.php",
+      "bytes": 11887,
+      "sha256": "9b7085dc49b80a02f79bf37ff7bb17732b6fd802fdc884380f390b0c2e78a555"
+    },
+    {
+      "path": "vite.config.js",
+      "bytes": 343,
+      "sha256": "acf3d7e54ea3452bbb259a20c9eba5a1d307e5be38be380861a4bbc070bd2155"
+    }
+  ]
+}

@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Opt-in only after the operator has reviewed a dry run and approved retention.
+        $schedule->command('dealer-registration:prune-receipts')->hourly()->withoutOverlapping()
+            ->when(fn () => config('dealer-registration.receipt_cleanup_enabled', false));
     }
 
     /**
