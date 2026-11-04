@@ -10,25 +10,13 @@
 .dr-site .dr-d12-avatar { display:grid; place-items:center; width:56px; height:56px; flex:none; border-radius:50%; background:var(--dr-muted); color:var(--dr-secondary); font-size:18px; font-weight:600; }
 .dr-site .dr-d12-status { display:inline-flex; align-items:center; gap:8px; flex:none; padding:7px 14px; border-radius:999px; background:#eef4ff; color:#1d3f8f; font-size:14px; font-weight:600; line-height:20px; white-space:nowrap; }
 .dr-site .dr-d12-status::before { content:''; width:8px; height:8px; border-radius:50%; background:#2864ff; }
-.dr-site .dr-d12-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); list-style:none; padding:0; margin-top:28px; }
-.dr-site .dr-d12-progress li { position:relative; min-width:0; padding:40px 20px 0 0; font-size:16px; line-height:22px; }
-.dr-site .dr-d12-progress li::before { content:''; position:absolute; left:0; top:0; width:28px; height:28px; border:2px solid #e3e3e8; border-radius:50%; background:white; }
-.dr-site .dr-d12-progress li:not(:last-child)::after { content:''; position:absolute; left:36px; right:0; top:13px; height:2px; background:#e3e3e8; }
-.dr-site .dr-d12-progress .is-done::before { content:''; border:0; background:url('../../public/dealer-registration/lookup-done.svg') center no-repeat; }
-.dr-site .dr-d12-progress .is-done::after { background:#bfe6cc; }
-.dr-site .dr-d12-progress .is-current::before { border:0; background:url('../../public/dealer-registration/lookup-current.svg') center no-repeat; }
-.dr-site .dr-d12-progress strong { font-weight:600; }
-.dr-site .dr-d12-progress .is-upcoming strong { color:#8e8e93; }
-.dr-site .dr-d12-progress p { color:#8e8e93; font-size:14px; line-height:20px; margin-top:4px; }
 .dr-site .dr-d12-action { display:flex; flex-direction:column; align-items:stretch; gap:14px; min-width:0; padding:32px; background:#fafafb; border-left:1px solid #ededf0; }
 .dr-site .dr-d12-action h3 { font-size:18px; font-weight:700; line-height:24px; }
 .dr-site .dr-d12-action p { color:var(--dr-secondary); font-size:14px; line-height:20px; overflow-wrap:anywhere; }
 .dr-site .dr-d12-action .dr-button { width:100%; }
 .dr-site .dr-lookup-results .dr-d12-person h3 { font-size:22px; line-height:28px; }
-.dr-site .dr-lookup-results .dr-d12-person p,.dr-site .dr-lookup-results .dr-d12-progress p,.dr-site .dr-lookup-results .dr-d12-action p { line-height:20px; }
-.dr-site .dr-lookup-results .dr-d12-progress p { color:#8e8e93; }
+.dr-site .dr-lookup-results .dr-d12-person p,.dr-site .dr-lookup-results .dr-d12-action p { line-height:20px; }
 .dr-site .dr-lookup-results .dr-d12-action h3 { font-size:18px; line-height:24px; }
-.dr-site .dr-d12-progress li.is-done::after { background:#bfe6cc; }
 @media (min-width:768px) and (max-width:1100px) {
     .dr-site .dr-d12 { grid-template-columns:minmax(0,1fr) 300px; }
     .dr-site .dr-d12-information { padding-inline:24px; }
@@ -37,22 +25,13 @@
 @media (max-width:767px) {
     .dr-site .dr-d12 { display:block; border-radius:24px; padding:20px; }
     .dr-site .dr-d12-information { padding:0; }
-    .dr-site .dr-d12-person { gap:12px; padding-bottom:20px; border-bottom:1px solid #ededf0; }
+    .dr-site .dr-d12-person { flex-wrap:wrap; gap:12px; padding-bottom:20px; border-bottom:1px solid #ededf0; }
+    .dr-site .dr-d12-person>div { min-width:min(100px,calc(100% - 56px)); }
     .dr-site .dr-d12-avatar { width:44px; height:44px; font-size:14px; }
     .dr-site .dr-lookup-results .dr-d12-person h3 { font-size:16px; font-weight:600; line-height:22px; letter-spacing:0; }
     .dr-site .dr-lookup-results .dr-d12-person p { font-size:13px; line-height:18px; }
     .dr-site .dr-d12-status { gap:6px; padding:5px 10px; font-size:12px; line-height:16px; }
     .dr-site .dr-d12-status::before { width:6px; height:6px; }
-    .dr-site .dr-d12-progress { display:block; margin-top:20px; }
-    .dr-site .dr-d12-progress li { padding:2px 0 22px 38px; font-size:15px; line-height:20px; min-height:64px; }
-    .dr-site .dr-d12-progress li:last-child { padding-bottom:0; min-height:24px; }
-    .dr-site .dr-d12-progress li::before { width:24px; height:24px; }
-    .dr-site .dr-d12-progress li.is-done::before { background-image:url('../../public/dealer-registration/lookup-done-mobile.svg'); }
-    .dr-site .dr-d12-progress li.is-current::before { background-image:url('../../public/dealer-registration/lookup-current-mobile.svg'); }
-    .dr-site .dr-d12-progress li.is-upcoming::before { border:0; background:url('../../public/dealer-registration/lookup-upcoming-mobile.svg') center no-repeat; }
-    .dr-site .dr-d12-progress li:not(:last-child)::after { left:11px; top:28px; bottom:4px; right:auto; width:2px; height:auto; }
-    .dr-site .dr-lookup-results .dr-d12-progress p { font-size:13px; line-height:18px; margin-top:3px; }
-    .dr-site .dr-d12-progress .is-current p { color:var(--dr-secondary); }
     .dr-site .dr-d12-action { padding:0; margin-top:20px; border:0; background:transparent; }
     .dr-site .dr-d12-action h3,.dr-site .dr-d12-action p { display:none; }
     .dr-site .dr-d12-action .dr-button { min-height:52px; }
@@ -143,24 +122,43 @@
 .dr-site .dr-lookup-person { display:flex; gap:16px; align-items:center; margin-bottom:28px; overflow-wrap:anywhere; }
 .dr-site .dr-lookup-person>div { min-width:0; flex:1; }
 .dr-site .dr-lookup-avatar { display:grid; place-items:center; width:56px; height:56px; flex:none; border-radius:50%; background:var(--dr-muted); color:var(--dr-secondary); font-size:18px; font-weight:600; line-height:24px; }
-.dr-site .dr-lookup-draft-steps { margin-top:24px; }
 .dr-site .dr-lookup-summary .dr-status-chip { color:var(--dr-secondary); background:var(--dr-muted); }
 .dr-site .dr-lookup-summary .dr-status-chip::before { background:#8e8e93; }
 .dr-site .dr-lookup-found-title { margin-bottom:8px; }
 .dr-site .dr-lookup-next { min-width:0; display:flex; flex-direction:column; align-items:stretch; gap:14px; padding:32px; background:#fafafb; border-left:1px solid #ededf0; }
+/* Shared lookup progress: real marker/rail elements avoid generic timeline pseudo-element overrides. */
+.dr-site .dr-lookup-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; list-style:none; padding:0; margin:0; }
+.dr-site .dr-lookup-progress-d12,.dr-site [data-lookup-kind=found] .dr-lookup-progress { margin-top:28px; }
+.dr-site .dr-lookup-progress-step { display:flex; flex-direction:column; gap:12px; min-width:0; position:relative; }
+.dr-site .dr-lookup-progress-rail { display:flex; align-items:center; gap:8px; min-width:0; }
+.dr-site .dr-lookup-progress-step:not(:last-child) .dr-lookup-progress-rail::after { content:''; flex:1; height:2px; border-radius:1px; background:#e3e3e8; }
+.dr-site .dr-lookup-progress-step.is-completed .dr-lookup-progress-rail::after { background:#bfe6cc; }
+.dr-site .dr-lookup-progress-node { display:block; flex:none; width:28px; height:28px; }
+.dr-site .dr-lookup-progress-node img { display:block; width:100%; height:100%; }
+.dr-site .dr-lookup-progress-blocked { display:grid; place-items:center; border:2px solid #e3e3e8; border-radius:50%; color:#5e5e66; background:white; font-size:16px; font-weight:600; line-height:1; }
+.dr-site .dr-lookup-progress-text { min-width:0; padding-right:20px; overflow-wrap:anywhere; }
+.dr-site .dr-lookup-progress-text strong { display:block; color:#111; font-size:16px; font-weight:600; line-height:22px; }
+.dr-site .dr-lookup-progress-step.is-pending strong,.dr-site .dr-lookup-progress-step.is-blocked strong { color:#8e8e93; }
+.dr-site .dr-lookup-results .dr-lookup-progress-text p { margin-top:4px; color:#8e8e93; font-size:14px; line-height:20px; }
+.dr-site .dr-lookup-results .is-warning .dr-lookup-progress-text p { color:#9a5800; }
+.dr-site .dr-lookup-results [data-step=membership].is-current .dr-lookup-progress-text p { color:#1d3f8f; }
+.dr-site .dr-lookup-progress .dr-lookup-progress-sr { position:absolute; width:1px; height:1px; padding:0; border:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+@media (max-width:767px) {
+    .dr-site .dr-lookup-progress { grid-template-columns:1fr; }
+    .dr-site .dr-lookup-progress-d12,.dr-site [data-lookup-kind=found] .dr-lookup-progress { margin-top:20px; }
+    .dr-site .dr-lookup-progress-step { display:grid; grid-template-columns:24px minmax(0,1fr); gap:14px; }
+    .dr-site .dr-lookup-progress-rail { flex-direction:column; align-items:center; gap:4px; padding-bottom:4px; }
+    .dr-site .dr-lookup-progress-step:not(:last-child) .dr-lookup-progress-rail::after { width:2px; height:auto; min-height:1px; }
+    .dr-site .dr-lookup-progress-node { width:24px; height:24px; }
+    .dr-site .dr-lookup-progress-blocked { font-size:14px; }
+    .dr-site .dr-lookup-progress-text { padding:2px 0 22px; }
+    .dr-site .dr-lookup-progress-step:last-child .dr-lookup-progress-text { padding-bottom:0; }
+    .dr-site .dr-lookup-progress-text strong { font-size:15px; line-height:20px; }
+    .dr-site .dr-lookup-results .dr-lookup-progress-text p { margin-top:3px; font-size:13px; line-height:18px; }
+    .dr-site .dr-lookup-results [data-step=group].is-current .dr-lookup-progress-text p,
+    .dr-site .dr-lookup-results [data-step=registration].is-current .dr-lookup-progress-text p { color:#5e5e66; }
+}
 @media (min-width:768px) {
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin-top:0; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li { padding:40px 20px 0 0; min-height:0; font-size:16px; line-height:22px; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li::before { width:28px; height:28px; border:0; background:url('../../public/dealer-registration/lookup-upcoming.svg') center no-repeat; content:''; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li.is-done::before { background-image:url('../../public/dealer-registration/lookup-done.svg'); }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li.is-current::before { background-image:url('../../public/dealer-registration/lookup-current.svg'); }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li.is-warning::before { content:''; background:transparent url('../../public/dealer-registration/lookup-warning.svg') center no-repeat; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li.is-waiting::before { content:''; background:transparent url('../../public/dealer-registration/lookup-waiting.svg') center no-repeat; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li:not(:last-child)::after { left:36px; right:0; top:13px; bottom:auto; height:2px; width:auto; border-radius:1px; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps li.is-done::after { background:#bfe6cc; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps p { margin-top:4px; font-size:14px; line-height:20px; color:#8e8e93; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps .is-warning p { color:#9a5800; }
-    .dr-site.dr-lookup-page .dr-lookup-draft-steps .is-waiting p { color:#1d3f8f; }
     .dr-site .dr-lookup-result:not([data-lookup-kind=requested]):not([data-lookup-kind=found]) { min-height:258px; }
     .dr-site [data-lookup-kind=requested] .dr-lookup-summary { min-height:238px; }
 }
@@ -169,6 +167,10 @@
     .dr-site .dr-lookup-form>[type=submit] { grid-column:1/-1; margin-top:0; }
     .dr-site .dr-lookup-result { grid-template-columns:1fr; }
     .dr-site .dr-lookup-empty { flex-direction:column; align-items:stretch; }
+}
+@media (min-width:768px) and (max-width:900px) {
+    .dr-site .dr-d12 { grid-template-columns:1fr; }
+    .dr-site .dr-d12-action { border-left:0; border-top:1px solid #ededf0; }
 }
 @media (max-width:767px) {
     .dr-site.dr-lookup-page .dr-container { width:calc(100% - 40px); }
@@ -195,7 +197,6 @@
 }
 
 .dr-site [data-lookup-kind=requested] { grid-template-columns:1fr; }
-.dr-site .dr-lookup-reason-mobile { display:none; }
 .dr-site .dr-lookup-person h3 { font-size:22px; line-height:28px; letter-spacing:-.22px; }
 .dr-site .dr-lookup-person p { margin-top:2px; line-height:20px; }
 .dr-site .dr-lookup-next h3 { font-size:18px; line-height:24px; }
@@ -211,8 +212,6 @@
 .dr-site .dr-lookup-next form { min-width:0; }
 .dr-site .dr-lookup-next form>.dr-button { width:100%; margin-top:14px; }
 .dr-site .dr-lookup-results .dr-error { color:#c81e32; }
-.dr-site.dr-lookup-page .dr-timeline .is-waiting::before { content:'◷'; border:0; background:#eef4ff; color:#2864ff; text-align:center; line-height:24px; }
-.dr-site.dr-lookup-page .dr-timeline .is-warning::before { content:'!'; border:0; background:#e58b00; color:white; text-align:center; line-height:24px; font-weight:700; }
 .dr-site.dr-lookup-page.dr-success .dr-lookup-content { padding-top:72px; }
 .dr-site .dr-supplement-success { display:grid; grid-template-columns:480px minmax(0,1fr); align-items:stretch; border-radius:32px; overflow:hidden; }
 .dr-site .dr-supplement-success>div:first-child { display:flex; justify-content:center; }
@@ -227,7 +226,6 @@
 .dr-site .dr-supplement-actions { display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; }
 .dr-site .dr-supplement-actions .dr-button-muted,.dr-site [data-lookup-kind=blocked] .dr-button-muted { background:white; border:1px solid var(--dr-border); }
 @media (min-width:768px) {
-    .dr-site .dr-d12-progress li.is-upcoming::before { border:0; background:url('../../public/dealer-registration/lookup-upcoming.svg') center no-repeat; }
     .dr-site .dr-lookup-summary .dr-status-chip::before { background:transparent url('../../public/dealer-registration/lookup-dot-neutral.svg') center no-repeat; }
     .dr-site .dr-lookup-summary .dr-lookup-chip-not_requested::before,.dr-site .dr-lookup-summary .dr-lookup-chip-requested::before,.dr-site .dr-d12-status::before { background:transparent url('../../public/dealer-registration/lookup-dot-blue.svg') center no-repeat; }
     .dr-site .dr-lookup-summary .dr-lookup-chip-member::before { background:transparent url('../../public/dealer-registration/lookup-dot-green.svg') center no-repeat; }
@@ -248,9 +246,8 @@
 }
 @media (max-width:767px) {
     .dr-site .dr-lookup-person { flex-wrap:wrap; gap:12px; }
+    .dr-site .dr-lookup-person>div { min-width:min(100px,calc(100% - 56px)); }
     .dr-site .dr-lookup-person h3 { font-size:16px; line-height:22px; }
-    .dr-site [data-lookup-kind=blocked] .dr-lookup-draft-steps { display:none; }
-    .dr-site .dr-lookup-reason-mobile { display:block; }
     .dr-site [data-lookup-kind=member] .dr-lookup-next>h3,.dr-site [data-lookup-kind=member] .dr-lookup-next>p,
     .dr-site [data-lookup-kind=not_requested] .dr-lookup-next>h3,.dr-site [data-lookup-kind=not_requested] .dr-lookup-next>p { display:none; }
     .dr-site .dr-lookup-person .dr-status-chip { max-width:100%; font-size:12px; padding:5px 10px; }

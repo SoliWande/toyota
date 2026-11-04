@@ -34,18 +34,11 @@
                     <div class="dr-card dr-lookup-result" data-lookup-kind="{{ $result['kind'] }}">
                         <div class="dr-lookup-summary">
                             <div class="dr-lookup-person"><x-dealer-registration.lookup-avatar :name="$result['masked_name']" class="dr-lookup-avatar" /><div><h3>{{ $result['masked_name'] }}</h3><p>{{ $result['vehicle'] }} @if (!empty($values['license_plate'])) · {{ $values['license_plate'] }} @endif</p></div>@if ($result['kind'] !== 'found')<span class="dr-status-chip dr-lookup-chip-{{ $result['kind'] }}">{{ ['draft' => 'Chưa hoàn tất', 'supplement' => 'Cần bổ sung', 'not_requested' => 'Chờ vào group', 'requested' => 'Chờ duyệt', 'member' => 'Thành viên', 'blocked' => 'Chưa xác nhận'][$result['kind']] }}</span>@endif</div>
-                            @if ($result['kind'] === 'draft')
-                                <ol class="dr-timeline dr-lookup-draft-steps" aria-label="Các bước đăng ký">
-                                    <li class="is-current" aria-current="step"><strong>Hoàn tất đăng ký</strong><p>Bạn mới xong bước 1, còn bước 2 (xe và Facebook).</p></li>
-                                    <li class="is-upcoming"><strong>Vào group Facebook</strong></li>
-                                    <li class="is-upcoming"><strong>Thành viên chính thức</strong></li>
-                                </ol>
-                            @elseif ($result['kind'] !== 'found')
-                                <x-dealer-registration.lookup-state :result="$result" :dealer="$dealer" />
-                            @else
+                            @if ($result['kind'] === 'found')
                                 <h3 class="dr-lookup-found-title">Đã tìm thấy đăng ký</h3>
                                 <p>Thông tin tra cứu khớp với một đăng ký. Kết quả này không xác nhận tư cách thành viên Facebook.</p>
                             @endif
+                            <x-dealer-registration.lookup-state :result="$result" />
                         </div>
                         @if ($result['kind'] !== 'requested')<div class="dr-lookup-next">
                             @if ($result['kind'] === 'draft')

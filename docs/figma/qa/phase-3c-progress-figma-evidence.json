@@ -1,0 +1,151 @@
+{
+  "date": "2026-11-03",
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "source": "Fresh Figma MCP get_design_context for all listed nodes; get_screenshot additionally D13, D14 and M12.",
+  "desktop": {
+    "node": 28,
+    "rail": 2,
+    "nodeRailGap": 8,
+    "columns": 3,
+    "title": {
+      "font": "Inter",
+      "weight": 600,
+      "size": 16,
+      "lineHeight": 22
+    },
+    "description": {
+      "font": "Inter",
+      "weight": 400,
+      "size": 14,
+      "lineHeight": 20
+    },
+    "textTopGap": 12,
+    "textRightPadding": 20,
+    "descriptionGap": 4
+  },
+  "mobile": {
+    "node": 24,
+    "rail": 2,
+    "nodeTextGap": 14,
+    "railGap": 4,
+    "railBottomPadding": 4,
+    "title": {
+      "font": "Inter",
+      "weight": 600,
+      "size": 15,
+      "lineHeight": 20
+    },
+    "description": {
+      "font": "Inter",
+      "weight": 400,
+      "size": 13,
+      "lineHeight": 18
+    },
+    "textTopPadding": 2,
+    "textBottomPadding": 22,
+    "descriptionGap": 3
+  },
+  "colors": {
+    "railPending": "#e3e3e8",
+    "railCompleted": "#bfe6cc",
+    "title": "#111",
+    "muted": "#8e8e93",
+    "waiting": "#1d3f8f",
+    "warning": "#9a5800"
+  },
+  "frames": [
+    {
+      "frame": "D07",
+      "node": "213:533",
+      "hasProgress": true
+    },
+    {
+      "frame": "D08",
+      "node": "212:647",
+      "hasProgress": false
+    },
+    {
+      "frame": "D09",
+      "node": "213:1447",
+      "hasProgress": false
+    },
+    {
+      "frame": "D10",
+      "node": "213:636",
+      "hasProgress": false
+    },
+    {
+      "frame": "D11",
+      "node": "213:702",
+      "hasProgress": true
+    },
+    {
+      "frame": "D12",
+      "node": "213:797",
+      "hasProgress": true
+    },
+    {
+      "frame": "D13",
+      "node": "213:894",
+      "hasProgress": true
+    },
+    {
+      "frame": "D14",
+      "node": "213:989",
+      "hasProgress": true
+    },
+    {
+      "frame": "D15",
+      "node": "213:1086",
+      "hasProgress": true
+    },
+    {
+      "frame": "M07",
+      "node": "57:733",
+      "hasProgress": true
+    },
+    {
+      "frame": "M08",
+      "node": "57:941",
+      "hasProgress": false
+    },
+    {
+      "frame": "M10",
+      "node": "204:366",
+      "hasProgress": false
+    },
+    {
+      "frame": "M11",
+      "node": "204:446",
+      "hasProgress": true
+    },
+    {
+      "frame": "M12",
+      "node": "204:541",
+      "hasProgress": true
+    },
+    {
+      "frame": "M13",
+      "node": "204:638",
+      "hasProgress": true
+    },
+    {
+      "frame": "M14",
+      "node": "204:736",
+      "hasProgress": true
+    },
+    {
+      "frame": "M15",
+      "node": "204:833",
+      "hasProgress": false
+    }
+  ],
+  "intentionalDifferences": [
+    "No 48-hour SLA per existing backend contract.",
+    "No assumed Group completion for D7/D15 without group_confirmed=true.",
+    "New requirement: show D15 progress on mobile despite M15 having none.",
+    "New requirement: neutral found shows only confirmed registration and explicitly unconfirmed Group.",
+    "Blocked marker gains a neutral question mark to distinguish it from pending without implying rejection.",
+    "Descriptions absent visually in Figma remain available to screen readers."
+  ]
+}

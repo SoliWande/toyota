@@ -178,6 +178,8 @@ export function initLookupValidation(form) {
         const name = event.target.name;
         if (!['phone', 'license_plate'].includes(name)) return;
         if (type !== 'input') touched.add(name);
+        // Let submit validate before inserting errors that could move the clicked button.
+        if (type === 'focusout' && event.relatedTarget === button) return;
         if (!touched.has(name)) return;
         const current = collectLookupErrors(form);
         if (current[name]) errors[name] = current[name]; else delete errors[name];
@@ -214,8 +216,10 @@ export function initSupplementValidation(form) {
     const button = form.querySelector('[type=submit]');
     const loading = form.querySelector('[data-supplement-loading]');
     if (input?.getAttribute('aria-invalid') === 'true') { touched = true; input.focus(); }
-    for (const type of ['input', 'focusout']) input?.addEventListener(type, () => {
+    for (const type of ['input', 'focusout']) input?.addEventListener(type, (event) => {
         if (type === 'focusout') touched = true;
+        // Rendering on mousedown -> blur can move the button before mouseup/click.
+        if (type === 'focusout' && event?.relatedTarget === button) return;
         if (touched) renderValidation(form, collectSupplementErrors(form));
     });
     form.addEventListener('submit', (event) => {

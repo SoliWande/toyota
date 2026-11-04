@@ -20,20 +20,21 @@ if ($path === '/qa.css') {
     echo str_replace(['@import "tailwindcss";', '../../public/'], ['', '/'], file_get_contents($root.'/resources/css/dealer-registration.css'));
     exit;
 }
-$states = ['D07' => 'supplement', 'D08' => 'supplemented', 'D09' => 'rules', 'D10' => 'not_found', 'D11' => 'draft', 'D12' => 'not_requested', 'D13' => 'requested', 'D14' => 'member', 'D15' => 'blocked'];
+$states = ['D07' => 'supplement', 'D08' => 'supplemented', 'D09' => 'rules', 'D10' => 'not_found', 'D11' => 'draft', 'D12' => 'not_requested', 'D13' => 'requested', 'D14' => 'member', 'D15' => 'blocked', 'FOUND' => 'found'];
 $kind = $states[trim($path, '/')] ?? null;
 if (! $kind) {
     http_response_code(404);
     exit;
 }
 putenv('APP_ENV=testing');
+putenv('ASSET_URL=http://127.0.0.1:8766');
 putenv('DB_CONNECTION=disabled-for-ui');
 putenv('SESSION_DRIVER=array');
 putenv('CACHE_DRIVER=array');
 require $root.'/vendor/autoload.php';
 $app = require $root.'/bootstrap/app.php';
 $app->make(Kernel::class)->bootstrap();
-config(['database.default' => 'disabled-for-ui', 'session.driver' => 'array', 'cache.default' => 'array', 'app.url' => 'http://127.0.0.1:8766', 'app.key' => 'base64:'.base64_encode(str_repeat('q', 32))]);
+config(['database.default' => 'disabled-for-ui', 'session.driver' => 'array', 'cache.default' => 'array', 'app.url' => 'http://127.0.0.1:8766', 'app.asset_url' => 'http://127.0.0.1:8766', 'app.key' => 'base64:'.base64_encode(str_repeat('q', 32))]);
 $app->make(Vite::class)->useHotFile($root.'/.laravel-tools/lookup-qa-no-hot');
 $app->make('request')->setLaravelSession($app->make('session')->driver());
 $dealer = new Dealer;
@@ -41,6 +42,15 @@ $dealer->forceFill(['id' => 1, 'slug' => 'qa-dealer', 'name' => 'Toyota An Sươ
 $result = ['kind' => $kind, 'masked_name' => 'N** V** A*', 'vehicle' => 'Hilux', 'group_confirmed' => true,
     'reason' => $kind === 'blocked' ? 'Biển số này đã được dùng cho một đăng ký khác.' : 'Link Facebook không mở được.',
     'supplement_key' => 'synthetic-visual-only', 'verification_version' => str_repeat('a', 64)];
+if (($_GET['group'] ?? '') === 'unknown') {
+    $result['group_confirmed'] = false;
+}
+if (($_GET['ownership'] ?? '') === 'none') {
+    unset($result['supplement_key'], $result['verification_version']);
+}
+if (($_GET['text'] ?? '') === 'long') {
+    $result['reason'] = str_repeat('Thông tin cần được đối chiếu lại với đại lý. ', 8);
+}
 if (! in_array($kind, ['blocked', 'supplement'])) {
     unset($result['reason']);
 }

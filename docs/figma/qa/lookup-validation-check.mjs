@@ -25,6 +25,10 @@ const form = {
 };
 initLookupValidation(form);
 assert.equal(outputs.every((node) => node.hidden), true, 'Untouched fields remain quiet');
+events.focusout({ target: phone, relatedTarget: button });
+assert.equal(outputs.every((node) => node.hidden), true, 'Submit-target blur must not move the clicked button');
+events.focusout({ target: phone, relatedTarget: plate });
+assert.equal(outputs[0].hidden, false, 'Other blur still validates the touched field');
 events.submit({ preventDefault() {} });
 assert.equal(focused, 'phone');
 assert.deepEqual(collectLookupErrors(form), { phone: 'Vui lòng nhập số điện thoại.', license_plate: 'Vui lòng nhập biển số xe.' });

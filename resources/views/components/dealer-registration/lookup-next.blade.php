@@ -16,7 +16,7 @@
         <h3>Liên hệ để bổ sung thông tin</h3><p>Vui lòng liên hệ Dealer hoặc Admin. Tra cứu không cấp quyền chỉnh sửa hồ sơ; cập nhật trực tuyến cần phiên đăng ký còn hiệu lực.</p>
     @endif
 @elseif ($kind === 'blocked')
-    <h3>Chưa thể xác nhận đăng ký của bạn</h3><p class="dr-lookup-reason-mobile">{{ $result['reason'] }}</p><p>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ $dealer->phone }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p>
+    <h3>Chưa thể xác nhận đăng ký của bạn</h3><p>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ $dealer->phone }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p>
 @elseif ($kind === 'not_requested')
     <h3>Bước tiếp: vào group</h3><p>Khi xin vào group, trả lời đúng số điện thoại và biển số bạn đã đăng ký.</p>
     <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button" />

@@ -269,7 +269,7 @@ class RegistrationLookupTest extends TestCase
         $record = $this->record();
         $record->update(['license_plate' => null]);
         $this->post(route('dealers.lookup.store', $record->dealer->slug), ['phone' => $record->phone, 'license_plate' => '51K90091'])
-            ->assertOk()->assertViewHas('result', ['kind' => 'not_found']);
+            ->assertOk()->assertViewHas('result', ['kind' => 'not_found'])->assertDontSee('data-lookup-progress', false);
     }
 
     public function test_rate_limits_ip_and_normalized_phone_across_ips_and_dealers(): void
@@ -322,7 +322,10 @@ class RegistrationLookupTest extends TestCase
         $drafts->update($request, $dealer, $draft);
         $payload = ['phone' => '0990000091', 'license_plate' => '51K-900.91'];
         $this->post(route('dealers.lookup.store', $dealer->slug), $payload)->assertOk()
-            ->assertViewHas('result', fn ($result) => $result['kind'] === 'draft')->assertSee('Tiếp tục đăng ký');
+            ->assertViewHas('result', fn ($result) => $result['kind'] === 'draft')->assertSee('Tiếp tục đăng ký')
+            ->assertSee('data-step="registration" data-state="current"', false)
+            ->assertSee('data-step="group" data-state="pending"', false)
+            ->assertSee('data-step="membership" data-state="pending"', false);
         $this->assertSame(0, CustomerSubmission::count());
         $other = Dealer::factory()->create();
         $this->post(route('dealers.lookup.store', $other->slug), $payload)->assertViewHas('result', ['kind' => 'not_found']);

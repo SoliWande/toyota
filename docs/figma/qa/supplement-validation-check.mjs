@@ -21,6 +21,10 @@ const form = { elements, dataset:{}, attrs:{},
     setAttribute(name, value) { this.attrs[name] = value; }, removeAttribute(name) { delete this.attrs[name]; } };
 initSupplementValidation(form);
 assert.equal(output.hidden, true);
+inputEvents.focusout({ relatedTarget: button });
+assert.equal(output.hidden, true, 'Submit-target blur must leave button geometry stable until submit');
+inputEvents.focusout({ relatedTarget: null });
+assert.equal(output.hidden, false, 'Normal blur continues showing the field error');
 events.submit({ preventDefault() {} });
 assert.equal(output.textContent, 'Vui lòng nhập liên kết Facebook cá nhân.');
 assert.equal(focus, 'facebook_profile_url');

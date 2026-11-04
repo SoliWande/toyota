@@ -73,6 +73,15 @@ class RegistrationLookupStatesTest extends TestCase
             ->assertViewIs('dealers.registration.lookup')->assertDontSee('Chưa thể gửi đăng ký');
     }
 
+    private function assertProgress($response, array $states): void
+    {
+        $this->assertSame(1, substr_count($response->getContent(), 'data-lookup-progress>'));
+        foreach (array_combine(['registration', 'group', 'membership'], $states) as $step => $state) {
+            $response->assertSee('data-step="'.$step.'" data-state="'.$state.'"', false);
+        }
+        $response->assertDontSee('Đã vào group');
+    }
+
     private function receipt(CustomerSubmission $record): void
     {
         $request = Request::create('/');
@@ -103,8 +112,14 @@ class RegistrationLookupStatesTest extends TestCase
         $record = $this->record();
         $before = $record->refresh()->getRawOriginal();
         $this->change($record, 'group', ['group_progress' => $progress]);
-        $this->lookup($record)->assertOk()->assertSee($label)->assertDontSee('48 giờ')
+        $response = $this->lookup($record)->assertOk()->assertSee($label)->assertDontSee('48 giờ')
             ->assertViewHas('result', fn ($dto) => $dto['kind'] === $kind);
+        $this->assertProgress($response, match ($progress) {
+            'requested' => ['completed', 'completed', 'current'],
+            'member' => ['completed', 'completed', 'completed'],
+            'not_requested' => ['completed', 'current', 'pending'],
+            default => ['completed', 'pending', 'pending'],
+        });
         $this->assertTrue($before === $record->fresh()->getRawOriginal(), 'Verification changed moderation or submission fields.');
         $this->assertSame(0, DB::table('moderation_reviews')->count());
         $this->assertSame(0, CustomerSubmission::where('status', 'approved')->count());
@@ -114,7 +129,8 @@ class RegistrationLookupStatesTest extends TestCase
     public function test_historical_unknown_and_generic_rejected_have_no_inferred_states_or_backfill(): void
     {
         $record = $this->record('rejected');
-        $this->lookup($record)->assertOk()->assertViewHas('result', fn ($dto) => $dto['kind'] === 'found');
+        $response = $this->lookup($record)->assertOk()->assertViewHas('result', fn ($dto) => $dto['kind'] === 'found');
+        $this->assertProgress($response, ['completed', 'pending', 'pending']);
         $this->assertSame(0, DB::table('submission_verification_states')->count());
         $this->assertSame(0, DB::table('submission_verification_audits')->count());
     }
@@ -203,7 +219,7 @@ class RegistrationLookupStatesTest extends TestCase
         $url = route('dealers.lookup.supplement', $record->dealer->slug);
         $this->post($url, $payload)->assertRedirect(route('dealers.lookup.supplemented', $record->dealer->slug));
         $this->get(route('dealers.lookup.supplemented', $record->dealer->slug))->assertOk()->assertSee('Đã gửi bổ sung')
-            ->assertHeader('Cache-Control', 'no-store, private')->assertDontSee('48 giờ');
+            ->assertHeader('Cache-Control', 'no-store, private')->assertDontSee('48 giờ')->assertDontSee('data-lookup-progress', false);
         $this->assertTrue($record->fresh()->facebook_url === $payload['facebook_profile_url']);
         $this->assertSame('pending', $record->fresh()->status->value);
         $this->assertNull($record->fresh()->approved_facebook_identity);
@@ -283,6 +299,30 @@ class RegistrationLookupStatesTest extends TestCase
         $result = app(RegistrationLookupStateResolver::class)->resolve($record->id, ['kind' => 'found'], $request, $record->dealer);
         $this->assertSame('member', $result['kind']);
         $this->assertSame(5, DB::table('submission_verification_audits')->count());
+    }
+
+    #[DataProvider('exceptionalProgress')]
+    public function test_exceptional_progress_uses_real_group_evidence_and_lookup_is_read_only(string $kind, bool $confirmed): void
+    {
+        $record = $this->record();
+        if ($confirmed) {
+            $this->change($record, 'group', ['group_progress' => 'requested']);
+        }
+        $this->change($record, $kind === 'supplement' ? 'supplement' : 'blocker', $kind === 'supplement'
+            ? ['supplement_reason' => 'missing_information'] : ['blocker_code' => 'identity_conflict']);
+        $before = $record->fresh()->getRawOriginal();
+        $auditCount = DB::table('submission_verification_audits')->count();
+        $response = $this->lookup($record)->assertOk()->assertViewHas('result', fn ($dto) => $dto['kind'] === $kind
+            && $dto['group_confirmed'] === $confirmed);
+        $this->assertProgress($response, ['completed', $confirmed ? 'completed' : 'pending', $kind === 'supplement' ? 'warning' : 'blocked']);
+        $this->assertSame($before, $record->fresh()->getRawOriginal());
+        $this->assertSame($auditCount, DB::table('submission_verification_audits')->count());
+        $this->assertSame(0, DB::table('moderation_reviews')->count());
+    }
+
+    public static function exceptionalProgress(): array
+    {
+        return [['supplement', false], ['supplement', true], ['blocked', false], ['blocked', true]];
     }
 
     public function test_supplement_honeypot_system_fields_throttle_and_confirmation_privacy(): void
