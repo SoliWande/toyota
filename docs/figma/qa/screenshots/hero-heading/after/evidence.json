@@ -1,0 +1,667 @@
+[
+  {
+    "width": 390,
+    "heading": {
+      "x": 20,
+      "y": 111.5,
+      "width": 307.171875,
+      "height": 77
+    },
+    "hero": {
+      "x": 0,
+      "y": 60,
+      "width": 390,
+      "height": 780
+    },
+    "cta": {
+      "x": 20,
+      "y": 276,
+      "width": 350,
+      "height": 60
+    },
+    "font": "700 26px / 32px Montserrat, Inter, sans-serif",
+    "fontFamily": "Montserrat, Inter, sans-serif",
+    "weight": "700",
+    "lineHeight": "32px",
+    "paddingTop": "6.5px",
+    "backgroundClip": "text",
+    "baseline": 143,
+    "ascent": 29.225997924804688,
+    "inkTop": 113.77400207519531,
+    "inkBottom": 181,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "ancestors": [
+      {
+        "tag": "H1",
+        "class": "",
+        "overflow": "visible",
+        "height": "77px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-hero-copy",
+        "overflow": "visible",
+        "height": "280px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-container",
+        "overflow": "visible",
+        "height": "280px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "SECTION",
+        "class": "wc-hero",
+        "overflow": "visible",
+        "height": "780px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "class": "",
+        "overflow": "visible",
+        "height": "3427px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "class": "competition-site",
+        "overflow": "visible",
+        "height": "3591px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "class": "",
+        "overflow": "visible",
+        "height": "3591px",
+        "maxHeight": "none",
+        "transform": "none"
+      }
+    ],
+    "actualFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-Bold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ],
+    "labelFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 22
+      }
+    ],
+    "fontFaces": [
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "labelWeight": "600"
+  },
+  {
+    "width": 768,
+    "heading": {
+      "x": 32,
+      "y": 250,
+      "width": 557.96875,
+      "height": 136
+    },
+    "hero": {
+      "x": 0,
+      "y": 60,
+      "width": 768,
+      "height": 680
+    },
+    "cta": {
+      "x": 32,
+      "y": 480,
+      "width": 445.296875,
+      "height": 56
+    },
+    "font": "700 48px / 56px Montserrat, Inter, sans-serif",
+    "fontFamily": "Montserrat, Inter, sans-serif",
+    "weight": "700",
+    "lineHeight": "56px",
+    "paddingTop": "12px",
+    "backgroundClip": "text",
+    "baseline": 307,
+    "ascent": 53.64801025390625,
+    "inkTop": 253.35198974609375,
+    "inkBottom": 374,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "ancestors": [
+      {
+        "tag": "H1",
+        "class": "",
+        "overflow": "visible",
+        "height": "136px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-hero-copy",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-container",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "SECTION",
+        "class": "wc-hero",
+        "overflow": "visible",
+        "height": "680px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "class": "",
+        "overflow": "visible",
+        "height": "2836px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "class": "competition-site",
+        "overflow": "visible",
+        "height": "2997px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "class": "",
+        "overflow": "visible",
+        "height": "2997px",
+        "maxHeight": "none",
+        "transform": "none"
+      }
+    ],
+    "actualFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-Bold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ],
+    "labelFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 22
+      }
+    ],
+    "fontFaces": [
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "labelWeight": "600"
+  },
+  {
+    "width": 1024,
+    "heading": {
+      "x": 32,
+      "y": 250,
+      "width": 557.96875,
+      "height": 136
+    },
+    "hero": {
+      "x": 0,
+      "y": 60,
+      "width": 1024,
+      "height": 680
+    },
+    "cta": {
+      "x": 32,
+      "y": 480,
+      "width": 445.296875,
+      "height": 56
+    },
+    "font": "700 48px / 56px Montserrat, Inter, sans-serif",
+    "fontFamily": "Montserrat, Inter, sans-serif",
+    "weight": "700",
+    "lineHeight": "56px",
+    "paddingTop": "12px",
+    "backgroundClip": "text",
+    "baseline": 307,
+    "ascent": 53.64801025390625,
+    "inkTop": 253.35198974609375,
+    "inkBottom": 374,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "ancestors": [
+      {
+        "tag": "H1",
+        "class": "",
+        "overflow": "visible",
+        "height": "136px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-hero-copy",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-container",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "SECTION",
+        "class": "wc-hero",
+        "overflow": "visible",
+        "height": "680px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "class": "",
+        "overflow": "visible",
+        "height": "2822px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "class": "competition-site",
+        "overflow": "visible",
+        "height": "2983px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "class": "",
+        "overflow": "visible",
+        "height": "2983px",
+        "maxHeight": "none",
+        "transform": "none"
+      }
+    ],
+    "actualFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-Bold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ],
+    "labelFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 22
+      }
+    ],
+    "fontFaces": [
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "labelWeight": "600"
+  },
+  {
+    "width": 1440,
+    "heading": {
+      "x": 120,
+      "y": 262,
+      "width": 557.96875,
+      "height": 136
+    },
+    "hero": {
+      "x": 0,
+      "y": 72,
+      "width": 1440,
+      "height": 680
+    },
+    "cta": {
+      "x": 120,
+      "y": 492,
+      "width": 445.296875,
+      "height": 56
+    },
+    "font": "700 48px / 56px Montserrat, Inter, sans-serif",
+    "fontFamily": "Montserrat, Inter, sans-serif",
+    "weight": "700",
+    "lineHeight": "56px",
+    "paddingTop": "12px",
+    "backgroundClip": "text",
+    "baseline": 319,
+    "ascent": 53.64801025390625,
+    "inkTop": 265.35198974609375,
+    "inkBottom": 386,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "ancestors": [
+      {
+        "tag": "H1",
+        "class": "",
+        "overflow": "visible",
+        "height": "136px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-hero-copy",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-container",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "SECTION",
+        "class": "wc-hero",
+        "overflow": "visible",
+        "height": "680px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "class": "",
+        "overflow": "visible",
+        "height": "2661px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "class": "competition-site",
+        "overflow": "visible",
+        "height": "2834px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "class": "",
+        "overflow": "visible",
+        "height": "2834px",
+        "maxHeight": "none",
+        "transform": "none"
+      }
+    ],
+    "actualFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-Bold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ],
+    "labelFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 22
+      }
+    ],
+    "fontFaces": [
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "labelWeight": "600"
+  },
+  {
+    "width": 1920,
+    "heading": {
+      "x": 360,
+      "y": 262,
+      "width": 557.96875,
+      "height": 136
+    },
+    "hero": {
+      "x": 0,
+      "y": 72,
+      "width": 1920,
+      "height": 680
+    },
+    "cta": {
+      "x": 360,
+      "y": 492,
+      "width": 445.296875,
+      "height": 56
+    },
+    "font": "700 48px / 56px Montserrat, Inter, sans-serif",
+    "fontFamily": "Montserrat, Inter, sans-serif",
+    "weight": "700",
+    "lineHeight": "56px",
+    "paddingTop": "12px",
+    "backgroundClip": "text",
+    "baseline": 319,
+    "ascent": 53.64801025390625,
+    "inkTop": 265.35198974609375,
+    "inkBottom": 386,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "ancestors": [
+      {
+        "tag": "H1",
+        "class": "",
+        "overflow": "visible",
+        "height": "136px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-hero-copy",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "DIV",
+        "class": "wc-container",
+        "overflow": "visible",
+        "height": "360px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "SECTION",
+        "class": "wc-hero",
+        "overflow": "visible",
+        "height": "680px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "MAIN",
+        "class": "",
+        "overflow": "visible",
+        "height": "2661px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "BODY",
+        "class": "competition-site",
+        "overflow": "visible",
+        "height": "2834px",
+        "maxHeight": "none",
+        "transform": "none"
+      },
+      {
+        "tag": "HTML",
+        "class": "",
+        "overflow": "visible",
+        "height": "2834px",
+        "maxHeight": "none",
+        "transform": "none"
+      }
+    ],
+    "actualFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-Bold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ],
+    "labelFonts": [
+      {
+        "familyName": "Inter",
+        "postScriptName": "Inter-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 2
+      },
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "MontserratThin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 22
+      }
+    ],
+    "fontFaces": [
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "family": "Montserrat",
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "labelWeight": "600"
+  }
+]

@@ -447,6 +447,9 @@
 .dr-site .dr-dealer-symbol { display:grid; place-items:center; width:64px; height:64px; flex:none; background:#fff1f2; border-radius:50%; }
 .dr-site .dr-dealer-photo { width:64px; height:64px; border-radius:50%; object-fit:cover; }
 .dr-site .dr-dealer-copy { flex:1; min-width:0; overflow-wrap:anywhere; }
+.dr-site .dr-dealer-call { flex-shrink:0; max-width:100%; white-space:nowrap; }
+.dr-site .dr-dealer-call:hover { background:#e3e3e8; color:#111; }
+.dr-site .dr-dealer-card.dr-dealer-compact .dr-dealer-call { min-height:44px; }
 .dr-site .dr-dealer-copy small { color:#8e8e93; font-size:11px; letter-spacing:1.5px; }
 .dr-site .dr-dealer-copy h2 { font-size:26px; font-weight:800; line-height:32px; letter-spacing:-.26px; margin-top:6px; }
 .dr-site .dr-dealer-meta { display:flex; flex-wrap:wrap; gap:12px 24px; margin-top:6px; color:var(--dr-secondary); font-size:14px; }

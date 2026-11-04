@@ -1,0 +1,235 @@
+{
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "pages": [
+    {
+      "id": "207:333",
+      "name": "UI · Website Thi đua – Desktop (B)",
+      "frames": [
+        "  <frame id=\"214:233\" name=\"B01 · Trang chủ\" x=\"0\" y=\"0\" width=\"1440\" height=\"2834\">",
+        "  <frame id=\"215:322\" name=\"B02 · Bảng xếp hạng\" x=\"1600\" y=\"0\" width=\"1440\" height=\"1399\">",
+        "  <frame id=\"215:504\" name=\"B03 · Vinh danh\" x=\"3200\" y=\"0\" width=\"1440\" height=\"879\">",
+        "  <frame id=\"216:382\" name=\"B14 · Danh sách đại lý\" x=\"4800\" y=\"0\" width=\"1440\" height=\"942\">",
+        "  <frame id=\"216:562\" name=\"B15 · Trang đại lý\" x=\"6400\" y=\"0\" width=\"1440\" height=\"1205\">",
+        "  <frame id=\"216:669\" name=\"B16 · Thể lệ đầy đủ\" x=\"8000\" y=\"0\" width=\"1440\" height=\"1494\">",
+        "  <frame id=\"217:472\" name=\"B04 · Đăng nhập\" x=\"9600\" y=\"0\" width=\"1440\" height=\"816\">",
+        "  <frame id=\"217:537\" name=\"B05 · Đăng ký tài khoản\" x=\"11200\" y=\"0\" width=\"1440\" height=\"913\">",
+        "  <frame id=\"217:633\" name=\"B06 · Chờ duyệt\" x=\"12800\" y=\"0\" width=\"1440\" height=\"816\">",
+        "  <frame id=\"217:703\" name=\"B06b · Tài khoản bị từ chối\" x=\"14400\" y=\"0\" width=\"1440\" height=\"816\">",
+        "  <frame id=\"217:768\" name=\"B17 · Quên mật khẩu\" x=\"16000\" y=\"0\" width=\"1440\" height=\"816\">",
+        "  <frame id=\"218:611\" name=\"B08 · Hồ sơ &amp; khách của tôi (sales)\" x=\"17600\" y=\"0\" width=\"1440\" height=\"1073\">",
+        "  <frame id=\"219:661\" name=\"B09 · Bảng điều khiển đại lý\" x=\"19200\" y=\"0\" width=\"1440\" height=\"1075\">",
+        "  <frame id=\"219:840\" name=\"B10 · Nhân viên\" x=\"20800\" y=\"0\" width=\"1440\" height=\"858\">",
+        "  <frame id=\"220:753\" name=\"B11 · Khai báo khách\" x=\"22400\" y=\"0\" width=\"1440\" height=\"1301\">",
+        "  <frame id=\"220:915\" name=\"B12 · Đã lưu, gửi link\" x=\"24000\" y=\"0\" width=\"1440\" height=\"770\">",
+        "  <frame id=\"220:1012\" name=\"B13 · Chi tiết khách\" x=\"25600\" y=\"0\" width=\"1440\" height=\"785\">",
+        "  <frame id=\"221:1043\" name=\"Toast · Đã gửi link đặt lại tới email của bạn\" x=\"0\" y=\"1400\" width=\"293\" height=\"52\">",
+        "  <frame id=\"221:1054\" name=\"Toast · Đang mở Zalo, tin nhắn đã soạn sẵn\" x=\"0\" y=\"1480\" width=\"300\" height=\"52\">",
+        "  <frame id=\"221:1062\" name=\"Toast · Đang mở Zalo kèm link tra cứu cho khách\" x=\"0\" y=\"1560\" width=\"337\" height=\"52\">",
+        "  <frame id=\"221:1069\" name=\"Toast · Đã sao chép link mời\" x=\"0\" y=\"1640\" width=\"200\" height=\"52\">",
+        "  <frame id=\"221:1076\" name=\"Toast · Đang mở Zalo với link mời của bạn\" x=\"0\" y=\"1720\" width=\"290\" height=\"52\">",
+        "  <frame id=\"221:1083\" name=\"Toast · Đang tải QR đại lý (PDF)\" x=\"0\" y=\"1800\" width=\"222\" height=\"52\">",
+        "  <frame id=\"221:1093\" name=\"Toast · Đã duyệt Ngô Khánh Linh\" x=\"0\" y=\"1880\" width=\"232\" height=\"52\">",
+        "  <frame id=\"221:1100\" name=\"Toast · Đã từ chối, người đăng ký sẽ nhận email\" x=\"0\" y=\"1960\" width=\"329\" height=\"52\">",
+        "  <frame id=\"221:1109\" name=\"Toast · Đang tải standee QR đại lý (PDF)\" x=\"0\" y=\"2040\" width=\"280\" height=\"52\">",
+        "  <frame id=\"221:1116\" name=\"Toast · Đã khoá tài khoản Lê Minh Anh\" x=\"0\" y=\"2120\" width=\"269\" height=\"52\">",
+        "  <frame id=\"221:1126\" name=\"Toast · Đang mở Zalo với tin nhắn soạn sẵn\" x=\"0\" y=\"2200\" width=\"299\" height=\"52\">",
+        "  <frame id=\"221:1133\" name=\"Toast · Đã sao chép tin nhắn\" x=\"0\" y=\"2280\" width=\"203\" height=\"52\">",
+        "  <frame id=\"221:1145\" name=\"B00 · Mục lục prototype\" x=\"-1600\" y=\"0\" width=\"1440\" height=\"912\">",
+        "  <frame id=\"222:1629\" name=\"Tương tác · Segmented · B02\" x=\"-3200\" y=\"0\" width=\"311\" height=\"132\">",
+        "  <frame id=\"222:1693\" name=\"Tương tác · Lọc · B08\" x=\"-3200\" y=\"172\" width=\"536\" height=\"220\">",
+        "  <frame id=\"222:1752\" name=\"Tương tác · Tabs · B10\" x=\"-3200\" y=\"432\" width=\"368\" height=\"186\">",
+        "  <frame id=\"222:1819\" name=\"Tương tác · Chọn · B05\" x=\"-3200\" y=\"658\" width=\"584\" height=\"269\">",
+        "  <frame id=\"222:1884\" name=\"Tương tác · Chọn xe · B11\" x=\"-3200\" y=\"967\" width=\"744\" height=\"268\">"
+      ]
+    },
+    {
+      "id": "148:252",
+      "name": "UI · Website Thi đua – Mobile (B)",
+      "frames": [
+        "  <frame id=\"150:233\" name=\"B01 · Trang chủ\" x=\"0\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"151:303\" name=\"B02 · Bảng xếp hạng\" x=\"430\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"151:441\" name=\"B03 · Vinh danh\" x=\"860\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"152:323\" name=\"B04 · Đăng nhập\" x=\"1290\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"152:367\" name=\"B05 · Đăng ký tài khoản\" x=\"1720\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"152:444\" name=\"B06 · Chờ duyệt\" x=\"2150\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"154:375\" name=\"B07 · Menu (quản lý đại lý)\" x=\"2580\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"154:473\" name=\"B08 · Hồ sơ &amp; link mời (sales)\" x=\"3010\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"155:398\" name=\"B09 · Bảng điều khiển đại lý\" x=\"3440\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"155:557\" name=\"B10 · Nhân viên (quản lý đại lý)\" x=\"3870\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"156:423\" name=\"B11 · Khai báo khách\" x=\"4300\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"156:517\" name=\"B12 · Đã lưu, gửi link\" x=\"4730\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"156:569\" name=\"B13 · Chi tiết khách\" x=\"5160\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"157:489\" name=\"B14 · Danh sách đại lý\" x=\"5590\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"157:624\" name=\"B15 · Trang đại lý\" x=\"6020\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"157:694\" name=\"B16 · Thể lệ đầy đủ\" x=\"6450\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"158:565\" name=\"B00 · Mục lục prototype\" x=\"-430\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"172:529\" name=\"Toast · Đang mở Zalo với link mời của bạn\" x=\"-430\" y=\"1100\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:536\" name=\"Toast · Đã sao chép link mời\" x=\"-430\" y=\"1190\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:543\" name=\"Toast · Đang tải QR đại lý (PDF)\" x=\"-430\" y=\"1280\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:553\" name=\"Toast · Đang mở Zalo, tin nhắn đã soạn sẵn\" x=\"-430\" y=\"1370\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:561\" name=\"Toast · Đang mở Zalo kèm link tra cứu cho khách\" x=\"-430\" y=\"1460\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:569\" name=\"Toast · Đã duyệt Ngô Khánh Linh\" x=\"-430\" y=\"1550\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:576\" name=\"Toast · Đã từ chối, người đăng ký sẽ nhận email\" x=\"-430\" y=\"1640\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:583\" name=\"Toast · Đang tải standee QR đại lý (PDF)\" x=\"-430\" y=\"1730\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:592\" name=\"Toast · Đã khoá tài khoản Lê Minh Anh\" x=\"-430\" y=\"1820\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:599\" name=\"Toast · Đang mở Zalo với tin nhắn soạn sẵn\" x=\"-430\" y=\"1910\" width=\"340\" height=\"52\">",
+        "  <frame id=\"172:606\" name=\"Toast · Đã sao chép tin nhắn\" x=\"-430\" y=\"2000\" width=\"340\" height=\"52\">",
+        "  <frame id=\"173:540\" name=\"Tương tác · Segmented · B02\" x=\"0\" y=\"-1400\" width=\"358\" height=\"132\">",
+        "  <frame id=\"173:604\" name=\"Tương tác · Lọc · B08\" x=\"398\" y=\"-1400\" width=\"501\" height=\"204\">",
+        "  <frame id=\"173:663\" name=\"Tương tác · Tabs · B10\" x=\"939\" y=\"-1400\" width=\"358\" height=\"180\">",
+        "  <frame id=\"173:739\" name=\"Tương tác · Vai trò · B05\" x=\"1337\" y=\"-1400\" width=\"358\" height=\"486\">",
+        "  <frame id=\"205:561\" name=\"B07b · Menu (sales)\" x=\"6880\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"205:659\" name=\"B07c · Menu (khách xem)\" x=\"7310\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"205:793\" name=\"B06b · Tài khoản bị từ chối\" x=\"7740\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"205:849\" name=\"B17 · Quên mật khẩu\" x=\"8170\" y=\"0\" width=\"390\" height=\"844\">",
+        "  <frame id=\"205:918\" name=\"Toast · Đã gửi link đặt lại tới email của bạn\" x=\"-430\" y=\"1000\" width=\"340\" height=\"52\">"
+      ]
+    }
+  ],
+  "implementationFrames": [
+    "214:233",
+    "150:233",
+    "205:659"
+  ],
+  "assets": [
+    {
+      "name": "logo",
+      "nodeId": "59:233",
+      "path": "public/competition/logo.png"
+    },
+    {
+      "name": "join",
+      "nodeId": "214:270",
+      "path": "public/competition/join.png"
+    },
+    {
+      "name": "join-red",
+      "nodeId": "214:461",
+      "path": "public/competition/join-red.png"
+    },
+    {
+      "name": "dealer",
+      "nodeId": "214:279",
+      "path": "public/competition/dealer.png"
+    },
+    {
+      "name": "members",
+      "nodeId": "214:287",
+      "path": "public/competition/members.png"
+    },
+    {
+      "name": "trophy",
+      "nodeId": "214:295",
+      "path": "public/competition/trophy.png"
+    },
+    {
+      "name": "calendar",
+      "nodeId": "214:303",
+      "path": "public/competition/calendar.png"
+    },
+    {
+      "name": "winner",
+      "nodeId": "214:339",
+      "path": "public/competition/winner.png"
+    },
+    {
+      "name": "award",
+      "nodeId": "214:373",
+      "path": "public/competition/award.png"
+    },
+    {
+      "name": "plus",
+      "nodeId": "56:315",
+      "path": "public/competition/plus.png"
+    },
+    {
+      "name": "close",
+      "nodeId": "205:664",
+      "path": "public/competition/close.png"
+    },
+    {
+      "name": "nav-home",
+      "nodeId": "205:755",
+      "path": "public/competition/nav-home.png"
+    },
+    {
+      "name": "nav-ranking",
+      "nodeId": "205:762",
+      "path": "public/competition/nav-ranking.png"
+    },
+    {
+      "name": "nav-awards",
+      "nodeId": "205:768",
+      "path": "public/competition/nav-awards.png"
+    },
+    {
+      "name": "nav-dealers",
+      "nodeId": "205:775",
+      "path": "public/competition/nav-dealers.png"
+    },
+    {
+      "name": "nav-rules",
+      "nodeId": "205:783",
+      "path": "public/competition/nav-rules.png"
+    },
+    {
+      "name": "chevron",
+      "nodeId": "205:759",
+      "path": "public/competition/chevron.png"
+    },
+    {
+      "name": "menu",
+      "nodeId": "148:242",
+      "path": "public/competition/menu.png"
+    },
+    {
+      "name": "hero-desktop",
+      "nodeId": "223:1584",
+      "path": "public/competition/hero-desktop.png"
+    },
+    {
+      "name": "hero-mobile",
+      "nodeId": "150:247",
+      "path": "public/competition/hero-mobile.png",
+      "method": "Existing isolated artwork 123:342 visually matches B01 Mobile background; copied unchanged, no customer layout used."
+    }
+  ],
+  "exportMethod": "MCP isolated-node PNG base64 because outbound Figma URL downloads are blocked. No whole-page screenshot in runtime. SVG export use_figma read was rejected by automatic approval policy; PNGs retain native design dimensions.",
+  "desktop": {
+    "viewport": 1440,
+    "container": 1200,
+    "header": 72,
+    "hero": 680,
+    "sectionY": [
+      72,
+      752,
+      996,
+      1375,
+      1859,
+      2403
+    ],
+    "resultsColumns": [
+      736,
+      440
+    ],
+    "gap": 24
+  },
+  "mobile": {
+    "viewport": 390,
+    "container": 358,
+    "header": 60,
+    "hero": 780,
+    "sectionY": [
+      60,
+      840,
+      1216,
+      1765,
+      2475,
+      3265
+    ],
+    "statsColumns": 2,
+    "stepsRows": 4,
+    "rulesRows": 11,
+    "menu": "205:659"
+  }
+}

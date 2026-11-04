@@ -1,0 +1,359 @@
+/* Website Thi đua (B01). Scoped entry: other public and account pages keep their layouts. */
+/* Google Fonts variable WOFF2, local Latin and Vietnamese subsets (SIL OFL 1.1). */
+@font-face { font-family:Montserrat; font-style:normal; font-weight:600; font-display:swap; src:url('../../public/competition/fonts/montserrat-vietnamese.woff2') format('woff2'); unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB; }
+@font-face { font-family:Montserrat; font-style:normal; font-weight:700; font-display:swap; src:url('../../public/competition/fonts/montserrat-vietnamese.woff2') format('woff2'); unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB; }
+@font-face { font-family:Montserrat; font-style:normal; font-weight:600; font-display:swap; src:url('../../public/competition/fonts/montserrat-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family:Montserrat; font-style:normal; font-weight:700; font-display:swap; src:url('../../public/competition/fonts/montserrat-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+.competition-site { --wc-red:#eb0a1e; --wc-page:#f5f5f7; --wc-card:#fff; --wc-muted:#f2f2f5; --wc-border:#ededf0; --wc-text:#111; --wc-secondary:#5e5e66; --wc-light:#8e8e93; margin:0; background:var(--wc-page); color:var(--wc-text); font:15px/1.5 Inter,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+.competition-site *, .competition-site *::before, .competition-site *::after { box-sizing:border-box; }
+.competition-site :is(h1,h2,h3,p,ol,ul) { margin:0; padding:0; }
+.competition-site a { color:inherit; text-decoration:none; }
+.competition-site button { font:inherit; color:inherit; cursor:pointer; }
+.competition-site img { display:block; max-width:100%; }
+.competition-site :is(a,button,summary):focus-visible { outline:3px solid var(--wc-red); outline-offset:4px; }
+.competition-site :is(main,section):focus { outline:none; }
+.competition-site section[id],.competition-site #xep-hang { scroll-margin-top:24px; }
+.competition-site .wc-container { width:min(1200px,calc(100% - 64px)); margin-inline:auto; }
+.competition-site .wc-icon { display:inline-block; flex:none; object-fit:contain; vertical-align:middle; }
+.competition-site .wc-skip { position:fixed; top:12px; left:12px; z-index:100; padding:12px 20px; background:var(--wc-text); color:white; transform:translateY(-200%); }
+.competition-site .wc-skip:focus { transform:none; }
+.competition-site .wc-header { height:72px; background:var(--wc-card); border-bottom:1px solid var(--wc-border); position:relative; z-index:20; }
+.competition-site .wc-header-row { display:flex; height:100%; align-items:center; gap:16px; }
+.competition-site .wc-brand { display:flex; align-items:center; flex:none; gap:14px; }
+.competition-site .wc-brand>img { width:49.8315px; height:36px; object-fit:contain; }
+.competition-site .wc-brand-copy { display:flex; flex-direction:column; padding-left:14px; border-left:1px solid #e3e3e8; }
+.competition-site .wc-brand-copy strong { font-size:14px; font-weight:600; line-height:18px; }
+.competition-site .wc-brand-copy>span { font-size:12px; color:var(--wc-light); line-height:16px; }
+.competition-site .wc-desktop-nav { display:flex; align-items:center; gap:4px; margin-left:auto; }
+.competition-site .wc-desktop-nav>a { border-radius:999px; padding:8px 14px; font-size:14px; line-height:20px; font-weight:500; color:#3a3a40; }
+.competition-site .wc-desktop-nav>a[aria-current] { background:#fff1f2; color:var(--wc-red); font-weight:600; }
+.competition-site .wc-desktop-nav>a:hover { color:var(--wc-red); }
+.competition-site .wc-login { margin-left:24px; border-radius:999px; padding:11px 20px; color:white; background:var(--wc-text); font-size:14px; line-height:20px; font-weight:600; }
+.competition-site .wc-menu { display:none; }
+.competition-site .wc-button { display:inline-flex; flex:none; align-items:center; justify-content:center; gap:8px; padding:16px 28px; min-height:54px; background:var(--wc-red); color:white; border-radius:999px; font-size:16px; font-weight:600; line-height:22px; text-align:center; transition:background .15s; }
+.competition-site .wc-button:hover { background:#c9081b; }
+.competition-site .wc-button-glass { background:#ffffff1a; border:1px solid #ffffff4d; }
+.competition-site .wc-button-glass:hover { background:#ffffff30; }
+.competition-site .wc-button-secondary { background:white; color:var(--wc-text); border:1px solid var(--wc-border); }
+.competition-site .wc-button-secondary:hover { background:var(--wc-muted); }
+.competition-site .wc-button-dark { background:#2f2e2c; }
+.competition-site .wc-button-dark:hover { background:var(--wc-text); }
+.competition-site .wc-hero { height:680px; display:flex; align-items:center; position:relative; background:#0a0d12; color:white; }
+.competition-site .wc-hero-art { position:absolute; inset:0; overflow:hidden; }
+.competition-site .wc-hero-art>img { width:100%; height:100%; object-fit:cover; object-position:center; }
+.competition-site .wc-hero-copy { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:24px; width:600px; max-width:100%; }
+.competition-site .wc-hero-label { display:flex; align-items:center; gap:12px; font:600 14px/18px Montserrat,Inter,sans-serif; letter-spacing:3.36px; }
+.competition-site .wc-hero-label::before { content:''; width:28px; height:3px; flex:none; background:var(--wc-red); }
+.competition-site .wc-hero h1 { font:700 48px/56px Montserrat,Inter,sans-serif; letter-spacing:-.96px; text-transform:uppercase; color:transparent; background:linear-gradient(white,#bfc4d1); background-clip:text; }
+/* Vietnamese stacked accents extend above the font's line box (measured 8.65px
+   at 48px, 4.23px at 26px). Expand the gradient paint box, not the line-height.
+   Matching negative margins preserve flex spacing, text baselines and CTA position. */
+.competition-site .wc-hero h1 { padding-block:.25em; margin-block:-.25em; }
+.competition-site .wc-hero-description { font-size:19px; line-height:29px; color:#ffffffcc; }
+.competition-site .wc-hero-actions { display:flex; align-items:flex-start; gap:12px; }
+.competition-site .wc-hero-note { font-size:14px; line-height:20px; color:#ffffff99; }
+.competition-site .wc-mobile-text,.competition-site .wc-mobile-break { display:none; }
+.competition-site .wc-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; padding-top:48px; }
+.competition-site .wc-stat { display:flex; flex-direction:column; align-items:flex-start; gap:12px; padding:24px; min-height:196px; border-radius:24px; background:var(--wc-card); min-width:0; overflow-wrap:anywhere; }
+.competition-site a.wc-stat:hover { box-shadow:0 0 0 1px #e3e3e8; }
+.competition-site .wc-stat-icon { width:40px; height:40px; border-radius:50%; background:#fde6e8; display:grid; place-items:center; flex:none; }
+.competition-site .wc-stat>strong { font:700 40px/44px Montserrat,Inter,sans-serif; letter-spacing:-.6px; color:var(--wc-red); }
+.competition-site .wc-stat>strong.wc-stat-pending { font-size:22px; line-height:28px; letter-spacing:-.33px; color:var(--wc-text); }
+.competition-site .wc-stat>span:last-child { font-size:14px; line-height:20px; color:var(--wc-secondary); }
+.competition-site .wc-section { padding-top:80px; }
+.competition-site .wc-heading p { color:var(--wc-red); font-size:13px; line-height:18px; font-weight:600; letter-spacing:1.56px; margin-bottom:8px; }
+.competition-site .wc-heading h2 { font-size:36px; line-height:42px; font-weight:800; letter-spacing:-.72px; }
+.competition-site .wc-steps { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:24px; }
+.competition-site .wc-step { padding:28px 24px; border-radius:24px; background:var(--wc-card); min-width:0; }
+.competition-site .wc-step>span { display:block; font:700 36px/40px Montserrat,Inter,sans-serif; letter-spacing:-.72px; color:var(--wc-red); margin-bottom:12px; }
+.competition-site .wc-step h3 { font-size:18px; line-height:24px; font-weight:600; margin-bottom:12px; }
+.competition-site .wc-step p { color:var(--wc-secondary); font-size:14px; line-height:21px; }
+.competition-site .wc-results { display:grid; grid-template-columns:minmax(0,736fr) minmax(0,440fr); gap:24px; align-items:stretch; }
+.competition-site .wc-ranking { min-width:0; }
+.competition-site .wc-ranking-list { list-style:none; padding:10px; margin-top:20px; border-radius:28px; background:var(--wc-card); min-height:248px; }
+.competition-site .wc-ranking-list li { display:flex; align-items:center; gap:16px; padding:16px; min-height:76px; border-radius:18px; }
+.competition-site .wc-ranking-list li:first-child:not(.wc-empty) { background:#fff1f2; }
+.competition-site .wc-rank { display:grid; place-items:center; width:44px; height:44px; flex:none; background:var(--wc-muted); color:var(--wc-secondary); border-radius:50%; font:700 16px/20px Montserrat,Inter,sans-serif; }
+.competition-site .wc-ranking-list li:first-child .wc-rank { background:var(--wc-red); }
+.competition-site .wc-ranking-name { flex:1; min-width:0; }
+.competition-site .wc-ranking-name a { display:block; font-size:16px; line-height:22px; font-weight:600; overflow-wrap:anywhere; }
+.competition-site .wc-ranking-name a:hover { text-decoration:underline; }
+.competition-site .wc-ranking-name p { margin-top:2px; color:var(--wc-light); font-size:12px; line-height:18px; }
+.competition-site .wc-points { display:flex; align-items:baseline; gap:4px; flex:none; }
+.competition-site .wc-points strong { font:700 22px/30px Montserrat,Inter,sans-serif; }
+.competition-site .wc-ranking-list li:first-child .wc-points strong { color:var(--wc-red); font-size:28px; }
+.competition-site .wc-points>span { font-size:14px; line-height:22px; color:var(--wc-light); }
+.competition-site .wc-ranking-list .wc-empty { min-height:228px; color:var(--wc-secondary); justify-content:center; text-align:center; }
+.competition-site .wc-ranking-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:20px; }
+.competition-site .wc-ranking-footer>p { font-size:13px; line-height:18px; color:var(--wc-light); }
+.competition-site .wc-ranking-footer .wc-button { min-height:48px; padding:12px 28px; font-size:14px; border-color:#e3e3e8; }
+.competition-site .wc-award { display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; overflow:hidden; gap:16px; padding:48px 40px; background:radial-gradient(ellipse 300px 300px at 90% -5%,#63141d 0%,transparent 100%),#1c1c1e; border-radius:28px; color:white; min-height:404px; text-align:center; }
+.competition-site .wc-award-icon { display:grid; place-items:center; width:80px; height:80px; flex:none; border-radius:50%; background:#ffffff14; }
+.competition-site .wc-award h2 { font:700 24px/30px Montserrat,Inter,sans-serif; letter-spacing:-.24px; }
+.competition-site .wc-award>p { color:#ffffff99; font-size:15px; line-height:22px; }
+.competition-site .wc-award-published ul { width:100%; list-style:none; text-align:left; }
+.competition-site .wc-award-published li { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; padding:8px 0; border-bottom:1px solid #ffffff26; overflow-wrap:anywhere; }
+.competition-site .wc-award-published li>span { flex:1; min-width:0; }
+.competition-site .wc-rules-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+.competition-site .wc-rules-heading>a { color:var(--wc-red); font-size:15px; font-weight:600; line-height:20px; }
+.competition-site .wc-rules-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; margin-top:24px; }
+.competition-site .wc-accordion { background:var(--wc-card); border-radius:24px; overflow:hidden; }
+.competition-site .wc-accordion details { border-bottom:1px solid var(--wc-border); }
+.competition-site .wc-accordion summary { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:61px; padding:16px 18px; cursor:pointer; list-style:none; font-size:15px; line-height:21px; font-weight:600; }
+.competition-site summary::-webkit-details-marker { display:none; }
+.competition-site .wc-accordion-toggle { display:grid; place-items:center; width:28px; height:28px; flex:none; border-radius:50%; background:var(--wc-muted); }
+.competition-site .wc-accordion details[open] .wc-accordion-toggle { transform:rotate(45deg); }
+.competition-site .wc-accordion-answer { padding:0 18px 18px; color:var(--wc-secondary); font-size:14px; line-height:22px; }
+.competition-site .wc-accordion-answer a { display:inline-block; margin-top:12px; color:var(--wc-red); text-decoration:underline; }
+.competition-site .wc-join { padding-bottom:100px; }
+.competition-site .wc-join-card { display:flex; align-items:center; gap:24px; padding:48px 56px; background:linear-gradient(164.291deg,#f2293a 0%,#b8000f 76.923%); border-radius:32px; color:white; }
+.competition-site .wc-join h2 { flex:1; font:700 32px/38px Montserrat,Inter,sans-serif; letter-spacing:-.32px; }
+.competition-site .wc-button-white { background:white; color:#c4101f; }
+.competition-site .wc-button-white:hover { background:#fde6e8; }
+.competition-site .wc-footer { background:white; border-top:1px solid var(--wc-border); padding-block:32px; }
+.competition-site .wc-footer-row { display:flex; align-items:center; gap:24px; font-size:13px; line-height:18px; }
+.competition-site .wc-footer-row>p { flex:1; color:var(--wc-secondary); }
+.competition-site .wc-footer-row>span { color:var(--wc-light); }
+
+@media (max-width:1199px) {
+    .competition-site .wc-header { height:60px; }
+    .competition-site .wc-header-row { gap:12px; }
+    .competition-site .wc-brand { margin-right:auto; gap:12px; }
+    .competition-site .wc-brand-copy { padding-left:12px; }
+    .competition-site .wc-brand-copy strong { font-size:13px; line-height:17px; }
+    .competition-site .wc-brand-copy>span { font-size:11px; line-height:14px; }
+    .competition-site .wc-desktop-nav,.competition-site .wc-login { display:none; }
+    .competition-site .wc-menu { display:block; }
+    .competition-site .wc-menu>summary { position:relative; z-index:32; display:grid; place-items:center; width:40px; height:40px; border-radius:50%; background:var(--wc-muted); cursor:pointer; list-style:none; }
+    .competition-site .wc-menu-close { display:none; }
+    .competition-site .wc-menu[open]>summary>.wc-icon { display:none; }
+    .competition-site .wc-menu[open] .wc-menu-close { display:block; }
+    .competition-site .wc-menu[open]::before { content:''; position:fixed; inset:0; background:white; z-index:30; }
+    .competition-site .wc-menu[open]>summary { position:fixed; top:10px; right:12px; }
+    .competition-site .wc-menu-logo { position:fixed; top:12px; left:16px; width:49.8315px; height:36px; }
+    .competition-site .wc-mobile-panel { position:fixed; inset:60px 0 0; z-index:31; padding:16px 12px; background:white; overflow-y:auto; }
+    .competition-site .wc-mobile-panel>a { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; margin-bottom:2px; padding:12px 14px; border-radius:14px; font-size:15px; line-height:20px; }
+    .competition-site .wc-mobile-panel>a[aria-current] { background:var(--wc-page); font-weight:600; }
+    .competition-site .wc-mobile-panel>a>span { flex:1; }
+    .competition-site .wc-mobile-account { padding:22px 12px 24px; }
+    .competition-site .wc-mobile-account .wc-button { display:flex; width:100%; min-height:52px; padding:15px 20px; }
+    .competition-site .wc-mobile-account p { font-size:13px; line-height:18px; color:var(--wc-light); text-align:center; margin-top:12px; }
+    .competition-site .wc-logout { display:block; border:0; padding:16px; width:100%; background:white; text-align:center; }
+    .competition-site.wc-menu-open { overflow:hidden; }
+    .competition-site .wc-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .competition-site .wc-results { grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); }
+    .competition-site .wc-heading h2 { font-size:30px; line-height:36px; }
+    .competition-site .wc-ranking-footer { align-items:flex-start; flex-direction:column; }
+    .competition-site .wc-ranking-footer .wc-button { width:100%; }
+    .competition-site .wc-award { padding-inline:24px; }
+    .competition-site .wc-join-card { padding:32px; }
+    .competition-site .wc-join h2 { font-size:26px; line-height:32px; }
+}
+
+@media (max-width:767px) {
+    .competition-site .wc-container { width:calc(100% - 32px); }
+    .competition-site .wc-header-row { width:auto; margin-left:16px; margin-right:12px; }
+    .competition-site .wc-hero { height:780px; align-items:flex-start; padding:28px 0; }
+    .competition-site .wc-hero>.wc-container { width:calc(100% - 40px); }
+    .competition-site .wc-hero-copy { gap:14px; width:100%; }
+    .competition-site .wc-hero-label { gap:10px; font-size:12px; line-height:16px; letter-spacing:2.88px; color:#ffffffe6; }
+    .competition-site .wc-hero-label::before { width:22px; }
+    .competition-site .wc-hero h1 { font-size:26px; line-height:32px; letter-spacing:-.26px; background-image:linear-gradient(white,#c7ccd6); filter:drop-shadow(0 2px 12px #00000059); }
+    .competition-site .wc-hero-description { font-size:15px; line-height:22px; color:#ffffffd9; }
+    .competition-site .wc-hero-actions { gap:10px; width:100%; padding-top:6px; }
+    .competition-site .wc-hero-actions .wc-button { min-height:52px; padding:15px 18px; }
+    .competition-site .wc-hero-actions .wc-button:first-child { flex:1; min-width:0; }
+    .competition-site .wc-hero-actions .wc-icon { display:none; }
+    .competition-site .wc-hero-actions .wc-button-glass { width:140px; backdrop-filter:blur(8px); border-color:#ffffff59; background:#ffffff24; }
+    .competition-site .wc-hero-note { font-size:13px; line-height:18px; color:white; }
+    .competition-site .wc-desktop-text { display:none; }
+    .competition-site .wc-mobile-text,.competition-site .wc-mobile-break { display:block; }
+    .competition-site .wc-stats { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding-top:24px; }
+    .competition-site .wc-stat { min-height:162px; padding:18px 16px; border-radius:22px; gap:10px; }
+    .competition-site .wc-stat:nth-child(n+3) { min-height:180px; }
+    .competition-site .wc-stat-icon { width:36px; height:36px; }
+    .competition-site .wc-stat-icon .wc-icon { width:18px; height:18px; }
+    .competition-site .wc-stat>strong { font-size:30px; line-height:34px; letter-spacing:-.3px; }
+    .competition-site .wc-stat>strong.wc-stat-pending { font-size:17px; line-height:22px; letter-spacing:-.17px; }
+    .competition-site .wc-stat>span:last-child { font-size:13px; line-height:18px; }
+    .competition-site .wc-award-note { display:block; }
+    .competition-site .wc-section { padding-top:40px; }
+    .competition-site .wc-heading { padding-inline:4px; }
+    .competition-site .wc-heading p { font-size:12px; line-height:16px; letter-spacing:1.44px; margin-bottom:6px; }
+    .competition-site .wc-heading h2 { font-size:24px; line-height:30px; letter-spacing:-.36px; }
+    .competition-site .wc-steps { display:block; padding:8px 20px; background:white; border-radius:24px; margin-top:16px; }
+    .competition-site .wc-step { display:flex; align-items:flex-start; gap:16px; padding:16px 0; border-radius:0; }
+    .competition-site .wc-step+.wc-step { border-top:1px solid var(--wc-border); }
+    .competition-site .wc-step>span { font-size:26px; line-height:30px; letter-spacing:-.52px; margin:0; flex:none; }
+    .competition-site .wc-step>div { flex:1; min-width:0; }
+    .competition-site .wc-step h3 { font-size:16px; line-height:22px; margin-bottom:4px; }
+    .competition-site .wc-step p { line-height:20px; }
+    .competition-site .wc-results { display:flex; flex-direction:column; gap:40px; }
+    .competition-site .wc-ranking-list { padding:8px; margin-top:16px; min-height:238px; border-radius:24px; }
+    .competition-site .wc-ranking-list li { padding:14px 12px; min-height:66px; gap:14px; border-radius:16px; }
+    .competition-site .wc-ranking-list li:first-child { min-height:70px; }
+    .competition-site .wc-rank { width:36px; height:36px; font-size:14px; }
+    .competition-site .wc-rank .wc-icon { width:18px; height:18px; }
+    .competition-site .wc-ranking-name a { font-size:14px; line-height:20px; }
+    .competition-site .wc-ranking-name p { font-size:11px; line-height:16px; }
+    .competition-site .wc-points { flex-direction:column; align-items:flex-end; gap:0; }
+    .competition-site .wc-points strong { font-size:20px; line-height:22px; }
+    .competition-site .wc-ranking-list li:first-child .wc-points strong { font-size:24px; line-height:26px; }
+    .competition-site .wc-points>span { font-size:11px; line-height:16px; }
+    .competition-site .wc-ranking-list .wc-empty { min-height:222px; }
+    .competition-site .wc-ranking-footer { margin-top:16px; gap:16px; }
+    .competition-site .wc-ranking-footer>p { font-size:11px; line-height:16px; }
+    .competition-site .wc-ranking-footer .wc-button { min-height:52px; font-size:16px; line-height:20px; border:1.5px solid #c7c7cc; padding:14px 20px; }
+    .competition-site .wc-award { min-height:224px; padding:32px 24px; gap:12px; border-radius:24px; background:#1c1c1e; }
+    .competition-site .wc-award-icon { width:64px; height:64px; }
+    .competition-site .wc-award-icon .wc-icon { width:28px; height:28px; }
+    .competition-site .wc-award h2 { font-size:20px; line-height:26px; letter-spacing:-.2px; }
+    .competition-site .wc-award>p { font-size:14px; line-height:20px; }
+    .competition-site .wc-rules-heading>a { display:none; }
+    .competition-site .wc-rules-columns { display:block; margin-top:16px; }
+    .competition-site .wc-accordion { border-radius:24px 24px 0 0; }
+    .competition-site .wc-accordion+.wc-accordion { border-radius:0 0 24px 24px; }
+    .competition-site .wc-join { padding-bottom:0; }
+    .competition-site .wc-join-card { flex-direction:column; gap:18px; padding:28px 24px; border-radius:24px; background:linear-gradient(153.052deg,#f2293a 0%,#b8000f 71.429%); }
+    .competition-site .wc-join h2 { width:100%; font-size:22px; line-height:28px; letter-spacing:-.22px; }
+    .competition-site .wc-join .wc-button { width:100%; min-height:52px; padding:14px 20px; border:1.5px solid #c7c7cc; color:var(--wc-text); }
+    .competition-site .wc-join .wc-icon { display:none; }
+    .competition-site .wc-footer { border:0; background:var(--wc-page); padding:32px 0 40px; }
+    .competition-site .wc-footer-row { justify-content:center; font-size:12px; line-height:16px; text-align:center; }
+    .competition-site .wc-footer-row>p { flex:none; max-width:300px; color:var(--wc-light); }
+    .competition-site .wc-footer-row>:not(p) { display:none; }
+}
+@media (max-width:359px) {
+    .competition-site .wc-hero-label { font-size:10px; letter-spacing:2px; }
+    .competition-site .wc-hero h1 { font-size:23px; }
+    .competition-site .wc-hero-actions .wc-button { font-size:14px; padding-inline:12px; }
+    .competition-site .wc-hero-actions .wc-button-glass { width:110px; }
+}
+@media (prefers-reduced-motion:reduce) { .competition-site * { transition:none!important; } }
+
+/* B02: data and pagination remain owned by the existing leaderboard controller. */
+.competition-site .wc-leaderboard { padding-bottom:100px; }
+.competition-site .wc-lb-intro { padding-top:48px; }
+.competition-site .wc-lb-heading-row { display:flex; align-items:flex-end; gap:24px; }
+.competition-site .wc-lb-heading { flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; }
+.competition-site .wc-lb-eyebrow { font-size:13px; font-weight:600; line-height:18px; letter-spacing:1.56px; color:var(--wc-red); }
+.competition-site .wc-lb-heading h1 { font-size:40px; font-weight:800; line-height:46px; letter-spacing:-.8px; }
+.competition-site .wc-lb-description { font-size:16px; line-height:24px; color:var(--wc-secondary); }
+.competition-site .wc-lb-periods { display:flex; gap:4px; padding:4px; border-radius:999px; background:#e9e9ee; flex:none; }
+.competition-site .wc-lb-periods a { padding:10px 20px; border-radius:999px; font-size:14px; font-weight:500; line-height:20px; color:var(--wc-secondary); text-align:center; }
+.competition-site .wc-lb-periods a[aria-current] { background:white; color:var(--wc-text); font-weight:600; }
+.competition-site .wc-lb-periods a:hover { color:var(--wc-text); }
+.competition-site .wc-lb-meta { display:flex; flex-wrap:wrap; gap:6px 24px; margin-top:20px; font-size:14px; font-weight:500; line-height:20px; color:var(--wc-secondary); }
+.competition-site .wc-lb-meta p { display:flex; align-items:flex-start; gap:8px; min-width:0; }
+.competition-site .wc-lb-meta img { flex:none; margin-top:2px; }
+.competition-site .wc-lb-standings { padding-top:28px; }
+.competition-site .wc-lb-podium { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; align-items:end; }
+.competition-site .wc-lb-card { display:flex; flex-direction:column; gap:16px; padding:28px; border-radius:28px; background:var(--wc-card); position:relative; overflow:hidden; min-width:0; overflow-wrap:anywhere; }
+.competition-site .wc-lb-place-1 { grid-column:2; grid-row:1; padding-top:44px; color:white; background:linear-gradient(142.1998deg,#f2293a 0%,#b8000f 71.429%); }
+.competition-site .wc-lb-place-2 { grid-column:1; grid-row:1; }
+.competition-site .wc-lb-place-3 { grid-column:3; grid-row:1; }
+.competition-site .wc-lb-card>:not(.wc-lb-watermark) { position:relative; }
+.competition-site .wc-lb-medal { width:48px; height:48px; flex:none; display:grid; place-items:center; border-radius:50%; background:#2f2e2c; }
+.competition-site .wc-lb-place-1 .wc-lb-medal { background:white; }
+.competition-site .wc-lb-place-3 .wc-lb-medal { background:#c7c7cc; }
+.competition-site .wc-lb-place { font-size:12px; font-weight:600; line-height:16px; letter-spacing:1.44px; text-transform:uppercase; color:#111111b3; }
+.competition-site .wc-lb-dealer-name { font-size:20px; font-weight:700; line-height:26px; letter-spacing:-.1px; }
+.competition-site .wc-lb-dealer-code { font-size:13px; line-height:18px; color:#111111b3; }
+.competition-site .wc-lb-place-1 :is(.wc-lb-place,.wc-lb-dealer-code) { color:#ffffffb3; }
+.competition-site .wc-lb-points { display:flex; align-items:flex-end; flex-wrap:wrap; gap:6px; max-width:100%; }
+.competition-site .wc-lb-points strong { font:700 40px/44px Montserrat,Inter,sans-serif; letter-spacing:-.8px; overflow-wrap:anywhere; min-width:0; }
+.competition-site .wc-lb-place-1 .wc-lb-points strong { font-size:56px; line-height:58px; letter-spacing:-1.12px; }
+.competition-site .wc-lb-points>span { font-size:14px; font-weight:500; line-height:24px; color:#111111bf; }
+.competition-site .wc-lb-place-1 .wc-lb-points>span { color:#ffffffbf; }
+.competition-site .wc-lb-watermark { position:absolute; top:-20px; left:200px; max-width:none; pointer-events:none; }
+.competition-site .wc-lb-mobile { display:none; }
+.competition-site .wc-lb-full { margin-top:40px; }
+.competition-site .wc-lb-full h2 { font-size:22px; font-weight:700; line-height:28px; letter-spacing:-.22px; margin-bottom:16px; }
+.competition-site .wc-lb-list { background:white; border-radius:28px; }
+.competition-site .wc-lb-table-head,.competition-site .wc-lb-row { display:grid; grid-template-columns:80px minmax(0,1fr) 200px 120px; gap:16px; padding-inline:28px; align-items:center; }
+.competition-site .wc-lb-table-head { border-radius:28px 28px 0 0; background:#f9f9fb; padding-block:12px; font-size:11px; font-weight:600; line-height:14px; letter-spacing:.88px; text-transform:uppercase; color:var(--wc-light); }
+.competition-site .wc-lb-table-head>span:last-child { text-align:right; }
+.competition-site .wc-lb-rows { list-style:none; }
+.competition-site .wc-lb-rows>li { border-top:1px solid var(--wc-border); }
+.competition-site .wc-lb-row { padding-block:18px; min-width:0; }
+.competition-site .wc-lb-row:hover { background:#f9f9fb; }
+.competition-site .wc-lb-rank { font:700 16px/20px Montserrat,Inter,sans-serif; color:var(--wc-light); }
+.competition-site .wc-lb-name { font-size:16px; font-weight:600; line-height:22px; overflow-wrap:anywhere; }
+.competition-site .wc-lb-code { font-size:14px; line-height:20px; color:var(--wc-secondary); overflow-wrap:anywhere; }
+.competition-site .wc-lb-score { font:700 18px/22px Montserrat,Inter,sans-serif; text-align:right; overflow-wrap:anywhere; }
+.competition-site .wc-lb-pagination { display:flex; align-items:center; gap:12px; padding:16px 28px; border-top:1px solid var(--wc-border); font-size:14px; line-height:20px; color:var(--wc-secondary); }
+.competition-site .wc-lb-pagination p { flex:1; font-weight:500; }
+.competition-site .wc-lb-pagination :is(a,span) { padding:8px 16px; border-radius:999px; background:var(--wc-page); font-weight:600; color:var(--wc-text); }
+.competition-site .wc-lb-pagination [aria-disabled] { color:#c7c7cc; }
+.competition-site .wc-lb-pagination a:hover { background:#e9e9ee; }
+.competition-site .wc-lb-empty { padding:48px 24px; border-radius:28px; background:white; text-align:center; color:var(--wc-secondary); }
+.competition-site .wc-lb-list-note { padding:24px 28px; color:var(--wc-secondary); }
+.competition-site .wc-lb-list-note a { text-decoration:underline; }
+.competition-site .wc-lb-sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media (min-width:768px) and (max-width:1199px) {
+    .competition-site .wc-lb-heading-row { align-items:flex-start; flex-direction:column; }
+    .competition-site .wc-lb-table-head,.competition-site .wc-lb-row { grid-template-columns:48px minmax(0,1fr) 130px 80px; }
+    .competition-site .wc-lb-card { padding-inline:20px; }
+}
+@media (max-width:767px) {
+    .competition-site .wc-leaderboard { padding-bottom:40px; }
+    .competition-site .wc-lb-intro { padding-top:28px; }
+    .competition-site .wc-lb-heading-row { flex-direction:column; align-items:stretch; gap:16px; }
+    .competition-site .wc-lb-heading { padding-inline:4px; gap:6px; }
+    .competition-site .wc-lb-eyebrow { font-size:12px; line-height:16px; letter-spacing:1.44px; }
+    .competition-site .wc-lb-heading h1 { font-size:24px; line-height:30px; letter-spacing:-.36px; }
+    .competition-site .wc-lb-description { font-size:14px; line-height:20px; }
+    .competition-site .wc-lb-periods a { flex:1; padding-inline:12px; }
+    .competition-site .wc-lb-periods a[aria-current] { box-shadow:0 1px 2px #00000014; }
+    .competition-site .wc-lb-meta { flex-direction:column; margin-top:16px; padding-inline:4px; font-size:13px; line-height:18px; }
+    .competition-site .wc-lb-meta p:last-child { font-weight:400; color:var(--wc-light); }
+    .competition-site .wc-lb-meta img { margin-top:1px; }
+    .competition-site .wc-lb-standings { padding-top:20px; }
+    .competition-site .wc-lb-podium { display:flex; flex-direction:column; align-items:stretch; gap:10px; }
+    .competition-site .wc-lb-card { display:grid; grid-template-columns:40px minmax(0,1fr) auto; grid-template-rows:auto auto; align-items:center; gap:2px 14px; padding:16px 18px 16px 16px; border-radius:24px; }
+    .competition-site .wc-lb-medal { width:40px; height:40px; grid-column:1; grid-row:1 / 3; }
+    .competition-site .wc-lb-place { display:none; }
+    .competition-site .wc-lb-dealer-name { grid-column:2; grid-row:1; font-size:15px; font-weight:600; line-height:20px; letter-spacing:0; }
+    .competition-site .wc-lb-dealer-code { grid-column:2; grid-row:2; font-size:12px; line-height:16px; color:var(--wc-light); }
+    .competition-site .wc-lb-points { grid-column:3; grid-row:1 / 3; flex-direction:column; align-items:flex-end; gap:0; }
+    .competition-site .wc-lb-points strong { font-size:22px; line-height:26px; letter-spacing:-.22px; }
+    .competition-site .wc-lb-points>span { font-size:12px; font-weight:400; line-height:16px; color:var(--wc-light); }
+    .competition-site .wc-lb-place-1 { padding:22px 20px; grid-template-columns:40px minmax(0,1fr) auto; grid-template-rows:40px auto auto; gap:0 10px; background:linear-gradient(157.8133deg,#f2293a 0%,#b8000f 71.429%); }
+    .competition-site .wc-lb-place-1 .wc-lb-medal { grid-row:1; }
+    .competition-site .wc-lb-place-1 .wc-lb-place { display:block; grid-column:2 / 4; grid-row:1; color:#ffffffcc; }
+    .competition-site .wc-lb-place-1 .wc-lb-dealer-name { grid-column:1 / 3; grid-row:2; align-self:end; margin-top:16px; font-size:20px; font-weight:700; line-height:26px; }
+    .competition-site .wc-lb-place-1 .wc-lb-dealer-code { grid-column:1 / 3; grid-row:3; padding-top:2px; font-size:13px; line-height:18px; color:#ffffffbf; }
+    .competition-site .wc-lb-place-1 .wc-lb-points { grid-row:2 / 4; flex-direction:row; align-items:flex-end; align-self:end; gap:4px; padding-left:2px; }
+    .competition-site .wc-lb-place-1 .wc-lb-points strong { font-size:40px; line-height:42px; letter-spacing:-.8px; }
+    .competition-site .wc-lb-place-1 .wc-lb-points>span { font-size:13px; line-height:22px; font-weight:500; color:#ffffffcc; }
+    .competition-site .wc-lb-watermark { top:-10px; left:230px; }
+    .competition-site .wc-lb-desktop { display:none; }
+    .competition-site .wc-lb-mobile { display:block; }
+    .competition-site .wc-lb-full { margin-top:32px; }
+    .competition-site .wc-lb-full h2 { font-size:18px; line-height:24px; letter-spacing:-.18px; margin-bottom:12px; }
+    .competition-site .wc-lb-list { background:none; border-radius:0; }
+    .competition-site .wc-lb-table-head { display:none; }
+    .competition-site .wc-lb-rows { padding:4px 16px; border-radius:24px; background:white; }
+    .competition-site .wc-lb-rows>li:first-child { border-top:0; }
+    .competition-site .wc-lb-row { grid-template-columns:28px minmax(0,1fr) auto; grid-template-rows:auto auto; gap:2px 12px; padding:14px 0; }
+    .competition-site .wc-lb-rank { grid-column:1; grid-row:1 / 3; font-size:15px; }
+    .competition-site .wc-lb-name { grid-column:2; grid-row:1; font-size:15px; line-height:20px; font-weight:500; }
+    .competition-site .wc-lb-code { grid-column:2; grid-row:2; font-size:12px; line-height:16px; color:var(--wc-light); }
+    .competition-site .wc-lb-score { grid-column:3; grid-row:1 / 3; font-size:16px; line-height:20px; }
+    .competition-site .wc-lb-pagination { padding:16px 0 0; gap:8px; border:0; }
+    .competition-site .wc-lb-pagination p { order:2; text-align:center; }
+    .competition-site .wc-lb-prev { order:1; }
+    .competition-site .wc-lb-next { order:3; }
+    .competition-site .wc-lb-pagination :is(a,span) { background:white; padding-block:10px; }
+    .competition-site .wc-lb-list-note { background:white; border-radius:24px; }
+    /* Large real scores get a separate row so dealer names keep readable width. */
+    .competition-site .wc-lb-wide-score :is(.wc-lb-dealer-name,.wc-lb-dealer-code) { grid-column:2 / 4; }
+    .competition-site .wc-lb-wide-score .wc-lb-points { grid-column:2 / 4; grid-row:3; flex-direction:row; gap:4px; margin-top:8px; }
+    .competition-site .wc-lb-place-1.wc-lb-wide-score :is(.wc-lb-dealer-name,.wc-lb-dealer-code) { grid-column:1 / 4; }
+    .competition-site .wc-lb-place-1.wc-lb-wide-score .wc-lb-points { grid-column:1 / 4; grid-row:4; margin-top:12px; justify-content:flex-end; }
+}
+@media (max-width:359px) {
+    .competition-site .wc-lb-place-1 .wc-lb-points { grid-column:1 / 4; grid-row:4; margin-top:12px; justify-content:flex-end; }
+    .competition-site .wc-lb-place-1 :is(.wc-lb-dealer-name,.wc-lb-dealer-code) { grid-column:1 / 4; }
+    .competition-site .wc-lb-pagination :is(a,span) { padding-inline:12px; }
+}

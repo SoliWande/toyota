@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\CustomerSubmission;
 use App\Models\User;
+use App\Services\ToyotaRealisticDemo;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -68,10 +69,16 @@ class PublicLeaderboardTest extends TestCase
         DB::enableQueryLog();
         DB::flushQueryLog();
         $this->get(route('leaderboard', ['period' => 'all']))->assertOk();
-        $this->assertCount(2, DB::getQueryLog());
+        $queries = collect(DB::getQueryLog());
+        $ownership = $queries->filter(fn ($query) => str_contains($query['query'], '`users`') && in_array(ToyotaRealisticDemo::EMAIL, $query['bindings'], true));
+        $this->assertCount(1, $ownership);
+        $this->assertCount(2, $queries->diffKeys($ownership));
         DB::flushQueryLog();
         $this->get(route('leaderboard', ['period' => 'all', 'dealers_page' => 2]))->assertOk();
-        $this->assertCount(3, DB::getQueryLog());
+        $queries = collect(DB::getQueryLog());
+        $ownership = $queries->filter(fn ($query) => str_contains($query['query'], '`users`') && in_array(ToyotaRealisticDemo::EMAIL, $query['bindings'], true));
+        $this->assertCount(2, $ownership);
+        $this->assertCount(3, $queries->diffKeys($ownership));
         DB::disableQueryLog();
     }
 

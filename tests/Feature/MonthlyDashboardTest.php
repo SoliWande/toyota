@@ -85,7 +85,9 @@ class MonthlyDashboardTest extends TestCase
             'address_line' => 'Địa chỉ kiểm thử', 'province_code' => '79', 'ward_code' => '26734',
             'consented_at' => now(), 'consent_version' => config('dealer.consent_version')];
         CustomerSubmission::factory()->approved()->create($registration);
-        CustomerSubmission::factory()->create($registration);
+        // A second real registration must have a distinct identity; approved and
+        // pending submissions intentionally occupy the normalized phone together.
+        CustomerSubmission::factory()->create(array_replace($registration, ['phone_normalized' => '0901234568']));
         $service = app(LeaderboardService::class);
         $this->assertTrue($service->sales(LeaderboardPeriod::Month)->get()->isEmpty());
         $this->assertSame(1, (int) $service->dealers(LeaderboardPeriod::Month)->sole()->score);

@@ -1,0 +1,312 @@
+[
+  {
+    "width": 390,
+    "weight": "700",
+    "labelWeight": "600",
+    "lineHeight": "32px",
+    "heroHeight": 780,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "widths": {
+      "600": 1231.3917236328125,
+      "700": 1239.6956787109375
+    },
+    "fonts": [
+      {
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "fontRequests": [
+      "http://127.0.0.1:8771/dealer-registration/inter-latin.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-latin-l_AIctKy.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-latin-ext.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-vietnamese.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-vietnamese-k7S-YeeD.woff2"
+    ],
+    "actualFonts": {
+      ".wc-hero h1": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 31
+        }
+      ],
+      ".wc-hero-label": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "failures": []
+  },
+  {
+    "width": 768,
+    "weight": "700",
+    "labelWeight": "600",
+    "lineHeight": "56px",
+    "heroHeight": 680,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "widths": {
+      "600": 1231.3917236328125,
+      "700": 1239.6956787109375
+    },
+    "fonts": [
+      {
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "fontRequests": [
+      "http://127.0.0.1:8771/dealer-registration/inter-latin.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-latin-l_AIctKy.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-latin-ext.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-vietnamese.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-vietnamese-k7S-YeeD.woff2"
+    ],
+    "actualFonts": {
+      ".wc-hero h1": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 31
+        }
+      ],
+      ".wc-hero-label": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "failures": []
+  },
+  {
+    "width": 1024,
+    "weight": "700",
+    "labelWeight": "600",
+    "lineHeight": "56px",
+    "heroHeight": 680,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "widths": {
+      "600": 1231.3917236328125,
+      "700": 1239.6956787109375
+    },
+    "fonts": [
+      {
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "fontRequests": [
+      "http://127.0.0.1:8771/dealer-registration/inter-latin.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-latin-l_AIctKy.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-latin-ext.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-vietnamese.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-vietnamese-k7S-YeeD.woff2"
+    ],
+    "actualFonts": {
+      ".wc-hero h1": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 31
+        }
+      ],
+      ".wc-hero-label": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "failures": []
+  },
+  {
+    "width": 1440,
+    "weight": "700",
+    "labelWeight": "600",
+    "lineHeight": "56px",
+    "heroHeight": 680,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "widths": {
+      "600": 1231.3917236328125,
+      "700": 1239.6956787109375
+    },
+    "fonts": [
+      {
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "fontRequests": [
+      "http://127.0.0.1:8771/dealer-registration/inter-latin.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-latin-l_AIctKy.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-latin-ext.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-vietnamese.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-vietnamese-k7S-YeeD.woff2"
+    ],
+    "actualFonts": {
+      ".wc-hero h1": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 31
+        }
+      ],
+      ".wc-hero-label": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "failures": []
+  },
+  {
+    "width": 1920,
+    "weight": "700",
+    "labelWeight": "600",
+    "lineHeight": "56px",
+    "heroHeight": 680,
+    "inkAboveBox": 0,
+    "inkBelowBox": 0,
+    "overflow": false,
+    "widths": {
+      "600": 1231.3917236328125,
+      "700": 1239.6956787109375
+    },
+    "fonts": [
+      {
+        "weight": "700",
+        "status": "unloaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      },
+      {
+        "weight": "600",
+        "status": "loaded"
+      },
+      {
+        "weight": "700",
+        "status": "loaded"
+      }
+    ],
+    "fontRequests": [
+      "http://127.0.0.1:8771/dealer-registration/inter-latin.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-latin-l_AIctKy.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-latin-ext.woff2",
+      "http://127.0.0.1:8771/dealer-registration/inter-vietnamese.woff2",
+      "http://127.0.0.1:8771/build/assets/montserrat-vietnamese-k7S-YeeD.woff2"
+    ],
+    "actualFonts": {
+      ".wc-hero h1": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 31
+        }
+      ],
+      ".wc-hero-label": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "Montserrat-Thin-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "failures": []
+  }
+]

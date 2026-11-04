@@ -190,7 +190,16 @@ class PublicPrivacyTest extends TestCase
             ->map(fn ($route) => $route->uri())->sort()->values()->all();
         $expected = ['/', 'leaderboard', 'dealers', 'dealers/{dealer}', 'awards', 'awards/{award}', 'login', 'register', 'forgot-password', 'reset-password/{token}',
             'dealers/{dealer}/qr', 'dealers/{dealer}/photo', '{slug}', '{slug}/address/wards/{province}', 'sales/{slug}', 'sales/{slug}/avatar',
-            'sanctum/csrf-cookie', '_ignition/health-check'];
+            'sanctum/csrf-cookie', '_ignition/health-check',
+            // Existing read-only campaign/registration pages. Keep an explicit
+            // allowlist: deriving it from the router would hide accidental exposure.
+            'chuong-trinh/the-le', '{slug}/registrations/lookup',
+            '{slug}/registrations/lookup/supplemented', '{slug}/registrations/step-two',
+            '{slug}/registrations/success'];
+        if (app()->environment(['local', 'testing'])) {
+            $expected[] = '_preview/dealer-registration/wards/{province}';
+            $expected[] = '_preview/dealer-registration/{screen?}';
+        }
         sort($expected);
         $this->assertSame($expected, $public);
     }

@@ -7,6 +7,7 @@ use App\Models\AwardWinner;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
+use App\Services\ToyotaRealisticDemo;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -102,7 +103,22 @@ class LandingPageTest extends TestCase
         DB::flushQueryLog();
         $this->get(route('home'))->assertOk()->assertViewMissing('topSales')
             ->assertViewHas('topDealers', fn ($items) => $items->count() === 3);
-        $this->assertCount(5, DB::getQueryLog());
+        // Five business queries remain the budget. Demo ownership verification is
+        // a separate, bounded read for each leaderboard query, not a Dealer N+1.
+        $assertBudget = function (): void {
+            [$ownership, $business] = collect(DB::getQueryLog())->partition(fn ($entry) => $entry['query'] === 'select * from `users` where `email` = ? limit 1'
+                && $entry['bindings'] === [ToyotaRealisticDemo::EMAIL]);
+            $this->assertCount(5, $business);
+            $this->assertLessThanOrEqual(2, $ownership->count());
+        };
+        $assertBudget();
+        DB::disableQueryLog();
+        CustomerSubmission::factory()->count(8)->approved()->create();
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+        $this->get(route('home'))->assertOk()
+            ->assertViewHas('topDealers', fn ($items) => $items->count() === 3);
+        $assertBudget();
         DB::disableQueryLog();
     }
 

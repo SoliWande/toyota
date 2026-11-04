@@ -1,0 +1,1415 @@
+{
+  "method": "Chrome CDP CSS.getPlatformFontsForNode, individual rendered glyphs with actual computed family/weight",
+  "glyphs": [
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "M",
+      "codepoint": "U+4D",
+      "id": "font-probe-0",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ỗ",
+      "codepoint": "U+1ED6",
+      "id": "font-probe-1",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "I",
+      "codepoint": "U+49",
+      "id": "font-probe-2",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "K",
+      "codepoint": "U+4B",
+      "id": "font-probe-3",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ế",
+      "codepoint": "U+1EBE",
+      "id": "font-probe-4",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "T",
+      "codepoint": "U+54",
+      "id": "font-probe-5",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "N",
+      "codepoint": "U+4E",
+      "id": "font-probe-6",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ố",
+      "codepoint": "U+1ED0",
+      "id": "font-probe-7",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": ".",
+      "codepoint": "U+2E",
+      "id": "font-probe-8",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ộ",
+      "codepoint": "U+1ED8",
+      "id": "font-probe-9",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "H",
+      "codepoint": "U+48",
+      "id": "font-probe-10",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "À",
+      "codepoint": "U+C0",
+      "id": "font-probe-11",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "R",
+      "codepoint": "U+52",
+      "id": "font-probe-12",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ì",
+      "codepoint": "U+CC",
+      "id": "font-probe-13",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ớ",
+      "codepoint": "U+1EDA",
+      "id": "font-probe-14",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "C",
+      "codepoint": "U+43",
+      "id": "font-probe-15",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Ộ",
+      "codepoint": "U+1ED8",
+      "id": "font-probe-16",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "N",
+      "codepoint": "U+4E",
+      "id": "font-probe-17",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "G",
+      "codepoint": "U+47",
+      "id": "font-probe-18",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Đ",
+      "codepoint": "U+110",
+      "id": "font-probe-19",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Ồ",
+      "codepoint": "U+1ED2",
+      "id": "font-probe-20",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "V",
+      "codepoint": "U+56",
+      "id": "font-probe-21",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "E",
+      "codepoint": "U+45",
+      "id": "font-probe-22",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "L",
+      "codepoint": "U+4C",
+      "id": "font-probe-23",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "O",
+      "codepoint": "U+4F",
+      "id": "font-probe-24",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Z",
+      "codepoint": "U+5A",
+      "id": "font-probe-25",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "&",
+      "codepoint": "U+26",
+      "id": "font-probe-26",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "H",
+      "codepoint": "U+48",
+      "id": "font-probe-27",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "I",
+      "codepoint": "U+49",
+      "id": "font-probe-28",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "U",
+      "codepoint": "U+55",
+      "id": "font-probe-29",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "X",
+      "codepoint": "U+58",
+      "id": "font-probe-30",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "K",
+      "codepoint": "U+4B",
+      "id": "font-probe-31",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ế",
+      "codepoint": "U+1EBF",
+      "id": "font-probe-32",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "t",
+      "codepoint": "U+74",
+      "id": "font-probe-33",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "n",
+      "codepoint": "U+6E",
+      "id": "font-probe-34",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ố",
+      "codepoint": "U+1ED1",
+      "id": "font-probe-35",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "i",
+      "codepoint": "U+69",
+      "id": "font-probe-36",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "h",
+      "codepoint": "U+68",
+      "id": "font-probe-37",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ô",
+      "codepoint": "U+F4",
+      "id": "font-probe-38",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "m",
+      "codepoint": "U+6D",
+      "id": "font-probe-39",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "a",
+      "codepoint": "U+61",
+      "id": "font-probe-40",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "y",
+      "codepoint": "U+79",
+      "id": "font-probe-41",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": ".",
+      "codepoint": "U+2E",
+      "id": "font-probe-42",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "T",
+      "codepoint": "U+54",
+      "id": "font-probe-43",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ạ",
+      "codepoint": "U+1EA1",
+      "id": "font-probe-44",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "o",
+      "codepoint": "U+6F",
+      "id": "font-probe-45",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ê",
+      "codepoint": "U+EA",
+      "id": "font-probe-46",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "d",
+      "codepoint": "U+64",
+      "id": "font-probe-47",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "ấ",
+      "codepoint": "U+1EA5",
+      "id": "font-probe-48",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "u",
+      "codepoint": "U+75",
+      "id": "font-probe-49",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "g",
+      "codepoint": "U+67",
+      "id": "font-probe-50",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-award h2",
+      "glyph": "à",
+      "codepoint": "U+E0",
+      "id": "font-probe-51",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "C",
+      "codepoint": "U+43",
+      "id": "font-probe-52",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ộ",
+      "codepoint": "U+1ED9",
+      "id": "font-probe-53",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "n",
+      "codepoint": "U+6E",
+      "id": "font-probe-54",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "g",
+      "codepoint": "U+67",
+      "id": "font-probe-55",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "đ",
+      "codepoint": "U+111",
+      "id": "font-probe-56",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ồ",
+      "codepoint": "U+1ED3",
+      "id": "font-probe-57",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "l",
+      "codepoint": "U+6C",
+      "id": "font-probe-58",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ớ",
+      "codepoint": "U+1EDB",
+      "id": "font-probe-59",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "h",
+      "codepoint": "U+68",
+      "id": "font-probe-60",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ơ",
+      "codepoint": "U+1A1",
+      "id": "font-probe-61",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": ".",
+      "codepoint": "U+2E",
+      "id": "font-probe-62",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "B",
+      "codepoint": "U+42",
+      "id": "font-probe-63",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ắ",
+      "codepoint": "U+1EAF",
+      "id": "font-probe-64",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "t",
+      "codepoint": "U+74",
+      "id": "font-probe-65",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ầ",
+      "codepoint": "U+1EA7",
+      "id": "font-probe-66",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "u",
+      "codepoint": "U+75",
+      "id": "font-probe-67",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ừ",
+      "codepoint": "U+1EEB",
+      "id": "font-probe-68",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ờ",
+      "codepoint": "U+1EDD",
+      "id": "font-probe-69",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "i",
+      "codepoint": "U+69",
+      "id": "font-probe-70",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "m",
+      "codepoint": "U+6D",
+      "id": "font-probe-71",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "c",
+      "codepoint": "U+63",
+      "id": "font-probe-72",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ủ",
+      "codepoint": "U+1EE7",
+      "id": "font-probe-73",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "a",
+      "codepoint": "U+61",
+      "id": "font-probe-74",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "b",
+      "codepoint": "U+62",
+      "id": "font-probe-75",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ạ",
+      "codepoint": "U+1EA1",
+      "id": "font-probe-76",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Montserrat Thin",
+          "postScriptName": "MontserratThin-Bold",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    }
+  ],
+  "fallback": [
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ộ",
+      "codepoint": "U+1ED8",
+      "id": "font-probe-9",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero h1",
+      "glyph": "Ớ",
+      "codepoint": "U+1EDA",
+      "id": "font-probe-14",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Ộ",
+      "codepoint": "U+1ED8",
+      "id": "font-probe-16",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-hero-label",
+      "glyph": "Đ",
+      "codepoint": "U+110",
+      "id": "font-probe-19",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "600",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ộ",
+      "codepoint": "U+1ED9",
+      "id": "font-probe-53",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "đ",
+      "codepoint": "U+111",
+      "id": "font-probe-56",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ớ",
+      "codepoint": "U+1EDB",
+      "id": "font-probe-59",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ơ",
+      "codepoint": "U+1A1",
+      "id": "font-probe-61",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ắ",
+      "codepoint": "U+1EAF",
+      "id": "font-probe-64",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ừ",
+      "codepoint": "U+1EEB",
+      "id": "font-probe-68",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    },
+    {
+      "selector": ".wc-join h2",
+      "glyph": "ờ",
+      "codepoint": "U+1EDD",
+      "id": "font-probe-69",
+      "requested": "Montserrat, Inter, sans-serif",
+      "weight": "700",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Bold",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "cards": [
+      {
+        "height": 54,
+        "contained": true,
+        "overlap": false,
+        "centered": false,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      },
+      {
+        "height": 44,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "cards": [
+      {
+        "height": 54,
+        "contained": true,
+        "overlap": false,
+        "centered": false,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      },
+      {
+        "height": 44,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "cards": [
+      {
+        "height": 54,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      },
+      {
+        "height": 44,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "cards": [
+      {
+        "height": 54,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      },
+      {
+        "height": 44,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "cards": [
+      {
+        "height": 54,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      },
+      {
+        "height": 44,
+        "contained": true,
+        "overlap": false,
+        "centered": true,
+        "background": "rgb(242, 242, 245)",
+        "color": "rgb(17, 17, 17)",
+        "radius": "999px"
+      }
+    ]
+  }
+]

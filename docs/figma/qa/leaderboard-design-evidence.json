@@ -1,0 +1,148 @@
+{
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "sessionId": "a0e79341-2b0d-4e5b-9cf0-aa9c81f16dbb",
+  "pages": [
+    {
+      "id": "207:333",
+      "name": "UI · Website Thi đua – Desktop (B)",
+      "screen": "215:322",
+      "size": [
+        1440,
+        1399
+      ],
+      "sections": {
+        "intro": "215:347",
+        "metadata": "215:358",
+        "podium": "215:369",
+        "fullRanking": "215:406",
+        "pagination": "215:489",
+        "footer": "215:496"
+      },
+      "interactions": "222:1629"
+    },
+    {
+      "id": "148:252",
+      "name": "UI · Website Thi đua – Mobile (B)",
+      "screen": "151:303",
+      "size": [
+        390,
+        844
+      ],
+      "sections": {
+        "intro": "151:315",
+        "metadata": "151:325",
+        "podium": "151:336",
+        "fullRanking": "151:377",
+        "list": "151:379",
+        "pagination": "151:435"
+      },
+      "interactions": "173:540"
+    }
+  ],
+  "states": {
+    "periods": [
+      "Tháng này",
+      "Toàn chương trình"
+    ],
+    "empty": "No separate leaderboard empty frame found in either page. Existing empty copy retained with competition tokens.",
+    "detail": "B15 is a separate dealer screen, not a leaderboard detail variant; existing dealer links preserved."
+  },
+  "references": {
+    "desktop": "screenshots/competition-leaderboard/figma-desktop.png",
+    "mobile": "screenshots/competition-leaderboard/figma-mobile.png",
+    "mobileListVisible": "screenshots/competition-leaderboard/figma-mobile-list-visible.png",
+    "limitation": "Mobile list section640px tall exported only166px visible due ancestor clipping; contentsOnly also166px. No Figma nodes changed."
+  },
+  "geometry": {
+    "desktop": {
+      "container": 1200,
+      "header": 72,
+      "title": [
+        40,
+        46
+      ],
+      "podiumOrder": [
+        2,
+        1,
+        3
+      ],
+      "cardWidths": 389.3333,
+      "firstCardHeight": 302,
+      "rankColumn": 80,
+      "codeColumn": 200,
+      "pointsColumn": 120
+    },
+    "mobile": {
+      "container": 358,
+      "header": 60,
+      "title": [
+        24,
+        30
+      ],
+      "podiumOrder": [
+        1,
+        2,
+        3
+      ],
+      "listRowSingleLine": 66,
+      "paginationButtonHeight": 40
+    }
+  },
+  "assets": [
+    {
+      "file": "public/competition/leaderboard/calendar.svg",
+      "node": "215:360 / 151:327",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "public/competition/leaderboard/info.svg",
+      "node": "215:365",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "public/competition/leaderboard/info-mobile.svg",
+      "node": "151:332",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-white-22.svg",
+      "node": "215:371 / 215:396",
+      "width": 22,
+      "height": 22
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-red-22.svg",
+      "node": "215:382",
+      "width": 22,
+      "height": 22
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-red-20.svg",
+      "node": "151:342",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-white-18.svg",
+      "node": "151:356 / 151:367",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-watermark-200.svg",
+      "node": "215:392",
+      "width": 200,
+      "height": 200
+    },
+    {
+      "file": "public/competition/leaderboard/trophy-watermark-150.svg",
+      "node": "151:338",
+      "width": 150,
+      "height": 150
+    }
+  ],
+  "dataPolicy": "Figma sample dates/names/scores/page totals are never used in runtime; only DB-disabled private reference fixtures contain samples. Runtime uses unchanged Laravel leaderboard controller/service."
+}

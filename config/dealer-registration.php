@@ -6,6 +6,9 @@ $configuredGroupUrl = trim((string) env('TOYOTA_COMMUNITY_GROUP_URL', $officialG
 
 // Other campaign values remain optional and are not replaced by demo data.
 return [
+    // Operator-confirmed verified/public numbers, keyed by Dealer slug. Empty fails closed.
+    // Demo numbers require their own explicit approval; never copy production approvals to demo.
+    'approved_call_phones' => json_decode((string) env('TOYOTA_DEALER_APPROVED_CALL_PHONES', '{}'), true) ?: [],
     'receipt_cleanup_enabled' => env('TOYOTA_RECEIPT_CLEANUP_ENABLED', false),
     'group_url' => rtrim($configuredGroupUrl, '/') === $officialGroupUrl ? $configuredGroupUrl : $officialGroupUrl,
     'group_name' => env('TOYOTA_COMMUNITY_GROUP_NAME'),

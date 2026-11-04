@@ -1,0 +1,479 @@
+{
+  "source": "Private isolated Blade/feature-test fixtures, no live authentication or production writes",
+  "results": [
+    {
+      "state": "empty",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "empty",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "empty",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "empty",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "empty",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "empty",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 106,
+            "scroll": 106
+          },
+          {
+            "width": 121,
+            "scroll": 121
+          },
+          {
+            "width": 121,
+            "scroll": 121
+          },
+          {
+            "width": 240,
+            "scroll": 240
+          },
+          {
+            "width": 240,
+            "scroll": 240
+          },
+          {
+            "width": 240,
+            "scroll": 240
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 176,
+            "scroll": 176
+          },
+          {
+            "width": 191,
+            "scroll": 191
+          },
+          {
+            "width": 191,
+            "scroll": 191
+          },
+          {
+            "width": 310,
+            "scroll": 310
+          },
+          {
+            "width": 310,
+            "scroll": 310
+          },
+          {
+            "width": 310,
+            "scroll": 310
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 153,
+            "scroll": 153
+          },
+          {
+            "width": 175,
+            "scroll": 175
+          },
+          {
+            "width": 175,
+            "scroll": 175
+          },
+          {
+            "width": 224,
+            "scroll": 224
+          },
+          {
+            "width": 224,
+            "scroll": 224
+          },
+          {
+            "width": 224,
+            "scroll": 224
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 307,
+            "scroll": 307
+          },
+          {
+            "width": 328,
+            "scroll": 328
+          },
+          {
+            "width": 328,
+            "scroll": 328
+          },
+          {
+            "width": 326,
+            "scroll": 326
+          },
+          {
+            "width": 326,
+            "scroll": 326
+          },
+          {
+            "width": 326,
+            "scroll": 326
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 481,
+            "scroll": 481
+          },
+          {
+            "width": 503,
+            "scroll": 503
+          },
+          {
+            "width": 503,
+            "scroll": 503
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "published",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": [
+          {
+            "width": 481,
+            "scroll": 481
+          },
+          {
+            "width": 503,
+            "scroll": 503
+          },
+          {
+            "width": 503,
+            "scroll": 503
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          },
+          {
+            "width": 360,
+            "scroll": 360
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "sales",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "dealer",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "admin",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 320,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 390,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 768,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 1024,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 1440,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    },
+    {
+      "state": "pending",
+      "width": 1920,
+      "geometry": {
+        "overflow": false,
+        "columns": []
+      },
+      "errors": []
+    }
+  ]
+}

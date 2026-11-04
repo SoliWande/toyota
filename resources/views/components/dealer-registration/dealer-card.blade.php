@@ -1,4 +1,5 @@
 @props(['dealer', 'compact' => false])
+@php($callPhone = app(\App\Services\DealerCallPhone::class)->forDealer($dealer))
 <section class="dr-dealer-card {{ $compact ? 'dr-dealer-compact' : '' }}" aria-label="Đại lý giới thiệu">
     @if (! $compact && $dealer->exists && $dealer->photo_path)
         <img class="dr-dealer-photo" src="{{ route('dealers.photo', $dealer->id) }}" alt="{{ $dealer->name }}" width="64" height="64" loading="lazy" data-fallback-image>
@@ -11,5 +12,5 @@
             @if ($dealer->opening_hours)<span><x-dealer-registration.icon name="clock" :size="16" />{{ $dealer->opening_hours }}</span>@endif
         </div>@endif
     </div>
-    @if ($dealer->phone)<a class="dr-button dr-button-muted" href="tel:{{ preg_replace('/[^+0-9]/', '', $dealer->phone) }}"><x-dealer-registration.icon name="phone" :size="18" /><span>Gọi đại lý</span></a>@endif
+    @if ($callPhone)<a class="dr-button dr-button-muted dr-dealer-call" href="tel:{{ $callPhone }}" aria-label="Gọi đại lý"><x-dealer-registration.icon name="phone" :size="18" /><span>Gọi đại lý</span></a>@endif
 </section>

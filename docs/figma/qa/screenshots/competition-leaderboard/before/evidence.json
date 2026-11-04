@@ -1,0 +1,26 @@
+[
+  {
+    "name": "leaderboard",
+    "width": 390,
+    "status": 200,
+    "overflow": false
+  },
+  {
+    "name": "home",
+    "width": 390,
+    "status": 200,
+    "overflow": false
+  },
+  {
+    "name": "leaderboard",
+    "width": 1440,
+    "status": 200,
+    "overflow": false
+  },
+  {
+    "name": "home",
+    "width": 1440,
+    "status": 200,
+    "overflow": false
+  }
+]

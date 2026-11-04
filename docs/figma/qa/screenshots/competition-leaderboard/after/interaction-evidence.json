@@ -1,0 +1,144 @@
+[
+  {
+    "width": 390,
+    "interaction": "Actual dealer detail click, legacy URL follows redirect",
+    "href": "http://127.0.0.1:8771/dealers/1",
+    "finalUrl": "http://toyota.test/demo-phase-2a-active"
+  },
+  {
+    "width": 390,
+    "interaction": "Keyboard period change and actual home navigation",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "weight": 600,
+    "fonts": [
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "Montserrat-Thin-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 40
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "weight": 700,
+    "fonts": [
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "Montserrat-Thin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 40
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "interaction": "Actual dealer detail click, legacy URL follows redirect",
+    "href": "http://127.0.0.1:8771/dealers/1",
+    "finalUrl": "http://toyota.test/demo-phase-2a-active"
+  },
+  {
+    "width": 1440,
+    "interaction": "Keyboard period change and actual home navigation",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "weight": 600,
+    "fonts": [
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "Montserrat-Thin-SemiBold",
+        "isCustomFont": true,
+        "glyphCount": 40
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "weight": 700,
+    "fonts": [
+      {
+        "familyName": "Montserrat Thin",
+        "postScriptName": "Montserrat-Thin-Bold",
+        "isCustomFont": true,
+        "glyphCount": 40
+      }
+    ]
+  },
+  {
+    "state": "one",
+    "width": 320,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "one",
+    "width": 390,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "one",
+    "width": 768,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "one",
+    "width": 1024,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "one",
+    "width": 1440,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "one",
+    "width": 1920,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 320,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 390,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 768,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 1024,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 1440,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  },
+  {
+    "state": "two",
+    "width": 1920,
+    "source": "DB-disabled Blade fixture",
+    "noteWithoutEmptyList": true
+  }
+]
