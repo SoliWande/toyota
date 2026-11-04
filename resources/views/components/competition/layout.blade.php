@@ -1,4 +1,4 @@
-@props(['title' => 'Thi đua cộng đồng Toyota Veloz & Hilux'])
+@props(['title' => 'Thi đua cộng đồng Toyota Veloz & Hilux', 'stickyFooter' => false])
 @php($accountUrl = auth()->check() ? route(auth()->user()->homeRoute()) : route('login'))
 <!doctype html>
 <html lang="vi">
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('dealer-registration/lookup-fonts.css') }}">
     @vite(['resources/css/competition.css', 'resources/js/competition.js'])
 </head>
-<body class="competition-site">
+<body @class(['competition-site', 'wc-sticky-footer' => $stickyFooter])>
     <a class="wc-skip" href="#noi-dung">Bỏ qua điều hướng, đến nội dung</a>
     <header class="wc-header"><div class="wc-container wc-header-row">
         <x-competition.brand />

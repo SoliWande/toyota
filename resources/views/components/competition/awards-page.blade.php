@@ -1,5 +1,5 @@
 @props(['awards', 'selectedAward' => null, 'periodType' => '', 'detail' => false])
-<x-competition.layout title="Lịch sử vinh danh · Toyota Veloz &amp; Hilux">
+<x-competition.layout title="Lịch sử vinh danh · Toyota Veloz &amp; Hilux" :sticky-footer="true">
     <div class="wc-container wc-awards">
         <header class="wc-aw-intro"><p>DẤU ẤN CỘNG ĐỒNG</p><h1>Lịch sử vinh danh</h1><p>Top 3 đại lý mỗi kỳ thi đua, công bố sau khi admin chốt kỳ.</p></header>
         @if ($awards->isNotEmpty())

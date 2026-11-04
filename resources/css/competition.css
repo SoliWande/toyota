@@ -359,6 +359,9 @@
 }
 
 /* B03 public Awards: snapshots only; all styles stay within the competition UI. */
+.competition-site.wc-sticky-footer { display:flex; flex-direction:column; min-height:100vh; min-height:100dvh; }
+.competition-site.wc-sticky-footer>main { flex:1 0 auto; }
+.competition-site.wc-sticky-footer>:is(.wc-header,.wc-footer) { flex-shrink:0; }
 .competition-site .wc-awards { padding-top:48px; padding-bottom:100px; }
 .competition-site .wc-aw-intro { display:flex; flex-direction:column; gap:8px; }
 .competition-site .wc-aw-intro>p:first-child { color:var(--wc-red); font-size:13px; font-weight:600; line-height:18px; letter-spacing:1.56px; }
