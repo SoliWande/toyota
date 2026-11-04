@@ -8,6 +8,7 @@ use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
 use App\Services\LeaderboardService;
+use App\Services\ToyotaRealisticDemo;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -106,14 +107,32 @@ class LeaderboardServiceTest extends TestCase
 
     public function test_aggregation_uses_two_queries_regardless_of_participant_count(): void
     {
-        CustomerSubmission::factory()->count(8)->approved()->create();
-        DB::enableQueryLog();
-        DB::flushQueryLog();
-        $service = app(LeaderboardService::class);
-        $this->assertCount(8, $service->salesScores()->get());
-        $this->assertCount(8, $service->dealerScores()->get());
-        $this->assertCount(2, DB::getQueryLog());
-        DB::disableQueryLog();
+        $admin = User::factory()->admin()->create();
+        foreach ([8, 16] as $count) {
+            foreach (range($count - 7, $count) as $index) {
+                CustomerSubmission::factory()->approved()->create([
+                    'reviewed_by' => $admin->id, 'license_plate' => '78A-'.(61000 + $index),
+                ]);
+            }
+            DB::enableQueryLog();
+            DB::flushQueryLog();
+            $service = app(LeaderboardService::class);
+            $this->assertCount($count, $service->salesScores()->get());
+            $this->assertCount($count, $service->dealerScores()->get());
+            $queries = collect(DB::getQueryLog());
+            DB::disableQueryLog();
+            // Demo ownership is checked once per aggregate, never per Dealer.
+            $ownership = $queries->filter(fn ($query) => $query['query'] === 'select * from `users` where `email` = ? limit 1'
+                && $query['bindings'] === [ToyotaRealisticDemo::EMAIL]);
+            $aggregates = $queries->diffKeys($ownership);
+            $this->assertCount(2, $ownership);
+            $this->assertCount(2, $aggregates);
+            $this->assertCount(4, $queries);
+            foreach ($aggregates as $query) {
+                $this->assertStringContainsString('COUNT(*) AS score', $query['query']);
+                $this->assertStringContainsString('group by', $query['query']);
+            }
+        }
     }
 
     public function test_invalid_or_partial_range_is_rejected(): void

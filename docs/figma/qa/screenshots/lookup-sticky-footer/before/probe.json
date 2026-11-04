@@ -1,0 +1,404 @@
+[
+  {
+    "state": "default",
+    "width": 390,
+    "source": "DB-disabled private Blade fixture; local production build",
+    "errors": [],
+    "failures": [],
+    "viewport": {
+      "width": 390,
+      "height": 900
+    },
+    "documentHeight": 900,
+    "overflow": false,
+    "html": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "746.5px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "body": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "746.5px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "main": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "464px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "footer": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "217.5px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "32px",
+      "paddingBottom": "110px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "bodyRect": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 746.5,
+      "top": 0,
+      "right": 390,
+      "bottom": 746.5,
+      "left": 0
+    },
+    "mainRect": {
+      "x": 0,
+      "y": 65,
+      "width": 390,
+      "height": 464,
+      "top": 65,
+      "right": 390,
+      "bottom": 529,
+      "left": 0
+    },
+    "footerRect": {
+      "x": 0,
+      "y": 529,
+      "width": 390,
+      "height": 217.5,
+      "top": 529,
+      "right": 390,
+      "bottom": 746.5,
+      "left": 0
+    },
+    "footerVisible": true,
+    "elements": {
+      ".dr-header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 65,
+        "top": 0,
+        "right": 390,
+        "bottom": 65,
+        "left": 0
+      },
+      ".dr-lookup-content": {
+        "x": 20,
+        "y": 65,
+        "width": 350,
+        "height": 464,
+        "top": 65,
+        "right": 370,
+        "bottom": 529,
+        "left": 20
+      },
+      ".dr-lookup-heading": {
+        "x": 20,
+        "y": 93,
+        "width": 350,
+        "height": 86,
+        "top": 93,
+        "right": 370,
+        "bottom": 179,
+        "left": 20
+      },
+      ".dr-lookup-form": {
+        "x": 20,
+        "y": 203,
+        "width": 350,
+        "height": 286,
+        "top": 203,
+        "right": 370,
+        "bottom": 489,
+        "left": 20
+      },
+      ".dr-lookup-result": null,
+      ".dr-d12": null,
+      ".dr-lookup-empty": null,
+      ".dr-supplement-success": null,
+      ".dr-lookup-next": null,
+      ".dr-footer": {
+        "x": 0,
+        "y": 529,
+        "width": 390,
+        "height": 217.5,
+        "top": 529,
+        "right": 390,
+        "bottom": 746.5,
+        "left": 0
+      }
+    },
+    "stylesheets": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap",
+      "http://127.0.0.1:8771/dealer-registration/lookup-fonts.css",
+      "http://127.0.0.1:8771/build/assets/dealer-registration-Dwh6UaTx.css"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-submit.svg",
+        "loaded": true
+      },
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-logo.svg",
+        "loaded": true
+      }
+    ],
+    "ctas": [
+      {
+        "text": "Tra cứu",
+        "rect": {
+          "x": 40,
+          "y": 415,
+          "width": 310,
+          "height": 54,
+          "top": 415,
+          "right": 350,
+          "bottom": 469,
+          "left": 40
+        }
+      }
+    ]
+  },
+  {
+    "state": "default",
+    "width": 1440,
+    "source": "DB-disabled private Blade fixture; local production build",
+    "errors": [],
+    "failures": [],
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "documentHeight": 900,
+    "overflow": false,
+    "html": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "564.984px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "body": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "564.984px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "main": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "392px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "footer": {
+      "display": "block",
+      "minHeight": "0px",
+      "height": "100.984px",
+      "flexDirection": "row",
+      "flexGrow": "0",
+      "flexShrink": "1",
+      "flexBasis": "auto",
+      "marginTop": "0px",
+      "marginBottom": "0px",
+      "paddingTop": "32px",
+      "paddingBottom": "32px",
+      "position": "static",
+      "overflow": "visible",
+      "boxSizing": "border-box"
+    },
+    "bodyRect": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 564.984375,
+      "top": 0,
+      "right": 1440,
+      "bottom": 564.984375,
+      "left": 0
+    },
+    "mainRect": {
+      "x": 0,
+      "y": 72,
+      "width": 1440,
+      "height": 392,
+      "top": 72,
+      "right": 1440,
+      "bottom": 464,
+      "left": 0
+    },
+    "footerRect": {
+      "x": 0,
+      "y": 464,
+      "width": 1440,
+      "height": 100.984375,
+      "top": 464,
+      "right": 1440,
+      "bottom": 564.984375,
+      "left": 0
+    },
+    "footerVisible": true,
+    "elements": {
+      ".dr-header": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 72,
+        "top": 0,
+        "right": 1440,
+        "bottom": 72,
+        "left": 0
+      },
+      ".dr-lookup-content": {
+        "x": 120,
+        "y": 72,
+        "width": 1200,
+        "height": 392,
+        "top": 72,
+        "right": 1320,
+        "bottom": 464,
+        "left": 120
+      },
+      ".dr-lookup-heading": {
+        "x": 120,
+        "y": 120,
+        "width": 1200,
+        "height": 80,
+        "top": 120,
+        "right": 1320,
+        "bottom": 200,
+        "left": 120
+      },
+      ".dr-lookup-form": {
+        "x": 120,
+        "y": 224,
+        "width": 1200,
+        "height": 140,
+        "top": 224,
+        "right": 1320,
+        "bottom": 364,
+        "left": 120
+      },
+      ".dr-lookup-result": null,
+      ".dr-d12": null,
+      ".dr-lookup-empty": null,
+      ".dr-supplement-success": null,
+      ".dr-lookup-next": null,
+      ".dr-footer": {
+        "x": 0,
+        "y": 464,
+        "width": 1440,
+        "height": 100.984375,
+        "top": 464,
+        "right": 1440,
+        "bottom": 564.984375,
+        "left": 0
+      }
+    },
+    "stylesheets": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap",
+      "http://127.0.0.1:8771/dealer-registration/lookup-fonts.css",
+      "http://127.0.0.1:8771/build/assets/dealer-registration-Dwh6UaTx.css"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-logo.svg",
+        "loaded": true
+      },
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-search.svg",
+        "loaded": true
+      },
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-dealer.svg",
+        "loaded": true
+      },
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-submit.svg",
+        "loaded": true
+      },
+      {
+        "src": "http://127.0.0.1:8771/dealer-registration/lookup-logo.svg",
+        "loaded": true
+      }
+    ],
+    "ctas": [
+      {
+        "text": "Tra cứu",
+        "rect": {
+          "x": 1147,
+          "y": 280,
+          "width": 141,
+          "height": 56,
+          "top": 280,
+          "right": 1288,
+          "bottom": 336,
+          "left": 1147
+        }
+      }
+    ]
+  }
+]

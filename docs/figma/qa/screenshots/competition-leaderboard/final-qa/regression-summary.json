@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-04",
+  "database": "toyota_testing, loopback MySQL; preflight SELECT DATABASE() verified, existing schema, no migrate/seed/reset",
+  "regression": {
+    "tests": 168,
+    "assertions": 3588,
+    "passed": 164,
+    "failures": 4,
+    "exitCode": 1,
+    "failuresReproducedIndividually": 4,
+    "classes": ["LeaderboardServiceTest", "CompetitionLeaderboardTest", "PublicLeaderboardTest", "MonthlyDashboardTest", "LandingPageTest", "CompetitionHomepageTest", "PublicPrivacyTest", "DealerProfileTest", "DealerHistoryTest", "DealerDashboardTest", "DealerAuthorizationTest", "DealerRegistrationDraftTest", "DealerRegistrationFinalTest", "RegistrationLookupTest", "RegistrationLookupStatesTest", "CampaignRulesTest"],
+    "findings": [
+      {"test": "LeaderboardServiceTest::test_aggregation_uses_two_queries_regardless_of_participant_count", "line": 115, "actual": "4 queries", "expected": "2 queries", "cause": "2 aggregates plus 2 exact ToyotaRealisticDemo ownership lookups; diagnostic at8/16 participants verifies constant counts without excluding unknown queries", "runtimeFix": false},
+      {"test": "DealerProfileTest::test_public_profile_never_exposes_sales_or_customers_with_approved_customer_count", "line": 34, "expected": "DEALER_PHONE visible", "cause": "Fixture phone is invalid and not approved; existing DealerCallPhone intentionally hides it, contrary to old assertion", "runtimeFix": false},
+      {"test": "DealerProfileTest::test_invalid_or_unauthorized_dealer_photo_uploads_are_rejected_without_creating_files", "line": 164, "expected": "Old photo placeholder text", "cause": "Current public registration Dealer card uses a Dealer icon for missing photo; no such text in current component", "runtimeFix": false},
+      {"test": "DealerHistoryTest::test_transfer_keeps_historical_dealer_new_submissions_use_new_dealer_and_scores_split", "line": 53, "cause": "Both data(history.first) and data(history.second) set29D-428.12; second POST correctly rejected by occupied-license uniqueness before score assertions", "runtimeFix": false}
+    ]
+  },
+  "matrix": {"tests": 18, "assertions": 1240, "failures": 0, "counts": [0,1,2,3,4,20,21,40,46], "periods": ["month","all"], "pages": 26},
+  "serviceDiagnostic": {"tests": 1, "assertions": 27, "failures": 0, "participants": [8,16]},
+  "visual": {"checks": 93, "matrixPageViewports": 78, "referenceAndStress": 12, "liveNavigationAndFonts": 3, "failures": 0},
+  "applicationSourceChanged": false,
+  "existingTestsChanged": false,
+  "limitations": ["Regression is not all PASS; no tests were skipped or weakened", "Mobile Figma reference is clipped below844px; no pixel-perfect acceptance for full scrolled page", "Browser matrix uses freshly exported isolated Laravel HTTP-test HTML; fixture browsing is not production traffic"]
+}

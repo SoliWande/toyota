@@ -1,0 +1,170 @@
+[
+  {
+    "name": "home",
+    "width": 320,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "home",
+    "width": 390,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "home",
+    "width": 768,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "home",
+    "width": 1024,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "home",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "home",
+    "width": 1920,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 320,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 390,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 768,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 1024,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "leaderboard",
+    "width": 1920,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 320,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 390,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 768,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 1024,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "awards",
+    "width": 1920,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 320,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 390,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 768,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 1024,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  },
+  {
+    "name": "lookup",
+    "width": 1920,
+    "status": 200,
+    "errors": [],
+    "source": "live GET real local data"
+  }
+]

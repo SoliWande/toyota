@@ -1,0 +1,26 @@
+[
+    {
+        "participants": 8,
+        "aggregateQueries": 2,
+        "ownershipQueries": 2,
+        "totalQueries": 4,
+        "sql": [
+            "select * from `users` where `email` = ? limit 1",
+            "select `users`.`id`, `users`.`name`, `dealers`.`id` as `dealer_id`, `dealers`.`name` as `dealer_name`, `dealers`.`code` as `dealer_code`, COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at from `customer_submissions` as `submissions` left join `users` on `users`.`id` = `submissions`.`sales_id` inner join `dealers` on `dealers`.`id` = `users`.`dealer_id` where (`users`.`role` = ? or (`submissions`.`source` = ? and `submissions`.`sales_id` is null)) and `submissions`.`status` = ? group by `users`.`id`, `users`.`name`, `dealers`.`id`, `dealers`.`name`, `dealers`.`code`",
+            "select * from `users` where `email` = ? limit 1",
+            "select `dealers`.`id`, `dealers`.`name`, `dealers`.`code`, COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at from `customer_submissions` as `submissions` left join `users` on `users`.`id` = `submissions`.`sales_id` inner join `dealers` on `dealers`.`id` = `submissions`.`dealer_id` where (`users`.`role` = ? or (`submissions`.`source` = ? and `submissions`.`sales_id` is null)) and `submissions`.`status` = ? group by `dealers`.`id`, `dealers`.`name`, `dealers`.`code`"
+        ]
+    },
+    {
+        "participants": 16,
+        "aggregateQueries": 2,
+        "ownershipQueries": 2,
+        "totalQueries": 4,
+        "sql": [
+            "select * from `users` where `email` = ? limit 1",
+            "select `users`.`id`, `users`.`name`, `dealers`.`id` as `dealer_id`, `dealers`.`name` as `dealer_name`, `dealers`.`code` as `dealer_code`, COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at from `customer_submissions` as `submissions` left join `users` on `users`.`id` = `submissions`.`sales_id` inner join `dealers` on `dealers`.`id` = `users`.`dealer_id` where (`users`.`role` = ? or (`submissions`.`source` = ? and `submissions`.`sales_id` is null)) and `submissions`.`status` = ? group by `users`.`id`, `users`.`name`, `dealers`.`id`, `dealers`.`name`, `dealers`.`code`",
+            "select * from `users` where `email` = ? limit 1",
+            "select `dealers`.`id`, `dealers`.`name`, `dealers`.`code`, COUNT(*) AS score, MAX(submissions.submitted_at) AS achieved_at from `customer_submissions` as `submissions` left join `users` on `users`.`id` = `submissions`.`sales_id` inner join `dealers` on `dealers`.`id` = `submissions`.`dealer_id` where (`users`.`role` = ? or (`submissions`.`source` = ? and `submissions`.`sales_id` is null)) and `submissions`.`status` = ? group by `dealers`.`id`, `dealers`.`name`, `dealers`.`code`"
+        ]
+    }
+]

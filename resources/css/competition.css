@@ -357,3 +357,96 @@
     .competition-site .wc-lb-place-1 :is(.wc-lb-dealer-name,.wc-lb-dealer-code) { grid-column:1 / 4; }
     .competition-site .wc-lb-pagination :is(a,span) { padding-inline:12px; }
 }
+
+/* B03 public Awards: snapshots only; all styles stay within the competition UI. */
+.competition-site .wc-awards { padding-top:48px; padding-bottom:100px; }
+.competition-site .wc-aw-intro { display:flex; flex-direction:column; gap:8px; }
+.competition-site .wc-aw-intro>p:first-child { color:var(--wc-red); font-size:13px; font-weight:600; line-height:18px; letter-spacing:1.56px; }
+.competition-site .wc-aw-intro h1 { font-size:40px; font-weight:800; line-height:46px; letter-spacing:-.8px; }
+.competition-site .wc-aw-intro>p:last-child { color:var(--wc-secondary); font-size:16px; line-height:24px; }
+.competition-site .wc-aw-split { display:grid; grid-template-columns:300px minmax(0,1fr); gap:24px; align-items:start; margin-top:28px; }
+.competition-site .wc-aw-history { min-width:0; }
+.competition-site .wc-aw-period-list { display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:24px; background:white; }
+.competition-site .wc-aw-period-link { display:flex; gap:12px; align-items:center; padding:14px; border-radius:16px; min-width:0; }
+.competition-site .wc-aw-period-link:hover { background:#f2f2f5; }
+.competition-site .wc-aw-period-link.is-selected { background:#111; color:white; }
+.competition-site .wc-aw-period-icon { display:grid; place-items:center; flex:none; width:36px; height:36px; border-radius:50%; background:#f2f2f5; }
+.competition-site .is-selected .wc-aw-period-icon { background:var(--wc-red); }
+.competition-site .wc-aw-period-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:2px; overflow-wrap:anywhere; }
+.competition-site .wc-aw-period-copy strong { font-size:15px; font-weight:600; line-height:20px; }
+.competition-site .wc-aw-period-copy>span { color:var(--wc-light); font-size:12px; line-height:16px; }
+.competition-site .is-selected .wc-aw-period-copy>span { color:#ffffff99; }
+.competition-site .wc-aw-selected { min-width:0; }
+.competition-site .wc-aw-panel { display:flex; flex-direction:column; align-items:stretch; gap:24px; padding:40px; background:#1c1c1e; color:white; border-radius:32px; overflow:hidden; position:relative; }
+.competition-site .wc-aw-glow { position:absolute; left:380px; top:-340px; max-width:none; pointer-events:none; }
+.competition-site .wc-aw-panel>:not(.wc-aw-glow) { position:relative; }
+.competition-site .wc-aw-panel-heading { display:flex; flex-direction:column; gap:6px; min-width:0; overflow-wrap:anywhere; }
+.competition-site .wc-aw-panel-heading>p:first-child { color:#ffffff99; font-size:12px; font-weight:600; line-height:16px; letter-spacing:1.44px; }
+.competition-site .wc-aw-panel-heading h2 { font:700 44px/50px Montserrat,Inter,sans-serif; letter-spacing:-.88px; }
+.competition-site .wc-aw-published { color:#ffffff99; font-size:15px; line-height:22px; }
+.competition-site .wc-aw-winners { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.competition-site .wc-aw-winner { display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0; padding:24px; border-radius:24px; background:#ffffff0f; border:1px solid #ffffff14; overflow-wrap:anywhere; }
+.competition-site .wc-aw-winner-copy { display:contents; }
+.competition-site .wc-aw-medal { display:grid; place-items:center; flex:none; width:48px; height:48px; border-radius:50%; background:var(--wc-red); }
+.competition-site .wc-aw-rank-2 .wc-aw-medal { background:#5e5e66; }
+.competition-site .wc-aw-rank-3 .wc-aw-medal { background:#c7c7cc; }
+.competition-site .wc-aw-rank { font-size:12px; font-weight:600; line-height:16px; letter-spacing:1.2px; color:#ffffff8c; }
+.competition-site .wc-aw-winner h3 { width:100%; font-size:18px; font-weight:600; line-height:24px; }
+.competition-site .wc-aw-winner h3 :is(a,span) { overflow-wrap:anywhere; }
+.competition-site .wc-aw-winner h3 a:hover { color:white; text-decoration:underline; }
+.competition-site .wc-aw-score { color:#ffffff99; font-size:13px; line-height:18px; }
+.competition-site .wc-aw-empty { display:flex; flex-direction:column; align-items:center; gap:20px; padding-block:56px; text-align:center; }
+.competition-site .wc-aw-empty h2 { font-size:24px; font-weight:700; line-height:32px; }
+.competition-site .wc-aw-filter { display:flex; flex-wrap:wrap; gap:6px; padding-top:12px; }
+.competition-site .wc-aw-filter a { flex:1; text-align:center; padding:10px 12px; border-radius:999px; border:1px solid var(--wc-border); background:white; font-size:14px; line-height:20px; font-weight:600; }
+.competition-site .wc-aw-filter [aria-current] { background:var(--wc-text); color:white; border-color:var(--wc-text); }
+.competition-site .wc-aw-pagination { display:flex; align-items:center; justify-content:space-between; gap:8px; padding-top:12px; font-size:13px; line-height:20px; }
+.competition-site .wc-aw-pagination :is(a,span[aria-disabled]) { padding:10px; border-radius:999px; background:white; font-weight:600; }
+.competition-site .wc-aw-pagination [aria-disabled] { color:#c7c7cc; }
+.competition-site .wc-aw-snapshot-note { display:flex; flex-direction:column; gap:8px; padding-top:20px; font-size:13px; line-height:20px; color:var(--wc-secondary); }
+.competition-site .wc-aw-snapshot-note a { text-decoration:underline; }
+.competition-site .wc-aw-history-heading,.competition-site .wc-aw-chips,.competition-site .wc-aw-mobile { display:none; }
+@media (min-width:768px) and (max-width:1199px) {
+    .competition-site .wc-aw-split { grid-template-columns:240px minmax(0,1fr); gap:20px; }
+    .competition-site .wc-aw-panel { padding:28px; }
+    .competition-site .wc-aw-winners { grid-template-columns:1fr; }
+}
+@media (max-width:767px) {
+    .competition-site .wc-awards { padding-top:28px; padding-bottom:40px; }
+    .competition-site .wc-aw-intro { padding-inline:4px; gap:6px; }
+    .competition-site .wc-aw-intro>p:first-child { font-size:12px; line-height:16px; letter-spacing:1.44px; }
+    .competition-site .wc-aw-intro h1 { font-size:24px; line-height:30px; letter-spacing:-.36px; }
+    .competition-site .wc-aw-intro>p:last-child { font-size:14px; line-height:20px; }
+    .competition-site .wc-aw-chips { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; margin-top:16px; }
+    .competition-site .wc-aw-chips::-webkit-scrollbar { display:none; }
+    .competition-site .wc-aw-chips a { flex:none; max-width:100%; padding:9px 16px; border:1px solid var(--wc-border); border-radius:999px; background:white; font-size:14px; font-weight:600; line-height:20px; overflow-wrap:anywhere; }
+    .competition-site .wc-aw-chips [aria-current] { background:var(--wc-text); border-color:var(--wc-text); color:white; }
+    .competition-site .wc-aw-split { display:flex; flex-direction:column; gap:32px; margin-top:20px; }
+    .competition-site .wc-aw-selected { order:1; width:100%; }
+    .competition-site .wc-aw-history { order:2; width:100%; }
+    .competition-site .wc-aw-history-heading { display:block; font-size:18px; font-weight:700; line-height:24px; letter-spacing:-.18px; margin-bottom:12px; }
+    .competition-site .wc-aw-period-list { padding:4px 16px; gap:0; }
+    .competition-site .wc-aw-period-link { border-radius:0; gap:14px; padding:16px 0; border-top:1px solid var(--wc-border); }
+    .competition-site .wc-aw-period-link:first-child,.competition-site .is-selected:first-child+.wc-aw-period-link { border-top:0; }
+    .competition-site .wc-aw-period-link.is-selected { display:none; }
+    .competition-site .wc-aw-no-previous .wc-aw-period-list { display:none; }
+    .competition-site .wc-aw-period-icon { width:40px; height:40px; }
+    .competition-site .wc-aw-period-copy>span { font-size:13px; line-height:18px; color:var(--wc-secondary); }
+    .competition-site .wc-aw-history-arrow { flex:none; }
+    .competition-site .wc-aw-panel { padding:24px 20px 20px; gap:18px; border-radius:24px; }
+    .competition-site .wc-aw-glow { left:90px; top:-240px; }
+    .competition-site .wc-aw-panel-heading { gap:4px; }
+    .competition-site .wc-aw-panel-heading h2 { font-size:28px; line-height:34px; letter-spacing:-.42px; }
+    .competition-site .wc-aw-published { font-size:13px; line-height:18px; }
+    .competition-site .wc-aw-winners { display:flex; flex-direction:column; gap:18px; }
+    .competition-site .wc-aw-winner { flex-direction:row; align-items:center; padding:14px 16px 14px 14px; gap:14px; border-radius:18px; }
+    .competition-site .wc-aw-medal { width:40px; height:40px; }
+    .competition-site .wc-aw-winner-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:2px; }
+    .competition-site .wc-aw-rank { font-size:11px; line-height:14px; letter-spacing:1.1px; }
+    .competition-site .wc-aw-winner h3 { font-size:15px; line-height:20px; }
+    .competition-site .wc-aw-score { font-size:12px; line-height:16px; }
+    .competition-site .wc-aw-empty { padding-block:32px; }
+    .competition-site .wc-aw-empty h2 { font-size:20px; line-height:28px; }
+    .competition-site .wc-aw-desktop { display:none; }
+    .competition-site .wc-aw-mobile { display:block; }
+}

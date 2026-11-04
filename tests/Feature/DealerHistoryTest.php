@@ -50,8 +50,10 @@ class DealerHistoryTest extends TestCase
         $this->get(route('admin.submissions.show', $first))->assertOk()->assertSee($dealerA->name);
         $this->get(route('admin.submissions.index', ['status' => 'approved', 'dealer_id' => $dealerA->id]))->assertOk()->assertViewHas('submissions', fn ($items) => $items->total() === 1);
         $this->get(route('admin.submissions.index', ['status' => 'approved', 'dealer_id' => $dealerB->id]))->assertViewHas('submissions', fn ($items) => $items->total() === 0);
-        $this->actingAs($sales->fresh())->post(route('sales.submissions.store'), $this->data('history.second') + ['dealer_id' => $dealerA->id])->assertSessionHasNoErrors();
+        // A second customer needs a distinct plate; approved history still occupies the first.
+        $this->actingAs($sales->fresh())->post(route('sales.submissions.store'), array_replace($this->data('history.second'), ['license_plate' => '29D-428.13']) + ['dealer_id' => $dealerA->id])->assertSessionHasNoErrors();
         $second = CustomerSubmission::whereKeyNot($first->id)->sole();
+        $this->assertNotSame($first->license_plate, $second->license_plate);
         $this->assertSame($dealerB->id, $second->dealer_id);
         $this->actingAs($admin)->post(route('admin.submissions.approve', $second))->assertSessionHasNoErrors();
         $service = app(LeaderboardService::class);

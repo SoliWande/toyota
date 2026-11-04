@@ -18,7 +18,7 @@ class DealerProfileTest extends TestCase
 
     public function test_public_profile_never_exposes_sales_or_customers_with_approved_customer_count(): void
     {
-        $dealer = Dealer::factory()->create(['phone' => 'DEALER_PHONE', 'address' => 'DEALER_ADDRESS']);
+        $dealer = Dealer::factory()->create(['phone' => '0901234567', 'address' => 'DEALER_ADDRESS']);
         $active = User::factory()->active()->create(['dealer_id' => $dealer->id, 'name' => 'Public Sales Name',
             'email' => 'private.profile@example.test', 'phone' => 'PRIVATE_SALES_PHONE', 'admin_note' => 'PRIVATE_ADMIN_NOTE',
             'avatar_path' => 'PRIVATE_AVATAR_PATH.jpg']);
@@ -29,10 +29,16 @@ class DealerProfileTest extends TestCase
         $approved = CustomerSubmission::factory()->approved()->create(['sales_id' => $active->id, 'customer_name' => 'PRIVATE_CUSTOMER', 'notes' => 'PRIVATE_CUSTOMER_NOTES']);
         CustomerSubmission::factory()->create(['sales_id' => $active->id]);
         CustomerSubmission::factory()->rejected()->create(['sales_id' => $active->id]);
+        config(['dealer-registration.approved_call_phones' => []]);
+        $this->get(app(DealerProfile::class)->url($dealer))->assertOk()
+            ->assertDontSee($dealer->phone)->assertDontSee('href="tel:', false);
+        // Public phone approval belongs only to this test Dealer and exact number.
+        config(['dealer-registration.approved_call_phones' => [$dealer->slug => $dealer->phone]]);
         foreach ([false, true] as $json) {
             $response = ($json ? $this->getJson(app(DealerProfile::class)->url($dealer)) : $this->get(app(DealerProfile::class)->url($dealer)))->assertOk()
                 ->assertSee($dealer->name)->assertSee($dealer->address)->assertSee($dealer->phone)->assertDontSee($active->name)
-                ->assertSee('Khách hàng đã được duyệt')->assertDontSee($active->email)->assertDontSee($active->phone)
+                ->assertSee('href="tel:'.$dealer->phone.'"', false)
+                ->assertSee('aria-label="Đại lý giới thiệu"', false)->assertDontSee($active->email)->assertDontSee($active->phone)
                 ->assertDontSee($active->avatar_path)->assertDontSee($active->admin_note)->assertDontSee($other->name)
                 ->assertDontSee($approved->customer_name)->assertDontSee($approved->notes)
                 ->assertDontSee('PRIVATE_pending')->assertDontSee('PRIVATE_blocked')->assertDontSee('PRIVATE_rejected')
@@ -161,7 +167,10 @@ class DealerProfileTest extends TestCase
         $this->actingAs(User::factory()->active()->create())->put(route('admin.dealers.update', $dealer), [...$data, 'photo' => UploadedFile::fake()->image('photo.jpg')])->assertForbidden();
         $this->assertSame([], Storage::disk('dealer_photos')->allFiles());
         $this->assertNull($dealer->fresh()->photo_path);
-        $this->get(app(DealerProfile::class)->url($dealer))->assertOk()->assertSee('Ảnh đại lý đang được cập nhật');
+        $this->get(app(DealerProfile::class)->url($dealer))->assertOk()
+            ->assertSee('class="dr-dealer-symbol"', false)
+            ->assertDontSee('class="dr-dealer-photo"', false)
+            ->assertDontSee(route('dealers.photo', $dealer));
         $this->get(route('dealers.photo', $dealer))->assertNotFound();
     }
 }
