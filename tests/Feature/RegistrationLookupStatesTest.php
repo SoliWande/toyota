@@ -70,7 +70,8 @@ class RegistrationLookupStatesTest extends TestCase
     private function lookup(CustomerSubmission $record)
     {
         return $this->post(route('dealers.lookup.store', $record->dealer->slug), ['phone' => $record->phone, 'license_plate' => $record->license_plate])
-            ->assertViewIs('dealers.registration.lookup')->assertDontSee('Chưa thể gửi đăng ký');
+            ->assertViewIs('dealers.registration.lookup')->assertDontSee('Chưa thể gửi đăng ký')
+            ->assertDontSee('Đã tìm thấy đăng ký')->assertDontSee('Thông tin tra cứu khớp với một đăng ký.');
     }
 
     private function assertProgress($response, array $states): void
@@ -103,7 +104,7 @@ class RegistrationLookupStatesTest extends TestCase
     public static function progress(): array
     {
         return [['requested', 'requested', 'Chờ duyệt'], ['member', 'member', 'Thành viên'],
-            ['not_requested', 'not_requested', 'Chờ vào group'], ['unknown', 'found', 'Đã tìm thấy đăng ký']];
+            ['not_requested', 'not_requested', 'Chờ vào group'], ['unknown', 'found', 'Chưa xác nhận']];
     }
 
     #[DataProvider('progress')]
@@ -139,7 +140,7 @@ class RegistrationLookupStatesTest extends TestCase
     {
         $record = $this->record();
         $this->lookup($record)->assertViewHas('result', fn ($dto) => $dto['kind'] === 'found')
-            ->assertSee('Đã tìm thấy đăng ký')->assertDontSee('class="dr-card dr-d12"', false);
+            ->assertSee('Chưa xác nhận')->assertDontSee('data-lookup-sidebox', false)->assertDontSee('class="dr-card dr-d12"', false);
         $before = $record->refresh()->getRawOriginal();
         $service = app(SubmissionVerification::class);
         $admin = User::factory()->admin()->create();
@@ -153,7 +154,7 @@ class RegistrationLookupStatesTest extends TestCase
         $response = $this->lookup($record)->assertOk()
             ->assertViewHas('result', fn ($dto) => $dto['kind'] === 'not_requested')
             ->assertSee('class="dr-card dr-d12"', false)->assertSee('Chờ vào group')
-            ->assertSee('Bước tiếp: vào group')->assertSee('Đã nhận thông tin của bạn')
+            ->assertSee('Bước tiếp theo: vào group')->assertSee('Đã nhận thông tin của bạn')
             ->assertSee('Xin vào group và trả lời đúng số điện thoại, biển số.')
             ->assertSee('aria-current="step"', false)
             ->assertSee('href="https://www.facebook.com/groups/376631239337942"', false)

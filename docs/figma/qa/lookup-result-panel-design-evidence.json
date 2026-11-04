@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-04",
+  "fileKey": "yKmWQI6BYJ6dponEnidlsq",
+  "source": "Fresh Figma MCP get_design_context before code edits; fresh screenshots saved for 9 desktop and 8 lookup mobile frames.",
+  "frames": [
+    {
+      "name": "D07",
+      "node": "213:533"
+    },
+    {
+      "name": "D08",
+      "node": "212:647"
+    },
+    {
+      "name": "D09",
+      "node": "213:1447"
+    },
+    {
+      "name": "D10",
+      "node": "213:636"
+    },
+    {
+      "name": "D11",
+      "node": "213:702"
+    },
+    {
+      "name": "D12",
+      "node": "213:797"
+    },
+    {
+      "name": "D13",
+      "node": "213:894"
+    },
+    {
+      "name": "D14",
+      "node": "213:989"
+    },
+    {
+      "name": "D15",
+      "node": "213:1086"
+    },
+    {
+      "name": "M07",
+      "node": "57:733"
+    },
+    {
+      "name": "M08",
+      "node": "57:941"
+    },
+    {
+      "name": "M09",
+      "node": "57:963"
+    },
+    {
+      "name": "M10",
+      "node": "204:366"
+    },
+    {
+      "name": "M11",
+      "node": "204:446"
+    },
+    {
+      "name": "M12",
+      "node": "204:541"
+    },
+    {
+      "name": "M13",
+      "node": "204:638"
+    },
+    {
+      "name": "M14",
+      "node": "204:736"
+    },
+    {
+      "name": "M15",
+      "node": "204:833"
+    }
+  ],
+  "desktop": {
+    "frame": 1440,
+    "cardWidth": 1200,
+    "sideboxWidth": 420,
+    "informationPadding": {
+      "top": 32,
+      "right": 40,
+      "bottom": 36,
+      "left": 40
+    },
+    "sideboxPadding": 32,
+    "sideboxGap": 14,
+    "personGap": 16,
+    "avatar": 56,
+    "headerProgressGap": 28,
+    "title": {
+      "size": 22,
+      "lineHeight": 28,
+      "weight": 700
+    },
+    "sideboxTitle": {
+      "size": 18,
+      "lineHeight": 24,
+      "weight": 700
+    },
+    "description": {
+      "size": 14,
+      "lineHeight": 20
+    },
+    "radius": 28,
+    "sideboxBackground": "#fafafb",
+    "divider": "#ededf0"
+  },
+  "mobile": {
+    "frame": 390,
+    "margin": 20,
+    "cardWidth": 350,
+    "padding": 20,
+    "radius": 24,
+    "gap": 20,
+    "avatar": 44,
+    "personGap": 12,
+    "name": {
+      "size": 16,
+      "lineHeight": 22,
+      "weight": 600
+    },
+    "description": {
+      "size": 13,
+      "lineHeight": 18
+    },
+    "badge": {
+      "paddingX": 10,
+      "paddingY": 5,
+      "gap": 6,
+      "font": 12,
+      "lineHeight": 16
+    },
+    "buttonHeight": 52,
+    "supplementBox": {
+      "padding": 16,
+      "radius": 18,
+      "background": "#f7f7f9"
+    },
+    "blockedBox": {
+      "padding": 16,
+      "radius": 16,
+      "gap": 6
+    },
+    "emptyIcon": 56,
+    "emptyInnerIcon": 24
+  },
+  "colors": {
+    "page": "#f5f5f7",
+    "card": "#ffffff",
+    "red": "#eb0a1e",
+    "dark": "#2f2e2c",
+    "primary": "#111111",
+    "secondary": "#5e5e66",
+    "muted": "#8e8e93"
+  },
+  "decisions": [
+    "D12 user explicitly asks Bước tiếp theo: vào group; Figma currently says Bước tiếp: vào group.",
+    "D14 is intentionally dark; red is not a global replacement.",
+    "D13 has no Sidebox or CTA.",
+    "M15 has message and outline CTA, no timeline; supersedes Phase 3C mobile extension.",
+    "Unknown found retains only confirmed progress and neutral existing badge wording, without a fabricated workflow kind or generic CTA.",
+    "Receipt authorization, privacy masking, real Dealer phone and no SLA remain unchanged."
+  ]
+}

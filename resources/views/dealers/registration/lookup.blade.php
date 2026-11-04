@@ -29,27 +29,15 @@
                         @if ($dealer->is_active)<a class="dr-button" href="{{ route('dealers.profile', $dealer->slug) }}#registration">Đăng ký tham gia</a>@endif
                     </div>
                 @elseif ($result['kind'] === 'not_requested')
-                    <x-dealer-registration.lookup-waiting-group :result="$result" :values="$values" />
+                    <x-dealer-registration.lookup-waiting-group :result="$result" :values="$values" :dealer="$dealer" />
                 @else
                     <div class="dr-card dr-lookup-result" data-lookup-kind="{{ $result['kind'] }}">
                         <div class="dr-lookup-summary">
-                            <div class="dr-lookup-person"><x-dealer-registration.lookup-avatar :name="$result['masked_name']" class="dr-lookup-avatar" /><div><h3>{{ $result['masked_name'] }}</h3><p>{{ $result['vehicle'] }} @if (!empty($values['license_plate'])) · {{ $values['license_plate'] }} @endif</p></div>@if ($result['kind'] !== 'found')<span class="dr-status-chip dr-lookup-chip-{{ $result['kind'] }}">{{ ['draft' => 'Chưa hoàn tất', 'supplement' => 'Cần bổ sung', 'not_requested' => 'Chờ vào group', 'requested' => 'Chờ duyệt', 'member' => 'Thành viên', 'blocked' => 'Chưa xác nhận'][$result['kind']] }}</span>@endif</div>
-                            @if ($result['kind'] === 'found')
-                                <h3 class="dr-lookup-found-title">Đã tìm thấy đăng ký</h3>
-                                <p>Thông tin tra cứu khớp với một đăng ký. Kết quả này không xác nhận tư cách thành viên Facebook.</p>
-                            @endif
+                            <x-dealer-registration.lookup-person :result="$result" :values="$values" />
                             <x-dealer-registration.lookup-state :result="$result" />
                         </div>
-                        @if ($result['kind'] !== 'requested')<div class="dr-lookup-next">
-                            @if ($result['kind'] === 'draft')
-                                <h3>Còn một bước nữa</h3><p>Điền thông tin xe và Facebook, mất khoảng 1 phút.</p>
-                                <a class="dr-button" href="{{ route('dealers.registrations.step-two', $dealer->slug) }}">Tiếp tục đăng ký</a>
-                            @elseif ($result['kind'] !== 'found')
-                                <x-dealer-registration.lookup-next :result="$result" :dealer="$dealer" />
-                            @else
-                                <h3>Cộng đồng Toyota Veloz &amp; Hilux</h3>
-                                <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Mở group Facebook" class="dr-button dr-button-dark" />
-                            @endif
+                        @if (! in_array($result['kind'], ['requested', 'found'], true))<div class="dr-lookup-next" data-lookup-sidebox>
+                            <x-dealer-registration.lookup-next :result="$result" :dealer="$dealer" :values="$values" />
                         </div>@endif
                     </div>
                 @endif

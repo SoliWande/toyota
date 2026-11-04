@@ -100,7 +100,8 @@ class RegistrationLookupTest extends TestCase
         $response = $this->post(route('dealers.lookup.store', $record->dealer->slug), $this->payload($record))
             ->assertOk()->assertViewIs('dealers.registration.lookup')
             ->assertViewHas('result', fn ($result) => $result['kind'] === 'found')
-            ->assertSee('Đã tìm thấy đăng ký')->assertDontSee('Chưa thể gửi đăng ký')
+            ->assertSee('Chưa xác nhận')->assertDontSee('Đã tìm thấy đăng ký')->assertDontSee('Chưa thể gửi đăng ký')
+            ->assertDontSee('data-lookup-sidebox', false)
             ->assertDontSee('data-lookup-kind="member"', false)
             ->assertHeader('Cache-Control', 'no-store, private');
         $this->assertFalse($response->headers->has('Location'));
@@ -163,7 +164,7 @@ class RegistrationLookupTest extends TestCase
             $record->evidence_image_path, $record->sales->email] as $private) {
             $this->assertFalse(str_contains($response->getContent(), $private), 'Private field appeared in lookup HTML.');
         }
-        $response->assertSee('Đã tìm thấy đăng ký')->assertDontSee('Bạn đã là thành viên chính thức')
+        $response->assertSee('Chưa xác nhận')->assertDontSee('Đã tìm thấy đăng ký')->assertDontSee('Bạn đã là thành viên chính thức')
             ->assertDontSee('Chờ vào group')->assertDontSee('Đã gửi yêu cầu vào group')->assertDontSee('48 giờ');
         $this->assertTrue($before === $record->fresh()->getRawOriginal());
         $this->assertSame($reviews, DB::table('moderation_reviews')->count());

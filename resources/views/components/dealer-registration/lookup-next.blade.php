@@ -1,8 +1,11 @@
-@props(['result', 'dealer'])
+@props(['result', 'dealer', 'values' => []])
 @php($kind = $result['kind'])
 @php($contactPhone = preg_replace('/[^0-9+]/', '', $dealer->phone ?? ''))
 @php($hasDealerPhone = preg_match('/^\+?[0-9]{8,15}$/D', $contactPhone))
-@if ($kind === 'supplement')
+@if ($kind === 'draft')
+    <h3>Còn một bước nữa</h3><p>Điền thông tin xe và Facebook, mất khoảng 1 phút.</p>
+    <a class="dr-button" href="{{ route('dealers.registrations.step-two', $dealer->slug) }}">Tiếp tục đăng ký</a>
+@elseif ($kind === 'supplement')
     @if (isset($result['supplement_key']))
         <form method="POST" action="{{ route('dealers.lookup.supplement', $dealer->slug) }}" data-registration-supplement novalidate autocomplete="off">
             @csrf
@@ -16,9 +19,9 @@
         <h3>Liên hệ để bổ sung thông tin</h3><p>Vui lòng liên hệ Dealer hoặc Admin. Tra cứu không cấp quyền chỉnh sửa hồ sơ; cập nhật trực tuyến cần phiên đăng ký còn hiệu lực.</p>
     @endif
 @elseif ($kind === 'blocked')
-    <h3>Chưa thể xác nhận đăng ký của bạn</h3><p>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ $dealer->phone }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p>
+    <div class="dr-lookup-blocked-message"><h3>Chưa thể xác nhận đăng ký của bạn</h3><p><span class="dr-lookup-blocked-mobile-reason">{{ $result['reason'] }} </span>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ $dealer->phone }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p></div>
 @elseif ($kind === 'not_requested')
-    <h3>Bước tiếp: vào group</h3><p>Khi xin vào group, trả lời đúng số điện thoại và biển số bạn đã đăng ký.</p>
+    <h3>Bước tiếp theo: vào group</h3><p>@if (!empty($values['phone']) && !empty($values['license_plate']))Khi xin vào group, trả lời số điện thoại {{ $values['phone'] }} và biển số {{ $values['license_plate'] }}.@else Khi xin vào group, trả lời đúng số điện thoại và biển số bạn đã đăng ký.@endif</p>
     <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button" />
 @elseif ($kind === 'member')
     <h3>Chào mừng bạn vào nhóm</h3><p>Xem ưu đãi và lịch sự kiện mới nhất trong group.</p>

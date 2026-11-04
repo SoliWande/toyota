@@ -39,6 +39,15 @@ $app->make(Vite::class)->useHotFile($root.'/.laravel-tools/lookup-qa-no-hot');
 $app->make('request')->setLaravelSession($app->make('session')->driver());
 $dealer = new Dealer;
 $dealer->forceFill(['id' => 1, 'slug' => 'qa-dealer', 'name' => 'Toyota An Sương', 'phone' => '0900000000', 'is_active' => true]);
+if (($_GET['phone'] ?? '') === 'none') {
+    $dealer->phone = null;
+}
+if (($_GET['dealer'] ?? '') === 'inactive') {
+    $dealer->is_active = false;
+}
+if (($_GET['group_url'] ?? '') === 'none') {
+    config(['dealer-registration.group_url' => null]);
+}
 $result = ['kind' => $kind, 'masked_name' => 'N** V** A*', 'vehicle' => 'Hilux', 'group_confirmed' => true,
     'reason' => $kind === 'blocked' ? 'Biển số này đã được dùng cho một đăng ký khác.' : 'Link Facebook không mở được.',
     'supplement_key' => 'synthetic-visual-only', 'verification_version' => str_repeat('a', 64)];
@@ -50,6 +59,9 @@ if (($_GET['ownership'] ?? '') === 'none') {
 }
 if (($_GET['text'] ?? '') === 'long') {
     $result['reason'] = str_repeat('Thông tin cần được đối chiếu lại với đại lý. ', 8);
+}
+if (($_GET['name'] ?? '') === 'long') {
+    $result['masked_name'] = str_repeat('N** ', 10).'A*';
 }
 if (! in_array($kind, ['blocked', 'supplement'])) {
     unset($result['reason']);

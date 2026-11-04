@@ -122,20 +122,21 @@
 .dr-site .dr-lookup-person { display:flex; gap:16px; align-items:center; margin-bottom:28px; overflow-wrap:anywhere; }
 .dr-site .dr-lookup-person>div { min-width:0; flex:1; }
 .dr-site .dr-lookup-avatar { display:grid; place-items:center; width:56px; height:56px; flex:none; border-radius:50%; background:var(--dr-muted); color:var(--dr-secondary); font-size:18px; font-weight:600; line-height:24px; }
+.dr-site .dr-lookup-results .dr-lookup-person-row h3 { font-size:22px; font-weight:700; line-height:28px; letter-spacing:-.22px; }
+.dr-site .dr-lookup-results .dr-lookup-person-row p { margin-top:2px; font-size:14px; line-height:20px; }
+.dr-site .dr-lookup-person-row .dr-status-chip { flex:none; padding:7px 14px; gap:8px; font-size:14px; line-height:20px; white-space:nowrap; }
 .dr-site .dr-lookup-summary .dr-status-chip { color:var(--dr-secondary); background:var(--dr-muted); }
 .dr-site .dr-lookup-summary .dr-status-chip::before { background:#8e8e93; }
-.dr-site .dr-lookup-found-title { margin-bottom:8px; }
 .dr-site .dr-lookup-next { min-width:0; display:flex; flex-direction:column; align-items:stretch; gap:14px; padding:32px; background:#fafafb; border-left:1px solid #ededf0; }
 /* Shared lookup progress: real marker/rail elements avoid generic timeline pseudo-element overrides. */
 .dr-site .dr-lookup-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; list-style:none; padding:0; margin:0; }
-.dr-site .dr-lookup-progress-d12,.dr-site [data-lookup-kind=found] .dr-lookup-progress { margin-top:28px; }
+.dr-site .dr-lookup-progress-d12 { margin-top:28px; }
 .dr-site .dr-lookup-progress-step { display:flex; flex-direction:column; gap:12px; min-width:0; position:relative; }
 .dr-site .dr-lookup-progress-rail { display:flex; align-items:center; gap:8px; min-width:0; }
 .dr-site .dr-lookup-progress-step:not(:last-child) .dr-lookup-progress-rail::after { content:''; flex:1; height:2px; border-radius:1px; background:#e3e3e8; }
 .dr-site .dr-lookup-progress-step.is-completed .dr-lookup-progress-rail::after { background:#bfe6cc; }
 .dr-site .dr-lookup-progress-node { display:block; flex:none; width:28px; height:28px; }
 .dr-site .dr-lookup-progress-node img { display:block; width:100%; height:100%; }
-.dr-site .dr-lookup-progress-blocked { display:grid; place-items:center; border:2px solid #e3e3e8; border-radius:50%; color:#5e5e66; background:white; font-size:16px; font-weight:600; line-height:1; }
 .dr-site .dr-lookup-progress-text { min-width:0; padding-right:20px; overflow-wrap:anywhere; }
 .dr-site .dr-lookup-progress-text strong { display:block; color:#111; font-size:16px; font-weight:600; line-height:22px; }
 .dr-site .dr-lookup-progress-step.is-pending strong,.dr-site .dr-lookup-progress-step.is-blocked strong { color:#8e8e93; }
@@ -145,12 +146,11 @@
 .dr-site .dr-lookup-progress .dr-lookup-progress-sr { position:absolute; width:1px; height:1px; padding:0; border:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 @media (max-width:767px) {
     .dr-site .dr-lookup-progress { grid-template-columns:1fr; }
-    .dr-site .dr-lookup-progress-d12,.dr-site [data-lookup-kind=found] .dr-lookup-progress { margin-top:20px; }
+    .dr-site .dr-lookup-progress-d12 { margin-top:20px; }
     .dr-site .dr-lookup-progress-step { display:grid; grid-template-columns:24px minmax(0,1fr); gap:14px; }
     .dr-site .dr-lookup-progress-rail { flex-direction:column; align-items:center; gap:4px; padding-bottom:4px; }
     .dr-site .dr-lookup-progress-step:not(:last-child) .dr-lookup-progress-rail::after { width:2px; height:auto; min-height:1px; }
     .dr-site .dr-lookup-progress-node { width:24px; height:24px; }
-    .dr-site .dr-lookup-progress-blocked { font-size:14px; }
     .dr-site .dr-lookup-progress-text { padding:2px 0 22px; }
     .dr-site .dr-lookup-progress-step:last-child .dr-lookup-progress-text { padding-bottom:0; }
     .dr-site .dr-lookup-progress-text strong { font-size:15px; line-height:20px; }
@@ -196,7 +196,12 @@
     .dr-site [data-lookup-kind=draft] .dr-lookup-next>h3,.dr-site [data-lookup-kind=draft] .dr-lookup-next>p { display:none; }
 }
 
-.dr-site [data-lookup-kind=requested] { grid-template-columns:1fr; }
+.dr-site [data-lookup-kind=requested],.dr-site [data-lookup-kind=found] { grid-template-columns:1fr; }
+.dr-site .dr-lookup-blocked-mobile-reason { display:none; }
+.dr-site .dr-lookup-blocked-message { display:flex; flex-direction:column; gap:14px; }
+.dr-site .dr-lookup-results .dr-button-dark:hover:not([aria-disabled]):not(:disabled) { background:#2f2e2c; }
+.dr-site .dr-lookup-results .dr-button-muted:hover:not([aria-disabled]):not(:disabled),
+.dr-site .dr-supplement-actions .dr-button-muted:hover:not([aria-disabled]):not(:disabled) { background:white; }
 .dr-site .dr-lookup-person h3 { font-size:22px; line-height:28px; letter-spacing:-.22px; }
 .dr-site .dr-lookup-person p { margin-top:2px; line-height:20px; }
 .dr-site .dr-lookup-next h3 { font-size:18px; line-height:24px; }
@@ -224,7 +229,8 @@
 .dr-site .dr-supplement-success h1 { font-size:40px; line-height:46px; font-weight:800; letter-spacing:-.8px; }
 .dr-site .dr-supplement-success p { color:var(--dr-secondary); font-size:18px; line-height:28px; }
 .dr-site .dr-supplement-actions { display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; }
-.dr-site .dr-supplement-actions .dr-button-muted,.dr-site [data-lookup-kind=blocked] .dr-button-muted { background:white; border:1px solid var(--dr-border); }
+.dr-site .dr-supplement-actions .dr-button-muted,.dr-site [data-lookup-kind=blocked] .dr-button-muted,
+.dr-site [data-lookup-kind=supplement] .dr-button-muted { background:white; border:1px solid var(--dr-border); }
 @media (min-width:768px) {
     .dr-site .dr-lookup-summary .dr-status-chip::before { background:transparent url('../../public/dealer-registration/lookup-dot-neutral.svg') center no-repeat; }
     .dr-site .dr-lookup-summary .dr-lookup-chip-not_requested::before,.dr-site .dr-lookup-summary .dr-lookup-chip-requested::before,.dr-site .dr-d12-status::before { background:transparent url('../../public/dealer-registration/lookup-dot-blue.svg') center no-repeat; }
@@ -251,6 +257,36 @@
     .dr-site [data-lookup-kind=member] .dr-lookup-next>h3,.dr-site [data-lookup-kind=member] .dr-lookup-next>p,
     .dr-site [data-lookup-kind=not_requested] .dr-lookup-next>h3,.dr-site [data-lookup-kind=not_requested] .dr-lookup-next>p { display:none; }
     .dr-site .dr-lookup-person .dr-status-chip { max-width:100%; font-size:12px; padding:5px 10px; }
+    .dr-site .dr-lookup-results .dr-card { border-radius:24px; }
+    .dr-site .dr-lookup-results .dr-lookup-person-row { margin-bottom:20px; }
+    .dr-site .dr-d12 .dr-lookup-person-row { margin-bottom:0; }
+    .dr-site .dr-lookup-results .dr-lookup-person-row h3 { font-size:16px; font-weight:600; line-height:22px; letter-spacing:0; }
+    .dr-site .dr-lookup-results .dr-lookup-person-row p { font-size:13px; line-height:18px; }
+    .dr-site .dr-lookup-person-row .dr-status-chip { gap:6px; padding:5px 10px; font-size:12px; line-height:16px; }
+    .dr-site .dr-lookup-person-row .dr-status-chip::before { width:6px; height:6px; }
+    .dr-site .dr-lookup-avatar { font-size:14px; }
+    .dr-site .dr-lookup-results .dr-button { min-height:52px; height:52px; padding-block:0; }
+    .dr-site .dr-lookup-empty-icon { width:56px; height:56px; align-self:center; }
+    .dr-site .dr-lookup-empty-icon img { width:24px; height:24px; }
+    .dr-site .dr-lookup-results .dr-lookup-empty h3 { font-size:17px; font-weight:600; line-height:22px; letter-spacing:0; }
+    .dr-site .dr-lookup-empty p { line-height:20px; }
+    .dr-site .dr-lookup-empty { gap:10px; }
+    .dr-site .dr-lookup-empty .dr-button { margin-top:6px; }
+    .dr-site .dr-lookup-empty>div p { margin-top:10px; }
+    .dr-site [data-lookup-kind=supplement] .dr-lookup-next { padding:16px; border-radius:18px; background:#f7f7f9; }
+    .dr-site .dr-lookup-next [data-field=facebook_profile_url]>label { margin-bottom:12px; font-size:15px; font-weight:600; line-height:20px; letter-spacing:0; }
+    .dr-site .dr-lookup-next [data-field=facebook_profile_url]>.dr-input { height:48px; }
+    .dr-site .dr-lookup-next [data-field=facebook_profile_url]>.dr-help { margin-top:12px; font-size:12px; line-height:16px; }
+    .dr-site .dr-lookup-next form>.dr-button { margin-top:16px; }
+    .dr-site [data-lookup-kind=member] .dr-lookup-next { margin-top:0; padding:0; background:transparent; }
+    .dr-site [data-lookup-kind=blocked] .dr-lookup-progress { display:none; }
+    .dr-site [data-lookup-kind=blocked] .dr-lookup-person-row { margin-bottom:0; }
+    .dr-site [data-lookup-kind=blocked] .dr-lookup-next { padding:0; gap:20px; background:transparent; }
+    .dr-site .dr-lookup-blocked-message { gap:6px; padding:16px; background:#f7f7f9; border-radius:16px; }
+    .dr-site .dr-lookup-blocked-message h3 { font-size:15px; font-weight:600; line-height:20px; }
+    .dr-site .dr-lookup-blocked-message p { font-size:13px; line-height:19px; }
+    .dr-site .dr-lookup-blocked-mobile-reason { display:inline; }
+    .dr-site [data-lookup-kind=blocked] .dr-button-muted { border:1.5px solid #c7c7cc; }
     .dr-site .dr-supplement-success { display:flex; flex-direction:column; padding-block:64px; gap:28px; text-align:center; min-height:650px; }
     .dr-site .dr-supplement-success>.dr-card { padding:0; background:transparent; min-height:0; gap:20px; }
     .dr-site .dr-supplement-success>div:first-child { min-height:0; }
