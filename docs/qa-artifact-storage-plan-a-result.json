@@ -1,0 +1,2821 @@
+{
+  "phase": "after-delete",
+  "head": "a9455445397bf764bf4d9b70e701a57d000c80a4",
+  "processedFiles": 343,
+  "removedBytes": 77947839,
+  "skipped": [],
+  "backup": {
+    "path": ".laravel-tools/qa-backups/plan-a-20261104/duplicates.tar.gz",
+    "sha256": "59dec685ebd814add3615cc1c5bcf636565d072b41a098f015fed3c1318a2ecd",
+    "bytes": 44147155,
+    "uniqueObjects": 209,
+    "restoredFiles": 343,
+    "rawRemovedBytes": 77947839,
+    "netBeforeNewQaOutputs": 33800684,
+    "head": "a9455445397bf764bf4d9b70e701a57d000c80a4"
+  },
+  "protectedFilesVerified": 873,
+  "canonicalVerified": 343,
+  "qaBeforeBytes": 239109609,
+  "qaNowBytes": 161311778,
+  "qaReductionBytes": 77797831,
+  "newIgnoredQaBytes": 140875,
+  "backupFolderBytes": 44147502,
+  "sourceChanges": [
+    ".gitignore",
+    "docs/figma/qa/LeaderboardFinalDiagnosticTest.php",
+    "docs/figma/qa/LeaderboardFinalMatrixTest.php",
+    "docs/figma/qa/awards-interactions-regression.mjs",
+    "docs/figma/qa/awards-regression-visual.mjs",
+    "docs/figma/qa/awards-sticky-footer-visual.mjs",
+    "docs/figma/qa/awards-visual.mjs",
+    "docs/figma/qa/competition-font-audit.mjs",
+    "docs/figma/qa/competition-font-restored.mjs",
+    "docs/figma/qa/competition-state-visual.mjs",
+    "docs/figma/qa/competition-visual.mjs",
+    "docs/figma/qa/dealer-call-visual.mjs",
+    "docs/figma/qa/hero-heading-check.mjs",
+    "docs/figma/qa/leaderboard-baseline.mjs",
+    "docs/figma/qa/leaderboard-final-visual.mjs",
+    "docs/figma/qa/leaderboard-interactions.mjs",
+    "docs/figma/qa/leaderboard-visual.mjs",
+    "docs/figma/qa/lookup-progress-visual.mjs",
+    "docs/figma/qa/lookup-result-panel-visual.mjs",
+    "docs/figma/qa/lookup-sticky-footer-visual.mjs",
+    "docs/figma/qa/lookup-visual.mjs",
+    "docs/figma/qa/release-manifest.py"
+  ],
+  "stagedDeletions": [
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-1024-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-768-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1024-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-320-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-390-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-768-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1024-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-320-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-390-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-768-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1024-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1440-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1920-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-320-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-390-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-768-1200.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-one-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-one-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/home-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-768-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1024-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1440-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1920-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-320-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-390-900.png",
+    "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-768-900.png",
+    "docs/figma/qa/screenshots/competition-awards/after/awards-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/awards-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/awards-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/awards-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/awards-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/design-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/design-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/design-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/design-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/detail-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/empty-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/empty-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/empty-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/empty-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/empty-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/home-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/leaderboard-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/long-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/lookup-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/many-768.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-320.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-390.png",
+    "docs/figma/qa/screenshots/competition-awards/after/one-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-768.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1024.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1440.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1920.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-320.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-390.png",
+    "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-768.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/after/home-1440.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/after/home-390.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-1440.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-1920.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-320.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-podium-390.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/live-1440.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/live-320.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-1440.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-1920.png",
+    "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-320.png",
+    "docs/figma/qa/screenshots/hero-heading/font-restored/home-1024.png",
+    "docs/figma/qa/screenshots/hero-heading/font-restored/home-1440.png",
+    "docs/figma/qa/screenshots/hero-heading/font-restored/home-1920.png",
+    "docs/figma/qa/screenshots/hero-heading/font-restored/home-390.png",
+    "docs/figma/qa/screenshots/hero-heading/font-restored/home-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-768.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1024.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1440.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1920.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-320.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-390.png",
+    "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/final/D09-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D08-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D08.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15-390.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15-768.png",
+    "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15.png",
+    "docs/figma/qa/screenshots/phase-3c-progress/D09-1024.png",
+    "docs/figma/qa/screenshots/phase-3c-progress/D09-320.png",
+    "docs/figma/qa/screenshots/phase-3c-progress/D09-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-1440.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D08-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D08-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-320.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D10-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D10-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D11-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D11-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D13-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D13-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D14-1024.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D14-768.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-unknown-320.png",
+    "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-unknown-390.png",
+    "docs/figma/qa/screenshots/website-competition/final-qa/dealer-1440.png",
+    "docs/figma/qa/screenshots/website-competition/final-qa/hero-390.png",
+    "docs/figma/qa/screenshots/website-competition/initial-1440.png",
+    "docs/figma/qa/screenshots/website-competition/initial-390.png",
+    "docs/figma/qa/screenshots/website-competition/stats-390.png"
+  ],
+  "outsideScopeChanges": [],
+  "files": [
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1440-900.png",
+      "size": 1460030,
+      "sha256": "11fab41476001004194dab5bf6d5ff77989c573a4465f3e55f0ee11e7cf96b50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1440-900.png",
+      "size": 1460030,
+      "sha256": "11fab41476001004194dab5bf6d5ff77989c573a4465f3e55f0ee11e7cf96b50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/after/home-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1440-900.png",
+      "size": 1460030,
+      "sha256": "11fab41476001004194dab5bf6d5ff77989c573a4465f3e55f0ee11e7cf96b50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/hero-heading/font-restored/home-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1440-900.png",
+      "size": 1460030,
+      "sha256": "11fab41476001004194dab5bf6d5ff77989c573a4465f3e55f0ee11e7cf96b50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1440-900.png",
+      "size": 1460030,
+      "sha256": "11fab41476001004194dab5bf6d5ff77989c573a4465f3e55f0ee11e7cf96b50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1920-900.png",
+      "size": 1563590,
+      "sha256": "92ce461f5f6e9f26bcaac5ca5a765441f28b3ea9f7d58eafb3a9058b6005d62b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1920-900.png",
+      "size": 1563590,
+      "sha256": "92ce461f5f6e9f26bcaac5ca5a765441f28b3ea9f7d58eafb3a9058b6005d62b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/hero-heading/font-restored/home-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1920-900.png",
+      "size": 1563590,
+      "sha256": "92ce461f5f6e9f26bcaac5ca5a765441f28b3ea9f7d58eafb3a9058b6005d62b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1920-900.png",
+      "size": 1563590,
+      "sha256": "92ce461f5f6e9f26bcaac5ca5a765441f28b3ea9f7d58eafb3a9058b6005d62b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1024-900.png",
+      "size": 1095037,
+      "sha256": "c61e5d04f1fa1f3af53d95b25530a9e00eb3090a79e9a72157bd589bc19fdd64",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1024-900.png",
+      "size": 1095037,
+      "sha256": "c61e5d04f1fa1f3af53d95b25530a9e00eb3090a79e9a72157bd589bc19fdd64",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/hero-heading/font-restored/home-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1024-900.png",
+      "size": 1095037,
+      "sha256": "c61e5d04f1fa1f3af53d95b25530a9e00eb3090a79e9a72157bd589bc19fdd64",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-1024-900.png",
+      "size": 1095037,
+      "sha256": "c61e5d04f1fa1f3af53d95b25530a9e00eb3090a79e9a72157bd589bc19fdd64",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-768-900.png",
+      "size": 881492,
+      "sha256": "990c2d7bcc4d36c170aaa9567089d20378f7c1d82668453b0849c11c88e9ad88",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-768-900.png",
+      "size": 881492,
+      "sha256": "990c2d7bcc4d36c170aaa9567089d20378f7c1d82668453b0849c11c88e9ad88",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/hero-heading/font-restored/home-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-768-900.png",
+      "size": 881492,
+      "sha256": "990c2d7bcc4d36c170aaa9567089d20378f7c1d82668453b0849c11c88e9ad88",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-768-900.png",
+      "size": 881492,
+      "sha256": "990c2d7bcc4d36c170aaa9567089d20378f7c1d82668453b0849c11c88e9ad88",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-390-900.png",
+      "size": 622730,
+      "sha256": "ce055cd112dfaccf35b9071eaef0250c156088d6dcd25ecae75e55056b9d84cd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-390-900.png",
+      "size": 622730,
+      "sha256": "ce055cd112dfaccf35b9071eaef0250c156088d6dcd25ecae75e55056b9d84cd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/after/home-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-390-900.png",
+      "size": 622730,
+      "sha256": "ce055cd112dfaccf35b9071eaef0250c156088d6dcd25ecae75e55056b9d84cd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/hero-heading/font-restored/home-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-390-900.png",
+      "size": 622730,
+      "sha256": "ce055cd112dfaccf35b9071eaef0250c156088d6dcd25ecae75e55056b9d84cd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-390-900.png",
+      "size": 622730,
+      "sha256": "ce055cd112dfaccf35b9071eaef0250c156088d6dcd25ecae75e55056b9d84cd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/home-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-320-900.png",
+      "size": 548083,
+      "sha256": "8bb2e58f7a3a20b27609779dd9ba91f7abf383dbf249863d7fe4b9a77e3327fa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/home-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-320-900.png",
+      "size": 548083,
+      "sha256": "8bb2e58f7a3a20b27609779dd9ba91f7abf383dbf249863d7fe4b9a77e3327fa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/home-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/home-320-900.png",
+      "size": 548083,
+      "sha256": "8bb2e58f7a3a20b27609779dd9ba91f7abf383dbf249863d7fe4b9a77e3327fa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-1920.png",
+      "size": 2024139,
+      "sha256": "74db0e08c225273eecbde4c4940eac08b91e252d2cf0fde79e1bbb27a6db7b3a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-1920.png",
+      "size": 1968140,
+      "sha256": "53fb449e57ecdf802d0c5b37fd243c7be8fca00bb31c654d55241d5603eed6fa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-1440.png",
+      "size": 1913955,
+      "sha256": "5110e4a5777adc185959a0c04afcd2a8626dc5e7a146380abbbebbe88c35474e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-1440.png",
+      "size": 1859584,
+      "sha256": "ffbda01f345b1024aa6d796f3be2e86f58eb91aa47256d0141fc036661168daa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/website-competition/initial-1440.png",
+      "canonical": "docs/figma/qa/screenshots/website-competition/home-1440.png",
+      "size": 1459250,
+      "sha256": "0257ef81d1bc639ada42d61c941fdb73a258fa9ddbc0b91477f6ed99cd3145fe",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/website-competition/final-qa/dealer-1440.png",
+      "canonical": "docs/figma/qa/screenshots/website-competition/final-qa/admin-1440.png",
+      "size": 1456946,
+      "sha256": "ad99e0f8d4e4710a8194088f04cb9ad9e937d3a3c40d689fb2bdd0cc13a13708",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-1024.png",
+      "size": 1445432,
+      "sha256": "2a382287a466c7538d7a262f9b635158e4d33e57dc025ca2fd5b03e9573595ef",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-1024.png",
+      "size": 1391300,
+      "sha256": "1829fc8654ab74b881210900a8ac92812f9a28a0784af6e2461c6a96f4d51419",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-768.png",
+      "size": 1129853,
+      "sha256": "6c7a9ed70c9d70757988fabeba00ce3059e3c9619138e9916874c6a9bceb293f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-768.png",
+      "size": 1070882,
+      "sha256": "9d384f7f401a12cecbca635d9071f0433431630537615c448518270436147b28",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1440-900.png",
+      "size": 143420,
+      "sha256": "efe0f2c84392dc0635ee2baf6fe7cab607827aabffb3a65f06b95baa036a90c5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1440-900.png",
+      "size": 143420,
+      "sha256": "efe0f2c84392dc0635ee2baf6fe7cab607827aabffb3a65f06b95baa036a90c5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/live-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1440-900.png",
+      "size": 143420,
+      "sha256": "efe0f2c84392dc0635ee2baf6fe7cab607827aabffb3a65f06b95baa036a90c5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1440-900.png",
+      "size": 143420,
+      "sha256": "efe0f2c84392dc0635ee2baf6fe7cab607827aabffb3a65f06b95baa036a90c5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1920-900.png",
+      "size": 146320,
+      "sha256": "d524a53ca1b2bc0a1ea424a844a2bd332190665bab3e4ca425d33b1507ca0428",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1920-900.png",
+      "size": 146320,
+      "sha256": "d524a53ca1b2bc0a1ea424a844a2bd332190665bab3e4ca425d33b1507ca0428",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1920-900.png",
+      "size": 146320,
+      "sha256": "d524a53ca1b2bc0a1ea424a844a2bd332190665bab3e4ca425d33b1507ca0428",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1920-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1920-1200.png",
+      "size": 181833,
+      "sha256": "e33cd1e1cb942481e4a02070b7c92fb857dd2e4d43b8c877c9fec3401bdd8d3e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1920-1200.png",
+      "size": 181833,
+      "sha256": "e33cd1e1cb942481e4a02070b7c92fb857dd2e4d43b8c877c9fec3401bdd8d3e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1920-1200.png",
+      "size": 181833,
+      "sha256": "e33cd1e1cb942481e4a02070b7c92fb857dd2e4d43b8c877c9fec3401bdd8d3e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1024-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-1024-1200.png",
+      "size": 180302,
+      "sha256": "00d0daf3722000a7f4e637508435f64266497877e72f85a2875549524164b0a5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-1024-1200.png",
+      "size": 180302,
+      "sha256": "00d0daf3722000a7f4e637508435f64266497877e72f85a2875549524164b0a5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-1024-1200.png",
+      "size": 180302,
+      "sha256": "00d0daf3722000a7f4e637508435f64266497877e72f85a2875549524164b0a5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-390.png",
+      "size": 719241,
+      "sha256": "cac434c30be73cb50261de0473f7e8b470149eccfbdfa587661b1d4a0a84cbd6",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1440-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1440-1200.png",
+      "size": 178428,
+      "sha256": "506c2930a640a50d571b327cd569c33cdcc17ce968e0444fe4df8f86999d1994",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1440-1200.png",
+      "size": 178428,
+      "sha256": "506c2930a640a50d571b327cd569c33cdcc17ce968e0444fe4df8f86999d1994",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1440-1200.png",
+      "size": 178428,
+      "sha256": "506c2930a640a50d571b327cd569c33cdcc17ce968e0444fe4df8f86999d1994",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1024.png",
+      "size": 348040,
+      "sha256": "3d589392c45a5aa25780b1adad126a408e232012819f5ed12b011312d285ee92",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1024.png",
+      "size": 348040,
+      "sha256": "3d589392c45a5aa25780b1adad126a408e232012819f5ed12b011312d285ee92",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-1440.png",
+      "size": 173159,
+      "sha256": "9607a1ed1bc13edf94d442e1c872af564f9151a54175aa66c4fcbe534a735d67",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-390.png",
+      "size": 675869,
+      "sha256": "6e72c13dfde270f6733bc2cc27434384b54ac310c37142b0d0462fd8d6081d76",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1920.png",
+      "size": 337846,
+      "sha256": "fe9beee7c0e759e4d3c9f1b916b60f1ea4d6c0fe85884f131b7ab820926361b1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1920.png",
+      "size": 337846,
+      "sha256": "fe9beee7c0e759e4d3c9f1b916b60f1ea4d6c0fe85884f131b7ab820926361b1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1440.png",
+      "size": 331497,
+      "sha256": "79e371280b8ced3b5169dd557054531561b0f0826a6a7f63d823276a69915539",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-1440.png",
+      "size": 331497,
+      "sha256": "79e371280b8ced3b5169dd557054531561b0f0826a6a7f63d823276a69915539",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1024-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1024-1200.png",
+      "size": 161549,
+      "sha256": "e652194cf5f443ab5321016e79d03841f29c77402448de1511a49bcb1e17e9b7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1024-1200.png",
+      "size": 161549,
+      "sha256": "e652194cf5f443ab5321016e79d03841f29c77402448de1511a49bcb1e17e9b7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-1024-1200.png",
+      "size": 161549,
+      "sha256": "e652194cf5f443ab5321016e79d03841f29c77402448de1511a49bcb1e17e9b7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-768-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-768-1200.png",
+      "size": 160459,
+      "sha256": "0ae55ee9d38c203409282d9cfbf4135bc9c4c415bf655a7e481b08dc0e99f463",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-768-1200.png",
+      "size": 160459,
+      "sha256": "0ae55ee9d38c203409282d9cfbf4135bc9c4c415bf655a7e481b08dc0e99f463",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-768-1200.png",
+      "size": 160459,
+      "sha256": "0ae55ee9d38c203409282d9cfbf4135bc9c4c415bf655a7e481b08dc0e99f463",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-768.png",
+      "size": 319162,
+      "sha256": "87e18fee1abc33cb4cb1c7821bab700842172fb0c8e881d19efcf73347821c36",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-768.png",
+      "size": 319162,
+      "sha256": "87e18fee1abc33cb4cb1c7821bab700842172fb0c8e881d19efcf73347821c36",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/website-competition/initial-390.png",
+      "canonical": "docs/figma/qa/screenshots/website-competition/home-390.png",
+      "size": 620935,
+      "sha256": "7ff07842baff0ee35a5123aae91ada256e9ea27a2601e513c18832013a8bfea8",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/inactive-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/inactive-320.png",
+      "size": 615811,
+      "sha256": "e4b0748242924e1e1e777da2bd0ac7ffa0a44cda1d0ee77bf92d4eeb858dd0fc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1024-900.png",
+      "size": 122249,
+      "sha256": "f6863e0010a20ce3f6f0fde907641c0b4fbf31e7cc7fbabeeaeef0117c70e15e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1024-900.png",
+      "size": 122249,
+      "sha256": "f6863e0010a20ce3f6f0fde907641c0b4fbf31e7cc7fbabeeaeef0117c70e15e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-1024-900.png",
+      "size": 122249,
+      "sha256": "f6863e0010a20ce3f6f0fde907641c0b4fbf31e7cc7fbabeeaeef0117c70e15e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-320-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-320-1200.png",
+      "size": 148142,
+      "sha256": "13ee7e16a216c76b46042693047f71f282ea6a357e3aadb528d354591100b7da",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-320-1200.png",
+      "size": 148142,
+      "sha256": "13ee7e16a216c76b46042693047f71f282ea6a357e3aadb528d354591100b7da",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-320-1200.png",
+      "size": 148142,
+      "sha256": "13ee7e16a216c76b46042693047f71f282ea6a357e3aadb528d354591100b7da",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/landing-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/landing-320.png",
+      "size": 571023,
+      "sha256": "99ff48cbdfff902a939baf25afcd48c5e4f36b0fa3d8cf21cb076172c07810f2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-390-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-390-1200.png",
+      "size": 142301,
+      "sha256": "de42e906ff38b11aea46dac0c18b833de0b55c881294eb6cb5a03e0ad3f55a65",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-390-1200.png",
+      "size": 142301,
+      "sha256": "de42e906ff38b11aea46dac0c18b833de0b55c881294eb6cb5a03e0ad3f55a65",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-390-1200.png",
+      "size": 142301,
+      "sha256": "de42e906ff38b11aea46dac0c18b833de0b55c881294eb6cb5a03e0ad3f55a65",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-768-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-768-1200.png",
+      "size": 142268,
+      "sha256": "1949f5dfb5c0c85bf63f7c228947a0526a9e9d2e4207a11178716471b2f26d5c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-768-1200.png",
+      "size": 142268,
+      "sha256": "1949f5dfb5c0c85bf63f7c228947a0526a9e9d2e4207a11178716471b2f26d5c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-768-1200.png",
+      "size": 142268,
+      "sha256": "1949f5dfb5c0c85bf63f7c228947a0526a9e9d2e4207a11178716471b2f26d5c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-768-900.png",
+      "size": 111791,
+      "sha256": "1d63bb90088994ba1f0d84d396b13db0e3c114051d518c215783db30551b46af",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-768-900.png",
+      "size": 111791,
+      "sha256": "1d63bb90088994ba1f0d84d396b13db0e3c114051d518c215783db30551b46af",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-768-900.png",
+      "size": 111791,
+      "sha256": "1d63bb90088994ba1f0d84d396b13db0e3c114051d518c215783db30551b46af",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-320-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-320-1200.png",
+      "size": 136080,
+      "sha256": "816daf8ea32a927c14da3c75d3d1d803b33400cf7b37c04e78f779b477cad39a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-many-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-320-1200.png",
+      "size": 136080,
+      "sha256": "816daf8ea32a927c14da3c75d3d1d803b33400cf7b37c04e78f779b477cad39a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/many-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-many-320-1200.png",
+      "size": 136080,
+      "sha256": "816daf8ea32a927c14da3c75d3d1d803b33400cf7b37c04e78f779b477cad39a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-768.png",
+      "size": 180545,
+      "sha256": "031481bd0cb9de4d1fbd2f2d3ffaf52442de005c531b6191de720926c90cfd24",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/phase-3c-progress/D09-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-768.png",
+      "size": 180545,
+      "sha256": "031481bd0cb9de4d1fbd2f2d3ffaf52442de005c531b6191de720926c90cfd24",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-768.png",
+      "size": 180545,
+      "sha256": "031481bd0cb9de4d1fbd2f2d3ffaf52442de005c531b6191de720926c90cfd24",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-1024.png",
+      "size": 177502,
+      "sha256": "95ab034b738b1ec75775fce746a8e64727b68c561695582c3ee46a49999f521b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/phase-3c-progress/D09-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-1024.png",
+      "size": 177502,
+      "sha256": "95ab034b738b1ec75775fce746a8e64727b68c561695582c3ee46a49999f521b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-1024.png",
+      "size": 177502,
+      "sha256": "95ab034b738b1ec75775fce746a8e64727b68c561695582c3ee46a49999f521b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-390-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-390-1200.png",
+      "size": 130430,
+      "sha256": "a6013dea5a1038ebfd512ffb2ac530368089dfac26d01ba1801d5f6d66f3e9e1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-390-1200.png",
+      "size": 130430,
+      "sha256": "a6013dea5a1038ebfd512ffb2ac530368089dfac26d01ba1801d5f6d66f3e9e1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-390-1200.png",
+      "size": 130430,
+      "sha256": "a6013dea5a1038ebfd512ffb2ac530368089dfac26d01ba1801d5f6d66f3e9e1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-320-900.png",
+      "size": 86747,
+      "sha256": "fa98854af113e7fd53351361279ffb0bb70dccf56358d4ceea3041ae1b4ff91b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-320-900.png",
+      "size": 86747,
+      "sha256": "fa98854af113e7fd53351361279ffb0bb70dccf56358d4ceea3041ae1b4ff91b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/live-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-320-900.png",
+      "size": 86747,
+      "sha256": "fa98854af113e7fd53351361279ffb0bb70dccf56358d4ceea3041ae1b4ff91b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-320-900.png",
+      "size": 86747,
+      "sha256": "fa98854af113e7fd53351361279ffb0bb70dccf56358d4ceea3041ae1b4ff91b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1024-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1024-1200.png",
+      "size": 126461,
+      "sha256": "c030b55af267ba01c7a6c3b4b5b8a9753990d6affa31c4e825dd5642b716a38d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1024-1200.png",
+      "size": 126461,
+      "sha256": "c030b55af267ba01c7a6c3b4b5b8a9753990d6affa31c4e825dd5642b716a38d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1024-1200.png",
+      "size": 126461,
+      "sha256": "c030b55af267ba01c7a6c3b4b5b8a9753990d6affa31c4e825dd5642b716a38d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-1024-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-1024-1200.png",
+      "size": 114742,
+      "sha256": "ea9510f172fc4918c1572716d9428b91fb05f87b8b7ea961230a522c2d2cdcb7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-1024-1200.png",
+      "size": 114742,
+      "sha256": "ea9510f172fc4918c1572716d9428b91fb05f87b8b7ea961230a522c2d2cdcb7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/design-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-1024-1200.png",
+      "size": 114742,
+      "sha256": "ea9510f172fc4918c1572716d9428b91fb05f87b8b7ea961230a522c2d2cdcb7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/long-1920.png",
+      "size": 457144,
+      "sha256": "1d999d77eeb8557c2b305a026fa515d0ada94f49cad11ec8aeccb1871f70d0b2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/long-1440.png",
+      "size": 447832,
+      "sha256": "70f29a5c25aed8e3a4db4bf035ff3d87c33af78e41172b50d59f7b6001a15f7e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/website-competition/final-qa/hero-390.png",
+      "canonical": "docs/figma/qa/screenshots/hero-heading/before/hero-390.png",
+      "size": 439694,
+      "sha256": "955bb6aafcff7a4c413db56ca241ec8e92081872ce35c458c5e9e74f198b756d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-768-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-768-1200.png",
+      "size": 108603,
+      "sha256": "3213c02d18fb819c0c20783fbbd3ceca63031a04793c4230e908936a176a3f50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-768-1200.png",
+      "size": 108603,
+      "sha256": "3213c02d18fb819c0c20783fbbd3ceca63031a04793c4230e908936a176a3f50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-768-1200.png",
+      "size": 108603,
+      "sha256": "3213c02d18fb819c0c20783fbbd3ceca63031a04793c4230e908936a176a3f50",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/leaderboard-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-390-900.png",
+      "size": 85165,
+      "sha256": "b0c659ad900c20681afe9d0585999597a3fd6c88c3b7d5c662c5650afb711d8d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/leaderboard-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-390-900.png",
+      "size": 85165,
+      "sha256": "b0c659ad900c20681afe9d0585999597a3fd6c88c3b7d5c662c5650afb711d8d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/leaderboard-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/leaderboard-390-900.png",
+      "size": 85165,
+      "sha256": "b0c659ad900c20681afe9d0585999597a3fd6c88c3b7d5c662c5650afb711d8d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-390-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-390-1200.png",
+      "size": 103060,
+      "sha256": "de564a4e7a0e93b37a60f67a097134a30a54cb1d8a3a68989cd73794d674572c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-390-1200.png",
+      "size": 103060,
+      "sha256": "de564a4e7a0e93b37a60f67a097134a30a54cb1d8a3a68989cd73794d674572c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-390-1200.png",
+      "size": 103060,
+      "sha256": "de564a4e7a0e93b37a60f67a097134a30a54cb1d8a3a68989cd73794d674572c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-390.png",
+      "size": 101891,
+      "sha256": "cb13c565eb5560916fa7d36e59f23b8c62b9b2ed13e8d8b9b099ed2fa532cdc2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-320.png",
+      "size": 197501,
+      "sha256": "8df6ce49f375759c2afd7dcec3ac3438819054b90ed20eab0d4c666e01a48738",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-320.png",
+      "size": 197501,
+      "sha256": "8df6ce49f375759c2afd7dcec3ac3438819054b90ed20eab0d4c666e01a48738",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-320-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-320-1200.png",
+      "size": 98310,
+      "sha256": "46cfaa71dfdd3aa200eb94170a8e4edf8c1577f9e448cb9ef4e27f39f012bccd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-320-1200.png",
+      "size": 98310,
+      "sha256": "46cfaa71dfdd3aa200eb94170a8e4edf8c1577f9e448cb9ef4e27f39f012bccd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-320-1200.png",
+      "size": 98310,
+      "sha256": "46cfaa71dfdd3aa200eb94170a8e4edf8c1577f9e448cb9ef4e27f39f012bccd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-1920-900.png",
+      "size": 195541,
+      "sha256": "bb5e9a082aabbb697c30bb07552a1ac81f4e497cb2c8b95af55cd142b1e53e3d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-long-1920-900.png",
+      "size": 195541,
+      "sha256": "bb5e9a082aabbb697c30bb07552a1ac81f4e497cb2c8b95af55cd142b1e53e3d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-768-1200.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-768-1200.png",
+      "size": 95944,
+      "sha256": "0818097347a14a181ebd171d381faabee335232c992ec9531f2520bc434a079c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-768-1200.png",
+      "size": 95944,
+      "sha256": "0818097347a14a181ebd171d381faabee335232c992ec9531f2520bc434a079c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/design-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-768-1200.png",
+      "size": 95944,
+      "sha256": "0818097347a14a181ebd171d381faabee335232c992ec9531f2520bc434a079c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/long-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-long-1440-900.png",
+      "size": 191759,
+      "sha256": "da2b3f14351422aa7446f419653960911f5ec202c0ab81f9b5ba2260f3b98a8c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-long-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-390.png",
+      "size": 172808,
+      "sha256": "330049f74113de81d66724a2eb8f9144e587f4036e794ea5daa4ab7983b4cc47",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/long-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/long-390.png",
+      "size": 172808,
+      "sha256": "330049f74113de81d66724a2eb8f9144e587f4036e794ea5daa4ab7983b4cc47",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/long-320.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/long-320.png",
+      "size": 336029,
+      "sha256": "fdc90c149cfafbcc277b532bf43dcbefd818ac1f29301de07db800c5e23a796e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-1024.png",
+      "size": 320467,
+      "sha256": "a9311303be5416b3596ae5c73e69beafecd4065cdf451985d03ed6e66bcbe3be",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-320.png",
+      "size": 105206,
+      "sha256": "40286a80f61b4671875122a8cfcbbf9a22e4b8285a87e87a03d709f1903e4537",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/phase-3c-progress/D09-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-320.png",
+      "size": 105206,
+      "sha256": "40286a80f61b4671875122a8cfcbbf9a22e4b8285a87e87a03d709f1903e4537",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D09-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-320.png",
+      "size": 105206,
+      "sha256": "40286a80f61b4671875122a8cfcbbf9a22e4b8285a87e87a03d709f1903e4537",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1024-900.png",
+      "size": 47256,
+      "sha256": "6f788c92be7450f6114774b91d24fe14fd85dcf48c53828038636b78c00a4715",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1024-900.png",
+      "size": 47256,
+      "sha256": "6f788c92be7450f6114774b91d24fe14fd85dcf48c53828038636b78c00a4715",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1024-900.png",
+      "size": 47256,
+      "sha256": "6f788c92be7450f6114774b91d24fe14fd85dcf48c53828038636b78c00a4715",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1024-900.png",
+      "size": 47256,
+      "sha256": "6f788c92be7450f6114774b91d24fe14fd85dcf48c53828038636b78c00a4715",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1024-900.png",
+      "size": 47256,
+      "sha256": "6f788c92be7450f6114774b91d24fe14fd85dcf48c53828038636b78c00a4715",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1920-900.png",
+      "size": 141347,
+      "sha256": "54cf03043575693b7986cfdea5eb337347ac50c21f2d24a31a943bff2e012ca4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1920-900.png",
+      "size": 141347,
+      "sha256": "54cf03043575693b7986cfdea5eb337347ac50c21f2d24a31a943bff2e012ca4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-detail-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1440-900.png",
+      "size": 138886,
+      "sha256": "599f3c47a7b1dd4bd2c73b2807d01dc16953bdceda1a635bf38eed8da7e4d6dc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/detail-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-detail-1440-900.png",
+      "size": 138886,
+      "sha256": "599f3c47a7b1dd4bd2c73b2807d01dc16953bdceda1a635bf38eed8da7e4d6dc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-768-900.png",
+      "size": 46159,
+      "sha256": "2f519feead9a3388a753f14961777ca9e03339e9e111fc953cd32a05aa0c14eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-768-900.png",
+      "size": 46159,
+      "sha256": "2f519feead9a3388a753f14961777ca9e03339e9e111fc953cd32a05aa0c14eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-768-900.png",
+      "size": 46159,
+      "sha256": "2f519feead9a3388a753f14961777ca9e03339e9e111fc953cd32a05aa0c14eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-768-900.png",
+      "size": 46159,
+      "sha256": "2f519feead9a3388a753f14961777ca9e03339e9e111fc953cd32a05aa0c14eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-768-900.png",
+      "size": 46159,
+      "sha256": "2f519feead9a3388a753f14961777ca9e03339e9e111fc953cd32a05aa0c14eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-1920.png",
+      "size": 276257,
+      "sha256": "1b24ea02be83cabe11fad7f6ceac7f8ffdea16668095b9d2b8e050b3bacce1aa",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-1440.png",
+      "size": 272214,
+      "sha256": "bf4e45fd2d3a43be0b5c60358f9130d938c2647617a58667df581a6c3aaddce4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-768.png",
+      "size": 261413,
+      "sha256": "13ee21ed1613b4383d2d34a12cc9faff624d3100fbf14b50f0a4732ea802febc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/awards-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-1920-900.png",
+      "size": 85003,
+      "sha256": "59b4b7cb875b526b28cbfd0fe918e7aac55ea492e3313cc1a69ae68fdf93f839",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/empty-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-1920-900.png",
+      "size": 85003,
+      "sha256": "59b4b7cb875b526b28cbfd0fe918e7aac55ea492e3313cc1a69ae68fdf93f839",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/empty-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-1440-900.png",
+      "size": 83742,
+      "sha256": "4253fe8614e2d014f1b132f9b5d2a5e920a535d378119e1ca328e0207c849714",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1920-900.png",
+      "size": 55720,
+      "sha256": "25c997aa473a6230b3d04aae32496958879a9d8fb5be297995bf7d6c828bcbfc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1920-900.png",
+      "size": 55720,
+      "sha256": "25c997aa473a6230b3d04aae32496958879a9d8fb5be297995bf7d6c828bcbfc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1920-900.png",
+      "size": 55720,
+      "sha256": "25c997aa473a6230b3d04aae32496958879a9d8fb5be297995bf7d6c828bcbfc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1440-900.png",
+      "size": 54461,
+      "sha256": "0c0e3e274e9b969be42677754d5208fa00151e1421b338d192105e2e7b77b838",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1440-900.png",
+      "size": 54461,
+      "sha256": "0c0e3e274e9b969be42677754d5208fa00151e1421b338d192105e2e7b77b838",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-1440-900.png",
+      "size": 54461,
+      "sha256": "0c0e3e274e9b969be42677754d5208fa00151e1421b338d192105e2e7b77b838",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/final/D09-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/before/D09-390.png",
+      "size": 102137,
+      "sha256": "fbfa3142c57dbfa5f4b01b41d17189e51f8140268c830ddb65df2a19d611a882",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/before/D09-390.png",
+      "size": 102137,
+      "sha256": "fbfa3142c57dbfa5f4b01b41d17189e51f8140268c830ddb65df2a19d611a882",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/design-1920.png",
+      "size": 199330,
+      "sha256": "ff404f63be0bbb0214d10cb0cee6083bd515dd3e3d270e972cb56f0896178a20",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/design-1440.png",
+      "size": 195806,
+      "sha256": "1d0cba56f3ad1113702fc3471ce287f1326a9ebb674f54c83f40f4b9522eb58a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-390-900.png",
+      "size": 32426,
+      "sha256": "a5f355e5ba4985eb2abc70ec2363fc3779ccc63ef203b66e37d3b5dfffa5b290",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-390-900.png",
+      "size": 32426,
+      "sha256": "a5f355e5ba4985eb2abc70ec2363fc3779ccc63ef203b66e37d3b5dfffa5b290",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-390-900.png",
+      "size": 32426,
+      "sha256": "a5f355e5ba4985eb2abc70ec2363fc3779ccc63ef203b66e37d3b5dfffa5b290",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-390-900.png",
+      "size": 32426,
+      "sha256": "a5f355e5ba4985eb2abc70ec2363fc3779ccc63ef203b66e37d3b5dfffa5b290",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-390-900.png",
+      "size": 32426,
+      "sha256": "a5f355e5ba4985eb2abc70ec2363fc3779ccc63ef203b66e37d3b5dfffa5b290",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/awards-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-1024-900.png",
+      "size": 64544,
+      "sha256": "4b4c3f6d169dcb3ecafb88da8830ad341ce11aac1bc0d2041946126eab13de8e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/empty-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-1024-900.png",
+      "size": 64544,
+      "sha256": "4b4c3f6d169dcb3ecafb88da8830ad341ce11aac1bc0d2041946126eab13de8e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/lookup-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-320-900.png",
+      "size": 31815,
+      "sha256": "4ba73555cbc70e797295cccee3dcce0bfa959d147518cea117b78ec2ce74dd78",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/lookup-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-320-900.png",
+      "size": 31815,
+      "sha256": "4ba73555cbc70e797295cccee3dcce0bfa959d147518cea117b78ec2ce74dd78",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-320-900.png",
+      "size": 31815,
+      "sha256": "4ba73555cbc70e797295cccee3dcce0bfa959d147518cea117b78ec2ce74dd78",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-320-900.png",
+      "size": 31815,
+      "sha256": "4ba73555cbc70e797295cccee3dcce0bfa959d147518cea117b78ec2ce74dd78",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/lookup-live-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/lookup-320-900.png",
+      "size": 31815,
+      "sha256": "4ba73555cbc70e797295cccee3dcce0bfa959d147518cea117b78ec2ce74dd78",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-1920.png",
+      "size": 189843,
+      "sha256": "ac4696a91151d5a88e203ffa0530fee93725bff5528480f5790e69c651c48815",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1440.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-1440.png",
+      "size": 185825,
+      "sha256": "b002737da96977887247aa55aea14c1da41faa6b2089560ba6e7da2c4731eac5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-390-900.png",
+      "size": 92255,
+      "sha256": "bd64e8732de39e60ff804d0695dc92e78fbaf06d73896f8942ea967fec20fd6f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D09-768.png",
+      "size": 181115,
+      "sha256": "f2b320ced59abe0e75222948ad86563c74920a41e46205baf0f17a1f52387e2a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-1024.png",
+      "size": 180155,
+      "sha256": "4ed174b2d93ac7240a102e618afc8f8af5f766a202ea5d90051a38f1cb925063",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-1024.png",
+      "size": 89998,
+      "sha256": "af7dee9f3310139b0e628c625c27218e382522f7a21ec0f2948d9e0aebcfec1c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-1024.png",
+      "size": 89998,
+      "sha256": "af7dee9f3310139b0e628c625c27218e382522f7a21ec0f2948d9e0aebcfec1c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-768.png",
+      "size": 178425,
+      "sha256": "a903542b0d71d800c53e604c7204edd2a96f09dc777cf3b2e3146a9de512951a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-768.png",
+      "size": 88939,
+      "sha256": "cd2db5892035e62348311ca436227ad3f2ad34e1f3d2248a6879200660224fcc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-768.png",
+      "size": 88939,
+      "sha256": "cd2db5892035e62348311ca436227ad3f2ad34e1f3d2248a6879200660224fcc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/rules-1920.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/rules-1920.png",
+      "size": 177173,
+      "sha256": "7d612934701e8b3f3f20912079e76bd6c076bb91bb5de4aa043ce7b2d9b33b05",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-768.png",
+      "size": 87499,
+      "sha256": "3d3b55823138ef07c95974bf125d1c54e3d054b96236c41adbdd8d08ab1b69e9",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-768.png",
+      "size": 87499,
+      "sha256": "3d3b55823138ef07c95974bf125d1c54e3d054b96236c41adbdd8d08ab1b69e9",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D09.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D09.png",
+      "size": 173559,
+      "sha256": "9996701afb28529f3a491796b9f27ca3bf3820383bb28b1dc7c832afe9c590ce",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-design-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-320-900.png",
+      "size": 86666,
+      "sha256": "9cb70d6c12b2089355da885f13275d11d4196f50da7036c0059dcee315f88fc5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/design-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-320-900.png",
+      "size": 86666,
+      "sha256": "9cb70d6c12b2089355da885f13275d11d4196f50da7036c0059dcee315f88fc5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-390.png",
+      "size": 168512,
+      "sha256": "694d21834854e885b85af9876ca48c31abb425dd5f44ee8ad06562f98e748d46",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-1024.png",
+      "size": 84115,
+      "sha256": "05292610aaf09cd49e2c2002c10a27d264ba2034b4e36b0af2d8f9bb707e2ec4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-1024.png",
+      "size": 84115,
+      "sha256": "05292610aaf09cd49e2c2002c10a27d264ba2034b4e36b0af2d8f9bb707e2ec4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-1024.png",
+      "size": 83653,
+      "sha256": "51ca1694b2095522ab5ddb732b39365e587db981b607d42a4342a675cf20f362",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-1024.png",
+      "size": 83653,
+      "sha256": "51ca1694b2095522ab5ddb732b39365e587db981b607d42a4342a675cf20f362",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-768.png",
+      "size": 82312,
+      "sha256": "f0e3ac793717680dcad9e6b8df2932c466e7c7b3951767398c07c94ff52d65d3",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-768.png",
+      "size": 82312,
+      "sha256": "f0e3ac793717680dcad9e6b8df2932c466e7c7b3951767398c07c94ff52d65d3",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-1024.png",
+      "size": 81509,
+      "sha256": "db5c3f0a02385958c9e8e8a0985b92437d11c22fbca40de30688ee44f06ada32",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1024.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-1024.png",
+      "size": 81509,
+      "sha256": "db5c3f0a02385958c9e8e8a0985b92437d11c22fbca40de30688ee44f06ada32",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-768.png",
+      "size": 81387,
+      "sha256": "1e391935c04166cf8093905a967fffe3361541d88e717cb4e6abadf75a98c3a5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-768.png",
+      "size": 81387,
+      "sha256": "1e391935c04166cf8093905a967fffe3361541d88e717cb4e6abadf75a98c3a5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-768.png",
+      "size": 80025,
+      "sha256": "aa6c0f085ba341c670cdc7e2e63dffd1955198bffadea944616ce88904f99ffe",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-768.png",
+      "size": 80025,
+      "sha256": "aa6c0f085ba341c670cdc7e2e63dffd1955198bffadea944616ce88904f99ffe",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-390.png",
+      "size": 156074,
+      "sha256": "20262eddb27af97af33a4a47c320c6aa4db740cb46760fcb1a77cd4403c6a4da",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/awards-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-390-900.png",
+      "size": 51471,
+      "sha256": "a1567e4398834caf13c99ab6c99765a17f89f4c229cd769e97dbfbab4077fedf",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/empty-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-390-900.png",
+      "size": 51471,
+      "sha256": "a1567e4398834caf13c99ab6c99765a17f89f4c229cd769e97dbfbab4077fedf",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/step-two-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/step-two-320.png",
+      "size": 153685,
+      "sha256": "5b16973131688ad4ff2313d13f8b60cbb4bcb2bfe6514b8ec9fec3e234ef9b45",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-one-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-390-900.png",
+      "size": 76054,
+      "sha256": "ff5833966e0cd1ce0ccd0dc0f306619a247908ddff394e31b3a4aefb75da4866",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-390.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-390-900.png",
+      "size": 76054,
+      "sha256": "ff5833966e0cd1ce0ccd0dc0f306619a247908ddff394e31b3a4aefb75da4866",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/success-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/success-320.png",
+      "size": 150913,
+      "sha256": "d96f76289ebdfe67577c85d893a258ed89d1c23c94b5d41610c6ed6d67dc390e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-768.png",
+      "size": 72884,
+      "sha256": "30d9f7d60d94eec872980277a37431aa93dc568ae04160762372db404a5c3f60",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-768.png",
+      "size": 72884,
+      "sha256": "30d9f7d60d94eec872980277a37431aa93dc568ae04160762372db404a5c3f60",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-390.png",
+      "size": 72834,
+      "sha256": "cc17955125c4e1daba8e7354719d3e0b0d5c622f78f4d88cee0d261cebf94e30",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-390.png",
+      "size": 72834,
+      "sha256": "cc17955125c4e1daba8e7354719d3e0b0d5c622f78f4d88cee0d261cebf94e30",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-320.png",
+      "size": 71683,
+      "sha256": "be7b51daa067018e6f824c34eee082c0c4554996d5580221048db1f115daf1c1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D07-320.png",
+      "size": 71683,
+      "sha256": "be7b51daa067018e6f824c34eee082c0c4554996d5580221048db1f115daf1c1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/awards-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-320-900.png",
+      "size": 47602,
+      "sha256": "aa064f53edeeae22303c63720731c94bdf8c239306daa7e53147d7b9ca0eb124",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-one-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-320-900.png",
+      "size": 71073,
+      "sha256": "a9a89045c215b5b19b50a9be5bb75be0189e572fa3994f6b99033ae96343d4fe",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-320.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-320-900.png",
+      "size": 71073,
+      "sha256": "a9a89045c215b5b19b50a9be5bb75be0189e572fa3994f6b99033ae96343d4fe",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/awards-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-768-900.png",
+      "size": 47297,
+      "sha256": "93cd5709c46eb2560bbc5c67b3b928f3831d743a0cee12cccdeffaaa40b7ffcc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/empty-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-empty-768-900.png",
+      "size": 47297,
+      "sha256": "93cd5709c46eb2560bbc5c67b3b928f3831d743a0cee12cccdeffaaa40b7ffcc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-768.png",
+      "size": 69978,
+      "sha256": "fd982fc75705d7fec868b3fbc5c4cd31302aca8f72256b2e73231487162d176e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-768.png",
+      "size": 69978,
+      "sha256": "fd982fc75705d7fec868b3fbc5c4cd31302aca8f72256b2e73231487162d176e",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/design-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-design-1920-900.png",
+      "size": 129397,
+      "sha256": "bd3daac1321a3b1ceb8999f5e56f6253b243be5b3ff698a8c8a347f7d9fe4a72",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-390.png",
+      "size": 61592,
+      "sha256": "b185ce95eb4210f0ea28d2eb89b8fd0f5e56a5357d676bc2808d08a6aff1bccd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-390.png",
+      "size": 61592,
+      "sha256": "b185ce95eb4210f0ea28d2eb89b8fd0f5e56a5357d676bc2808d08a6aff1bccd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-320.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/design-320.png",
+      "size": 121812,
+      "sha256": "3f390e4deb231e6ce31760101a84b595e7c875670151faef51d9a4537af70614",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-320.png",
+      "size": 60751,
+      "sha256": "46427b6f3bd8b3dff5e76701210fb3f1a7742f76ab9b10ce52f55b5d2fc39994",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D12-320.png",
+      "size": 60751,
+      "sha256": "46427b6f3bd8b3dff5e76701210fb3f1a7742f76ab9b10ce52f55b5d2fc39994",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-390.png",
+      "size": 58719,
+      "sha256": "19a66daa257955abe23380568592a6fd41d24fb5780334ed3bcf343485cee73b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-390.png",
+      "size": 58719,
+      "sha256": "19a66daa257955abe23380568592a6fd41d24fb5780334ed3bcf343485cee73b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-390.png",
+      "size": 58673,
+      "sha256": "48f2a4cb56199b6597b51184fc63580916888938b535238c3614f4e018f25f53",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-390.png",
+      "size": 58673,
+      "sha256": "48f2a4cb56199b6597b51184fc63580916888938b535238c3614f4e018f25f53",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-320.png",
+      "size": 58058,
+      "sha256": "4b05ad8f5c5f0157a30bfe7d634fad6f578907f62951b742a6f79b96d1c17a2f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D11-320.png",
+      "size": 58058,
+      "sha256": "4b05ad8f5c5f0157a30bfe7d634fad6f578907f62951b742a6f79b96d1c17a2f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-320.png",
+      "size": 58057,
+      "sha256": "ff51bc24251ae2a63744d5e9a996e949e77b97c2e82b976af0da50fd27766b37",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D13-320.png",
+      "size": 58057,
+      "sha256": "ff51bc24251ae2a63744d5e9a996e949e77b97c2e82b976af0da50fd27766b37",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-1920.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-1920-900.png",
+      "size": 114351,
+      "sha256": "8abbcc1ea0359dd96e9c40156fa4b90ef1e89f7a389af2401d844a1740306dc1",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-320.png",
+      "size": 56810,
+      "sha256": "12942fce1eed19dcc0f2145eff653e782634fa154c6d15967cee56de6619ec67",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D14-320.png",
+      "size": 56810,
+      "sha256": "12942fce1eed19dcc0f2145eff653e782634fa154c6d15967cee56de6619ec67",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-1440.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-1440-900.png",
+      "size": 112239,
+      "sha256": "747434ce41ac0effa22d60d5fdd169d2de33fc94939c825fdca0cd6e92b44bec",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-390.png",
+      "size": 54816,
+      "sha256": "027f94890484a0450988966dbeb5e814373bb3df3d2acc961b55f5f78ea9c8ac",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-390.png",
+      "size": 54816,
+      "sha256": "027f94890484a0450988966dbeb5e814373bb3df3d2acc961b55f5f78ea9c8ac",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-320.png",
+      "size": 54648,
+      "sha256": "1d5458c3fc7f6197b6d04b489cd010ad3d5ff1dc36bdbfccd7b05c2fdaf9c2fb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D15-320.png",
+      "size": 54648,
+      "sha256": "1d5458c3fc7f6197b6d04b489cd010ad3d5ff1dc36bdbfccd7b05c2fdaf9c2fb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-390.png",
+      "size": 52316,
+      "sha256": "14c78d42fcf3ac16de7bffe3283bf16b1a8e25820505683bc0ebad1354510749",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-390.png",
+      "size": 52316,
+      "sha256": "14c78d42fcf3ac16de7bffe3283bf16b1a8e25820505683bc0ebad1354510749",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-320.png",
+      "size": 51608,
+      "sha256": "de89b9153bcc541dfffeaf7828fd4cf7f5af015ca74e65cc7d61e8dc48f63341",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D10-320.png",
+      "size": 51608,
+      "sha256": "de89b9153bcc541dfffeaf7828fd4cf7f5af015ca74e65cc7d61e8dc48f63341",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-1920.png",
+      "size": 99397,
+      "sha256": "ac02bf0d1799cdb241dad0e58ef631d218e3477f793dea563c2a605b2c4d9e2f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-1920.png",
+      "size": 97392,
+      "sha256": "4bf257f92df4cf92a5ef5b9111236d3bb25a1d547ed8055b431d6d73d2eda0a3",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-1440.png",
+      "size": 97339,
+      "sha256": "ec357474d8bd1aebe6e9d0fb9b6098af1fda7c28365849c03af4c4c891b819cc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D12.png",
+      "size": 97271,
+      "sha256": "2115bae6b4289672ad63f349a46e321f1e074de22ba95abc31e61d9a57eaf271",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-1440.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D07-unknown-1440.png",
+      "size": 96852,
+      "sha256": "e5066aee75bdfb0fa5eaa199cba54ccf14f3002a8808c48fb30854edeb79319c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D07-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D07-1440.png",
+      "size": 95326,
+      "sha256": "190c7234330ffedb5988ccad851932170dfe7a82d3225db3c46c9d1c101dd72a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D15.png",
+      "size": 95002,
+      "sha256": "9fc21f0d3d8a135c20899142abfba91d200dff3837f18d915fad9ecc792b5062",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-1024.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-1024-900.png",
+      "size": 94596,
+      "sha256": "1e70738e70aba9e436de8c51f80d487e68408ef1e484d722e9bb2765c63cc84c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D07.png",
+      "size": 93847,
+      "sha256": "ab03bbd4435bc5a95637ce58c4d733a669e398a51ead4ddf3fb500e56cb05c9b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-1920.png",
+      "size": 92347,
+      "sha256": "fa0c255737a70fb86bb65555c386781dfffab1608657c3068e497ac50c8f5eaf",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-1920.png",
+      "size": 92002,
+      "sha256": "463cbf80a3f60aeff985f3e1da8e45f34b7e18d66ae4f321f8433e48f394b48d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D12-768.png",
+      "size": 91105,
+      "sha256": "7a1814232ee4da9d4ae3057f7cc8a849f29ea33839294235baa640f3ba7acbd9",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D07-unknown-1024.png",
+      "size": 90473,
+      "sha256": "10dcb6d5035272b1ebf2ddede6eaaf6ec0ec7c6182061860622a7153d76361e7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D12-1024.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D12-1024.png",
+      "size": 90348,
+      "sha256": "c8657af49b64cb269ab990f534bb992715e2106e87392c8777d43528c5d05451",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D15-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D15-1440.png",
+      "size": 90202,
+      "sha256": "72dd1e9e92c8e1ff88e2ca85dc4ff4718ca9dc3faefec493b5fcbc4436d58b85",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D11.png",
+      "size": 89961,
+      "sha256": "655fe29304302b6dcf5a7d8c001a31118af460c3f8a8c3ea134bb58d07a24f2a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D11-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D11-1440.png",
+      "size": 89897,
+      "sha256": "0282d5e7a53c06ba0774eba38a57c49cfcb9903a017657b89960778433008382",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-1920.png",
+      "size": 89478,
+      "sha256": "53a0f025b2fc8efa9ccc00e6a8cb877fee2d81fdc96e31d3d5da0c7460d9f675",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D07-1024.png",
+      "size": 89027,
+      "sha256": "c1ad9cb49db18103aa56cc72b8a6f0dc364fc8b963c3318a02b5d530876952b4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-unknown-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D07-unknown-768.png",
+      "size": 88792,
+      "sha256": "94d4c8e76fb113305b0a862728fe7a3f35c886a3db37baa3f5777a0b1a25e629",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-1440.png",
+      "size": 87538,
+      "sha256": "c217adfb959d452c763cbf22e6e4fd1ea4e64afe549cf662adf14fced9beaf81",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D14.png",
+      "size": 87522,
+      "sha256": "77d415fc97864bb6fb82b5c98fa2acd176ad8cd9842bafe7d7ecb2ea490d927a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D15-768.png",
+      "size": 87278,
+      "sha256": "5a817ed9b62b76d9afebce09af035b6fe8dc7117b9725b3d8c5bd1acc46e06c7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D07-768.png",
+      "size": 86086,
+      "sha256": "b5557f83895b6b2525bc849305be4612535098d545952fd45d2738ab43a1e3b7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D07-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D07-768.png",
+      "size": 85923,
+      "sha256": "9a88e5a2b63c4a4f0e99f9f008f9187bb8a7ec511f110d1285ce037b43949c1a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1920-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-1920-900.png",
+      "size": 84975,
+      "sha256": "b457b56fc0cdba220884a166aecdd0ae7a1e29cb2eb4f0019e81b0ee2324f8bf",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D11-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D11-1024.png",
+      "size": 84639,
+      "sha256": "2b52bfd88bf2ec64f772b58418189c8660744459ea94059f6e7453b801946bec",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1440-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-1440-900.png",
+      "size": 83739,
+      "sha256": "45d6cd0db789b0b6cb14666d032eb5482f849d4853086465746106fa75447206",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-1920.png",
+      "size": 83202,
+      "sha256": "37aa24af2eb4e5f3a7cc48be6aabd2d87ee872223a45f5f241bee332975b0da2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D11-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D11-768.png",
+      "size": 82260,
+      "sha256": "a26d390a343d5864343612c39fd9601a9946d3e61a00795987ffd6d67148c488",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D14-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D14-1024.png",
+      "size": 82246,
+      "sha256": "114fd71e7da541eef1e96042a8ab3eaf64b15211f078335c226691104c14b59d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D11-768.png",
+      "size": 82127,
+      "sha256": "df3916fa45576dd4bb1bb109b4b6412f4290d2c44ff88d2588a71fab52a6b01d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-1440.png",
+      "size": 81101,
+      "sha256": "27ab5f5b77e35603e47c0b10a407ba48d48123c868737b27d31d25b006a59089",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D13.png",
+      "size": 81063,
+      "sha256": "761bb2f60469ca26ad2fed57b3aeba1f0dd217134b33b9ccee4dcd37061c51b4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D14-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D14-768.png",
+      "size": 79971,
+      "sha256": "ba3f98046f479c872d4d165ad12eb06a1062ebb52a7f8108114cad1949bac22f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D14-768.png",
+      "size": 79819,
+      "sha256": "57a398ac54bf907034931b0f17218152be4483cae0ce46557e89758af0bfda62",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-1920.png",
+      "size": 79176,
+      "sha256": "0d84715c7c742f14a3b27c21c9b7c1eadd834a4a36f4280bbe5918e3541765f7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-1440.png",
+      "size": 77038,
+      "sha256": "25bb4d754ed490aefd2454a083d5d973ec2f2cce94a210a771681ab92fd84e51",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D10.png",
+      "size": 76156,
+      "sha256": "3d101b59074e25194b69dc0cabd30ee8cbebc4c61aec64266110fbf6418db060",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/after/one-768.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/before/fixture-one-768-900.png",
+      "size": 75947,
+      "sha256": "4811d24e4aca925f89f290994352bd0a1fb5772c397e12df02d3f34ff8b5670f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D13-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D13-1024.png",
+      "size": 75195,
+      "sha256": "abf662e2ac9cf7406670c0155e3472ea96f9aefd8532062eebc51c046623e107",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D13-1024.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D13-1024.png",
+      "size": 74285,
+      "sha256": "72ccd5c6173c9c401cb2bb5d5e666d47642497da42aa3d8f803ba891b4a03c3d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D13-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D13-768.png",
+      "size": 73283,
+      "sha256": "b4d90e589080184a9b31f486b368344314c456471b024d569ee16a3cafdf9a22",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D13-768.png",
+      "size": 73071,
+      "sha256": "bf61aa87d6d6df288c1f7dce53037e7bb9e3dc2be54ddf388d6388b1405f9c71",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D07-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D07-390.png",
+      "size": 72499,
+      "sha256": "a9ce88e4b6c8518151b01baa007766ef4b0313f3d5f532225691e43f9644f6e8",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D10-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D10-1024.png",
+      "size": 71715,
+      "sha256": "b0c531962f431ad5fba5a52314ee3fd29f80202f386fba4cb9eebd844b4a31f0",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/found-768.png",
+      "size": 71503,
+      "sha256": "fdfb2d8074bb2923456d03b0c5370b2238916562a8f3613d19d718555145e785",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-1920.png",
+      "size": 71157,
+      "sha256": "f1da7abdca61a49d8059951ecba4bea0a6097c15e5173458a198a63621a47473",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D10-1024.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D10-1024.png",
+      "size": 70879,
+      "sha256": "57423f941c013f6cc698f3d560b1407176e36ba58b8a0e7237210dada8042acc",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D10-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D10-768.png",
+      "size": 69927,
+      "sha256": "6ebe7b300a997ae24f89b39596ddb5dce4a6c15cf3bdf83bb1c34b3b41625684",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10-768.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D10-768.png",
+      "size": 69606,
+      "sha256": "acbb0435d9cf291cbe49ab5655be85b37c9fb8ca150ed1d7271783b2d29ec246",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-1920.png",
+      "size": 69343,
+      "sha256": "416ec105724c86acc70a9a49e40b1c177e3a2061931612b5f967e0e57760bbd4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-1440.png",
+      "size": 69110,
+      "sha256": "39c4c3144ac1232afdf9a4ca57112abe6590a2d2709a5f61f9d4c042b1480ca7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D08.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D08.png",
+      "size": 68358,
+      "sha256": "4a8bc4e1cded656ccd55fc56d89cbe9712acf4eecb7fccc89410775eaee2adb4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-1440.png",
+      "size": 67297,
+      "sha256": "637f622dc1432be983740dd61ee2ba57eb3ae41cb988b00dd93a80c6206ae92a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-1024-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-1024-900.png",
+      "size": 64541,
+      "sha256": "002034eab724cb7a7120eabd1a881aaa8df43e08ea7c8c89d01c15fe21c5ea98",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D15-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D15-390.png",
+      "size": 63997,
+      "sha256": "022184c2d99ae43131f322f2f58e4cae049b33527fdf8be82b35a9580d1cdae2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D08-1024.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D08-1024.png",
+      "size": 63646,
+      "sha256": "232db3eb419ebf4b564918eb8b120a3a9ecdeb80e8c5e657f1e49e048f7b607a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-1024.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-1024.png",
+      "size": 62838,
+      "sha256": "2674a7f9372f7184e7a4ad5e80897d3ed4b4974e2a2de1498dd6f340324ef2e5",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D12-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D12-390.png",
+      "size": 61573,
+      "sha256": "8eafe26cf899eb681a52c6efbd1226c36f07c7f2959803078c0750f698ec7a99",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D08-768.png",
+      "canonical": "docs/figma/qa/screenshots/phase-3c-progress/D08-768.png",
+      "size": 61416,
+      "sha256": "8a4309d8d93a0504fe4d2c5151f4b25aa2003ccf2c8e834ac8f97b8ff23db51a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-768.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-768.png",
+      "size": 60704,
+      "sha256": "1599a93dba460ad143bcf6fa2899055408695a5fb897016121ee3a507a4a238a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-1024.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-1024.png",
+      "size": 60533,
+      "sha256": "b1692f6c7bafb011461cd55c1554c245db1a92f7b064aafe9df751ca8135d5eb",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-unknown-390.png",
+      "canonical": "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-390.png",
+      "size": 59913,
+      "sha256": "7f57543ad77c1e03484a0d969b6bc3e4d17f620a9762cb79525f6285396264e2",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D08-390.png",
+      "size": 29872,
+      "sha256": "6f110d7da6031cb9f1d027e492ecc1b1f24098f6d5f571bba29ff5b585465ed8",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D08-390.png",
+      "size": 29872,
+      "sha256": "6f110d7da6031cb9f1d027e492ecc1b1f24098f6d5f571bba29ff5b585465ed8",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-unknown-320.png",
+      "canonical": "docs/figma/qa/screenshots/result-panel-sidebox/after/D15-320.png",
+      "size": 59677,
+      "sha256": "0571b5a3fc4a13dbc7e4d222ac0f6706c32a606697d479eb68ebed688b4451d6",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D11-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D11-390.png",
+      "size": 58515,
+      "sha256": "7d51205c53d8ecc36ea90407e6ef3aaef724dade860d1f0e46747c17610d200c",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D13-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D13-390.png",
+      "size": 58466,
+      "sha256": "ebb2521180afc2e7eaf3da91ea5dc18bdeee99ca3132298d2ed71f281cdb3d1b",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D14-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D14-390.png",
+      "size": 58373,
+      "sha256": "019b6ad6536a049f134681477465b546a609d18f1da6b04cc878d13bd822ea2d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D08-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D08-320.png",
+      "size": 29153,
+      "sha256": "d90308ec4e8e716d69e79b22276a15a1665204d252c3ec3f57afba006a3af2f3",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D08-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/D08-320.png",
+      "size": 29153,
+      "sha256": "d90308ec4e8e716d69e79b22276a15a1665204d252c3ec3f57afba006a3af2f3",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-768.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-768.png",
+      "size": 58085,
+      "sha256": "f01d7f9cd2b68118ece96cb1d75ee8562e5eed7452f5ed78ffe717f57fa110bd",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/D14-390.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-D14-390.png",
+      "size": 57675,
+      "sha256": "221e20f1c732d9272e945f8ab6c1348aaeea3ecbe3a6cb5bb5fe2f8cdf6c4f6f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/found-390.png",
+      "size": 56508,
+      "sha256": "deecc4be05fc1b033c3b550a62f938edb31551d83f211910f763c92cb5072775",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/found-320.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sticky-footer/before/found-320.png",
+      "size": 55930,
+      "sha256": "b57537617c523ef3fc4d27e7d954bf7d22356147b1e0ec43fc9fc9b0551f768d",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1920.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-1920.png",
+      "size": 54859,
+      "sha256": "3f47100416f03ea9211343e29a15001a4525347f81926d2729c8d2dc1eed34ad",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/default-1440.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-default-1440.png",
+      "size": 53597,
+      "sha256": "76d8c2ccf5a5b3e009d0421972e72633afefaf272713c597844beee43f70e8f7",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D10-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D10-390.png",
+      "size": 53442,
+      "sha256": "b2bde058982c84229f1a649e2f3857aece9c3a70c5f3f550f120aa1d9e2ca598",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-390-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-390-900.png",
+      "size": 51636,
+      "sha256": "827337afcc7a252e7236bb2187b956396bcc637cdfb75ceb51fb09d6be58446f",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-768-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-768-900.png",
+      "size": 47745,
+      "sha256": "48ecaa38f202ad4bb986b7a56246b0378e94df806baa9e80a446bdc9fd0dd5f4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/awards-sticky-footer/after/live-awards-320-900.png",
+      "canonical": "docs/figma/qa/screenshots/awards-sticky-footer/after/fixture-empty-320-900.png",
+      "size": 47602,
+      "sha256": "60018a5118c0225bd71520bb8fd21c56a66ce3a8335a101b87cd671359e2f6f4",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-390.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-390.png",
+      "size": 45857,
+      "sha256": "655bc3bd6a1761957be94bc73d699395745d2db8d08dd51e227a341af0cf6823",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sticky-footer/after/validation-320.png",
+      "canonical": "docs/figma/qa/screenshots/competition-awards/interactions/lookup-validation-320.png",
+      "size": 45100,
+      "sha256": "1d3032486a6ca3ca5386a084da482bd550926b6353b7e20773054541a2f4f537",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/competition-leaderboard/final-qa/design-podium-390.png",
+      "canonical": "docs/figma/qa/screenshots/competition-leaderboard/after/design-podium-390.png",
+      "size": 43427,
+      "sha256": "cdb9683a692911c922f3603fd9abc072a5745a38673a0f57089e28a0c6f9a640",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/lookup-sync/phase-3c-before/D08-390.png",
+      "canonical": "docs/figma/qa/screenshots/lookup-sync/final/D08-390.png",
+      "size": 29601,
+      "sha256": "b5b93f3a5e237c83d2aca8b8a0d7f7b55fdb9a9891c1439124019da252a1cc8a",
+      "reasons": []
+    },
+    {
+      "path": "docs/figma/qa/screenshots/website-competition/stats-390.png",
+      "canonical": "docs/figma/qa/screenshots/website-competition/final-qa/stats-390.png",
+      "size": 16253,
+      "sha256": "6a4bb12dbe8fabacfbe9d75590ba112de7fb73578374b84aba748e2507743c3d",
+      "reasons": []
+    }
+  ],
+  "netQaAndBackupReductionBytes": 33650329,
+  "trackedQaRemaining": 908,
+  "untrackedFiles": [
+    "docs/figma/qa/ARTIFACTS.md",
+    "docs/figma/qa/artifact-paths.mjs",
+    "docs/figma/qa/artifact-paths.php",
+    "docs/figma/qa/artifact-paths.test.mjs",
+    "docs/qa-artifact-storage-audit-manifest.json",
+    "docs/qa-artifact-storage-audit.md",
+    "docs/qa-artifact-storage-plan-a-result.json",
+    "docs/qa-artifact-storage-plan-a.md"
+  ],
+  "checks": {
+    "routingTests": "PASS5",
+    "dealerFixture": "PASS25",
+    "browser": "PASS5 widths, actual redirected output",
+    "render": "PASS DB-disabled",
+    "productionAssets": "PASS22",
+    "validationHarnesses": "PASS4 with existing Node22 loader",
+    "mjsSyntax": "PASS25",
+    "phpLintPint": "PASS",
+    "pythonAst": "PASS, packaging not executed",
+    "historicalRulesCss": "FAIL existing min-width2ch assertion; context-recovery-2026-11-03.md documents same failure; no test/source changed"
+  }
+}

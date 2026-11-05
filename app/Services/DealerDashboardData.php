@@ -49,6 +49,10 @@ class DealerDashboardData
 
     public function awards(Dealer $dealer): Builder
     {
+        if (config('realistic_demo.retired')) {
+            app(DemoDataGuard::class)->assertRetired();
+        }
+
         return AwardWinner::query()->select(['id', 'award_id', 'dealer_id', 'rank', 'score', 'dealer_name_snapshot', 'dealer_code_snapshot'])
             ->where('winner_type', AwardWinnerType::Dealer->value)->where('dealer_id', $dealer->id)
             ->whereHas('award', fn ($query) => $query->whereNotNull('published_at'))

@@ -25,6 +25,9 @@ class ToyotaRealisticDemo
 
     public function assertEnabled(): void
     {
+        if (config('realistic_demo.retired')) {
+            throw new LogicException('Demo installation is retired; seeding and legacy cleanup are disabled.');
+        }
         if (! config('realistic_demo.enabled')
             || (! app()->environment(['local', 'testing']) && ! (app()->environment('production') && config('realistic_demo.allow_production')))) {
             throw new LogicException('Enable TOYOTA_DEMO_ENABLED and, on production demo VMs, TOYOTA_DEMO_ALLOW_PRODUCTION.');
@@ -252,6 +255,42 @@ class ToyotaRealisticDemo
         }
 
         throw new LogicException('Demo ownership cannot be verified; metrics require operator review.');
+    }
+
+    /** Strict cleanup proof; authenticated metric ownership alone is not deletion permission. */
+    public function verifiedCleanupManifest(): ?array
+    {
+        $admin = User::where('email', self::EMAIL)->first();
+        if (! $admin) {
+            return null;
+        }
+        $manifest = $this->manifest($admin);
+        foreach (['users', 'submissions', 'reviews'] as $key) {
+            $ids = $manifest[$key] ?? null;
+            if (! is_array($ids) || count(array_unique($ids, SORT_REGULAR)) !== count($ids)
+                || count(array_filter($ids, fn ($id) => is_int($id) && $id > 0)) !== count($ids)) {
+                throw new LogicException('Invalid cleanup ID manifest; operator review required.');
+            }
+        }
+        // Require the authenticated envelope, not labels, a row count or an unsigned hash alone.
+        if (! isset($manifest['ownership']) || $this->ownedSubmissionIds() !== $manifest['submissions']) {
+            throw new LogicException('Authenticated cleanup ownership missing; operator review required.');
+        }
+        foreach (['users' => 'users', 'submissions' => 'customer_submissions', 'reviews' => 'moderation_reviews'] as $key => $table) {
+            if (DB::table($table)->whereIn('id', $manifest[$key])->count() !== count($manifest[$key])) {
+                throw new LogicException('Manifest records missing; operator review required.');
+            }
+        }
+        if (! is_string($manifest['fingerprint'] ?? null)
+            || ! hash_equals($manifest['fingerprint'], $this->fingerprint($manifest['users'], $manifest['submissions'], $manifest['reviews']))) {
+            throw new LogicException('Cleanup fingerprint changed (data or schema); operator review required.');
+        }
+        if (DB::table('users')->whereIn('id', $manifest['users'])->where('email', 'not like', 'toyota.realistic.v1.%@example.com')->exists()
+            || DB::table('customer_submissions')->whereIn('id', $manifest['submissions'])->where(fn ($q) => $q->whereNull('notes')->orWhere('notes', '!=', self::TAG))->exists()) {
+            throw new LogicException('Owned identities changed; operator review required.');
+        }
+
+        return $manifest;
     }
 
     private function fingerprint(array $users, array $submissions, array $reviews): string

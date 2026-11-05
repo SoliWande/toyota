@@ -10,6 +10,10 @@ class PublicAwardResults
 {
     public function query(): Builder
     {
+        if (config('realistic_demo.retired')) {
+            app(DemoDataGuard::class)->assertRetired();
+        }
+
         // Internal titles, publishers and Sales snapshots never enter public view data.
         return Award::query()
             ->select(['id', 'period_type', 'period_start', 'period_end', 'published_at'])
