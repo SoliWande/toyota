@@ -42,7 +42,7 @@ class CompetitionLeaderboardTest extends TestCase
             $this->assertSame($expected->take(3)->pluck('id')->all(), $response->viewData('topDealers')->pluck('id')->all());
             $response->assertDontSee('PRIVATE_QUERY_TEST')->assertDontSee('Top Sales')->assertSee('aria-label="Top Đại Lý"', false);
             foreach ($response->viewData('dealers') as $row) {
-                $response->assertSee(route('dealers.show', $row->id));
+                $response->assertSee('href="'.route('dealers.competition', $row->id).'"', false);
             }
             $business = array_filter($queries, fn ($query) => ! (str_contains($query['query'], '`users`') && in_array(ToyotaRealisticDemo::EMAIL, $query['bindings'], true)));
             // Exact baseline query budget: COUNT + page rows, plus top3 on later pages.

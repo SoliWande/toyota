@@ -35,7 +35,7 @@
                         <ol class="wc-lb-rows" aria-label="Thứ hạng đại lý">
                             @foreach ($dealers as $row)
                                 @if ((int) $row->rank > 3)
-                                    <li value="{{ $row->rank }}"><a class="wc-lb-row" href="{{ route('dealers.show', $row->id) }}">
+                                    <li value="{{ $row->rank }}"><a class="wc-lb-row" href="{{ route('dealers.competition', $row->id) }}">
                                         <span class="wc-lb-rank"><span class="wc-lb-sr">Hạng </span>{{ $row->rank }}</span>
                                         <span class="wc-lb-name">{{ $row->name }}</span>
                                         <span class="wc-lb-code">{{ $row->code }}</span>

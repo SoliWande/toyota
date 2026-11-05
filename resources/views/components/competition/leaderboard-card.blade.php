@@ -1,6 +1,6 @@
 @props(['leader'])
 @php($rank = (int) $leader->rank)
-<a class="wc-lb-card wc-lb-place-{{ $rank }} {{ strlen(number_format($leader->score, 0, ',', '.')) > 5 ? 'wc-lb-wide-score' : '' }}" href="{{ route('dealers.show', $leader->id) }}" aria-label="Hạng {{ $rank }}: {{ $leader->name }}, {{ number_format($leader->score, 0, ',', '.') }} điểm">
+<a class="wc-lb-card wc-lb-place-{{ $rank }} {{ strlen(number_format($leader->score, 0, ',', '.')) > 5 ? 'wc-lb-wide-score' : '' }}" href="{{ route('dealers.competition', $leader->id) }}" aria-label="Hạng {{ $rank }}: {{ $leader->name }}, {{ number_format($leader->score, 0, ',', '.') }} điểm">
     @if ($rank === 1)
         <img class="wc-lb-watermark wc-lb-desktop" src="{{ asset('competition/leaderboard/trophy-watermark-200.svg') }}" width="200" height="200" alt="" aria-hidden="true">
         <img class="wc-lb-watermark wc-lb-mobile" src="{{ asset('competition/leaderboard/trophy-watermark-150.svg') }}" width="150" height="150" alt="" aria-hidden="true">

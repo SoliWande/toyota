@@ -53,6 +53,8 @@ Route::get('/', LandingPageController::class)->name('home');
 Route::get('/chuong-trinh/the-le', CampaignRulesController::class)->name('campaign.rules');
 Route::get('/leaderboard', LeaderboardController::class)->name('leaderboard');
 Route::get('/dealers', [PublicDealerController::class, 'index'])->name('dealers.index');
+// B15 is separate from the already distributed QR/registration landing.
+Route::get('/dealers/{dealer}/profile', [PublicDealerController::class, 'competition'])->whereNumber('dealer')->name('dealers.competition');
 Route::get('/dealers/{dealer}', [PublicDealerController::class, 'legacy'])->whereNumber('dealer')->name('dealers.show');
 Route::get('/dealers/{dealer}/qr', [DealerProfileMediaController::class, 'qr'])->whereNumber('dealer')->name('dealers.qr');
 Route::get('/dealers/{dealer}/photo', [DealerProfileMediaController::class, 'photo'])->whereNumber('dealer')->name('dealers.photo');

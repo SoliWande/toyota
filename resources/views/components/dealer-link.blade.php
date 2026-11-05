@@ -2,7 +2,7 @@
 @php
     $viewer = auth()->user();
     $active = $viewer?->status === \App\Enums\UserStatus::Active;
-    $url = $dealerId ? route('dealers.show', $dealerId) : null;
+    $url = $dealerId ? route($public ? 'dealers.competition' : 'dealers.show', $dealerId) : null;
     if ($url && ! $public && $active) {
         if ($viewer->role === \App\Enums\UserRole::Admin) {
             $url = route('admin.dealers.show', $dealerId);

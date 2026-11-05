@@ -1,4 +1,16 @@
 const menu = document.querySelector('[data-competition-menu]');
+document.querySelectorAll('[data-dealer-province], [data-dealer-sort]').forEach(select => {
+    select.addEventListener('change', () => select.form.requestSubmit());
+});
+document.querySelectorAll('[data-dealer-direction]').forEach(link => {
+    link.addEventListener('click', event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const form = link.closest('form');
+        form.querySelector('[data-dealer-direction-value]').value = link.dataset.dealerDirection;
+        form.requestSubmit();
+    });
+});
 if (menu) {
     const trigger = menu.querySelector('summary');
     const panel = menu.querySelector('nav');

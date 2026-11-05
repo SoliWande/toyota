@@ -42,7 +42,7 @@
             <x-competition.heading eyebrow="NHỮNG NGƯỜI DẪN NHỊP" id="ranking-heading">Top đại lý tháng này</x-competition.heading>
             <ol class="wc-ranking-list">
                 @forelse ($topDealers as $dealer)
-                    <li><span class="wc-rank">@if ((int) $dealer->rank === 1)<x-competition.icon name="winner" />@else{{ $dealer->rank }}@endif</span><div class="wc-ranking-name"><a href="{{ route('dealers.show', $dealer->id) }}">{{ $dealer->name }}</a><p>{{ $dealer->code }}</p></div><p class="wc-points"><strong>{{ number_format($dealer->score, 0, ',', '.') }}</strong><span>điểm</span></p></li>
+                    <li><span class="wc-rank">@if ((int) $dealer->rank === 1)<x-competition.icon name="winner" />@else{{ $dealer->rank }}@endif</span><div class="wc-ranking-name"><a href="{{ route('dealers.competition', $dealer->id) }}">{{ $dealer->name }}</a><p>{{ $dealer->code }}</p></div><p class="wc-points"><strong>{{ number_format($dealer->score, 0, ',', '.') }}</strong><span>điểm</span></p></li>
                 @empty
                     <li class="wc-empty">Chưa có thành tích hợp lệ trong kỳ này.</li>
                 @endforelse
@@ -53,7 +53,7 @@
             <span class="wc-award-icon"><x-competition.icon name="award" :size="34" /></span>
             @if ($latestAward)
                 <h2 id="award-heading">Kỳ vinh danh gần nhất</h2><p>{{ $latestAward->period_type->label() }} · {{ $latestAward->period_start->format('d/m/Y') }} – {{ $latestAward->period_end->subDay()->format('d/m/Y') }}<br>Công bố {{ $latestAward->published_at->format('d/m/Y') }}</p>
-                <ul>@foreach ($latestAward->winners as $winner)<li><span>{{ $winner->rank }}. @if ($winner->dealer_id)<a href="{{ route('dealers.show', $winner->dealer_id) }}">{{ $winner->dealer_name_snapshot }}</a>@else{{ $winner->dealer_name_snapshot }}@endif<br>{{ $winner->dealer_code_snapshot }}</span><strong>{{ number_format($winner->score, 0, ',', '.') }} điểm</strong></li>@endforeach</ul>
+                <ul>@foreach ($latestAward->winners as $winner)<li><span>{{ $winner->rank }}. @if ($winner->dealer_id)<a href="{{ route('dealers.competition', $winner->dealer_id) }}">{{ $winner->dealer_name_snapshot }}</a>@else{{ $winner->dealer_name_snapshot }}@endif<br>{{ $winner->dealer_code_snapshot }}</span><strong>{{ number_format($winner->score, 0, ',', '.') }} điểm</strong></li>@endforeach</ul>
                 <a class="wc-button wc-button-secondary" href="{{ route('awards.show', $latestAward) }}">Xem kỳ vinh danh</a>
             @else
                 <h2 id="award-heading">Kết nối hôm nay.<br>Tạo nên dấu ấn ngày mai.</h2><p>Chưa có kỳ vinh danh được công bố.</p>

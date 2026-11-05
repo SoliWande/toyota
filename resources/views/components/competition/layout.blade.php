@@ -1,4 +1,4 @@
-@props(['title' => 'Thi đua cộng đồng Toyota Veloz & Hilux', 'stickyFooter' => false])
+@props(['title' => 'Thi đua cộng đồng Toyota Veloz & Hilux', 'stickyFooter' => false, 'dealerProfile' => false])
 @php($accountUrl = auth()->check() ? route(auth()->user()->homeRoute()) : route('login'))
 <!doctype html>
 <html lang="vi">
@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="{{ asset('dealer-registration/lookup-fonts.css') }}">
     @vite(['resources/css/competition.css', 'resources/js/competition.js'])
 </head>
-<body @class(['competition-site', 'wc-sticky-footer' => $stickyFooter])>
+<body @class(['competition-site', 'wc-sticky-footer' => $stickyFooter, 'wc-d-profile-site' => $dealerProfile])>
     <a class="wc-skip" href="#noi-dung">Bỏ qua điều hướng, đến nội dung</a>
     <header class="wc-header"><div class="wc-container wc-header-row">
+        @if ($dealerProfile)<a class="wc-d-header-back" href="{{ route('dealers.index') }}"><x-competition.dealer-icon name="back-22" :size="22" />Đại lý</a>@endif
         <x-competition.brand />
         <nav class="wc-desktop-nav" aria-label="Điều hướng chính"><x-competition.navigation /></nav>
         <a class="wc-login" href="{{ $accountUrl }}">{{ auth()->check() ? 'Tài khoản' : 'Đăng nhập' }}</a>

@@ -52,13 +52,15 @@ class DealerLandingRegistrationTest extends TestCase
 
     public function test_landing_form_uses_correct_dealer_and_stable_existing_qr(): void
     {
-        $dealer = Dealer::factory()->create(['phone' => 'PUBLIC_DEALER_PHONE']);
+        $dealer = Dealer::factory()->create(['phone' => '0901234567']);
         $url = app(DealerProfile::class)->url($dealer);
         $qr = $this->get(route('dealers.qr', ['dealer' => $dealer, 'download' => 1]))->assertOk()->getContent();
         $dealer->update(['name' => 'New Dealer Name', 'address' => 'New Dealer Address']);
-        $this->get($url)->assertOk()->assertSee('New Dealer Name')->assertSee('PUBLIC_DEALER_PHONE')
-            ->assertSee('name="consent"', false)->assertSee('name="vehicle_description"', false)
-            ->assertSee(route('dealers.registrations.store', ['slug' => $dealer->slug]))
+        $this->get($url)->assertOk()->assertDontSee($dealer->phone)->assertDontSee('href="tel:', false);
+        config(['dealer-registration.approved_call_phones' => [$dealer->slug => $dealer->phone]]);
+        $this->get($url)->assertOk()->assertSee('New Dealer Name')->assertSee($dealer->phone)
+            ->assertSee('href="tel:'.$dealer->phone.'"', false)->assertSee('name="vehicle_description"', false)
+            ->assertSee(route('dealers.registrations.step-one', ['slug' => $dealer->slug]))
             ->assertHeader('Cache-Control', 'no-store, private');
         $this->assertSame($url, app(DealerProfile::class)->url($dealer->fresh()));
         $this->assertSame($qr, $this->get(route('dealers.qr', $dealer))->assertOk()->getContent());
@@ -240,9 +242,11 @@ class DealerLandingRegistrationTest extends TestCase
         $this->assertStringNotContainsString('PRIVATE_', $response->headers->get('Location'));
         $this->assertEmpty(session()->getOldInput());
         $this->get($response->headers->get('Location'))->assertOk()->assertDontSee('PRIVATE_QR_ADDRESS')->assertDontSee('0901234567');
-        $response = $this->post($url, $this->payload())->assertSessionHasNoErrors()->assertRedirect();
+        $response = $this->post($url, $this->payload())->assertSessionHasNoErrors()->assertRedirect()
+            ->assertSessionHas('registration_success', 'Đã nhận đăng ký. Đại lý sẽ liên hệ để xác minh; thông tin đang chờ Admin duyệt.');
         $this->assertSame(route('dealers.profile', ['slug' => $dealer->slug]).'#registration', $response->headers->get('Location'));
-        $this->get($response->headers->get('Location'))->assertOk()->assertSee('Đã nhận đăng ký')->assertDontSee('PRIVATE_QR_CUSTOMER');
+        $this->assertSame(1, CustomerSubmission::count());
+        $this->get($response->headers->get('Location'))->assertOk()->assertDontSee('PRIVATE_QR_CUSTOMER')->assertDontSee('PRIVATE_QR_ADDRESS')->assertDontSee('0901234567');
     }
 
     public function test_public_address_fields_never_restore_private_sales_old_input(): void
