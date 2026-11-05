@@ -25,7 +25,7 @@ class ToyotaRealisticDemo
 
     public function assertEnabled(): void
     {
-        if (config('realistic_demo.retired')) {
+        if (config('realistic_demo.retired') || app(ResetDemoRetirement::class)->isPresent()) {
             throw new LogicException('Demo installation is retired; seeding and legacy cleanup are disabled.');
         }
         if (! config('realistic_demo.enabled')

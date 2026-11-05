@@ -9,7 +9,7 @@ final class DemoSubmissionScope
 {
     public function apply($query, string $idColumn = 'customer_submissions.id'): mixed
     {
-        if (config('realistic_demo.retired')) {
+        if (config('realistic_demo.retired') || app(ResetDemoRetirement::class)->isPresent()) {
             app(DemoDataGuard::class)->assertRetired();
 
             return $query;

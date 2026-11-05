@@ -49,7 +49,7 @@ class DealerDashboardData
 
     public function awards(Dealer $dealer): Builder
     {
-        if (config('realistic_demo.retired')) {
+        if (config('realistic_demo.retired') || app(ResetDemoRetirement::class)->isPresent()) {
             app(DemoDataGuard::class)->assertRetired();
         }
 

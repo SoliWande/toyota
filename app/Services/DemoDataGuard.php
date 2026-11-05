@@ -38,6 +38,11 @@ class DemoDataGuard
         if (config('realistic_demo.enabled') || config('realistic_demo.allow_production') || config('realistic_demo.include_in_metrics')) {
             throw new LogicException('Retired production cannot enable demo installation or demo metrics.');
         }
+        if (app(ResetDemoRetirement::class)->isPresent()) {
+            app(ResetDemoRetirement::class)->assertValid();
+
+            return;
+        }
         try {
             $path = $this->receiptPath();
             $receipt = is_file($path) ? json_decode(Crypt::decryptString(file_get_contents($path)), true, flags: JSON_THROW_ON_ERROR) : null;
