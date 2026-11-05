@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DealerAccountRequest;
 use App\Models\Dealer;
@@ -51,6 +52,9 @@ class DealerAccountController extends Controller
         DB::transaction(function () use ($request, $dealer) {
             Dealer::whereKey($dealer->id)->lockForUpdate()->firstOrFail();
             $manager = $dealer->manager()->lockForUpdate()->firstOrFail();
+            if (in_array($manager->status, [UserStatus::Pending, UserStatus::Rejected], true)) {
+                throw ValidationException::withMessages(['status' => 'Hồ sơ đăng ký phải được xử lý tại màn Duyệt quản lý đại lý.']);
+            }
             $manager->name = $request->validated('name');
             $manager->status = $request->validated('status');
             $manager->save();

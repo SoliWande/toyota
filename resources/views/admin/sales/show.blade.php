@@ -28,18 +28,7 @@
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-semibold">Xét duyệt tài khoản</h2>
             @if ($sales->status === \App\Enums\UserStatus::Pending)
-                <form method="POST" action="{{ route('admin.sales.review', [$sales, 'approve']) }}" class="mt-5">
-                    @csrf
-                    <button type="submit" class="button-primary w-full">Duyệt tài khoản</button>
-                </form>
-                <form method="POST" action="{{ route('admin.sales.review', [$sales, 'reject']) }}" class="mt-6 border-t border-slate-100 pt-5">
-                    @csrf
-                    <label for="rejection_reason" class="text-sm font-medium">Lý do từ chối (tùy chọn)</label>
-                    <textarea id="rejection_reason" name="rejection_reason" class="form-input" maxlength="2000" rows="3">{{ old('rejection_reason') }}</textarea>
-                    <label for="reject_note" class="mt-4 block text-sm font-medium">Ghi chú nội bộ (tùy chọn)</label>
-                    <textarea id="reject_note" name="admin_note" class="form-input" maxlength="2000" rows="2">{{ old('admin_note') }}</textarea>
-                    <button type="submit" class="mt-4 rounded-xl border border-red-200 px-5 py-3 font-semibold text-red-700 hover:bg-red-50">Từ chối</button>
-                </form>
+                <p class="mt-5 text-sm text-slate-600">Tài khoản Sales do quản lý của chính đại lý xét duyệt.</p>
             @elseif ($sales->status === \App\Enums\UserStatus::Active)
                 <form method="POST" action="{{ route('admin.sales.review', [$sales, 'block']) }}" class="mt-5" onsubmit="return confirm('Khóa tài khoản Sales này?')">
                     @csrf
@@ -47,7 +36,7 @@
                     <textarea id="block_note" name="admin_note" class="form-input" maxlength="2000" rows="3">{{ old('admin_note') }}</textarea>
                     <button type="submit" class="mt-4 rounded-xl border border-red-200 px-5 py-3 font-semibold text-red-700 hover:bg-red-50">Khóa tài khoản</button>
                 </form>
-            @elseif (in_array($sales->status, [\App\Enums\UserStatus::Blocked, \App\Enums\UserStatus::Rejected], true))
+            @elseif ($sales->status === \App\Enums\UserStatus::Blocked)
                 <form method="POST" action="{{ route('admin.sales.review', [$sales, 'reactivate']) }}" class="mt-5" onsubmit="return confirm('Kích hoạt lại tài khoản Sales này?')">
                     @csrf
                     <label for="reactivate_note" class="text-sm font-medium">Ghi chú nội bộ (tùy chọn)</label>

@@ -3,6 +3,10 @@
         <a href="{{ route('admin.dealers.show', $dealer) }}" class="text-sm text-slate-500 hover:text-red-700">← {{ $dealer->name }}</a>
         <h1 class="my-6 text-3xl font-bold">Tài khoản quản lý đại lý</h1>
         <x-admin-feedback />
+        @if ($manager && in_array($manager->status, [\App\Enums\UserStatus::Pending, \App\Enums\UserStatus::Rejected], true))
+            <p class="mb-4 rounded-xl bg-amber-50 p-4 text-sm">Tài khoản {{ $manager->email }}: {{ $manager->status->label() }}. Hồ sơ đăng ký cần được xét duyệt qua hàng chờ; tài khoản bị từ chối phải gửi lại trước.</p>
+            <a href="{{ route('admin.dealer-registrations.index') }}" class="button-primary">Duyệt quản lý đại lý</a>
+        @else
         <form method="POST" action="{{ route($manager ? 'admin.dealers.account.update' : 'admin.dealers.account.store', $dealer) }}" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
             @csrf
             @if ($manager) @method('PATCH') @endif
@@ -20,5 +24,6 @@
             <select id="status" name="status" class="form-input"><option value="active" @selected(old('status', $manager?->status?->value ?? 'active') === 'active')>Hoạt động</option><option value="blocked" @selected(old('status', $manager?->status?->value) === 'blocked')>Đã khóa</option></select>
             <button class="button-primary" type="submit">{{ $manager ? 'Lưu tài khoản' : 'Tạo tài khoản Dealer' }}</button>
         </form>
+        @endif
     </div>
 </x-layout>

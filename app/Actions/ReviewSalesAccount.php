@@ -13,6 +13,11 @@ class ReviewSalesAccount
 {
     public function execute(User $admin, User $sales, string $action, array $data): void
     {
+        if (in_array($action, ['approve', 'reject'], true)) {
+            app(ReviewAccountRegistration::class)->execute($admin, $sales, $action, $data);
+
+            return;
+        }
         DB::transaction(function () use ($admin, $sales, $action, $data) {
             $sales = User::whereKey($sales->id)->lockForUpdate()->firstOrFail();
             Gate::forUser($admin)->authorize('moderate', $sales);
@@ -21,7 +26,7 @@ class ReviewSalesAccount
                 'approve' => [[UserStatus::Pending], UserStatus::Active],
                 'reject' => [[UserStatus::Pending], UserStatus::Rejected],
                 'block' => [[UserStatus::Active], UserStatus::Blocked],
-                'reactivate' => [[UserStatus::Rejected, UserStatus::Blocked], UserStatus::Active],
+                'reactivate' => [[UserStatus::Blocked], UserStatus::Active],
                 default => throw ValidationException::withMessages(['action' => 'Thao tác không hợp lệ.']),
             };
 

@@ -13,15 +13,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Montserrat:wght@600;700&amp;display=swap">
     @if ($lookup || $rules)<link rel="stylesheet" href="{{ asset('dealer-registration/lookup-fonts.css') }}">@endif
-    @vite($rules ? ['resources/css/dealer-registration.css'] : ['resources/css/dealer-registration.css', 'resources/js/dealer-registration.js'])
+    @vite($rules ? ['resources/css/dealer-registration.css', 'resources/css/competition.css', 'resources/js/competition.js'] : ['resources/css/dealer-registration.css', 'resources/js/dealer-registration.js'])
 </head>
-<body class="dr-site {{ $landing ? 'dr-landing' : 'dr-inner' }} {{ $success ? 'dr-success' : '' }} {{ $lookup ? 'dr-lookup-page' : '' }} {{ $rules ? 'dr-rules-page' : '' }}" data-dealer-registration @if ($preview) data-preview @endif>
+<body class="dr-site {{ $landing ? 'dr-landing' : 'dr-inner' }} {{ $success ? 'dr-success' : '' }} {{ $lookup ? 'dr-lookup-page' : '' }} {{ $rules ? 'dr-rules-page competition-site' : '' }}" data-dealer-registration @if ($preview) data-preview @endif>
     <a href="#dr-main" class="dr-skip">Bỏ qua điều hướng</a>
     @if ($preview)
         <aside class="dr-preview" aria-label="Chế độ xem trước">Xem trước giao diện · Không lưu thông tin
             <nav><a href="{{ route('dealer-registration.preview', 'landing') }}">D01</a><a href="{{ route('dealer-registration.preview', 'step-two') }}">D02/D03</a><a href="{{ route('dealer-registration.preview', 'success') }}">D04</a><a href="{{ route('dealer-registration.preview', 'inactive') }}">D06</a></nav>
         </aside>
     @endif
+    @if ($rules)
+        <x-competition.header />
+    @else
     <header class="dr-header">
         <div class="dr-container dr-header-row">
             <a class="dr-mobile-topbar" href="{{ $rules ? route('home') : ($preview ? route('dealer-registration.preview', 'landing').'#registration' : route('dealers.profile', $dealer->slug).'#registration') }}" @if (!$rules) data-back-step @endif><span aria-hidden="true">‹</span> {{ $rules ? 'Thể lệ chương trình' : ($lookup ? 'Tra cứu đăng ký' : 'Đăng ký tham gia') }}</a>
@@ -40,6 +43,7 @@
             </nav>
         </div>
     </header>
+    @endif
     <main id="dr-main" tabindex="-1">{{ $slot }}</main>
     <footer class="dr-footer">
         <div class="dr-container dr-footer-row">

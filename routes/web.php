@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountRegistrationReviewController;
 use App\Http\Controllers\AccountStatusController;
 use App\Http\Controllers\Admin\AwardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -89,6 +90,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/account/status', AccountStatusController::class)->name('account.status');
+    Route::post('/account/resubmit', [AccountStatusController::class, 'resubmit'])->middleware('throttle:6,1')->name('account.resubmit');
     Route::get('/submissions/{submission}/evidence', SubmissionEvidenceController::class)
         ->whereNumber('submission')->middleware('account.active')->name('submissions.evidence');
     Route::get('/sales/dashboard', DashboardController::class)->middleware(['role:sales', 'account.active'])->name('sales.dashboard');
@@ -104,6 +106,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->middleware(['role:admin', 'account.active'])->name('admin.dashboard');
     Route::get('/dealer/dashboard', DealerDashboardController::class)->middleware(['role:dealer', 'account.active'])->name('dealer.dashboard');
     Route::prefix('dealer')->name('dealer.')->middleware(['role:dealer', 'account.active'])->group(function () {
+        Route::post('/staff/{account}/{action}', AccountRegistrationReviewController::class)
+            ->whereNumber('account')->whereIn('action', ['approve', 'reject', 'block', 'reactivate'])->middleware('throttle:30,1')->name('staff.review');
         Route::get('/sales', [DealerSalesController::class, 'index'])->name('sales.index');
         Route::get('/sales/{sales}', [DealerSalesController::class, 'show'])->whereNumber('sales')->name('sales.show');
         Route::get('/customers', [DealerCustomerController::class, 'index'])->name('customers.index');
@@ -111,6 +115,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('/awards', [DealerAwardController::class, 'index'])->name('awards.index');
     });
     Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'account.active', 'throttle:admin-writes'])->group(function () {
+        Route::get('/dealer-registrations', App\Http\Controllers\Admin\DealerRegistrationController::class)->name('dealer-registrations.index');
+        Route::post('/dealer-registrations/{account}/{action}', AccountRegistrationReviewController::class)
+            ->whereNumber('account')->whereIn('action', ['approve', 'reject'])->name('dealer-registrations.review');
         Route::get('/awards', [AwardController::class, 'index'])->name('awards.index');
         Route::post('/awards', [AwardController::class, 'store'])->name('awards.store');
         Route::get('/awards/{award}', [AwardController::class, 'show'])->whereNumber('award')->name('awards.show');

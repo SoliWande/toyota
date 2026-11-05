@@ -1,0 +1,66 @@
+/* B04 only; shared header, tokens and fonts come from competition.css. */
+.wc-login-site .wc-auth-main { display:grid; grid-template-columns:480px minmax(0,1fr); gap:24px; padding-block:40px 64px; }
+.wc-login-site .wc-auth-art { position:relative; display:flex; align-items:flex-end; min-height:640px; padding:40px; border-radius:32px; overflow:hidden; color:white; }
+.wc-login-site .wc-auth-scene { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.wc-login-site .wc-auth-art::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 35%,#000000d9); }
+.wc-login-site .wc-auth-art-copy { position:relative; z-index:1; display:flex; flex-direction:column; gap:16px; }
+.wc-login-site .wc-auth-eyebrow { display:flex; align-items:center; gap:12px; font:600 12px/16px Montserrat,Inter,sans-serif; letter-spacing:2.4px; }
+.wc-login-site .wc-auth-eyebrow::before { content:''; width:24px; height:3px; flex:none; background:var(--wc-red); }
+.wc-login-site .wc-auth-art h2 { font:700 32px/38px Montserrat,Inter,sans-serif; letter-spacing:-.32px; }
+.wc-login-site .wc-auth-art-copy>p:last-child { font-size:15px; line-height:22px; color:#ffffffbf; }
+.wc-login-site .wc-auth-panel { display:flex; flex-direction:column; gap:24px; padding:48px 56px; border-radius:32px; background:white; min-width:0; }
+.wc-login-site .wc-auth-heading h1 { font-size:36px; font-weight:800; line-height:42px; letter-spacing:-.72px; }
+.wc-login-site .wc-auth-heading p { margin-top:8px; font-size:16px; line-height:24px; color:var(--wc-secondary); }
+.wc-login-site .wc-auth-form { display:flex; flex-direction:column; gap:24px; }
+.wc-login-site .wc-auth-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.wc-login-site .wc-auth-field { display:flex; flex-direction:column; gap:8px; min-width:0; }
+.wc-login-site .wc-auth-field label { font-size:14px; font-weight:500; line-height:20px; }
+.wc-login-site .wc-auth-field input { box-sizing:border-box; width:100%; min-width:0; height:56px; padding:0 14px; border:1px solid transparent; border-radius:16px; background:var(--wc-muted); color:var(--wc-text); font:400 16px/1.2 Inter,Arial,sans-serif; outline:none; }
+.wc-login-site .wc-auth-field input::placeholder { color:var(--wc-light); opacity:1; }
+.wc-login-site .wc-auth-field input:focus-visible { border-color:var(--wc-red); box-shadow:0 0 0 2px #eb0a1e1a; }
+.wc-login-site .wc-auth-field input[aria-invalid=true] { border-color:var(--wc-red); }
+.wc-login-site .wc-auth-password { position:relative; }
+.wc-login-site .wc-auth-password input { padding-right:70px; }
+.wc-login-site .wc-auth-toggle:not([hidden]) { position:absolute; top:6px; right:8px; display:flex; align-items:center; justify-content:center; height:44px; min-width:44px; padding:0 6px; background:transparent; border:0; font-size:14px; line-height:20px; color:var(--wc-light); }
+.wc-login-site .wc-auth-actions { display:flex; align-items:center; gap:16px; min-height:100px; }
+.wc-login-site .wc-auth-forgot { flex:none; color:var(--wc-red); font-size:14px; font-weight:600; line-height:20px; }
+.wc-login-site .wc-auth-register { margin-left:auto; font-size:14px; line-height:20px; color:var(--wc-secondary); white-space:nowrap; }
+.wc-login-site .wc-auth-register a { color:var(--wc-text); font-weight:600; text-decoration:underline; text-underline-offset:2px; }
+.wc-login-site .wc-auth-submit { border:0; cursor:pointer; font-family:inherit; }
+.wc-login-site .wc-auth-submit:disabled { opacity:.65; cursor:wait; }
+.wc-login-site .wc-auth-divider { height:1px; flex:none; background:var(--wc-border); }
+.wc-login-site .wc-auth-owner { display:flex; gap:14px; align-items:center; padding:18px 20px; border-radius:20px; background:#eef4ff; color:#1d3f8f; }
+.wc-login-site .wc-auth-owner-icon { display:flex; align-items:center; justify-content:center; width:44px; height:44px; flex:none; border-radius:50%; background:white; }
+.wc-login-site .wc-auth-icon-mobile { display:none; }
+.wc-login-site .wc-auth-owner h2 { font-size:15px; font-weight:600; line-height:20px; }
+.wc-login-site .wc-auth-owner p { margin-top:2px; font-size:14px; line-height:20px; }
+.wc-login-site .wc-auth-field-error,.wc-login-site .wc-auth-error { color:#b60919; font-size:13px; line-height:20px; overflow-wrap:anywhere; }
+.wc-login-site .wc-auth-error,.wc-login-site .wc-auth-success { padding:12px 14px; border-radius:12px; background:#fff1f2; }
+.wc-login-site .wc-auth-success { background:#edf8f0; color:#186534; font-size:14px; line-height:20px; }
+@media (min-width:768px) and (max-width:1199px) {
+    .wc-login-site .wc-auth-main { grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr); }
+    .wc-login-site .wc-auth-art { padding:24px; }
+    .wc-login-site .wc-auth-panel { padding:32px 24px; }
+    .wc-login-site .wc-auth-fields { grid-template-columns:1fr; }
+    .wc-login-site .wc-auth-actions { flex-wrap:wrap; min-height:0; }
+}
+@media (max-width:767px) {
+    .wc-login-site .wc-auth-main { display:block; width:calc(100% - 32px); padding-block:32px 40px; }
+    .wc-login-site .wc-auth-art { display:none; }
+    .wc-login-site .wc-auth-panel { gap:20px; padding:0; background:transparent; border-radius:0; }
+    .wc-login-site .wc-auth-heading { padding-inline:4px; }
+    .wc-login-site .wc-auth-heading h1 { font-size:26px; line-height:32px; letter-spacing:-.39px; }
+    .wc-login-site .wc-auth-heading p { margin-top:6px; font-size:15px; line-height:22px; }
+    .wc-login-site .wc-auth-form { gap:16px; padding:20px; background:white; border-radius:24px; }
+    .wc-login-site .wc-auth-fields,.wc-login-site .wc-auth-actions { display:contents; }
+    .wc-login-site .wc-auth-forgot { order:1; align-self:flex-end; }
+    .wc-login-site .wc-auth-submit { order:2; width:100%; min-height:52px; padding:15px 20px; }
+    .wc-login-site .wc-auth-register { order:3; align-self:center; margin:0; padding-top:4px; }
+    .wc-login-site .wc-auth-divider { display:none; }
+    .wc-login-site .wc-auth-owner { gap:12px; align-items:flex-start; padding:16px; border-radius:18px; }
+    .wc-login-site .wc-auth-owner-icon { width:36px; height:36px; }
+    .wc-login-site .wc-auth-icon-desktop { display:none; }
+    .wc-login-site .wc-auth-icon-mobile { display:block; }
+    .wc-login-site .wc-auth-owner h2 { font-size:14px; line-height:20px; }
+    .wc-login-site .wc-auth-owner p { font-size:13px; line-height:18px; color:#1d3f8fd9; }
+}

@@ -76,7 +76,12 @@ class DashboardNavigationTest extends TestCase
         $submission->dealer->update(['is_active' => false]);
         $this->get(route('home'))->assertOk()->assertSee(route('dealers.show', $submission->dealer_id));
         $this->get(route('dealers.index'))->assertOk()->assertViewHas('dealers', fn ($items) => $items->isEmpty());
-        $this->get(app(DealerProfile::class)->url($submission->dealer_id))->assertOk()->assertSee('Ngừng hoạt động');
+        // D06/M06 replaces the legacy status label inside the D01 registration panel.
+        $this->get(app(DealerProfile::class)->url($submission->dealer_id))->assertOk()
+            ->assertSee('Mã QR không còn hiệu lực')->assertSee('Đại lý hiện không tiếp nhận đăng ký mới.')
+            ->assertViewHas('dealer', fn ($dealer) => ! $dealer->is_active)
+            ->assertViewHas('standing', fn ($standing) => (int) $standing->score === 1 && (int) $standing->rank === 1)
+            ->assertDontSee('data-step-one', false)->assertDontSee('name="customer_name"', false);
     }
 
     public function test_only_admin_can_access_internal_dealer_details_and_filters_validate(): void

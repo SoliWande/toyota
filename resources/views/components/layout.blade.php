@@ -1,4 +1,5 @@
 @props(['title' => 'Cộng đồng Toyota'])
+@php($staffHeader = auth()->check() && auth()->user()->status === \App\Enums\UserStatus::Active && in_array(auth()->user()->role, [\App\Enums\UserRole::Sales, \App\Enums\UserRole::Dealer], true))
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -7,8 +8,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} · Toyota Veloz & Hilux</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if ($staffHeader)
+        <link rel="stylesheet" href="{{ asset('dealer-registration/lookup-fonts.css') }}">
+        @vite(['resources/css/competition.css', 'resources/css/account.css', 'resources/js/competition.js'])
+    @endif
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+<body @class(['min-h-screen bg-slate-50 text-slate-900 antialiased', 'wc-staff-legacy-site' => $staffHeader])>
+    @if ($staffHeader)
+        <div class="competition-site"><x-competition.staff-header /></div>
+    @else
     <header class="border-b border-slate-200 bg-white">
         <nav aria-label="Điều hướng chính" class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
@@ -33,6 +41,7 @@
             @endauth
         </nav>
     </header>
+    @endif
     <main class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-16">
         {{ $slot }}
     </main>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Services\RegistrationPhone;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -15,6 +16,9 @@ class RegisterRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if (is_string($this->input('phone'))) {
+            $this->merge(['phone' => RegistrationPhone::normalize(trim($this->input('phone')))]);
+        }
         if (is_string($this->input('email'))) {
             $this->merge(['email' => mb_strtolower(trim($this->input('email')))]);
         }
@@ -24,10 +28,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'regex:/\A\+?[0-9]{9,15}\z/', 'max:30'],
             'email' => ['bail', 'required', 'string', 'not_regex:/[\x00-\x1F\x7F]/', 'email', 'max:255', Rule::unique('users', 'email')],
             'password' => ['required', 'string', 'max:255', 'confirmed', Password::min(8)],
             'dealer_id' => ['required', 'integer', Rule::exists('dealers', 'id')->where('is_active', true)],
-            'role' => ['prohibited'],
+            'role' => ['sometimes', 'required', Rule::in(['sales', 'dealer'])],
             'status' => ['prohibited'],
         ];
     }
@@ -51,7 +56,10 @@ class RegisterRequest extends FormRequest
             'dealer_id.required' => 'Vui lòng chọn đại lý.',
             'dealer_id.integer' => 'Đại lý không hợp lệ.',
             'dealer_id.exists' => 'Đại lý không tồn tại hoặc đang ngừng nhận đăng ký.',
-            'role.prohibited' => 'Không được tự chọn vai trò tài khoản.',
+            'role.in' => 'Vai trò đăng ký không hợp lệ.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.regex' => 'Số điện thoại không hợp lệ.',
+            'phone.string' => 'Số điện thoại không hợp lệ.',
             'status.prohibited' => 'Không được tự chọn trạng thái tài khoản.',
         ];
     }

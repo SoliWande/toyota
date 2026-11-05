@@ -13,7 +13,7 @@
         @endif
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <a href="{{ route('admin.sales.index', ['status' => 'pending']) }}" class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-4 hover:border-red-400 focus-visible:outline-red-600">
-                <span><span class="block font-semibold">Duyệt Sales</span><span class="mt-1 block text-sm text-slate-500">Tài khoản đăng ký mới</span></span>
+                <span><span class="block font-semibold">Sales chờ duyệt</span><span class="mt-1 block text-sm text-slate-500">Quản lý đại lý xét duyệt</span></span>
                 <span class="text-2xl font-bold text-red-600">{{ number_format($stats['pending_sales']) }}</span>
             </a>
             <a href="{{ route('admin.submissions.index', ['status' => 'pending']) }}" class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-4 hover:border-red-400 focus-visible:outline-red-600">
@@ -22,6 +22,7 @@
             </a>
         </div>
         <nav aria-label="Thao tác nhanh" class="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+            @can('reviewDealerRegistrations', \App\Models\User::class)<a href="{{ route('admin.dealer-registrations.index') }}" class="rounded-lg bg-red-50 px-4 py-3 text-red-700">Duyệt quản lý đại lý</a>@endcan
             <a href="{{ route('admin.dealers.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Quản lý Đại Lý</a>
             <a href="{{ route('leaderboard') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Xem Leaderboard</a>
             <a href="{{ route('admin.awards.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Tạo vinh danh</a>

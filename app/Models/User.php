@@ -77,9 +77,14 @@ class User extends Authenticatable
         });
 
         static::saving(function (self $user) {
-            if ($user->reviewed_by !== null
-                && ! self::whereKey($user->reviewed_by)->where('role', UserRole::Admin->value)->exists()) {
-                throw new InvalidArgumentException('An account reviewer must be an admin.');
+            if ($user->reviewed_by !== null && ($user->isDirty('reviewed_by') || $user->isDirty('reviewed_at'))) {
+                $actor = self::find($user->reviewed_by);
+                $manager = $actor && $actor->id !== $user->id && $actor->role === UserRole::Dealer
+                    && $actor->status === UserStatus::Active && $user->role === UserRole::Sales
+                    && $actor->dealer_id !== null && $actor->dealer_id === $user->dealer_id;
+                if (! $actor || ($actor->role !== UserRole::Admin && ! $manager)) {
+                    throw new InvalidArgumentException('Account reviewer must be an admin or the assigned active Dealer Manager.');
+                }
             }
         });
     }

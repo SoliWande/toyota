@@ -32,6 +32,7 @@ class AuthenticationTest extends TestCase
     {
         return array_merge([
             'name' => 'Nguyễn Minh Anh',
+            'phone' => '0901234567',
             'email' => 'minhanh@example.test',
             'dealer_id' => Dealer::factory()->create()->id,
             'password' => 'test-password-123',

@@ -91,9 +91,9 @@ class AdminSalesManagementTest extends TestCase
     public function test_details_show_phone_dealer_and_review_history(): void
     {
         $admin = User::factory()->admin()->create();
-        $sales = User::factory()->create(['phone' => '0901234567']);
+        $sales = User::factory()->active()->create(['phone' => '0901234567']);
         $this->actingAs($admin)->from(route('admin.sales.show', $sales))
-            ->post(route('admin.sales.review', [$sales, 'approve']), ['admin_note' => 'Verified employment'])->assertRedirect();
+            ->post(route('admin.sales.review', [$sales, 'block']), ['admin_note' => 'Verified employment'])->assertRedirect();
         $this->get(route('admin.sales.show', $sales))->assertOk()->assertSee($sales->email)->assertSee($sales->phone)
             ->assertSee($sales->dealer->name)->assertSee('Verified employment')->assertSee($admin->name);
     }
@@ -163,6 +163,15 @@ class AdminSalesManagementTest extends TestCase
         $data = ['rejection_reason' => 'Not eligible', 'admin_note' => 'Review note', 'reviewed_by' => 999999];
         $response = $this->actingAs($admin)->from(route('admin.sales.show', $sales))
             ->post(route('admin.sales.review', [$sales, $action]), $data);
+        // New contract: Sales registration approval belongs exclusively to its Dealer Manager.
+        if (in_array($action, ['approve', 'reject'], true)) {
+            $response->assertForbidden();
+            $this->assertSame($from, $sales->fresh()->status->value);
+            $this->assertNull($sales->fresh()->reviewed_by);
+            $this->assertSame(0, ModerationReview::count());
+
+            return;
+        }
         if ($to === null) {
             $response->assertSessionHasErrors('action');
             $this->assertSame($from, $sales->fresh()->status->value);
@@ -188,7 +197,7 @@ class AdminSalesManagementTest extends TestCase
 
     public static function allTransitions(): array
     {
-        $valid = ['pending:approve' => 'active', 'pending:reject' => 'rejected', 'active:block' => 'blocked', 'blocked:reactivate' => 'active', 'rejected:reactivate' => 'active'];
+        $valid = ['active:block' => 'blocked', 'blocked:reactivate' => 'active'];
         $cases = [];
         foreach (['pending', 'active', 'rejected', 'blocked'] as $from) {
             foreach (['approve', 'reject', 'block', 'reactivate'] as $action) {
@@ -207,51 +216,49 @@ class AdminSalesManagementTest extends TestCase
             ->assertSessionHasErrors(['rejection_reason', 'admin_note']);
         $this->assertSame(0, ModerationReview::count());
         $this->assertSame(UserStatus::Pending, $sales->fresh()->status);
-        $this->post(route('admin.sales.review', [$sales, 'reject']), ['rejection_reason' => '   '])->assertSessionHasNoErrors();
-        $this->assertSame(UserStatus::Rejected, $sales->fresh()->status);
+        $this->post(route('admin.sales.review', [$sales, 'reject']), ['rejection_reason' => '   '])->assertForbidden();
+        $this->assertSame(UserStatus::Pending, $sales->fresh()->status);
         $this->assertNull($sales->fresh()->rejection_reason);
     }
 
     public function test_account_change_is_rolled_back_when_history_insert_fails(): void
     {
         $admin = User::factory()->admin()->create();
-        $sales = User::factory()->create();
-        new ModerationReview; // Boot the normal model listeners before cloning the dispatcher.
+        $sales = User::factory()->active()->create();
+        new ModerationReview;
         $dispatcher = ModerationReview::getEventDispatcher();
         ModerationReview::setEventDispatcher(clone $dispatcher);
         ModerationReview::creating(fn () => throw new RuntimeException('Simulated history write failure.'));
-
         try {
-            app(ReviewSalesAccount::class)->execute($admin, $sales, 'approve', []);
+            app(ReviewSalesAccount::class)->execute($admin, $sales, 'block', []);
             $this->fail('Expected the history insert to fail.');
         } catch (RuntimeException $exception) {
             $this->assertSame('Simulated history write failure.', $exception->getMessage());
         } finally {
             ModerationReview::setEventDispatcher($dispatcher);
         }
-
-        $this->assertSame(UserStatus::Pending, $sales->fresh()->status);
+        $this->assertSame(UserStatus::Active, $sales->fresh()->status);
         $this->assertNull($sales->fresh()->reviewed_by);
         $this->assertSame(0, ModerationReview::count());
     }
 
-    public function test_repeat_approval_does_not_duplicate_history(): void
+    public function test_repeat_block_does_not_duplicate_history(): void
     {
         $admin = User::factory()->admin()->create();
-        $sales = User::factory()->create();
-        $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'approve']))->assertSessionHasNoErrors();
-        $this->post(route('admin.sales.review', [$sales, 'approve']))->assertSessionHasErrors('action');
+        $sales = User::factory()->active()->create();
+        $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'block']))->assertSessionHasNoErrors();
+        $this->post(route('admin.sales.review', [$sales, 'block']))->assertSessionHasErrors('action');
         $this->assertSame(1, ModerationReview::count());
     }
 
-    public function test_reactivation_keeps_old_rejection_in_history(): void
+    public function test_reactivation_keeps_old_admin_notes_in_history(): void
     {
         $admin = User::factory()->admin()->create();
-        $sales = User::factory()->create();
-        $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'reject']), ['rejection_reason' => 'First reason'])->assertSessionHasNoErrors();
+        $sales = User::factory()->active()->create();
+        $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'block']), ['admin_note' => 'First note'])->assertSessionHasNoErrors();
         $this->post(route('admin.sales.review', [$sales, 'reactivate']), ['admin_note' => 'Reviewed again'])->assertSessionHasNoErrors();
         $this->assertSame(2, $sales->moderationReviews()->count());
-        $this->assertSame('First reason', $sales->moderationReviews()->orderBy('id')->first()->rejection_reason);
+        $this->assertSame('First note', $sales->moderationReviews()->orderBy('id')->first()->admin_note);
         $this->assertNull($sales->fresh()->rejection_reason);
         $this->assertSame(UserStatus::Active, $sales->fresh()->status);
     }
