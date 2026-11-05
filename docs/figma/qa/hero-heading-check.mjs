@@ -1,14 +1,15 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const phase=process.argv[2]||'before';
-const output=`docs/figma/qa/screenshots/hero-heading/${phase}`;
+const output=qaOutput(`hero-heading/${phase}`);
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const evidence=[];
-const before=phase==='after'?JSON.parse(await readFile('docs/figma/qa/screenshots/hero-heading/before/evidence.json','utf8')):null;
+const before=phase==='after'?JSON.parse(await readFile(qaInput('hero-heading/before/evidence.json'),'utf8')):null;
 try {
  for(const width of [390,768,1024,1440,1920]) {
   const page=await browser.newPage({viewport:{width,height:900}});

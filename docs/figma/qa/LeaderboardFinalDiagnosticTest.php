@@ -54,6 +54,7 @@ class LeaderboardFinalDiagnosticTest extends TestCase
             }
             $results[] = ['participants' => $index, 'aggregateQueries' => 2, 'ownershipQueries' => 2, 'totalQueries' => 4, 'sql' => $queries->pluck('query')->all()];
         }
-        file_put_contents(__DIR__.'/screenshots/competition-leaderboard/final-qa/service-query-diagnostic.json', json_encode($results, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
+        require_once __DIR__.'/artifact-paths.php';
+        file_put_contents(qa_artifact_output('competition-leaderboard/final-qa').'/service-query-diagnostic.json', json_encode($results, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
     }
 }

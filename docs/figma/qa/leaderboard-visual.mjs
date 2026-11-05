@@ -1,8 +1,9 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const origin='http://127.0.0.1:8771';
-const output='docs/figma/qa/screenshots/competition-leaderboard/after';
+const output=qaOutput('competition-leaderboard/after');
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const evidence=[];
@@ -82,7 +83,7 @@ try {
   await page.goto(origin,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
   assert.equal(await page.locator('.wc-desktop-nav a[aria-current]').innerText(),'Trang chủ');
   const screenshot=await page.screenshot({path:`${output}/home-${width}.png`,fullPage:true});
-  assert.ok(screenshot.equals(await readFile(`docs/figma/qa/screenshots/competition-leaderboard/before/home-${width}.png`)),`Home screenshot changed ${width}`);
+  assert.ok(screenshot.equals(await readFile(qaInput(`competition-leaderboard/before/home-${width}.png`))),`Home screenshot changed ${width}`);
   await page.close();
  }
  await writeFile(`${output}/evidence.json`,JSON.stringify(evidence,null,2));

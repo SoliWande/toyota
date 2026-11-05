@@ -1,11 +1,12 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const phase=process.argv[2];assert.ok(['before','after'].includes(phase));
-const origin='http://127.0.0.1:8771',root='docs/figma/qa/screenshots/awards-sticky-footer',output=`${root}/${phase}`;
+const origin='http://127.0.0.1:8771',output=qaOutput(`awards-sticky-footer/${phase}`);
 await mkdir(output,{recursive:true});
-const before=phase==='after'?JSON.parse(await readFile(`${root}/before/evidence.json`,'utf8')):[];
+const before=phase==='after'?JSON.parse(await readFile(qaInput('awards-sticky-footer/before/evidence.json'),'utf8')):[];
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const evidence=[];
 async function capture(page,state,width,height,source) {
@@ -32,7 +33,7 @@ async function capture(page,state,width,height,source) {
    for(const cta of data.ctas)assert.ok(cta.bottom<=data.footerRect.top+1);
    for(const [selector,rect] of Object.entries(data.sections))if(rect&&old.sections[selector])for(const key of ['x','y','width','height'])
     assert.ok(Math.abs(rect[key]-old.sections[selector][key])<=1,`${state}/${width} ${selector} changed ${key}`);
-  }else assert.ok(screenshot.equals(await readFile(`${root}/before/${state}-${width}-${height}.png`)),`${state}/${width} regression screenshot changed`);
+  }else assert.ok(screenshot.equals(await readFile(qaInput(`awards-sticky-footer/before/${state}-${width}-${height}.png`))),`${state}/${width} regression screenshot changed`);
  }
  evidence.push({state,width,height,source,...data});
 }

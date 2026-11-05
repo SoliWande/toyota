@@ -1,10 +1,11 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const origin='http://127.0.0.1:8771';
-const output='docs/figma/qa/screenshots/competition-leaderboard/final-qa';
-const matrix=JSON.parse(await readFile(`${output}/matrix.json`,'utf8'));
+const output=qaOutput('competition-leaderboard/final-qa');
+const matrix=JSON.parse(await readFile(qaInput('competition-leaderboard/final-qa/matrix.json'),'utf8'));
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const results=[];
 const localHtml=html=>html.replaceAll('http://localhost',origin).replaceAll('http://toyota.test',origin);

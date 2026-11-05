@@ -6,6 +6,7 @@ Run from the project root: python docs/figma/qa/release-manifest.py
 
 import hashlib
 import json
+import os
 import pathlib
 import re
 import subprocess
@@ -61,7 +62,10 @@ def main():
     installed = json.loads((ROOT / "vendor/composer/installed.json").read_text(encoding="utf-8"))
     dev_names = {p["name"] for p in lock.get("packages-dev", [])}
     local_dev = sorted(p["name"] for p in installed["packages"] if p["name"] in dev_names)
-    directory = ROOT / "storage/app/private/release-qa"
+    run = os.environ.get("QA_RUN_ID", "latest")
+    if not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}", run):
+        raise RuntimeError("Invalid QA_RUN_ID")
+    directory = ROOT / "docs/figma/qa/artifacts" / run / "release"
     directory.mkdir(parents=True, exist_ok=True)
     archive = directory / "phase-2c-4c-source-NOT-DEPLOYABLE.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as output:
@@ -96,7 +100,7 @@ def main():
         "migrations": [r for r in rows if r["path"].startswith("database/migrations/")],
         "working_tree_changes": changes, "files": rows,
     }
-    target = ROOT / "docs/figma/qa/release-manifest-2c-4c.json"
+    target = directory / "release-manifest-2c-4c.json"
     target.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (target.parent / "release-artifact-2c-4c.sha256").write_text(
         archive_hash + "  " + archive.relative_to(ROOT).as_posix() + "\n", encoding="utf-8")

@@ -1,9 +1,10 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 // Presentation fixtures are loopback-only and have no database connection.
-const output = 'docs/figma/qa/screenshots/phase-3c-progress';
+const output = qaOutput('phase-3c-progress');
 await mkdir(output, { recursive: true });
 const cases = [
     ['D07', '/D07', ['completed', 'completed', 'warning'], 'Cần bổ sung'],
@@ -131,5 +132,9 @@ try {
     await writeFile(`${output}/evidence.json`, JSON.stringify(evidence, null, 2) + '\n');
 }
 const gallery = cases.map(([name]) => `<section><h2>${name}</h2>${['D12', 'D13', 'D14'].includes(name) ? `<p><a href="${name === 'D12' ? '../lookup-sync/figma/D12.png' : `figma/${name}.png`}">Figma desktop</a>${name === 'D12' ? ' · <a href="figma/M12.png">Figma mobile</a>' : ''}</p>` : ''}<div class="row">${[1440, 390].map(width => `<a href="${name}-${width}.png"><img loading="lazy" src="${name}-${width}.png" alt="${name} ${width}px"></a>`).join('')}</div></section>`).join('');
-await writeFile(`${output}/index.html`, `<!doctype html><html lang="vi"><meta charset="utf-8"><title>Phase 3C progress QA</title><style>body{font:16px sans-serif;background:#eee;margin:24px}.row{display:flex;gap:20px;align-items:flex-start}.row a:first-child{width:70%}.row a:last-child{width:25%}img{width:100%;display:block}section{margin-bottom:40px}</style><h1>Phase 3C — Progress QA</h1><p>Fixture loopback, database disabled; 5 widths. <a href="../lookup-sync/index.html">Figma references and earlier comparison</a></p>${gallery}</html>`);
+const linkedGallery = gallery.replace(/(href|src)="((?:figma|\.\.\/lookup-sync)\/[^"\s]+)"/g, (_, attr, relative) => {
+    const source = relative.startsWith("../lookup-sync/") ? relative.slice(3) : `phase-3c-progress/${relative}`;
+    return `${attr}="${qaReferenceLink(output, source)}"`;
+});
+await writeFile(`${output}/index.html`, `<!doctype html><html lang="vi"><meta charset="utf-8"><title>Phase 3C progress QA</title><style>body{font:16px sans-serif;background:#eee;margin:24px}.row{display:flex;gap:20px;align-items:flex-start}.row a:first-child{width:70%}.row a:last-child{width:25%}img{width:100%;display:block}section{margin-bottom:40px}</style><h1>Phase 3C — Progress QA</h1><p>Fixture loopback, database disabled; 5 widths. <a href="${qaReferenceLink(output, 'lookup-sync/index.html')}">Figma references and earlier comparison</a></p>${linkedGallery}</html>`);
 console.log(`PASS: ${cases.length} cases x ${widths.length} widths = ${evidence.length} default screenshots + 2 validation/focus screenshots; semantic states, markers, rails, fonts, resources and overflow.`);

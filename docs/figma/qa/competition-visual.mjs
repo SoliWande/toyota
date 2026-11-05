@@ -1,9 +1,10 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const origin = process.env.COMPETITION_QA_ORIGIN || 'http://127.0.0.1:8771';
-const output = process.env.COMPETITION_QA_OUTPUT || 'docs/figma/qa/screenshots/website-competition';
+const output = process.env.COMPETITION_QA_OUTPUT || qaOutput('website-competition');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
 const evidence = [];

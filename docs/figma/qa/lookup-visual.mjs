@@ -1,9 +1,10 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const phase = process.argv[2] || 'after';
-const folder = `docs/figma/qa/screenshots/lookup-sync/${phase}`;
+const folder = qaOutput(`lookup-sync/${phase}`);
 await mkdir(folder, { recursive: true });
 const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
 const heights = { D07:883, D08:765, D09:1578, D10:809, D11:883, D12:883, D13:863, D14:883, D15:883 };

@@ -1,8 +1,9 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
-const origin='http://127.0.0.1:8771',output='docs/figma/qa/screenshots/competition-awards/interactions';
+const origin='http://127.0.0.1:8771',output=qaOutput('competition-awards/interactions');
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const evidence=[];

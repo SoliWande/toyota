@@ -1,3 +1,4 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -5,9 +6,8 @@ import assert from 'node:assert/strict';
 const phase=process.argv[2]||'before';assert.ok(['before','after'].includes(phase));
 const probe=process.argv.includes('--probe');
 const origin='http://127.0.0.1:8771';
-const root='docs/figma/qa/screenshots/lookup-sticky-footer';
-const output=`${root}/${phase}`;await mkdir(output,{recursive:true});
-const before=phase==='after'?JSON.parse(await readFile(`${root}/before/evidence.json`,'utf8')):null;
+const output=qaOutput(`lookup-sticky-footer/${phase}`);await mkdir(output,{recursive:true});
+const before=phase==='after'?JSON.parse(await readFile(qaInput('lookup-sticky-footer/before/evidence.json'),'utf8')):null;
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const evidence=[];
 const local=html=>html.replaceAll('http://localhost',origin).replaceAll('http://toyota.test',origin);
@@ -94,7 +94,7 @@ try {
    }
    await page.screenshot({path:`${output}/${name}-${width}.png`,fullPage:true});
    if(phase==='after'&&name!=='lookup-live') {
-    assert.ok((await readFile(`${output}/${name}-${width}.png`)).equals(await readFile(`${root}/before/${name}-${width}.png`)),`${name}/${width} shared page changed`);
+    assert.ok((await readFile(`${output}/${name}-${width}.png`)).equals(await readFile(qaInput(`lookup-sticky-footer/before/${name}-${width}.png`))),`${name}/${width} shared page changed`);
    }
    await page.close();
   }

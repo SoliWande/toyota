@@ -158,7 +158,8 @@ class LeaderboardFinalMatrixTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-        $output = __DIR__.'/screenshots/competition-leaderboard/final-qa';
+        require_once __DIR__.'/artifact-paths.php';
+        $output = qa_artifact_output('competition-leaderboard/final-qa');
         if (! is_dir($output)) {
             mkdir($output, 0777, true);
         }

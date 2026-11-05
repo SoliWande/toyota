@@ -18,3 +18,13 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Disposable QA run output; keep scripts, historical evidence and baselines.
+/docs/figma/qa/artifacts/
+/docs/figma/qa/test-results/
+/docs/figma/qa/playwright-report/
+/docs/figma/qa/blob-report/
+/docs/figma/qa/**/*.log
+/docs/figma/qa/**/*.webm
+/docs/figma/qa/**/*.mp4
+/docs/figma/qa/**/trace*.zip

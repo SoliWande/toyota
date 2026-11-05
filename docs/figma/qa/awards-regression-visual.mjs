@@ -1,8 +1,9 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const phase=process.argv[2]||'before',origin='http://127.0.0.1:8771';
-const output=`docs/figma/qa/screenshots/competition-awards/${phase}`;await mkdir(output,{recursive:true});
+const output=qaOutput(`competition-awards/${phase}`);await mkdir(output,{recursive:true});
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const results=[];
 try {
@@ -17,7 +18,7 @@ try {
   await page.evaluate(()=>document.fonts.ready);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   const screenshot=await page.screenshot({path:`${output}/${name}-${width}.png`,fullPage:true});
-  if(phase==='after'&&name!=='awards')assert.ok(screenshot.equals(await readFile(`docs/figma/qa/screenshots/competition-awards/before/${name}-${width}.png`)),`${name}/${width} changed`);
+  if(phase==='after'&&name!=='awards')assert.ok(screenshot.equals(await readFile(qaInput(`competition-awards/before/${name}-${width}.png`))),`${name}/${width} changed`);
   assert.deepEqual(errors,[]);results.push({name,width,status:200,errors,source:'live GET real local data'});await page.close();
  }
  await writeFile(`${output}/regression.json`,JSON.stringify(results,null,2));console.log(`PASS ${phase}:24 live page/viewports${phase==='after'?';18 home/leaderboard/lookup screenshots unchanged':''}`);

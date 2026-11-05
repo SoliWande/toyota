@@ -1,10 +1,11 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const phase = process.argv[2] || 'after';
 assert.ok(['before', 'after'].includes(phase));
-const root = 'docs/figma/qa/screenshots/result-panel-sidebox';
+const root = qaOutput('result-panel-sidebox');
 const output = `${root}/${phase}`;
 await mkdir(output, { recursive: true });
 const cases = [
@@ -127,6 +128,7 @@ try {
 }
 if(phase==='after') {
     const gallery = cases.slice(0,10).map(c=>`<section><h2>${c.name}</h2><p>${c.name==='FOUND'?'Không có frame Figma riêng':`<a href="figma/${c.name}.png">Figma desktop</a>${c.name==='D09'?'':` · <a href="figma/M${c.name.slice(1)}.png">Figma mobile</a>`}`} · <a href="before/${c.name}-1440.png">Trước sửa</a></p><div class="row"><a href="after/${c.name}-1440.png"><img src="after/${c.name}-1440.png" loading="lazy" alt="${c.name} desktop"></a><a href="after/${c.name}-390.png"><img src="after/${c.name}-390.png" loading="lazy" alt="${c.name} mobile"></a></div></section>`).join('');
-    await writeFile(`${root}/index.html`,`<!doctype html><html lang="vi"><meta charset="utf-8"><title>Result Panel + Sidebox QA</title><style>body{font:16px sans-serif;margin:24px;background:#eee}.row{display:flex;gap:20px;align-items:flex-start}.row a:first-child{width:70%}.row a:last-child{width:25%}img{width:100%;display:block}section{margin-bottom:36px}</style><h1>Result Panel + Sidebox — Figma / trước / sau</h1><p>Fixture loopback, database disabled. Sai khác nghiệp vụ/privacy ghi trong tracking.</p>${gallery}</html>`);
+    const linkedGallery = gallery.replace(/(href|src)="((?:figma|before)\/[^"\s]+)"/g, (_, attr, relative) => `${attr}="${qaReferenceLink(root, `result-panel-sidebox/${relative}`)}"`);
+    await writeFile(`${root}/index.html`,`<!doctype html><html lang="vi"><meta charset="utf-8"><title>Result Panel + Sidebox QA</title><style>body{font:16px sans-serif;margin:24px;background:#eee}.row{display:flex;gap:20px;align-items:flex-start}.row a:first-child{width:70%}.row a:last-child{width:25%}img{width:100%;display:block}section{margin-bottom:36px}</style><h1>Result Panel + Sidebox — Figma / trước / sau</h1><p>Fixture loopback, database disabled. Sai khác nghiệp vụ/privacy ghi trong tracking.</p>${linkedGallery}</html>`);
 }
 console.log(`PASS ${phase}: ${evidence.length} screenshots (${selected.length} cases x ${widths.length} widths).`);

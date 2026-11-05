@@ -1,3 +1,4 @@
+import { qaInput, qaOutput, qaReferenceLink } from './artifact-paths.mjs';
 import { chromium } from '../../../.laravel-tools/visual-qa/node_modules/playwright-core/index.mjs';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -5,7 +6,7 @@ import assert from 'node:assert/strict';
 const html = await readFile('.laravel-tools/dealer-call/cards.html', 'utf8');
 const manifest = JSON.parse(await readFile('public/build/manifest.json', 'utf8'));
 const css = await readFile(`public/build/${manifest['resources/css/dealer-registration.css'].file}`, 'utf8');
-const output = 'docs/figma/qa/screenshots/dealer-call';
+const output = qaOutput('dealer-call');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
 const evidence = [];
