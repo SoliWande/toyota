@@ -1,4 +1,4 @@
-/* Authenticated B08–B13 only; public/auth pages do not load this entry. */
+/* Authenticated staff pages only; public/auth pages do not load this entry. */
 .wc-staff-site .wc-staff-main { padding-top:40px; }
 .wc-staff-site .wc-staff-back { color:var(--wc-secondary); font-size:14px; font-weight:600; line-height:20px; }
 .wc-staff-site .wc-staff-note { font-size:13px; line-height:20px; color:var(--wc-secondary); margin-top:12px; overflow-wrap:anywhere; }
@@ -325,3 +325,14 @@
  .wc-page-b08 .wc-b08-actions:not(:empty) { position:relative; padding:8px; align-self:center; }
  .wc-page-b08 .wc-b08-lookup { background:white; padding:7px 10px; font-size:12px; }
 }
+
+/* Manager customer list: shared B09 card/row fallback; dedicated frame is unavailable. */
+.wc-page-manager-customers .wc-manager-customer-list { list-style:none; padding:0; margin:0; }
+.wc-page-manager-customers .wc-customer-row { align-items:center; flex-wrap:wrap; gap:12px 16px; }
+.wc-page-manager-customers .wc-manager-customer-copy { flex:1; min-width:0; overflow-wrap:anywhere; }
+.wc-page-manager-customers .wc-manager-customer-copy>a { font-size:14px; line-height:20px; }
+.wc-page-manager-customers .wc-manager-customer-copy small { display:block; margin-top:4px; font-size:12px; line-height:18px; color:var(--wc-secondary); }
+.wc-page-manager-customers .wc-customer-row:last-child { border-bottom:0; }
+.wc-page-manager-customers .wc-customer-row>.wc-staff-status { flex:none; border-radius:999px; }
+.wc-page-manager-customers .wc-staff-status-rejected { background:#fef2f2; color:#b91c1c; }
+.wc-page-manager-customers .wc-lb-pagination { padding-inline:0; }

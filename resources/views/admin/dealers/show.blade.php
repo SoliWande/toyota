@@ -1,4 +1,4 @@
-<x-layout :title="$dealer->name">
+<x-admin.layout :title="$dealer->name">
     <a href="{{ route('admin.dealers.index') }}" class="text-sm text-slate-500 hover:text-red-600">← Danh sách đại lý</a>
     <div class="mb-7 mt-4 flex flex-wrap items-center justify-between gap-4"><h1 class="text-3xl font-bold break-words">{{ $dealer->name }}</h1><a href="{{ route('admin.dealers.edit', $dealer) }}" class="button-primary">Chỉnh sửa đại lý</a></div>
     <x-dealer-profile-media :dealer="$dealer" />
@@ -30,4 +30,4 @@
         </ul>
         <div class="mt-5">{{ $customers->links() }}</div>
     </section>
-</x-layout>
+</x-admin.layout>

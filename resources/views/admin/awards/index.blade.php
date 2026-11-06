@@ -1,4 +1,4 @@
-<x-layout title="Quản lý vinh danh">
+<x-admin.layout title="Quản lý vinh danh">
     <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
     <h1 class="mt-3 text-3xl font-bold">Awards / Vinh danh</h1>
     <x-admin-feedback />
@@ -40,4 +40,4 @@
         @endforelse
     </ul>
     <div class="mt-5">{{ $awards->links() }}</div>
-</x-layout>
+</x-admin.layout>

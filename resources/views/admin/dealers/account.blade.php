@@ -1,4 +1,4 @@
-<x-layout :title="'Tài khoản Dealer · '.$dealer->name">
+<x-admin.layout :title="'Tài khoản Dealer · '.$dealer->name">
     <div class="mx-auto max-w-xl">
         <a href="{{ route('admin.dealers.show', $dealer) }}" class="text-sm text-slate-500 hover:text-red-700">← {{ $dealer->name }}</a>
         <h1 class="my-6 text-3xl font-bold">Tài khoản quản lý đại lý</h1>
@@ -26,4 +26,4 @@
         </form>
         @endif
     </div>
-</x-layout>
+</x-admin.layout>

@@ -1,92 +1,75 @@
-<x-layout title="Admin Dashboard">
-    <p class="text-xs font-bold uppercase tracking-widest text-red-600">Không gian quản trị</p>
-    <h1 class="mt-3 text-3xl font-bold break-words">Xin chào, {{ auth()->user()->name }}</h1>
-    <p class="mt-3 text-slate-600">Theo dõi chương trình và xử lý các khai báo đang chờ duyệt.</p>
-
-    <section aria-labelledby="moderation-title" class="mt-8 rounded-2xl border border-red-200 bg-white p-5 sm:p-7">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="moderation-title" class="text-lg font-bold">Cần xử lý</h2>
-            <p class="rounded-full bg-red-50 px-4 py-2 text-sm font-semibold text-red-700">{{ number_format($stats['pending_sales'] + $stats['pending_submissions']) }} mục chờ duyệt</p>
-        </div>
-        @if ($stats['pending_sales'] + $stats['pending_submissions'] === 0)
-            <p class="mt-4 text-sm text-slate-600">Đã xử lý hết hàng chờ. Hiện không có tài khoản hoặc khai báo cần duyệt.</p>
-        @endif
-        <div class="mt-5 grid gap-3 sm:grid-cols-2">
-            <a href="{{ route('admin.sales.index', ['status' => 'pending']) }}" class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-4 hover:border-red-400 focus-visible:outline-red-600">
-                <span><span class="block font-semibold">Sales chờ duyệt</span><span class="mt-1 block text-sm text-slate-500">Quản lý đại lý xét duyệt</span></span>
-                <span class="text-2xl font-bold text-red-600">{{ number_format($stats['pending_sales']) }}</span>
-            </a>
-            <a href="{{ route('admin.submissions.index', ['status' => 'pending']) }}" class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-4 hover:border-red-400 focus-visible:outline-red-600">
-                <span><span class="block font-semibold">Duyệt khách hàng</span><span class="mt-1 block text-sm text-slate-500">Xác minh thành viên Facebook</span></span>
-                <span class="text-2xl font-bold text-red-600">{{ number_format($stats['pending_submissions']) }}</span>
-            </a>
-        </div>
-        <nav aria-label="Thao tác nhanh" class="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-            @can('reviewDealerRegistrations', \App\Models\User::class)<a href="{{ route('admin.dealer-registrations.index') }}" class="rounded-lg bg-red-50 px-4 py-3 text-red-700">Duyệt quản lý đại lý</a>@endcan
-            <a href="{{ route('admin.dealers.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Quản lý Đại Lý</a>
-            <a href="{{ route('leaderboard') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Xem Leaderboard</a>
-            <a href="{{ route('admin.awards.index') }}" class="rounded-lg bg-slate-100 px-4 py-3 hover:bg-slate-200 focus-visible:outline-red-600">Tạo vinh danh</a>
-        </nav>
-    </section>
-
-    <section aria-labelledby="stats-title" class="mt-8">
-        <h2 id="stats-title" class="text-lg font-bold">Tổng quan chương trình</h2>
-        <dl class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            @foreach ([
-                'dealers' => 'Tổng Đại Lý',
-                'active_dealers' => 'Đại Lý đang hoạt động',
-                'sales' => 'Tổng Sales',
-                'submissions' => 'Tổng khách hàng',
-                'active_sales' => 'Sales đang hoạt động',
-                'pending_sales' => 'Sales chờ duyệt',
-                'approved_submissions' => 'Khách hàng đã duyệt',
-                'pending_submissions' => 'Khai báo chờ duyệt',
-                'week_submissions' => 'Khai báo tuần này',
-                'month_submissions' => 'Khai báo tháng này',
-            ] as $key => $label)
-                <div class="relative rounded-xl border border-slate-200 bg-white p-4 hover:border-red-400 sm:p-5">
-                    <dt class="text-sm text-slate-600">{{ $label }}</dt>
-                    <dd class="mt-3 text-3xl font-bold tabular-nums text-red-700">
-                        <a href="{{ $statLinks[$key] }}" data-stat="{{ $key }}" aria-label="Xem danh sách {{ $label }}" class="rounded focus-visible:outline-red-600"><span class="absolute inset-0 rounded-xl" aria-hidden="true"></span>{{ number_format($stats[$key]) }}</a>
-                    </dd>
-                </div>
-            @endforeach
-        </dl>
-        <p class="mt-3 text-xs leading-5 text-slate-500">Khai báo tuần/tháng gồm mọi trạng thái, tính theo thời điểm khai báo (submitted_at). Múi giờ: {{ config('app.timezone') }}.</p>
-    </section>
-
-    <section aria-labelledby="pending-title" class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:p-7">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="pending-title" class="text-lg font-bold">Khai báo chờ duyệt gần đây</h2>
-            <a href="{{ route('admin.submissions.index', ['status' => 'pending']) }}" class="py-2 text-sm font-semibold text-red-600 hover:underline">Xem toàn bộ hàng chờ →</a>
-        </div>
-        <ul class="mt-3 divide-y divide-slate-100">
-            @forelse ($recentPendingSubmissions as $submission)
-                <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div class="min-w-0">
-                        <p class="font-semibold break-words"><a href="{{ route('admin.submissions.show', $submission) }}" class="rounded hover:text-red-700 hover:underline focus-visible:outline-red-600">{{ $submission->customer_name }}</a></p>
-                        <p class="mt-1 text-sm text-slate-600 break-words"><x-sales-link :sales="$submission->sales" /> · <x-dealer-link :dealer-id="$submission->dealer_id" :name="$submission->dealer?->name ?? 'Chưa xác minh đại lý lịch sử'" /></p>
-                        <p class="mt-1 text-xs text-slate-500">Khai báo {{ $submission->submitted_at->format('d/m/Y H:i') }}</p>
-                    </div>
-                    <a href="{{ route('admin.submissions.show', $submission) }}" aria-label="Xem và duyệt {{ $submission->customer_name }}" class="shrink-0 self-start rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 hover:bg-red-100 focus-visible:outline-red-600">Xem và duyệt →</a>
-                </li>
-            @empty
-                <li class="py-5 text-sm text-slate-500">Không có khai báo chờ duyệt.</li>
-            @endforelse
-        </ul>
-    </section>
-
-    <section aria-labelledby="ranking-title" class="mt-8">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-                <h2 id="ranking-title" class="text-lg font-bold">Dẫn đầu tháng này</h2>
-                <p class="mt-1 text-sm text-slate-500">{{ $monthStart->format('d/m/Y') }} – {{ $monthEnd->subDay()->format('d/m/Y') }} · Chỉ tính khai báo đã duyệt theo submitted_at.</p>
+<x-admin.layout title="Tổng quan">
+    @vite('resources/css/admin-overview.css')
+    @php
+        $number = fn ($value) => number_format($value, 0, ',', '.');
+        $pendingUrl = route('admin.submissions.index', ['status' => 'pending']);
+        $leaders = $ranking === 'sales' ? $topSales : $topDealers;
+        $dayNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+    @endphp
+    <div class="ao-page">
+        <header class="ao-head">
+            <div><p class="ao-eyebrow">KHÔNG GIAN QUẢN TRỊ</p><h1>Xin chào, {{ auth()->user()->name }}</h1><p>Theo dõi chương trình và xử lý các khai báo đang chờ duyệt.</p></div>
+            <div class="ao-date"><img src="{{ asset('admin/icons/c01-calendar.png') }}" alt="" width="16" height="16">{{ $dayNames[$now->dayOfWeek] }}, {{ $now->format('d/m/Y') }}</div>
+        </header>
+        <section class="ao-tasks" aria-label="Việc cần làm">
+            <div class="ao-review">
+                <img class="ao-review-art" src="{{ asset('admin/icons/c01-hero.png') }}" alt="">
+                <h2>Duyệt khách hàng</h2>
+                <div class="ao-review-total"><strong>{{ $number($overview['pending']) }}</strong><div><p>khách chờ xác minh</p>@if ($overview['oldest'])<small>Cũ nhất: {{ $overview['oldest']->format('d/m/Y') }} · {{ $number($overview['oldest_days']) }} ngày</small>@endif</div></div>
+                <span class="ao-overdue"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><defs><filter id="ao-clock-alpha" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 -1.080508474576 0 1" /></filter><mask id="ao-clock" style="mask-type:alpha"><image href="{{ asset('admin/icons/c01-clock.png') }}" width="14" height="14" filter="url(#ao-clock-alpha)" /></mask></defs><rect width="14" height="14" fill="white" mask="url(#ao-clock)" /></svg>{{ $number($overview['overdue']) }} khai báo quá 48 giờ</span>
+                <x-admin.button :href="$pendingUrl" variant="secondary" size="42" class="ao-start">Bắt đầu duyệt<img src="{{ asset('admin/icons/c01-arrow.png') }}" width="16" height="16" alt=""></x-admin.button>
             </div>
-            <a href="{{ route('leaderboard', ['period' => 'month']) }}" class="py-2 text-sm font-semibold text-red-600 hover:underline">Xem bảng xếp hạng →</a>
-        </div>
-        <div class="mt-4 grid gap-4 lg:grid-cols-2">
-            <x-public.ranking-preview title="Top 3 Sales" :leaders="$topSales" type="sales" detail-route="admin.sales.show" :avatars="$salesAvatars" :dealer-ids="$salesDealerIds" :public-slugs="$salesPublicSlugs" />
-            <x-public.ranking-preview title="Top 3 Đại Lý" :leaders="$topDealers" type="dealers" detail-route="admin.dealers.show" />
-        </div>
-    </section>
-</x-layout>
+            <div class="ao-accounts ao-card">
+                <h2><span class="ao-account-icon"><x-admin.icon name="registration" size="18" /></span>Duyệt tài khoản</h2>
+                <div class="ao-account-total"><strong>{{ $number($overview['pending_managers']) }}</strong><p>quản lý đại lý<br>chờ duyệt</p></div>
+                <p class="ao-sales-warning"><img src="{{ asset('admin/icons/c01-clock.png') }}" width="14" height="14" alt="">Thêm {{ $number($overview['overdue_sales']) }} sales chờ quá 3 ngày</p>
+                <a class="ao-link" href="{{ route('admin.dealer-registrations.index') }}">Mở danh sách<img src="{{ asset('admin/icons/c01-arrow.png') }}" width="14" height="14" alt=""></a>
+            </div>
+            <nav class="ao-shortcuts ao-card" aria-label="Lối tắt">
+                <h2>Lối tắt</h2>
+                @foreach ([['dealer', 'Đại lý', route('admin.dealers.index')], ['trophy', 'Tạo kỳ vinh danh', route('admin.awards.index')], ['external', 'Xem bảng xếp hạng', route('leaderboard')]] as [$icon, $label, $url])
+                    <a href="{{ $url }}" @if ($icon === 'external') target="_blank" rel="noopener" @endif><span><x-admin.icon :name="$icon" size="16" /></span><p>{{ $label }}</p><img src="{{ asset('admin/icons/c01-chevron.png') }}" width="16" height="16" alt=""></a>
+                @endforeach
+            </nav>
+        </section>
+        <div class="ao-stats-head"><h2>Tổng quan chương trình</h2><p>Bấm vào số để mở danh sách đã lọc</p></div>
+        <section class="ao-stats" aria-label="Tổng quan chương trình">
+            <div class="ao-kpis">
+                <div class="ao-kpi ao-card"><div class="ao-kpi-label"><span>CHỈ SỐ CHÍNH</span><h3>Khách đã xác minh tháng này</h3></div><div class="ao-kpi-value"><strong>{{ $number($overview['approved_month']) }}</strong><p>khách · tháng {{ $monthStart->format('m/Y') }}</p></div><div class="ao-track" aria-hidden="true"><i></i></div></div>
+                <div class="ao-kpi ao-card"><div class="ao-kpi-label"><span>CHỈ SỐ PHỤ</span><h3>Đại lý có từ 5 khách đã xác minh</h3></div><div class="ao-kpi-value"><strong>{{ $number($overview['qualified_dealers']) }}</strong><p>/ {{ $number($stats['dealers']) }} đại lý tham gia</p></div><div class="ao-track ao-track-secondary" aria-hidden="true"><i></i></div></div>
+            </div>
+            @foreach ([['dealers' => 'Tổng đại lý', 'active_dealers' => 'Đại lý hoạt động', 'sales' => 'Tổng sales', 'active_sales' => 'Sales hoạt động', 'pending_sales' => 'Sales chờ duyệt'], ['submissions' => 'Tổng khách hàng', 'approved_submissions' => 'Khách đã duyệt', 'pending_submissions' => 'Chờ xác minh', 'week_submissions' => 'Khai báo tuần này', 'month_submissions' => 'Khai báo tháng này']] as $row)
+                <dl class="ao-stat-row">
+                    @foreach ($row as $key => $label)
+                        <div class="ao-stat ao-card"><dt>{{ $label }}<img src="{{ asset('admin/icons/c01-chevron.png') }}" width="14" height="14" alt=""></dt><dd><a href="{{ $statLinks[$key] }}" data-stat="{{ $key }}" @class(['ao-green' => $key === 'approved_submissions', 'ao-red' => $key === 'pending_submissions'])>{{ $number($stats[$key]) }}</a></dd>@if (in_array($key, ['week_submissions', 'month_submissions']))<small>Mọi trạng thái</small>@endif</div>
+                    @endforeach
+                </dl>
+            @endforeach
+        </section>
+        <section class="ao-bottom">
+            <div class="ao-queue ao-card">
+                <div class="ao-queue-head"><h2>Chờ xác minh gần đây</h2><a class="ao-link" href="{{ $pendingUrl }}">Xem toàn bộ hàng chờ<img src="{{ asset('admin/icons/c01-arrow.png') }}" width="14" height="14" alt=""></a></div>
+                @foreach ($recentPendingSubmissions as $submission)
+                    @php
+                        $digits = preg_replace('/\D/', '', $submission->phone ?? '');
+                        $maskedPhone = strlen($digits) >= 9 && strlen($digits) <= 15 ? substr($digits, 0, 2).str_repeat('*', strlen($digits) - 6).substr($digits, -4) : '';
+                    @endphp
+                    <div class="ao-queue-row">
+                        <div class="ao-customer"><strong>{{ $submission->customer_name }}</strong><small>{{ $maskedPhone }}</small></div>
+                        <div class="ao-attribution"><strong>{{ $submission->dealer?->name }}</strong><small>{{ $submission->source === 'dealer_qr' ? 'Khách tự đăng ký' : $submission->sales?->name }}</small></div>
+                        <div class="ao-source"><x-admin.badge :variant="$submission->source === 'dealer_qr' ? 'neutral' : 'info'">{{ $submission->source === 'dealer_qr' ? 'QR đại lý' : 'Sales khai báo' }}</x-admin.badge></div>
+                        <time datetime="{{ $submission->submitted_at->toIso8601String() }}">{{ $submission->submitted_at->format('d/m H:i') }}</time>
+                        <x-admin.button :href="route('admin.submissions.show', $submission)" size="32">Duyệt</x-admin.button>
+                    </div>
+                @endforeach
+            </div>
+            <div class="ao-ranking ao-card" id="ranking">
+                <h2>Dẫn đầu tháng này</h2><p class="ao-ranking-period">{{ $monthStart->format('d/m') }} – {{ $monthEnd->subDay()->format('d/m/Y') }} · Chỉ tính khai báo đã duyệt</p>
+                <x-admin.tabs :items="[['key' => 'dealers', 'label' => 'Đại lý', 'href' => route('admin.dashboard', ['ranking' => 'dealers']).'#ranking'], ['key' => 'sales', 'label' => 'Sales (nội bộ)', 'href' => route('admin.dashboard', ['ranking' => 'sales']).'#ranking']]" :active="$ranking" />
+                @foreach ($leaders as $leader)
+                    <a @class(['ao-leader', 'ao-leader-first' => $loop->first]) href="{{ route($ranking === 'sales' ? 'admin.sales.show' : 'admin.dealers.show', $leader->id) }}"><span class="ao-rank">@if ($loop->first)<img src="{{ asset('admin/icons/c01-winner.png') }}" width="15" height="15" alt="">@else{{ $leader->rank }}@endif</span><div><strong>{{ $leader->name }}</strong><small>{{ $ranking === 'sales' ? $leader->dealer_name : $leader->code }}</small></div><b>{{ $number($leader->score) }}</b></a>
+                @endforeach
+            </div>
+        </section>
+    </div>
+</x-admin.layout>

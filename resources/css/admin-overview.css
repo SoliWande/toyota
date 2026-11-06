@@ -1,0 +1,89 @@
+/* C01 content only; P01 shell/primitives are unchanged. */
+@font-face{font-family:Montserrat;font-style:normal;font-weight:100 900;font-display:swap;src:url('../../public/competition/fonts/montserrat-latin.woff2') format('woff2')}
+.ad-admin .ao-page{display:flex;flex-direction:column;gap:24px}
+.ad-admin .ao-page :is(p,h1,h2,h3,dl,dd){margin:0}
+.ad-admin .ao-page h2{font-size:15px;font-weight:600;line-height:20px}
+.ad-admin .ao-head{display:flex;align-items:flex-end;gap:16px}
+.ad-admin .ao-head>div:first-child{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.ad-admin .ao-head .ao-eyebrow{color:#eb0a1e;font-size:12px;line-height:16px;font-weight:600;letter-spacing:1.44px}
+.ad-admin .ao-head h1{font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.42px;overflow-wrap:anywhere}
+.ad-admin .ao-head p{font-size:14px;line-height:20px;color:#5e5e66}
+.ad-admin .ao-date{display:flex;align-items:center;gap:6px;flex:none;min-height:38px;padding:9px 14px;border:1px solid #e3e3e8;border-radius:999px;background:white;font-size:13px;line-height:18px;font-weight:600;white-space:nowrap}
+.ad-admin .ao-card{background:white;border:1px solid #ededf0;border-radius:20px;min-width:0}
+.ad-admin .ao-tasks{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.ad-admin .ao-review{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:20px;padding:28px;border-radius:20px;overflow:hidden;color:white;background:linear-gradient(153.935deg,#f2293a 0%,#b8000f 71.429%)}
+.ad-admin .ao-review>*:not(.ao-review-art){position:relative}
+.ad-admin .ao-review-art{position:absolute;right:0;top:0;width:192px;height:190px}
+.ad-admin .ao-review h2{color:#ffffffd9}
+.ad-admin .ao-review-total{display:flex;align-items:flex-end;gap:12px}
+.ad-admin .ao-review-total>strong{font:700 64px/64px Montserrat,sans-serif;letter-spacing:-1.92px}
+.ad-admin .ao-review-total>div{padding-bottom:8px;min-height:48px}
+.ad-admin .ao-review-total p{font-size:15px;line-height:20px;font-weight:500}
+.ad-admin .ao-review-total small{display:block;margin-top:2px;color:#ffffffbf;font-size:13px;line-height:18px}
+.ad-admin .ao-overdue{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:#ffffff29;font-size:13px;line-height:18px;font-weight:600}
+.ad-admin .ao-review .ao-start{color:#c4101f;border:0;font-size:14px;line-height:18px;min-height:42px}
+.ad-admin .ao-accounts{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:24px}
+.ad-admin .ao-accounts h2{display:flex;align-items:center;gap:8px}
+.ad-admin .ao-account-icon{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:50%;background:#fff4e0;color:#e08600}
+.ad-admin .ao-account-total{display:flex;gap:8px;align-items:flex-end}
+.ad-admin .ao-account-total strong{font:700 40px/44px Montserrat,sans-serif;letter-spacing:-.8px}
+.ad-admin .ao-account-total p{font-size:13px;line-height:18px;color:#5e5e66}
+.ad-admin .ao-sales-warning{display:flex;align-items:center;gap:6px;width:100%;padding:8px 10px;border-radius:10px;background:#fff8ec;color:#9a5800;font-size:12px;line-height:16px;font-weight:500}
+.ad-admin .ao-sales-warning img{mix-blend-mode:multiply;flex:none}
+.ad-admin .ao-link{display:inline-flex;align-items:center;gap:4px;color:#eb0a1e;font-size:13px;line-height:18px;font-weight:600;text-decoration:none;white-space:nowrap}
+.ad-admin .ao-accounts>.ao-link{margin-top:auto}
+.ad-admin .ao-shortcuts{display:flex;flex-direction:column;gap:4px;padding:20px 12px 12px}
+.ad-admin .ao-shortcuts h2{padding:0 12px 8px}
+.ad-admin .ao-shortcuts>a{display:flex;align-items:center;gap:12px;padding:10px 12px;color:#111;font-size:14px;line-height:20px;font-weight:500;text-decoration:none}
+.ad-admin .ao-shortcuts>a>span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#f5f5f7;flex:none;color:#5e5e66}
+.ad-admin .ao-shortcuts>a>p{flex:1}
+.ad-admin .ao-stats-head{display:flex;align-items:flex-end;gap:12px;padding-top:8px}
+.ad-admin .ao-stats-head h2{flex:1;font-size:18px;line-height:24px;font-weight:700;letter-spacing:-.18px}
+.ad-admin .ao-stats-head p{font-size:13px;line-height:18px;color:#8e8e93}
+.ad-admin .ao-stats{display:flex;flex-direction:column;gap:12px}
+.ad-admin .ao-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ad-admin .ao-kpi{display:flex;flex-direction:column;gap:10px;padding:20px 24px;overflow:hidden}
+.ad-admin .ao-kpi-label{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.ad-admin .ao-kpi-label>span{padding:3px 8px;border-radius:999px;background:#fff1f2;color:#eb0a1e;font-size:10px;line-height:14px;font-weight:700;letter-spacing:.8px}
+.ad-admin .ao-kpi-label h3{font-size:14px;line-height:20px;font-weight:600}
+.ad-admin .ao-kpi-value{display:flex;align-items:flex-end;gap:8px}
+.ad-admin .ao-kpi-value strong{font:700 40px/44px Montserrat,sans-serif;letter-spacing:-.8px}
+.ad-admin .ao-kpi-value p{font-size:13px;line-height:22px;color:#5e5e66}
+/* Decorative Figma tracks: no unprovided target or progress semantics. */
+.ad-admin .ao-track{height:6px;border-radius:999px;background:#f2f2f5;overflow:hidden}
+.ad-admin .ao-track i{display:block;width:62%;height:6px;background:#eb0a1e;border-radius:3px}
+.ad-admin .ao-track-secondary i{width:24%}
+.ad-admin .ao-stat-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.ad-admin .ao-stat{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:96px;padding:18px 20px}
+.ad-admin .ao-stat-row:last-child .ao-stat{min-height:118px}
+.ad-admin .ao-stat dt{display:flex;align-items:center;gap:6px;width:100%;color:#5e5e66;font-size:13px;line-height:18px;font-weight:500}
+.ad-admin .ao-stat dt img{margin-left:auto;flex:none}
+.ad-admin .ao-stat dd{font:700 30px/34px Montserrat,sans-serif;letter-spacing:-.45px}
+.ad-admin .ao-stat dd a{color:#111;text-decoration:none}
+.ad-admin .ao-stat dd .ao-green{color:#15803d}
+.ad-admin .ao-stat dd .ao-red{color:#eb0a1e}
+.ad-admin .ao-stat small{font-size:12px;line-height:16px;color:#8e8e93}
+.ad-admin .ao-bottom{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:12px;align-items:start}
+.ad-admin .ao-queue{overflow:hidden;min-height:394px}
+.ad-admin .ao-queue-head{display:flex;align-items:center;gap:8px;padding:18px 20px 14px}
+.ad-admin .ao-queue-head h2{flex:1}
+.ad-admin .ao-bottom h2{font-size:16px;line-height:22px;font-weight:700;letter-spacing:-.08px}
+.ad-admin .ao-queue-row{display:flex;align-items:center;gap:16px;padding:14px 20px;border-top:1px solid #ededf0}
+.ad-admin .ao-queue-row strong{display:block;font-size:14px;line-height:20px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ad-admin .ao-queue-row small{display:block;font-size:12px;line-height:16px;color:#8e8e93;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.ad-admin .ao-customer{width:170px;min-width:0;flex-shrink:0}
+.ad-admin .ao-attribution{flex:1;min-width:0}
+.ad-admin .ao-source{width:120px;flex:none}
+.ad-admin .ao-queue-row time{flex:none;font-size:13px;line-height:18px;color:#5e5e66;white-space:nowrap}
+.ad-admin .ao-queue-row .ad-button{flex:none}
+.ad-admin .ao-ranking{display:flex;flex-direction:column;gap:14px;padding:24px;min-height:394px}
+.ad-admin .ao-ranking-period{font-size:12px;line-height:16px;color:#8e8e93}
+.ad-admin .ao-leader{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;color:#111;text-decoration:none}
+.ad-admin .ao-rank{display:grid;place-items:center;width:30px;height:30px;flex:none;background:#f2f2f5;color:#5e5e66;border-radius:50%;font:700 13px/16px Montserrat,sans-serif}
+.ad-admin .ao-leader>div{flex:1;min-width:0}
+.ad-admin .ao-leader strong{display:block;font-size:14px;line-height:20px;font-weight:600;overflow-wrap:anywhere}
+.ad-admin .ao-leader small{display:block;margin-top:2px;color:#8e8e93;font-size:12px;line-height:16px}
+.ad-admin .ao-leader>b{flex:none;font:700 18px/22px Montserrat,sans-serif}
+.ad-admin .ao-leader-first{background:#fff1f2}
+.ad-admin .ao-leader-first .ao-rank{background:#eb0a1e}
+.ad-admin .ao-leader-first>b{color:#eb0a1e}

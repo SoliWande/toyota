@@ -1,4 +1,4 @@
-<x-layout title="Quản lý đại lý">
+<x-admin.layout title="Quản lý đại lý">
     <div class="mb-7 flex flex-wrap items-end justify-between gap-4">
         <div>
             <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
@@ -43,4 +43,4 @@
         </table>
     </div>
     <div class="mt-6">{{ $dealers->links() }}</div>
-</x-layout>
+</x-admin.layout>

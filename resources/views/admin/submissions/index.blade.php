@@ -1,4 +1,4 @@
-<x-layout title="Duyệt khai báo">
+<x-admin.layout title="Duyệt khai báo">
     <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
     <h1 class="mt-3 text-3xl font-bold">Duyệt khai báo</h1>
     <p class="mt-2 text-sm text-slate-600">{{ $submissions->total() }} khai báo phù hợp · Ưu tiên khai báo cũ nhất.</p>
@@ -99,4 +99,4 @@
         @endforelse
     </ul>
     <div class="mt-6">{{ $submissions->links() }}</div>
-</x-layout>
+</x-admin.layout>

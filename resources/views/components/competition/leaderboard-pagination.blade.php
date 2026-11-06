@@ -1,5 +1,5 @@
-@props(['rows'])
-<nav class="wc-lb-pagination" aria-label="Phân trang bảng xếp hạng">
+@props(['rows', 'label' => 'Phân trang bảng xếp hạng'])
+<nav class="wc-lb-pagination" aria-label="{{ $label }}">
     <p>Trang {{ number_format($rows->currentPage(), 0, ',', '.') }} / {{ number_format($rows->lastPage(), 0, ',', '.') }}</p>
     @if ($rows->onFirstPage())
         <span class="wc-lb-prev" aria-disabled="true">‹ Trước</span>

@@ -1,4 +1,4 @@
-<x-layout :title="'Sales · '.$sales->name">
+<x-admin.layout :title="'Sales · '.$sales->name">
     <a href="{{ route('admin.sales.index') }}" class="text-sm font-medium text-slate-500 hover:text-red-600">← Danh sách Sales</a>
     <div class="mb-7 mt-4 flex flex-wrap items-center gap-4">
         <x-sales-avatar :sales-id="$sales->id" :has-avatar="(bool) $sales->avatar_path" />
@@ -64,4 +64,4 @@
         </div>
         <div class="mt-5">{{ $reviews->links() }}</div>
     </section>
-</x-layout>
+</x-admin.layout>

@@ -1,4 +1,4 @@
-<x-layout title="Duyệt quản lý đại lý">
+<x-admin.layout title="Duyệt quản lý đại lý">
     <a href="{{ route('admin.dashboard') }}" class="text-red-700">← Quản trị</a>
     <h1 class="my-6 text-3xl font-bold">Duyệt quản lý đại lý</h1>
     <x-admin-feedback />
@@ -19,4 +19,4 @@
         <p>Không có tài khoản quản lý chờ duyệt.</p>
     @endforelse
     {{ $accounts->links() }}
-</x-layout>
+</x-admin.layout>

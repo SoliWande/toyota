@@ -1,4 +1,4 @@
-<x-layout title="Kiểm tra khai báo">
+<x-admin.layout title="Kiểm tra khai báo">
     <div class="mx-auto max-w-3xl">
         <a href="{{ route('admin.submissions.index') }}" class="text-sm text-slate-500 hover:text-red-600">← Duyệt khai báo</a>
         <h1 class="mb-6 mt-4 break-words text-3xl font-bold">{{ $submission->customer_name }}</h1>
@@ -42,4 +42,4 @@
         </div>
         <x-submission-verification :submission="$submission" :state="$verificationState" :audits="$verificationAudits" />
     </div>
-</x-layout>
+</x-admin.layout>

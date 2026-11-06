@@ -1,4 +1,4 @@
-<x-layout title="Chỉnh sửa Sales">
+<x-admin.layout title="Chỉnh sửa Sales">
     <div class="mx-auto max-w-xl">
         <a class="text-sm text-slate-500" href="{{ route('admin.sales.show', $sales) }}">← Chi tiết Sales</a>
         <h1 class="mt-4 text-3xl font-bold">Chỉnh sửa Sales</h1>
@@ -22,4 +22,4 @@
             <button type="submit" class="button-primary w-full">Lưu thay đổi</button>
         </form>
     </div>
-</x-layout>
+</x-admin.layout>

@@ -1,4 +1,4 @@
-<x-layout :title="$dealer->exists ? 'Sửa đại lý' : 'Thêm đại lý'">
+<x-admin.layout :title="$dealer->exists ? 'Sửa đại lý' : 'Thêm đại lý'">
     <div class="mx-auto max-w-2xl">
         <a href="{{ route('admin.dealers.index') }}" class="text-sm text-slate-500 hover:text-red-600">← Danh sách đại lý</a>
         <h1 class="mb-7 mt-4 text-3xl font-bold">{{ $dealer->exists ? 'Sửa đại lý' : 'Thêm đại lý' }}</h1>
@@ -37,4 +37,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+</x-admin.layout>
