@@ -26,12 +26,13 @@ class SalesDashboardTest extends TestCase
 
         $this->actingAs($sales)->get(route('sales.dashboard'))
             ->assertOk()->assertSee($sales->name)->assertSee($sales->dealer->name)
-            ->assertSee($sales->dealer->code)
+            ->assertSee('Nhân viên kinh doanh')->assertSee('Tài khoản đã duyệt')
             ->assertViewHas('stats', ['total' => 0, 'approved' => 0, 'pending' => 0, 'rejected' => 0])
             ->assertViewHas('currentRank', null)
             ->assertViewHas('recentSubmissions', fn ($items) => $items->isEmpty())
-            ->assertSee('Bạn chưa có khai báo nào')->assertSee('Chưa có dữ liệu xếp hạng.')
-            ->assertSee('Thêm khách hàng')->assertSee(route('sales.submissions.create'));
+            ->assertSee('Bạn chưa có khai báo nào')->assertSee('Hạng — trong')
+            ->assertDontSee('Thêm khách hàng')->assertDontSee('Lọc khách')
+            ->assertSee('Khai báo tay')->assertSee(route('sales.submissions.create'));
     }
 
     public function test_counts_include_all_time_and_all_statuses_for_only_the_authenticated_sales(): void
@@ -63,11 +64,12 @@ class SalesDashboardTest extends TestCase
         $lateCreated = CustomerSubmission::factory()->rejected()->create(['sales_id' => $sales->id, 'submitted_at' => now()->subDays(20)]);
         $expected = [$newest->id, ...$middle->sortByDesc('id')->modelKeys()];
 
-        $this->actingAs($sales)->get(route('sales.dashboard'))->assertOk()
+        $this->actingAs($sales)->get(route('sales.dashboard', ['tab' => 'all']))->assertOk()
             ->assertViewHas('recentSubmissions', fn ($items) => $items->modelKeys() === $expected)
             ->assertSeeInOrder([$newest->customer_name, ...$middle->sortByDesc('id')->pluck('customer_name')->all()])
-            ->assertDontSee($old->customer_name)->assertDontSee($lateCreated->customer_name)
-            ->assertSee($newest->submitted_at->format('d/m/Y H:i'))->assertSee('Đã duyệt')->assertSee('Chờ duyệt');
+            ->assertViewHas('customers', fn ($items) => $items->total() === 7)
+            ->assertSee($old->customer_name)->assertSee($lateCreated->customer_name)
+            ->assertSee($newest->submitted_at->toIso8601String())->assertSee('Đã xác minh')->assertSee('Mới đăng ký');
     }
 
     public function test_customer_names_are_escaped_and_internal_data_is_not_rendered(): void
@@ -79,7 +81,7 @@ class SalesDashboardTest extends TestCase
             'phone' => '0901234567', 'rejection_reason' => 'Private rejection reason',
         ]);
 
-        $this->actingAs($sales)->get(route('sales.dashboard'))->assertOk()
+        $this->actingAs($sales)->get(route('sales.dashboard', ['tab' => 'all']))->assertOk()
             ->assertSee('<script>alert("customer")</script>')
             ->assertDontSee('<script>alert("customer")</script>', false)
             ->assertDontSee('Private admin note')->assertDontSee('Private sales note')

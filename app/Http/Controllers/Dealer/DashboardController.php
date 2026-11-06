@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dealer;
 use App\Enums\LeaderboardPeriod;
 use App\Http\Controllers\Controller;
 use App\Services\DealerDashboardData;
+use App\Services\DealerRegistrationReport;
 use App\Services\DemoSubmissionScope;
 use App\Services\LeaderboardService;
 use Illuminate\Http\Request;
@@ -17,9 +18,14 @@ class DashboardController extends Controller
     {
         $dealer = $data->currentDealer($request->user());
         $this->authorize('view', $dealer);
+        $standings = $data->standings($dealer, $leaderboard);
+        $rankAhead = $standings['month']->rank > 1
+            ? DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::Month), 'ranked')->where('rank', $standings['month']->rank - 1)->first()
+            : null;
 
         return view('dealer.dashboard', [
-            'dealer' => $dealer, 'standings' => $data->standings($dealer, $leaderboard),
+            'dealer' => $dealer, 'standings' => $standings, 'rankAhead' => $rankAhead,
+            'registrationReport' => app(DealerRegistrationReport::class)->forDealer($dealer),
             'salesCount' => $dealer->sales()->count(),
             'customerCount' => app(DemoSubmissionScope::class)->apply($dealer->submissions())->count(),
             'recentCustomers' => $data->customers($dealer)->orderByDesc('submitted_at')->orderByDesc('id')->limit(5)->get(),

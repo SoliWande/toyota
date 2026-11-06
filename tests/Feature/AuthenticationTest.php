@@ -272,7 +272,7 @@ class AuthenticationTest extends TestCase
     {
         return [
             ['pending', 'Tài khoản đang chờ duyệt'],
-            ['rejected', 'Đăng ký chưa được chấp nhận'],
+            ['rejected', 'Chưa duyệt được tài khoản'],
             ['blocked', 'Tài khoản đã bị khóa'],
         ];
     }

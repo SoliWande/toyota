@@ -7,13 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Sales\SubmissionRequest;
 use App\Models\CustomerSubmission;
 use App\Models\User;
+use App\Services\LeaderboardService;
+use App\Services\StaffCustomerLinks;
+use App\Services\StaffSubmissionProgress;
 use App\Services\SubmissionIntake;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
@@ -23,28 +25,8 @@ class SubmissionController extends Controller
     public function index(Request $request): View
     {
         $this->authorize('viewAny', CustomerSubmission::class);
-        $filters = $request->validate([
-            'q' => ['nullable', 'string', 'max:255'],
-            'status' => ['nullable', Rule::enum(SubmissionStatus::class)],
-            'page' => ['nullable', 'integer', 'min:1'],
-        ]);
-        $query = $request->user()->submissions()->select(['id', 'sales_id', 'customer_name', 'status', 'submitted_at']);
-        if (! empty($filters['status'])) {
-            $query->where('status', $filters['status']);
-        }
-        if (isset($filters['q']) && $filters['q'] !== '') {
-            $search = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $filters['q']).'%';
-            $query->where(function ($query) use ($search) {
-                foreach (['customer_name', 'facebook_url', 'phone'] as $field) {
-                    $query->orWhereRaw($field." LIKE ? ESCAPE '!'", [$search]);
-                }
-            });
-        }
 
-        return view('sales.submissions.index', [
-            'submissions' => $query->orderByDesc('submitted_at')->orderByDesc('id')->paginate(20)->withQueryString(),
-            'filters' => $filters,
-        ]);
+        return app(DashboardController::class)($request, app(LeaderboardService::class));
     }
 
     public function create(): View
@@ -80,14 +62,26 @@ class SubmissionController extends Controller
             throw $error;
         }
 
-        return redirect()->route('sales.submissions.show', $submission)->with('success', 'Đã gửi khai báo, vui lòng chờ admin duyệt.');
+        return redirect()->route('sales.submissions.saved', $submission)->with('success', 'Đã gửi khai báo, vui lòng chờ admin duyệt.');
     }
 
     public function show(CustomerSubmission $submission): View
     {
         $this->authorize('view', $submission);
 
-        return view('sales.submissions.show', compact('submission'));
+        $progress = app(StaffSubmissionProgress::class)->data($submission);
+        $lookupUrl = app(StaffCustomerLinks::class)->lookup($submission);
+
+        return view('sales.submissions.show', compact('submission', 'progress', 'lookupUrl'));
+    }
+
+    public function saved(CustomerSubmission $submission): View
+    {
+        $this->authorize('view', $submission);
+        $links = app(StaffCustomerLinks::class);
+        $lookupUrl = $links->lookup($submission);
+
+        return view('sales.submissions.saved', ['submission' => $submission, 'lookupUrl' => $lookupUrl, 'message' => $links->message($lookupUrl)]);
     }
 
     public function edit(CustomerSubmission $submission): View

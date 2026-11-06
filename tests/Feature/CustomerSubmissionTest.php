@@ -78,6 +78,7 @@ class CustomerSubmissionTest extends TestCase
         unset($data['customer_phone'], $data['note']);
         $this->actingAs($sales)->post(route('sales.submissions.store'), $data)->assertSessionHasNoErrors();
         $data['evidence_image'] = UploadedFile::fake()->image('bang-chung-2.jpg');
+        $data['license_plate'] = '29D-428.13'; // Same pending Facebook profile is allowed; occupied plates are not.
         $this->post(route('sales.submissions.store'), $data)->assertSessionHasNoErrors();
         $this->assertSame(2, $sales->submissions()->count());
         $this->assertNull($sales->submissions()->first()->phone);
@@ -262,7 +263,10 @@ class CustomerSubmissionTest extends TestCase
         $sales = User::factory()->active()->create();
         $this->actingAs($sales);
         for ($i = 0; $i < 20; $i++) {
-            $this->post(route('sales.submissions.store'), $this->data())->assertRedirect();
+            $this->post(route('sales.submissions.store'), $this->data([
+                'customer_phone' => '090'.str_pad((string) $i, 7, '0', STR_PAD_LEFT),
+                'license_plate' => '29D-'.str_pad((string) $i, 5, '0', STR_PAD_LEFT),
+            ]))->assertRedirect()->assertSessionHasNoErrors();
         }
         $this->post(route('sales.submissions.store'), $this->data())->assertStatus(429);
         $this->get(route('sales.submissions.index'))->assertOk();

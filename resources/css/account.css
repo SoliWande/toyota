@@ -49,8 +49,13 @@
 .wc-account-site .wc-status-help h2 { font-size:15px; margin-bottom:6px; }
 .wc-account-site .wc-status-help a { display:inline-block; margin-top:10px; font-weight:600; }
 .wc-account-site .wc-status-logout { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border:0; padding:8px 0; color:var(--wc-secondary); background:transparent; cursor:pointer; font:600 14px Inter,sans-serif; }
-.wc-staff-header .wc-staff-account { display:flex; gap:10px; align-items:center; max-width:220px; margin-left:auto; }
-.wc-staff-header .wc-staff-account-menu { position:relative; flex:none; margin-left:auto; }
+.wc-staff-header .wc-header-row { flex-wrap:nowrap; }
+.wc-staff-header .wc-brand-copy { white-space:nowrap; }
+.wc-staff-header .wc-staff-account { display:flex; gap:8px; align-items:center; min-width:0; padding:4px 10px 4px 4px; border-radius:999px; background:var(--wc-page); }
+.wc-staff-header .wc-staff-account-menu { position:relative; flex:0 1 220px; min-width:120px; max-width:220px; }
+.wc-staff-header .wc-staff-account-copy { flex:1; min-width:0; }
+.wc-staff-header .wc-staff-account .wc-staff-initial { width:32px; height:32px; background:#2f2e2c; color:white; font-size:13px; }
+.wc-staff-header .wc-staff-account-chevron { flex:none; font-size:14px; line-height:14px; }
 .wc-staff-header .wc-staff-account-menu summary { cursor:pointer; list-style:none; }
 .wc-staff-header .wc-staff-account-dropdown { position:absolute; top:calc(100% + 12px); right:0; min-width:180px; padding:12px 20px; background:white; border:1px solid #ededf0; border-radius:16px; box-shadow:0 8px 32px #00000014; font-size:14px; }
 .wc-staff-header .wc-staff-account-dropdown>a { display:block; padding-block:10px; }
@@ -58,9 +63,13 @@
 .wc-staff-site .wc-staff-page-links { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
 .wc-staff-site .wc-staff-page-links>span:first-child { margin-right:auto; color:var(--wc-secondary); font-size:12px; }
 .wc-staff-site .wc-staff-page-links>a { border:1px solid #e4e4e8; border-radius:10px; padding:10px 14px; min-height:44px; }
-.wc-staff-header .wc-staff-account strong,.wc-staff-header .wc-staff-account small { display:block; font-size:12px; line-height:18px; overflow-wrap:anywhere; }
-.wc-staff-header .wc-staff-account small { color:var(--wc-secondary); font-size:11px; }
-.wc-staff-header .wc-desktop-nav { gap:20px; }
+.wc-staff-header .wc-staff-account strong,.wc-staff-header .wc-staff-account small { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; line-height:16px; }
+.wc-staff-header .wc-staff-account small { color:var(--wc-light); font-size:11px; line-height:14px; }
+.competition-site .wc-staff-header .wc-desktop-nav { flex:0 0 auto; flex-wrap:nowrap; gap:4px; }
+.wc-staff-header .wc-desktop-nav>a { flex:none; white-space:nowrap; }
+.wc-staff-header .wc-staff-cta { display:inline-flex; flex:none; align-items:center; gap:8px; padding:11px 20px; border:1px solid #e3e3e8; border-radius:999px; white-space:nowrap; font-size:14px; line-height:20px; font-weight:600; }
+.wc-staff-header .wc-staff-cta>span { font-size:20px; line-height:16px; }
+.wc-staff-header .wc-staff-cta[aria-current] { background:#fff1f2; color:var(--wc-red); }
 .wc-staff-initial { display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#f0f0f3; color:#44444e; width:40px; height:40px; flex:none; font-weight:600; }
 .wc-staff-header .wc-mobile-panel>a { display:block; padding:14px 0; font-size:16px; font-weight:600; }
 .wc-staff-header .wc-staff-menu-person { padding:12px 0 24px; border-bottom:1px solid var(--wc-border); overflow-wrap:anywhere; }
@@ -137,8 +146,26 @@
 .wc-staff-site .wc-staff-manage summary { cursor:pointer; }
 .wc-staff-site .wc-staff-manage form { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
 .wc-staff-site .wc-staff-pagination { margin-top:20px; font-size:14px; }
-@media(max-width:1199px) { .wc-staff-site .wc-dashboard-top { grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); } .wc-staff-header .wc-desktop-nav { gap:12px; } .wc-staff-header .wc-staff-account { max-width:160px; } }
-@media(max-width:1023px) { .wc-staff-header .wc-staff-account-menu { display:none; } .wc-staff-site .wc-dashboard-bottom { grid-template-columns:1fr; } }
+.wc-staff-site .wc-funnel-card header p,.wc-staff-site .wc-report-note { font-size:12px; line-height:18px; color:var(--wc-secondary); margin-block:10px; }
+.wc-staff-site .wc-funnel { display:flex; flex-direction:column; gap:14px; margin-top:20px; }
+.wc-staff-site .wc-funnel-row { display:flex; align-items:center; gap:12px; }
+.wc-staff-site .wc-funnel-row dt { width:130px; flex:none; font-size:14px; line-height:20px; font-weight:500; }
+.wc-staff-site .wc-funnel-row dd { display:flex; flex:1; min-width:0; align-items:center; gap:12px; margin:0; }
+.wc-staff-site .wc-funnel-row strong { min-width:28px; font:700 15px/20px Montserrat,sans-serif; text-align:right; }
+.wc-staff-site .wc-funnel-track { display:block; height:10px; background:#f2f2f5; border-radius:999px; flex:1; overflow:hidden; }
+.wc-staff-site .wc-funnel-track>span { display:block; height:100%; border-radius:inherit; background:#8e8e93; }
+.wc-staff-site .wc-funnel-group .wc-funnel-track>span { background:#2463eb; }
+.wc-staff-site .wc-funnel-verification .wc-funnel-track>span { background:#e08600; }
+.wc-staff-site .wc-funnel-supplement .wc-funnel-track>span { background:#eb0a1e; }
+.wc-staff-site .wc-funnel-verified .wc-funnel-track>span { background:#16834a; }
+.wc-staff-site .wc-stalled-badge { border-radius:999px; background:#fef2f2; color:#b91c1c; padding:4px 10px; font-size:12px; flex:none; }
+.wc-staff-site .wc-qr-actions { display:flex; flex-direction:column; align-items:flex-start; gap:12px; font-size:13px; }
+.wc-staff-site .wc-staff-login-label { display:none; }
+@media(max-width:1199px) {
+    .wc-staff-site .wc-dashboard-top { grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); }
+    .wc-staff-header .wc-staff-account-menu,.wc-staff-header .wc-staff-cta,.competition-site .wc-staff-header .wc-desktop-nav { display:none; }
+}
+@media(max-width:1023px) { .wc-staff-site .wc-dashboard-bottom { grid-template-columns:1fr; } }
 @media(max-width:767px) {
     .wc-account-site .wc-register-fields>.wc-auth-submit { order:0; }
     .wc-account-site .wc-header-row:has(.wc-account-mobile-back)>.wc-brand { display:none; }
@@ -187,6 +214,7 @@
     .wc-staff-site .wc-staff-table-head { display:none; }
     .wc-staff-site .wc-staff-table-row { grid-template-columns:minmax(0,1fr) 70px; gap:14px 10px; padding-block:20px; }
     .wc-staff-site .wc-staff-table-row>p:nth-child(3) { grid-column:1; }
+    .wc-staff-site .wc-staff-login-label { display:inline; }
     .wc-staff-site .wc-staff-table-row>div:last-child { grid-column:1/-1; }
     .wc-staff-site .wc-staff-score { text-align:right; }
     .wc-staff-site .wc-staff-score small { display:block; font-size:10px; margin-top:4px; }

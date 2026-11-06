@@ -30,6 +30,7 @@ class PasswordRecoveryTest extends TestCase
 
     public function test_forgot_password_sends_token_without_disclosing_account_existence(): void
     {
+        config(['mail.default' => 'smtp']); // A configured delivery transport; Notification::fake prevents network sends.
         Notification::fake();
         $user = User::factory()->active()->create();
         $this->get(route('password.request'))->assertOk()->assertHeader('Cache-Control', 'no-store, private');

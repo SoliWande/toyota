@@ -18,6 +18,7 @@ use App\Http\Controllers\Dealer\AwardController as DealerAwardController;
 use App\Http\Controllers\Dealer\CustomerController as DealerCustomerController;
 use App\Http\Controllers\Dealer\DashboardController as DealerDashboardController;
 use App\Http\Controllers\Dealer\SalesController as DealerSalesController;
+use App\Http\Controllers\Dealer\StandeeController;
 use App\Http\Controllers\DealerProfileMediaController;
 use App\Http\Controllers\DealerRegistrationController;
 use App\Http\Controllers\DealerRegistrationDraftController;
@@ -95,6 +96,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         ->whereNumber('submission')->middleware('account.active')->name('submissions.evidence');
     Route::get('/sales/dashboard', DashboardController::class)->middleware(['role:sales', 'account.active'])->name('sales.dashboard');
     Route::prefix('sales')->name('sales.')->middleware(['role:sales', 'account.active'])->group(function () {
+        Route::get('submissions/{submission}/saved', [SubmissionController::class, 'saved'])->whereNumber('submission')->name('submissions.saved');
         Route::get('address/wards/{province}', AddressController::class)->where('province', '[0-9]{2}')->name('address.wards');
         Route::resource('submissions', SubmissionController::class)->except(['store', 'update', 'destroy']);
         Route::middleware('throttle:submissions')->group(function () {
@@ -106,6 +108,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->middleware(['role:admin', 'account.active'])->name('admin.dashboard');
     Route::get('/dealer/dashboard', DealerDashboardController::class)->middleware(['role:dealer', 'account.active'])->name('dealer.dashboard');
     Route::prefix('dealer')->name('dealer.')->middleware(['role:dealer', 'account.active'])->group(function () {
+        Route::get('/standee', StandeeController::class)->middleware('throttle:10,1')->name('standee');
         Route::post('/staff/{account}/{action}', AccountRegistrationReviewController::class)
             ->whereNumber('account')->whereIn('action', ['approve', 'reject', 'block', 'reactivate'])->middleware('throttle:30,1')->name('staff.review');
         Route::get('/sales', [DealerSalesController::class, 'index'])->name('sales.index');

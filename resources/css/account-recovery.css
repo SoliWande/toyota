@@ -1,0 +1,67 @@
+/* B06/B06b/B17 only. Loaded by account-layout's explicit screen prop. */
+.wc-recovery-site .wc-auth-panel { padding:48px 56px; }
+.wc-recovery-site .wc-auth-heading h1 { letter-spacing:-.48px; }
+.wc-recovery-site .wc-auth-heading p { font-size:16px; line-height:24px; }
+.wc-recovery-site .wc-header-row { flex-wrap:nowrap; }
+.wc-recovery-site .wc-desktop-nav>a,.wc-recovery-site .wc-login { flex:none; white-space:nowrap; }
+.wc-recovery-site .wc-status-hero .wc-auth-heading { flex:1; min-width:0; }
+.wc-recovery-site .wc-status-illustration { width:96px; height:96px; }
+.wc-recovery-site .wc-status-meta { padding:20px 24px; gap:16px; background:#fafafb; }
+.wc-recovery-site .wc-status-meta dt { color:var(--wc-light); font-size:13px; margin-bottom:4px; }
+.wc-recovery-site .wc-status-meta dd { font-size:15px; }
+.wc-recovery-site .wc-status-reason { grid-column:auto; }
+.wc-recovery-site .wc-status-reason dd { color:#c4101f; }
+.wc-recovery-site .wc-status-context { font-size:13px; line-height:20px; color:var(--wc-secondary); overflow-wrap:anywhere; }
+.wc-recovery-site .wc-status-help { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:16px; padding:20px 24px; border:1px solid #ededf0; background:white; }
+.wc-recovery-site .wc-status-help-icon { display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:#f2f2f5; font-size:24px; }
+.wc-recovery-site .wc-status-help h2 { font-size:15px; line-height:20px; margin:0 0 2px; }
+.wc-recovery-site .wc-status-help p { font-size:14px; line-height:20px; }
+.wc-recovery-site .wc-recovery-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:56px; padding:16px 28px; border:1px solid #e3e3e8; border-radius:999px; background:white; cursor:pointer; font:600 16px/22px Inter,sans-serif; white-space:nowrap; margin:0; }
+.wc-recovery-site .wc-status-help .wc-recovery-secondary { display:inline-flex; margin:0; }
+.wc-recovery-site .wc-mail-notice { margin:0; padding:14px; border-radius:12px; background:#fff8e6; color:#805500; font-size:14px; line-height:20px; }
+.wc-recovery-site .wc-status-logout { display:inline-flex; gap:8px; align-items:center; min-height:20px; padding:0; line-height:20px; }
+.wc-recovery-site .wc-status-logout>span { font-size:18px; }
+.wc-recovery-site .wc-status-rules { font-size:13px; color:var(--wc-secondary); }
+.wc-recovery-site .wc-password-panel { min-height:640px; }
+.wc-recovery-site .wc-password-panel .wc-auth-heading h1 { font-size:36px; line-height:42px; letter-spacing:-.72px; }
+.wc-recovery-site .wc-password-back { display:flex; align-items:center; gap:4px; font-size:14px; line-height:20px; font-weight:600; color:var(--wc-secondary); }
+.wc-recovery-site .wc-password-back>span { font-size:22px; }
+.wc-recovery-site .wc-password-mobile-back { display:none; }
+.wc-recovery-site .wc-password-request { display:flex; flex-direction:row; align-items:flex-end; gap:16px; }
+.wc-recovery-site .wc-password-request>.wc-auth-field { flex:1; }
+.wc-recovery-site .wc-password-request>.wc-auth-submit { flex:none; white-space:nowrap; height:56px; }
+.wc-recovery-site .wc-password-email { overflow-wrap:anywhere; font-size:14px; line-height:20px; }
+@media(min-width:768px) and (max-width:1199px) {
+    .wc-recovery-site .wc-auth-panel { padding:32px 24px; }
+    .wc-recovery-site .wc-status-help { grid-template-columns:44px minmax(0,1fr); }
+    .wc-recovery-site .wc-status-help>form,.wc-recovery-site .wc-status-help>a { grid-column:1/-1; }
+    .wc-recovery-site .wc-password-request { flex-direction:column; align-items:stretch; }
+}
+@media(max-width:767px) {
+    .wc-recovery-site .wc-auth-panel { padding:0; }
+    .wc-recovery-status .wc-auth-main { padding-block:40px; }
+    .wc-recovery-site .wc-status-panel { gap:20px; min-height:0; }
+    .wc-recovery-site .wc-status-hero { gap:12px; padding:0 8px 4px; }
+    .wc-recovery-site .wc-status-hero .wc-auth-heading { padding:0; }
+    .wc-recovery-site .wc-status-hero h1 { font-size:24px; line-height:30px; letter-spacing:-.36px; }
+    .wc-recovery-site .wc-status-hero .wc-auth-heading p { font-size:15px; line-height:22px; margin-top:12px; }
+    .wc-recovery-site .wc-status-meta { padding:4px 20px; border-radius:24px; background:white; gap:0; }
+    .wc-recovery-site .wc-status-meta>div { padding:14px 0; gap:12px; border-color:#ededf0; }
+    .wc-recovery-site .wc-status-meta>div:last-child { border-bottom:0; }
+    .wc-recovery-site .wc-status-meta dt { flex:0 0 auto; max-width:40%; margin:0; color:var(--wc-secondary); font-size:14px; line-height:20px; }
+    .wc-recovery-site .wc-status-meta dd { min-width:0; font-size:14px; line-height:20px; }
+    .wc-recovery-site .wc-status-help { grid-template-columns:36px minmax(0,1fr); align-items:start; gap:14px 12px; padding:20px; border:0; border-radius:24px; }
+    .wc-recovery-site .wc-status-help-icon { width:36px; height:36px; font-size:22px; }
+    .wc-recovery-site .wc-status-help p { font-size:13px; line-height:18px; }
+    .wc-recovery-site .wc-status-help>form,.wc-recovery-site .wc-status-help>a { grid-column:1/-1; width:100%; }
+    .wc-recovery-site .wc-recovery-secondary { width:100%; min-height:52px; padding:14px 20px; border:1.5px solid #c7c7cc; }
+    .wc-recovery-site .wc-status-logout-form { display:flex; justify-content:center; width:100%; padding-top:4px; }
+    .wc-recovery-site .wc-password-panel { min-height:0; }
+    .wc-recovery-site .wc-password-panel .wc-auth-heading h1 { font-size:26px; line-height:32px; letter-spacing:-.39px; }
+    .wc-recovery-password .wc-auth-main { padding-block:32px 40px; }
+    .wc-recovery-site .wc-password-panel .wc-auth-heading p { font-size:15px; line-height:22px; }
+    .wc-recovery-site .wc-password-back { display:none; }
+    .wc-recovery-site .wc-password-mobile-back { display:block; align-self:center; text-decoration:underline; font-size:14px; line-height:20px; font-weight:600; }
+    .wc-recovery-site .wc-password-request { flex-direction:column; align-items:stretch; }
+    .wc-recovery-site .wc-password-request>.wc-auth-submit { height:52px; }
+}

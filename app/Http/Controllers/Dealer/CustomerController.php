@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dealer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealer\CustomerIndexRequest;
 use App\Services\DealerDashboardData;
+use App\Services\StaffCustomerLinks;
+use App\Services\StaffSubmissionProgress;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -34,6 +36,9 @@ class CustomerController extends Controller
         $submission = $data->customers($dealer)->whereKey($submission)->firstOrFail();
         $this->authorize('view', $submission);
 
-        return view('dealer.customers.show', compact('dealer', 'submission'));
+        $progress = app(StaffSubmissionProgress::class)->data($submission);
+        $lookupUrl = app(StaffCustomerLinks::class)->lookup($submission);
+
+        return view('dealer.customers.show', compact('dealer', 'submission', 'progress', 'lookupUrl'));
     }
 }

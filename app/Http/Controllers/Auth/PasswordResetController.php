@@ -8,10 +8,12 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class PasswordResetController extends Controller
 {
@@ -22,10 +24,46 @@ class PasswordResetController extends Controller
 
     public function email(Request $request): RedirectResponse
     {
+        if (is_string($request->input('email'))) {
+            $request->merge(['email' => mb_strtolower(trim($request->input('email')))]);
+        }
         $data = $request->validate(['email' => ['required', 'string', 'not_regex:/[\x00-\x1F\x7F]/', 'email', 'max:255']]);
-        Password::sendResetLink(['email' => mb_strtolower(trim($data['email']))]);
+        if (! $this->deliveryConfigured(config('mail.default'))) {
+            return back()->with('success', 'Chức năng gửi email hiện chưa sẵn sàng. Vui lòng liên hệ quản trị viên để được hỗ trợ.')
+                ->with('password_reset_unavailable', true);
+        }
+        try {
+            Password::sendResetLink(['email' => $data['email']]);
+        } catch (TransportExceptionInterface|\InvalidArgumentException $error) {
+            // Never log recipient/token, transport credentials or the exception's message.
+            Log::warning('Password reset mail transport unavailable.');
+        }
 
-        return back()->with('success', 'Nếu email đã đăng ký, liên kết đặt lại mật khẩu sẽ được gửi đến email đó.');
+        // Identical for sent, unknown user, throttled broker and delivery failure.
+        return back()->with('success', 'Yêu cầu đã được tiếp nhận. Nếu email đã đăng ký và dịch vụ gửi thư khả dụng, bạn sẽ nhận được liên kết đặt lại mật khẩu.');
+    }
+
+    private function deliveryConfigured(?string $name, array $visited = []): bool
+    {
+        if (! $name || in_array($name, $visited, true)
+            || ! filter_var(config('mail.from.address'), FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        $mailer = config('mail.mailers.'.$name, []);
+        $transport = $mailer['transport'] ?? null;
+        if (in_array($transport, ['failover', 'roundrobin'], true)) {
+            $children = $mailer['mailers'] ?? [];
+
+            return $children !== [] && collect($children)->every(fn ($child) => $this->deliveryConfigured($child, [...$visited, $name]));
+        }
+        if ($transport === 'smtp') {
+            return filled($mailer['url'] ?? null) || (filled($mailer['host'] ?? null) && (int) ($mailer['port'] ?? 0) > 0);
+        }
+        if ($transport === 'sendmail') {
+            return is_executable(strtok($mailer['path'] ?? '', ' '));
+        }
+
+        return in_array($transport, ['ses', 'ses-v2', 'postmark', 'mailgun'], true);
     }
 
     public function create(Request $request, string $token): View

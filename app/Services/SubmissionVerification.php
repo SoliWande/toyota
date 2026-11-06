@@ -48,9 +48,16 @@ final class SubmissionVerification
         }
         $audit = DB::table('submission_verification_audits')->where('submission_id', $submission->id)
             ->where('action', 'group')->orderByDesc('id')->value('new_values');
+
+        return $this->evidencedProgressFromAudit($submission, $state, $audit);
+    }
+
+    /** The report preloads audits in batches; keep the same evidence check as public lookup. */
+    public function evidencedProgressFromAudit(CustomerSubmission $submission, ?object $state, ?string $audit): ?string
+    {
         $key = $audit ? (json_decode($audit, true, flags: JSON_THROW_ON_ERROR)['profile_key'] ?? '') : '';
 
-        return hash_equals($this->profileKey($submission), $key) ? $state->group_progress : null;
+        return $state && is_string($key) && hash_equals($this->profileKey($submission), $key) ? ($state->group_progress ?? null) : null;
     }
 
     private function profileKey(CustomerSubmission $submission): string

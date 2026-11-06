@@ -1,69 +1,17 @@
-<x-layout :title="$submission->exists ? 'Sửa khai báo' : 'Thêm khách hàng'">
-    <div class="mx-auto max-w-2xl">
-        <a href="{{ route('sales.submissions.index') }}" class="text-sm text-slate-500 hover:text-red-600">← Khai báo của tôi</a>
-        <h1 class="mb-3 mt-4 text-3xl font-bold">{{ $submission->exists ? 'Sửa khai báo' : 'Thêm khách hàng' }}</h1>
-        <p class="mb-7 text-sm leading-6 text-slate-600">Khai báo thành viên bạn đã mời tham gia cộng đồng Facebook Toyota Veloz & Hilux. Thông tin xe Toyota và 1 ảnh bằng chứng là bắt buộc.</p>
-        <x-admin-feedback />
-        <form method="POST" enctype="multipart/form-data" action="{{ $submission->exists ? route('sales.submissions.update', $submission) : route('sales.submissions.store') }}" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 sm:p-8">
-            @csrf
-            @if ($submission->exists) @method('PUT') @endif
-            @foreach (['customer_name' => ['Họ tên khách hàng', 'text', 255, true, $submission->customer_name], 'facebook_url' => ['URL trang cá nhân Facebook', 'url', 2048, true, $submission->facebook_url], 'customer_phone' => ['Số điện thoại (tùy chọn)', 'tel', 30, false, $submission->phone]] as $field => [$label, $type, $max, $required, $value])
-                <div>
-                    <label for="{{ $field }}" class="text-sm font-medium">{{ $label }}</label>
-                    <input id="{{ $field }}" name="{{ $field }}" type="{{ $type }}" value="{{ old($field, $value) }}" maxlength="{{ $max }}" @required($required)
-                        class="form-input" aria-invalid="{{ $errors->has($field) ? 'true' : 'false' }}" @if ($errors->has($field)) aria-describedby="{{ $field }}-error" @endif>
-                    @error($field)<p id="{{ $field }}-error" class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
-                </div>
-            @endforeach
-            <x-customer-address-fields :submission="$submission" />
-            <fieldset class="space-y-5 border-t border-slate-100 pt-5">
-                <legend class="px-1 text-base font-semibold">Thông tin xe Toyota (bắt buộc)</legend>
-                <div>
-                    <label for="vehicle_model" class="text-sm font-medium">Dòng xe Toyota</label>
-                    <select id="vehicle_model" name="vehicle_model" required class="form-input" aria-invalid="{{ $errors->has('vehicle_model') ? 'true' : 'false' }}" @if ($errors->has('vehicle_model')) aria-describedby="vehicle_model-error" @endif>
-                        <option value="">Chọn dòng xe Toyota</option>
-                        @foreach (config('vehicles.toyota_models') as $value => $label)
-                            <option value="{{ $value }}" @selected((string) old('vehicle_model', $submission->vehicle_model) === (string) $value)>{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @error('vehicle_model')<p id="vehicle_model-error" class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
-                </div>
-                <div class="grid gap-5 sm:grid-cols-2">
-                    @foreach ([
-                        'first_registration_year' => ['Năm đăng ký lần đầu', 'number', 4, '2022'],
-                        'vehicle_color' => ['Màu xe', 'text', 50, 'Trắng'],
-                        'license_plate' => ['Biển số xe', 'text', 20, '29D-428.12'],
-                    ] as $field => [$label, $type, $max, $placeholder])
-                        <div>
-                            <label for="{{ $field }}" class="text-sm font-medium">{{ $label }}</label>
-                            <input id="{{ $field }}" name="{{ $field }}" type="{{ $type }}" value="{{ old($field, $submission->$field) }}" placeholder="{{ $placeholder }}" required maxlength="{{ $max }}"
-                                @if ($field === 'first_registration_year') min="1900" max="{{ now(config('app.timezone'))->year }}" step="1" inputmode="numeric" @endif
-                                class="form-input" aria-invalid="{{ $errors->has($field) ? 'true' : 'false' }}" @if ($errors->has($field)) aria-describedby="{{ $field }}-error" @endif>
-                            @error($field)<p id="{{ $field }}-error" class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
-                        </div>
-                    @endforeach
-                </div>
-                <div>
-                    <label for="evidence_image" class="text-sm font-medium">Ảnh bằng chứng (1 ảnh)</label>
-                    <input id="evidence_image" name="evidence_image" type="file" accept="image/jpeg,image/png,image/webp" @required(!$submission->evidence_image_path) class="form-input"
-                        aria-invalid="{{ $errors->has('evidence_image') ? 'true' : 'false' }}" aria-describedby="evidence-help{{ $errors->has('evidence_image') ? ' evidence_image-error' : '' }}">
-                    <p id="evidence-help" class="mt-2 text-xs leading-5 text-slate-500">JPG, PNG hoặc WebP, tối đa 5 MB. Ảnh chỉ hiển thị cho bạn và admin. {{ $submission->evidence_image_path ? 'Để trống để giữ ảnh hiện tại; chọn ảnh mới để thay thế.' : 'Vui lòng chọn ảnh bằng chứng trước khi gửi.' }}</p>
-                    @error('evidence_image')<p id="evidence_image-error" class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
-                    @if ($submission->evidence_image_path)
-                        <img src="{{ route('submissions.evidence', $submission) }}" alt="Ảnh bằng chứng hiện tại" class="mt-3 max-h-48 w-full rounded-xl border border-slate-200 object-contain">
-                    @endif
-                </div>
-            </fieldset>
-            <div>
-                <label for="note" class="text-sm font-medium">Ghi chú (tùy chọn)</label>
-                <textarea id="note" name="note" rows="4" maxlength="2000" class="form-input" aria-invalid="{{ $errors->has('note') ? 'true' : 'false' }}">{{ old('note', $submission->notes) }}</textarea>
-                @error('note')<p class="mt-2 text-sm text-red-700">{{ $message }}</p>@enderror
-            </div>
-            <p class="text-sm text-slate-500">Bạn chỉ có thể sửa hoặc xóa khai báo khi đang chờ duyệt.</p>
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <button type="submit" class="button-primary">{{ $submission->exists ? 'Lưu thay đổi' : 'Gửi khai báo' }}</button>
-                <a href="{{ route('sales.submissions.index') }}" class="text-center text-sm text-slate-600 hover:underline">Hủy</a>
-            </div>
+<x-competition.account-layout :title="$submission->exists ? 'Sửa khai báo' : 'Khai báo khách'" :staff="true">
+    <a class="wc-staff-back" href="{{ route('sales.submissions.index') }}">‹ Khách của tôi</a>
+    <header class="wc-staff-title"><div><h1>{{ $submission->exists ? 'Sửa khai báo' : 'Khai báo khách' }}</h1></div></header>
+    <aside class="wc-staff-hint"><img src="{{ asset('competition/leaderboard/info.svg') }}" width="20" height="20" alt=""><p>Nên gửi QR đại lý để khách tự đăng ký. Chỉ khai báo tay khi khách nhờ bạn điền giúp.</p><a href="{{ route('sales.dashboard') }}">Xem link mời →</a></aside>
+    @if ($errors->any())<div class="wc-form-errors" role="alert"><strong>Vui lòng kiểm tra lại thông tin.</strong>@foreach ($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>@endif
+    <div class="wc-declaration-layout">
+        <form method="POST" enctype="multipart/form-data" action="{{ $submission->exists ? route('sales.submissions.update', $submission) : route('sales.submissions.store') }}" class="wc-customer-form" data-staff-form>
+            @csrf @if ($submission->exists) @method('PUT') @endif
+            <section class="wc-form-section"><h2>Thông tin khách</h2><div class="wc-field-grid"><x-competition.customer-input name="customer_name" label="Họ và tên khách *" :value="$submission->customer_name" required maxlength="255" autocomplete="name" /><x-competition.customer-input name="customer_phone" label="Số điện thoại (tùy chọn)" type="tel" :value="$submission->phone" maxlength="30" autocomplete="tel" /></div><p class="wc-staff-note">Hồ sơ được ghi nhận cho {{ $submission->exists ? $submission->dealer?->name : auth()->user()->dealer?->name }} · {{ auth()->user()->name }}.</p></section>
+            <section class="wc-form-section"><h2>Thông tin xe Toyota (bắt buộc)</h2><div class="wc-staff-field"><label for="vehicle_model">Dòng xe Toyota *</label>@php($selectedModel = old('vehicle_model', $submission->vehicle_model))<select id="vehicle_model" name="vehicle_model" required aria-invalid="{{ $errors->has('vehicle_model') ? 'true' : 'false' }}"><option value="">Chọn dòng xe Toyota</option>@foreach (config('vehicles.toyota_models') as $value => $label)<option value="{{ $value }}" @selected($selectedModel === $value)>{{ $label }}</option>@endforeach</select>@error('vehicle_model')<p class="wc-field-error" role="alert">{{ $message }}</p>@enderror</div><div class="wc-field-grid"><x-competition.customer-input name="license_plate" label="Biển số xe *" :value="$submission->license_plate" required maxlength="20" /><x-competition.customer-input name="first_registration_year" label="Năm đăng ký lần đầu *" type="number" :value="$submission->first_registration_year" required min="1900" :max="now(config('app.timezone'))->year" step="1" inputmode="numeric" /><x-competition.customer-input name="vehicle_color" label="Màu xe *" :value="$submission->vehicle_color" required maxlength="50" /></div></section>
+            <section class="wc-form-section"><h2>Địa chỉ & Facebook</h2><x-customer-address-fields :submission="$submission" /><x-competition.customer-input name="facebook_url" label="URL trang cá nhân Facebook *" type="url" :value="$submission->facebook_url" required maxlength="2048" /><p class="wc-staff-note">Facebook và ảnh bằng chứng cần thiết để Admin xác minh; khai báo chưa đồng nghĩa thành viên Group.</p></section>
+            <section class="wc-form-section"><h2>Ảnh bằng chứng *</h2><label class="wc-upload-box" for="evidence_image"><span aria-hidden="true">↑</span><strong>Chọn ảnh bằng chứng</strong><small>JPG, PNG, WebP · Tối đa 5 MB</small><input id="evidence_image" name="evidence_image" type="file" accept="image/jpeg,image/png,image/webp" @required(!$submission->evidence_image_path) aria-invalid="{{ $errors->has('evidence_image') ? 'true' : 'false' }}" data-evidence-input></label><p data-evidence-name class="wc-staff-note" role="status"></p>@error('evidence_image')<p class="wc-field-error" role="alert">{{ $message }}</p>@enderror @if ($submission->evidence_image_path)<p class="wc-staff-note">Để trống để giữ ảnh hiện tại.</p><img src="{{ route('submissions.evidence', $submission) }}" class="wc-evidence-preview" alt="Ảnh bằng chứng hiện tại">@endif</section>
+            <section class="wc-form-section"><div class="wc-staff-field"><label for="note">Ghi chú (tùy chọn)</label>@php($note = old('note', $submission->notes))<textarea id="note" name="note" maxlength="2000" rows="3">{{ is_string($note) ? $note : '' }}</textarea>@error('note')<p class="wc-field-error">{{ $message }}</p>@enderror</div><p class="wc-staff-note">Chỉ cung cấp thông tin khi khách đã cho phép. Thao tác khai báo của nhân viên không thay thế sự đồng ý trực tuyến của khách. Thông tin và ảnh chỉ hiển thị theo quyền truy cập hiện có.</p><div class="wc-form-actions"><button class="wc-staff-button" type="submit" data-staff-submit>{{ $submission->exists ? 'Lưu thay đổi' : 'Lưu và gửi link cho khách' }}</button><a href="{{ route('sales.submissions.index') }}">Hủy</a></div></section>
         </form>
+        <aside class="wc-declaration-aside"><section class="wc-staff-card"><h2>Sau khi lưu</h2><ol class="wc-after-save"><li>Hồ sơ được ghi nhận ở trạng thái chờ duyệt.</li><li>Sao chép link tra cứu và gửi cho khách khi cần.</li><li>Admin đối chiếu bằng chứng trước khi tính điểm.</li></ol><p class="wc-staff-note">Nếu cung cấp địa chỉ, vui lòng chọn đủ Tỉnh/Thành và Phường/Xã.</p></section></aside>
     </div>
-</x-layout>
+</x-competition.account-layout>

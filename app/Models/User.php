@@ -40,6 +40,7 @@ class User extends Authenticatable
         'rejection_reason',
         'avatar_path',
         'dealer_manager_key',
+        'last_login_at',
     ];
 
     /**
@@ -52,6 +53,7 @@ class User extends Authenticatable
         'status' => UserStatus::class,
         'reviewed_at' => 'immutable_datetime',
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'immutable_datetime',
         'password' => 'hashed',
     ];
 

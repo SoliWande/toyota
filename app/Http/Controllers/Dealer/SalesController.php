@@ -21,9 +21,8 @@ class SalesController extends Controller
             $filters['status'] = 'active';
         }
         $query = $data->sales($dealer)->leftJoinSub($leaderboard->sales(LeaderboardPeriod::Month), 'standing', 'standing.id', '=', 'users.id')
-            ->select(array_map(fn ($field) => 'users.'.$field, ['id', 'dealer_id', 'role', 'name', 'email', 'phone', 'status', 'avatar_path', 'public_slug', 'created_at']))
-            ->selectRaw('COALESCE(standing.score,0) AS monthly_score')
-            ->withMax(['submissions' => fn ($query) => $query->where('dealer_id', $dealer->id)], 'submitted_at');
+            ->select(array_map(fn ($field) => 'users.'.$field, ['id', 'dealer_id', 'role', 'name', 'email', 'phone', 'status', 'avatar_path', 'public_slug', 'created_at', 'last_login_at']))
+            ->selectRaw('COALESCE(standing.score,0) AS monthly_score');
         if (filled($filters['status'] ?? null)) {
             $query->where('users.status', $filters['status']);
         }
