@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\LeaderboardPeriod;
 use App\Enums\SubmissionStatus;
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DealerRequest;
 use App\Models\Dealer;
+use App\Services\AdministrativeDivisions;
+use App\Services\DealerProfile;
+use App\Services\DealerStandee;
 use App\Services\DemoSubmissionScope;
 use App\Services\LeaderboardService;
 use App\Services\SalesAvatars;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -22,13 +28,41 @@ use Throwable;
 
 class DealerController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, LeaderboardService $leaderboard): View
     {
         $this->authorize('viewAny', Dealer::class);
-        $filters = $request->validate(['q' => ['nullable', 'string', 'max:255'], 'status' => ['nullable', Rule::in(['active', 'inactive'])], 'page' => ['nullable', 'integer', 'min:1']]);
-        $query = Dealer::withCount('sales');
-        if (filled($filters['status'] ?? null)) {
-            $query->where('is_active', $filters['status'] === 'active');
+        $filters = $request->validate([
+            'q' => ['nullable', 'string', 'max:255'],
+            'status' => ['nullable', Rule::in(['active', 'inactive', 'no_customers', 'no_manager'])],
+            'province' => ['nullable', 'string', 'max:255'],
+            'sort' => ['nullable', Rule::in(['month', 'total', 'name'])],
+            'selected' => ['nullable', 'integer', 'min:1'],
+            'page' => ['nullable', 'integer', 'min:1'],
+        ]);
+        [$start, $end] = $leaderboard->bounds(LeaderboardPeriod::Month);
+        $approved = fn ($query) => app(DemoSubmissionScope::class)->apply($query)->where('status', SubmissionStatus::Approved->value);
+        $monthly = fn ($query) => $approved($query)->where('submitted_at', '>=', $start)->where('submitted_at', '<', $end);
+        $activeManager = fn ($query) => $query->where('status', UserStatus::Active->value);
+        $counts = [
+            'all' => Dealer::count(),
+            'active' => Dealer::where('is_active', true)->count(),
+            'inactive' => Dealer::where('is_active', false)->count(),
+            'no_customers' => Dealer::whereDoesntHave('submissions', $monthly)->count(),
+            'no_manager' => Dealer::whereDoesntHave('manager', $activeManager)->count(),
+        ];
+        $query = Dealer::with(['manager' => $activeManager])->withCount([
+            'sales', 'sales as active_sales_count' => fn ($query) => $query->where('status', UserStatus::Active->value),
+            'submissions as month_count' => $monthly, 'submissions as approved_count' => $approved,
+        ]);
+        match ($filters['status'] ?? '') {
+            'active' => $query->where('is_active', true),
+            'inactive' => $query->where('is_active', false),
+            'no_customers' => $query->whereDoesntHave('submissions', $monthly),
+            'no_manager' => $query->whereDoesntHave('manager', $activeManager),
+            default => null,
+        };
+        if (filled($filters['province'] ?? null)) {
+            $query->where('province', $filters['province']);
         }
         if (isset($filters['q']) && $filters['q'] !== '') {
             $search = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $filters['q']).'%';
@@ -39,7 +73,19 @@ class DealerController extends Controller
             });
         }
 
-        return view('admin.dealers.index', ['dealers' => $query->orderBy('name')->orderBy('id')->paginate(20)->withQueryString(), 'filters' => $filters]);
+        match ($filters['sort'] ?? 'month') {
+            'month' => $query->orderByDesc('month_count'),
+            'total' => $query->orderByDesc('approved_count'),
+            default => null,
+        };
+        $dealers = $query->orderBy('name')->orderBy('id')->paginate(20)->withQueryString();
+        // Selection is restricted to the current filtered page, including after a mutation.
+        $selected = $dealers->firstWhere('id', $filters['selected'] ?? null) ?? $dealers->first();
+        $standing = $selected ? DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::Month), 'standing')->where('id', $selected->id)->first() : null;
+        $provinces = Dealer::whereNotNull('province')->where('province', '!=', '')->distinct()->orderBy('province')->pluck('province');
+        $formProvinces = collect(app(AdministrativeDivisions::class)->provinces())->pluck('name')->merge($provinces)->unique()->sort()->values();
+
+        return view('admin.dealers.index', compact('dealers', 'filters', 'counts', 'selected', 'standing', 'provinces', 'formProvinces'));
     }
 
     public function create(): View
@@ -65,10 +111,14 @@ class DealerController extends Controller
         return view('admin.dealers.show', compact('dealer', 'standing', 'sales', 'customers', 'approvedCustomers'));
     }
 
-    public function store(DealerRequest $request): RedirectResponse
+    public function store(DealerRequest $request): RedirectResponse|JsonResponse
     {
         $dealer = new Dealer;
         $this->save($dealer, $request);
+
+        if ($request->expectsJson()) {
+            return response()->json(['id' => $dealer->id, 'message' => 'Đã tạo đại lý · QR và standee đã sẵn sàng'], 201);
+        }
 
         return redirect()->route('admin.dealers.edit', $dealer)->with('success', 'Đã tạo đại lý.');
     }
@@ -80,20 +130,42 @@ class DealerController extends Controller
         return view('admin.dealers.form', compact('dealer'));
     }
 
-    public function update(DealerRequest $request, Dealer $dealer): RedirectResponse
+    public function update(DealerRequest $request, Dealer $dealer): RedirectResponse|JsonResponse
     {
         $this->save($dealer, $request);
+
+        if ($request->expectsJson()) {
+            return response()->json(['id' => $dealer->id, 'message' => 'Đã lưu thông tin đại lý']);
+        }
 
         return redirect()->route('admin.dealers.edit', $dealer)->with('success', 'Đã cập nhật đại lý.');
     }
 
-    public function status(Request $request, Dealer $dealer): RedirectResponse
+    public function status(Request $request, Dealer $dealer): RedirectResponse|JsonResponse
     {
         $this->authorize('update', $dealer);
         $data = $request->validate(['is_active' => ['required', 'boolean']]);
         $dealer->update($data);
 
+        if ($request->expectsJson()) {
+            return response()->json(['id' => $dealer->id, 'message' => $dealer->is_active ? null : 'Đã ngừng tham gia '.$dealer->name]);
+        }
+
         return redirect()->route('admin.dealers.index')->with('success', 'Đã cập nhật trạng thái đại lý.');
+    }
+
+    public function download(Dealer $dealer, string $format, DealerProfile $profile, DealerStandee $standee): Response
+    {
+        // Admin-only adapter; Manager own-Dealer endpoints retain their existing policy.
+        $this->authorize('viewAny', Dealer::class);
+        $pdf = $format === 'pdf';
+
+        return response($pdf ? $standee->pdf($dealer, $profile) : $profile->qr($dealer), 200, [
+            'Content-Type' => $pdf ? 'application/pdf' : 'image/png',
+            'Content-Disposition' => 'attachment; filename="dealer-'.$dealer->id.($pdf ? '-standee-a4.pdf' : '-qr.png').'"',
+            'Cache-Control' => 'no-store, private',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     private function save(Dealer $dealer, DealerRequest $request): void

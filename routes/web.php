@@ -119,7 +119,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     });
     Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'account.active', 'throttle:admin-writes'])->group(function () {
         Route::get('/dealer-registrations', App\Http\Controllers\Admin\DealerRegistrationController::class)->name('dealer-registrations.index');
-        Route::post('/dealer-registrations/{account}/{action}', AccountRegistrationReviewController::class)
+        Route::post('/dealer-registrations/{account}/{action}', [App\Http\Controllers\Admin\DealerRegistrationController::class, 'review'])
             ->whereNumber('account')->whereIn('action', ['approve', 'reject'])->name('dealer-registrations.review');
         Route::get('/awards', [AwardController::class, 'index'])->name('awards.index');
         Route::post('/awards', [AwardController::class, 'store'])->name('awards.store');
@@ -132,6 +132,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::post('/submissions/{submission}/approve', [SubmissionReviewController::class, 'approve'])->whereNumber('submission')->name('submissions.approve');
         Route::post('/submissions/{submission}/reject', [SubmissionReviewController::class, 'reject'])->whereNumber('submission')->name('submissions.reject');
         Route::resource('dealers', DealerController::class)->except(['destroy']);
+        Route::get('/dealers/{dealer}/download/{format}', [DealerController::class, 'download'])->whereNumber('dealer')->whereIn('format', ['png', 'pdf'])->middleware('throttle:10,1')->name('dealers.download');
         Route::get('/dealers/{dealer}/account', [DealerAccountController::class, 'edit'])->whereNumber('dealer')->name('dealers.account.edit');
         Route::post('/dealers/{dealer}/account', [DealerAccountController::class, 'store'])->whereNumber('dealer')->name('dealers.account.store');
         Route::patch('/dealers/{dealer}/account', [DealerAccountController::class, 'update'])->whereNumber('dealer')->name('dealers.account.update');

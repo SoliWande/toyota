@@ -1,0 +1,54 @@
+/* C06 only; P01 and Sales/Manager account screens retain their existing styles. */
+.ad-admin .ac-page{display:flex;flex-direction:column;gap:20px}
+.ad-admin .ac-page :is(h1,h2,h3,p,dl,dd){margin:0}
+.ad-admin .ac-head{display:flex;flex-direction:column;gap:6px}
+.ad-admin .ac-head h1{font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.42px}
+.ad-admin .ac-head p{font-size:14px;line-height:20px;color:#5e5e66}
+.ad-admin .ac-split{display:grid;grid-template-columns:540px minmax(0,1fr);gap:16px;align-items:start}
+.ad-admin .ac-card{background:white;border:1px solid #ededf0;border-radius:20px;min-width:0}
+.ad-admin .ac-applicant{display:flex;flex-direction:column;gap:20px;padding:24px}
+.ad-admin .ac-person{display:flex;gap:14px;align-items:center}
+.ad-admin .ac-avatar{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:50%;background:#eef4ff;color:#2463eb;font-size:20px;line-height:24px;font-weight:600}
+.ad-admin .ac-person>div{display:flex;flex:1;min-width:0;flex-direction:column;gap:6px;align-items:flex-start}
+.ad-admin .ac-person h2{font-size:20px;line-height:26px;font-weight:700;letter-spacing:-.2px;overflow-wrap:anywhere}
+.ad-admin .ac-info{display:flex;flex-direction:column;padding:4px 16px;border-radius:14px;background:#fafafb}
+.ad-admin .ac-info>div{display:flex;align-items:center;gap:12px;padding:12px 0;min-height:44px}
+.ad-admin .ac-info>div+div{border-top:1px solid #ededf0}
+.ad-admin .ac-info dt{flex:1;min-width:0;color:#8e8e93;font-size:13px;line-height:18px}
+.ad-admin .ac-info dd{max-width:80%;font-size:14px;line-height:20px;font-weight:600;text-align:right;overflow-wrap:anywhere}
+.ad-admin .ac-decisions{display:flex;gap:8px;align-items:flex-start}
+.ad-admin .ac-decisions>form{flex:0 0 calc((100% - 10px)/2);min-width:0}
+.ad-admin .ac-decisions .ac-approve{width:100%;border:0;min-height:40px;line-height:18px;font-size:14px}
+.ad-admin .ac-decisions .ac-reject-toggle{flex:1;min-width:0;min-height:42px;background:#fff5f6;line-height:18px;font-size:14px}
+.ad-admin .ac-rejection{display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid #ededf0;border-radius:16px;background:#fafafb}
+.ad-admin .ac-rejection>label{font-size:13px;line-height:18px;font-weight:500}
+.ad-admin .ac-rejection select{height:40px;min-width:0;appearance:none;border:1px solid #e3e3e8;border-radius:12px;padding:0 36px 0 14px;background:white url('../../public/admin/icons/c06-down.png') no-repeat right 14px center;background-size:14px;font:400 13px/18px Inter,sans-serif;color:#111}
+.ad-admin .ac-rejection textarea{height:72px;min-height:72px;resize:vertical;border:1px solid #e3e3e8;border-radius:12px;padding:12px 14px;background:white;color:#111;font:400 13px/18px Inter,sans-serif}
+.ad-admin .ac-rejection textarea::placeholder{color:#8e8e93}
+.ad-admin .ac-rejection-actions{display:flex;justify-content:flex-end;gap:8px;align-items:flex-start}
+.ad-admin .ac-rejection-actions .ad-button-danger{width:98px;padding-inline:0;border:0}
+.ad-admin .ac-checks{display:flex;flex-direction:column;gap:12px;padding:24px;min-height:314px}
+.ad-admin .ac-checks h3{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.96px;color:#8e8e93}
+.ad-admin .ac-unverified-slots{height:104px;flex:none}
+.ad-admin .ac-check-info,.ad-admin .ac-check-note{display:flex;align-items:flex-start;gap:10px;border-radius:12px;padding:12px 14px;font-size:14px;line-height:20px}
+.ad-admin .ac-check-info{background:#eef4ff;color:#1d3f8f}
+.ad-admin .ac-check-note{background:#fff8ec;color:#7a4600}
+.ad-admin .ac-checks img{flex:none;mix-blend-mode:multiply}
+.ad-admin .ac-overdue{overflow:hidden}
+.ad-admin .ac-overdue>header{display:flex;flex-direction:column;gap:2px;padding:18px 20px 14px}
+.ad-admin .ac-overdue h2{font-size:16px;line-height:22px;font-weight:700;letter-spacing:-.08px}
+.ad-admin .ac-overdue>header p{height:18px}
+.ad-admin .ac-sales-row{display:flex;align-items:center;gap:16px;padding:14px 20px;border-top:1px solid #ededf0}
+.ad-admin .ac-sales-person{width:260px;flex:none;min-width:0}
+.ad-admin .ac-sales-manager{flex:1;min-width:0}
+.ad-admin .ac-sales-row strong{display:block;font-size:14px;line-height:20px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ad-admin .ac-sales-person strong{font-weight:600}
+.ad-admin .ac-sales-row small{display:block;margin-top:2px;color:#8e8e93;font-size:12px;line-height:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ad-admin .ac-wait{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;background:#fff4e0;color:#9a5800;font-size:12px;line-height:16px;font-weight:600;white-space:nowrap;flex:none}
+.ad-admin .ac-wait img{mix-blend-mode:multiply}
+.ad-admin .ac-sales-row .ad-button{padding-inline:14px;flex:none}
+.ad-admin .ac-sales-row .ac-override{min-height:34px;border:0}
+.ad-admin .ac-sales-row .ac-remind img{mix-blend-mode:multiply}
+.ad-admin .ac-error{font-size:13px;line-height:18px;color:#c4101f;overflow-wrap:anywhere}
+.ad-admin .ac-rejection[hidden],.ad-admin .ac-error[hidden]{display:none}
+.ad-admin #ac-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100}

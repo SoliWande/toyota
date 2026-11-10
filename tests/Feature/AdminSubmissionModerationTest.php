@@ -78,7 +78,6 @@ class AdminSubmissionModerationTest extends TestCase
         CustomerSubmission::factory()->create(['sales_id' => $sales->id]);
         $this->actingAs($admin)->get(route('admin.submissions.index', ['dealer_id' => $dealer->id]))->assertOk()
             ->assertViewHas('dealers', fn ($items) => $items->contains('id', $dealer->id))
-            ->assertViewHas('salesOptions', fn ($items) => $items->contains('id', $sales->id) && ! $items->contains('id', $admin->id))
             ->assertViewHas('submissions', fn ($items) => $items->total() === 1);
         $this->get(route('admin.submissions.index', ['sales_id' => $admin->id]))->assertSessionHasErrors('sales_id');
     }
@@ -110,8 +109,8 @@ class AdminSubmissionModerationTest extends TestCase
             ->assertSee('Mở Facebook')->assertSee('rel="noopener noreferrer"', false)
             ->assertDontSee('confirm(', false)->assertSee('data-inline-confirmation', false)->assertSee('Xác nhận duyệt')
             ->assertSee(route('admin.submissions.reject', $target));
-        $this->get(route('admin.submissions.index'))->assertOk()->assertSee('Kiểm tra và duyệt nhanh')
-            ->assertSee($target->phone)->assertSee($target->notes)->assertSee('return_to_queue');
+        $this->get(route('admin.submissions.index'))->assertOk()->assertSee('ĐỐI CHIẾU GROUP FACEBOOK')
+            ->assertSee($target->phone)->assertDontSee($target->notes)->assertSee('return_to_queue');
     }
 
     public function test_reject_saves_reviewer_timestamp_reason_note_and_atomic_history_without_changing_submission(): void
@@ -200,8 +199,9 @@ class AdminSubmissionModerationTest extends TestCase
         $approved = CustomerSubmission::factory()->approved()->create();
         $target = CustomerSubmission::factory()->create(['facebook_url' => $approved->facebook_url]);
         $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
-            ->assertSee('Facebook profile đã được duyệt')->assertSee(route('admin.submissions.show', $approved))
-            ->assertSee('disabled', false);
+            ->assertDontSee('Không trùng SĐT, biển số, Facebook.')->assertSee('disabled', false);
+        $this->get(route('admin.submissions.show', $target))->assertOk()
+            ->assertSee('Facebook profile đã được duyệt')->assertSee(route('admin.submissions.show', $approved));
         $this->post(route('admin.submissions.approve', $target), ['return_to_queue' => 1])->assertSessionHasErrors('duplicate');
         $this->assertSame(SubmissionStatus::Pending, $target->fresh()->status);
         $this->post(route('admin.submissions.reject', $target), ['rejection_reason' => 'Duplicate Facebook profile'])->assertSessionHasNoErrors();
@@ -278,7 +278,8 @@ class AdminSubmissionModerationTest extends TestCase
         $target = CustomerSubmission::factory()->create(['customer_name' => '<script>alert(1)</script>', 'notes' => '<img src=x onerror=alert(1)>']);
         $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
             ->assertSee($target->customer_name)->assertDontSee($target->customer_name, false)
-            ->assertSee($target->notes)->assertDontSee($target->notes, false);
+            ->assertDontSee($target->notes);
+        $this->get(route('admin.submissions.show', $target))->assertSee($target->notes)->assertDontSee($target->notes, false);
         $reason = '<script>alert(2)</script>';
         $this->post(route('admin.submissions.reject', $target), ['rejection_reason' => $reason])->assertSessionHasNoErrors();
         $this->get(route('admin.submissions.show', $target))->assertSee($reason)->assertDontSee($reason, false);

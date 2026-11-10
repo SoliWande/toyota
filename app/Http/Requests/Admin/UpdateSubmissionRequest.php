@@ -67,9 +67,13 @@ class UpdateSubmissionRequest extends FormRequest
 
     protected function getRedirectUrl(): string
     {
-        $validator = validator($this->query->all(), (new SubmissionIndexRequest)->rules());
+        $context = $this->boolean('c02');
+        $validator = validator($this->query->all(), ($context ? new SubmissionQueueRequest : new SubmissionIndexRequest)->rules());
         $query = $validator->passes() ? $validator->validated() : ['status' => 'pending'];
         $query['status'] = $query['status'] ?? '';
+        if ($context) {
+            return route('admin.submissions.show', ['submission' => $this->route('submission'), ...$query, 'c02' => 1]).'#submission-review';
+        }
 
         return route('admin.submissions.index', $query).'#submission-'.$this->route('submission')->id;
     }

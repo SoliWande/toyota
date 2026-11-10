@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
 use Tests\Support\TestDatabase;
@@ -282,6 +283,109 @@ class AccountRegistrationApprovalTest extends TestCase
         $sales = User::factory()->create(['status' => 'rejected', 'reviewed_by' => $admin->id, 'reviewed_at' => now(),
             'rejection_reason' => 'LEGACY_INTERNAL_REASON', 'admin_note' => 'SECRET_INTERNAL']);
         $this->actingAs($sales)->get(route('account.status'))->assertOk()->assertDontSee('LEGACY_INTERNAL_REASON')->assertDontSee('SECRET_INTERNAL');
+    }
+
+    public function test_c06_queue_is_real_masked_and_does_not_claim_unverified_checks_or_blocked_actions(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $pending = User::factory()->dealer()->create(['status' => 'pending', 'phone' => '0939123214', 'name' => '<script>Pending</script>', 'admin_note' => 'PRIVATE_NOTE']);
+        $active = User::factory()->dealer()->create();
+        $rejected = User::factory()->dealer()->create(['status' => 'rejected']);
+        $sales = User::factory()->create(['created_at' => now()->subDays(5)]);
+        $response = $this->actingAs($admin)->get(route('admin.dealer-registrations.index'))->assertOk()
+            ->assertViewHas('pendingCount', 1)->assertViewHas('accounts', fn ($rows) => $rows->modelKeys() === [$pending->id])
+            ->assertSee($pending->email)->assertSee('0939 xxx 214')->assertSee($pending->name)
+            ->assertDontSee($pending->name, false)->assertDontSee('0939123214')->assertDontSee('PRIVATE_NOTE')
+            ->assertDontSee($active->email)->assertDontSee($rejected->email)->assertDontSee('Email đúng tên miền')
+            ->assertDontSee('Số điện thoại chưa dùng')->assertDontSee('admin có thể nhắc hoặc duyệt thay')
+            ->assertDontSee('Đã gửi')->assertDontSee('Đã duyệt thay');
+        $response->assertSee('Đã xử lý')->assertSee('aria-disabled="true"', false);
+        $this->get(route('admin.dealer-registrations.index', ['tab' => 'overdue']))->assertOk()
+            ->assertViewHas('accounts', fn ($rows) => $rows->isEmpty())->assertSee($sales->name)->assertDontSee($pending->email);
+        $this->getJson(route('admin.dealer-registrations.index', ['tab' => 'processed']))->assertUnprocessable();
+        $this->actingAs($sales)->getJson(route('admin.dealer-registrations.index'))->assertForbidden();
+    }
+
+    public function test_c06_overdue_uses_strict_72_hours_and_latest_resubmission_instead_of_updated_at(): void
+    {
+        $this->travelTo(now()->setDate(2026, 11, 10)->setTime(12, 0));
+        $admin = User::factory()->admin()->create();
+        $manager = User::factory()->dealer()->create();
+        $old = User::factory()->create(['dealer_id' => $manager->dealer_id, 'created_at' => now()->subDays(5), 'updated_at' => now()]);
+        User::factory()->create(['created_at' => now()->subHours(72)]);
+        $over = User::factory()->create(['created_at' => now()->subHours(72)->subSecond()]);
+        User::factory()->active()->create(['created_at' => now()->subMonth()]);
+        $resubmitted = User::factory()->create(['created_at' => now()->subMonth(), 'status' => 'rejected']);
+        app(ReviewAccountRegistration::class)->resubmit($resubmitted);
+        $this->actingAs($admin)->get(route('admin.dealer-registrations.index'))->assertOk()
+            ->assertViewHas('overdueSales', fn ($rows) => $rows->modelKeys() === [$old->id, $over->id]
+                && $rows->first()->waiting_days === 5 && $rows->first()->dealer->manager->is($manager));
+        $this->travel(4)->days();
+        $this->get(route('admin.dealer-registrations.index'))->assertOk()
+            ->assertViewHas('overdueSales', fn ($rows) => $rows->contains('id', $resubmitted->id));
+    }
+
+    public function test_c06_public_rejection_combines_reason_and_note_with_validation_and_never_sends_mail(): void
+    {
+        Mail::fake();
+        $admin = User::factory()->admin()->create();
+        $account = User::factory()->dealer()->create(['status' => 'pending']);
+        $identity = $account->only(['id', 'email', 'password', 'dealer_id', 'role']);
+        $url = route('admin.dealer-registrations.review', [$account, 'reject']);
+        $this->actingAs($admin)->postJson($url, ['admin_note' => 'PRIVATE', 'dealer_id' => 999, 'role' => 'admin'])
+            ->assertUnprocessable()->assertJsonValidationErrors(['admin_note', 'dealer_id', 'role']);
+        $this->actingAs($admin)->postJson($url, ['rejection_reason' => 'Không phải nhân viên của đại lý', 'rejection_note' => str_repeat('a', 2000)])
+            ->assertUnprocessable()->assertJsonValidationErrors('rejection_reason');
+        $this->postJson($url, ['rejection_reason' => 'Không phải nhân viên của đại lý', 'rejection_note' => ['forged']])
+            ->assertUnprocessable()->assertJsonValidationErrors('rejection_note');
+        $this->assertDatabaseCount('moderation_reviews', 0);
+        $this->postJson($url, ['rejection_reason' => 'Không phải nhân viên của đại lý', 'rejection_note' => ' Xác nhận lại với tổng đài. '])
+            ->assertOk()->assertJsonPath('message', null)->assertDontSee('email');
+        $reason = "Không phải nhân viên của đại lý\nXác nhận lại với tổng đài.";
+        $this->assertSame($reason, $account->fresh()->rejection_reason);
+        $this->assertSame($reason, ModerationReview::sole()->rejection_reason);
+        $this->assertSame($identity, $account->fresh()->only(array_keys($identity)));
+        $this->postJson($url)->assertUnprocessable();
+        $this->assertDatabaseCount('moderation_reviews', 1);
+        Mail::assertNothingSent();
+        Mail::assertNothingQueued();
+    }
+
+    public function test_c06_approval_toast_requires_real_success_and_admin_cannot_override_sales(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $manager = User::factory()->dealer()->create(['status' => 'pending']);
+        $sales = User::factory()->create(['dealer_id' => $manager->dealer_id]);
+        $this->actingAs($admin)->postJson(route('admin.dealer-registrations.review', [$sales, 'approve']))->assertForbidden();
+        $this->postJson(route('admin.dealer-registrations.review', [$manager, 'approve']))->assertOk()
+            ->assertJsonPath('message', 'Đã duyệt '.$manager->name.' làm quản lý '.$manager->dealer->name);
+        $this->assertSame(UserStatus::Active, $manager->fresh()->status);
+        $this->assertSame(UserStatus::Pending, $sales->fresh()->status);
+        $this->assertDatabaseCount('moderation_reviews', 1);
+        $this->postJson(route('admin.dealer-registrations.review', [$manager, 'approve']))->assertUnprocessable();
+        $this->assertDatabaseCount('moderation_reviews', 1);
+        $this->actingAs($manager->fresh())->postJson(route('dealer.staff.review', [$sales, 'approve']))->assertRedirect();
+        $this->assertSame(UserStatus::Active, $sales->fresh()->status);
+    }
+
+    public function test_c06_rejects_missing_csrf_and_inactive_dealer_without_writing(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $account = User::factory()->dealer()->create(['status' => 'pending']);
+        $url = route('admin.dealer-registrations.review', [$account, 'approve']);
+        $this->actingAs($admin);
+        $previous = $this->app['env'];
+        $this->app['env'] = 'local';
+        try {
+            $this->post($url)->assertStatus(419);
+        } finally {
+            $this->app['env'] = $previous;
+        }
+        $account->dealer->update(['is_active' => false]);
+        $this->get(route('admin.dealer-registrations.index'))->assertOk()->assertDontSee('chưa có quản lý. Duyệt xong');
+        $this->postJson($url)->assertUnprocessable();
+        $this->assertSame(UserStatus::Pending, $account->fresh()->status);
+        $this->assertDatabaseCount('moderation_reviews', 0);
     }
 
     public function test_staff_block_and_unblock_are_scoped_and_do_not_change_scores_or_customer_data(): void

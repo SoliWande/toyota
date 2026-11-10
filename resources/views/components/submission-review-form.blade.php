@@ -49,7 +49,7 @@
             <p class="my-3 break-words text-sm">Bạn có chắc muốn duyệt khai báo của {{ $submission->customer_name }} thuộc {{ $submission->dealer?->name ?? 'đại lý chưa xác minh' }}?</p>
             <div class="flex flex-wrap gap-3"><button type="submit" class="button-primary" @disabled($duplicate || $identityConflicts !== [])>Xác nhận duyệt</button><button type="button" data-cancel-inline class="rounded-xl border border-slate-300 px-4 py-3">Hủy</button></div>
         </details>
-        <details data-inline-confirmation class="min-w-0 flex-1 rounded-xl border border-slate-200 p-3">
+        <details data-inline-confirmation class="min-w-0 flex-1 rounded-xl border border-slate-200 p-3" @if (request()->query('review') === 'reject') open @endif>
             <summary class="min-h-12 cursor-pointer py-3 font-semibold text-red-700">Từ chối</summary>
             <p class="my-3 text-sm">Xác nhận từ chối khai báo này? Trạng thái và lý do từ chối sẽ được hiển thị theo quyền.</p>
             <div class="flex flex-wrap gap-3"><button type="submit" formaction="{{ route('admin.submissions.reject', $parameters) }}" class="rounded-xl border border-red-300 px-5 py-3 font-semibold text-red-700">Xác nhận từ chối</button><button type="button" data-cancel-inline class="rounded-xl border border-slate-300 px-4 py-3">Hủy</button></div>

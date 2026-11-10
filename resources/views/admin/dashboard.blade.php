@@ -39,11 +39,11 @@
                 <div class="ao-kpi ao-card"><div class="ao-kpi-label"><span>CHỈ SỐ PHỤ</span><h3>Đại lý có từ 5 khách đã xác minh</h3></div><div class="ao-kpi-value"><strong>{{ $number($overview['qualified_dealers']) }}</strong><p>/ {{ $number($stats['dealers']) }} đại lý tham gia</p></div><div class="ao-track ao-track-secondary" aria-hidden="true"><i></i></div></div>
             </div>
             @foreach ([['dealers' => 'Tổng đại lý', 'active_dealers' => 'Đại lý hoạt động', 'sales' => 'Tổng sales', 'active_sales' => 'Sales hoạt động', 'pending_sales' => 'Sales chờ duyệt'], ['submissions' => 'Tổng khách hàng', 'approved_submissions' => 'Khách đã duyệt', 'pending_submissions' => 'Chờ xác minh', 'week_submissions' => 'Khai báo tuần này', 'month_submissions' => 'Khai báo tháng này']] as $row)
-                <dl class="ao-stat-row">
+                <div class="ao-stat-row">
                     @foreach ($row as $key => $label)
-                        <div class="ao-stat ao-card"><dt>{{ $label }}<img src="{{ asset('admin/icons/c01-chevron.png') }}" width="14" height="14" alt=""></dt><dd><a href="{{ $statLinks[$key] }}" data-stat="{{ $key }}" @class(['ao-green' => $key === 'approved_submissions', 'ao-red' => $key === 'pending_submissions'])>{{ $number($stats[$key]) }}</a></dd>@if (in_array($key, ['week_submissions', 'month_submissions']))<small>Mọi trạng thái</small>@endif</div>
+                        <a class="ao-stat ao-card" href="{{ $statLinks[$key] }}" data-stat="{{ $key }}"><span class="ao-stat-label">{{ $label }}<img src="{{ asset('admin/icons/c01-chevron.png') }}" width="14" height="14" alt=""></span><strong @class(['ao-stat-value', 'ao-green' => $key === 'approved_submissions', 'ao-red' => $key === 'pending_submissions'])>{{ $number($stats[$key]) }}</strong>@if (in_array($key, ['week_submissions', 'month_submissions']))<small>Mọi trạng thái</small>@endif</a>
                     @endforeach
-                </dl>
+                </div>
             @endforeach
         </section>
         <section class="ao-bottom">

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Actions\UpdateCustomerSubmission;
+use App\Enums\UserRole;
 use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\ModerationReview;
@@ -38,7 +39,7 @@ class AdminSubmissionInlineTest extends TestCase
             'consented_at' => now(), 'consent_version' => config('dealer.consent_version')]);
     }
 
-    public function test_list_renders_phone_historical_dealer_sales_source_and_inline_controls(): void
+    public function test_queue_renders_selected_phone_and_historical_attribution_with_scoped_mutation_controls(): void
     {
         $sales = User::factory()->active()->create();
         $submission = CustomerSubmission::factory()->create(['sales_id' => $sales->id, 'phone' => '0901234567']);
@@ -46,9 +47,10 @@ class AdminSubmissionInlineTest extends TestCase
         $new = Dealer::factory()->create();
         $sales->forceFill(['dealer_id' => $new->id])->save();
         $response = $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
-            ->assertSee($submission->phone)->assertSee($old->name)->assertSee($sales->name)->assertSee('Sales khai báo')
-            ->assertSee('Sales hiện thuộc đại lý khác')->assertSee('Chỉnh sửa')->assertSee('Lưu thay đổi')
-            ->assertSee('Xác nhận duyệt')->assertDontSee('confirm(', false)->assertDontSee('onsubmit=', false);
+            ->assertSee($submission->phone)->assertSee($old->name)->assertSee($sales->name)
+            ->assertSee('Xác minh')->assertSee('Sửa')->assertSee('name="edit_version"', false)
+            ->assertDontSee('data-inline-confirmation', false)->assertDontSee('confirm(', false)->assertDontSee('onsubmit=', false);
+        $this->get(route('admin.submissions.show', $submission))->assertOk()->assertSee('Chỉnh sửa')->assertSee('Lưu thay đổi')->assertSee('Xác nhận duyệt');
         $this->assertSame($old->id, $response->viewData('submissions')->sole()->dealer_id);
     }
 
@@ -56,7 +58,7 @@ class AdminSubmissionInlineTest extends TestCase
     {
         $qr = $this->qr();
         $admin = User::factory()->admin()->create();
-        $this->actingAs($admin)->get(route('admin.submissions.index'))->assertOk()->assertSee('Khách tự đăng ký')->assertSee('Khách tự đăng ký qua QR Dealer');
+        $this->actingAs($admin)->get(route('admin.submissions.index'))->assertOk()->assertSee('Khách tự đăng ký')->assertSee('QR đại lý');
         $data = $this->payload($qr, ['customer_name' => 'Tên QR đã sửa', 'province_code' => $qr->province_code,
             'ward_code' => $qr->ward_code, 'address_line' => $qr->address_line, 'vehicle_description' => 'Toyota Hilux']);
         unset($data['vehicle_model']);
@@ -70,7 +72,8 @@ class AdminSubmissionInlineTest extends TestCase
     {
         $submission = CustomerSubmission::factory()->create();
         DB::table('customer_submissions')->where('id', $submission->id)->update(['dealer_id' => null]);
-        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()->assertSee('Thiếu đại lý lịch sử hợp lệ');
+        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
+            ->assertViewHas('selected', fn ($row) => $row->dealer === null)->assertDontSee('name="verified_facebook_url"', false);
         $this->post(route('admin.submissions.approve', $submission))->assertSessionHasErrors('submission');
         $this->assertSame('pending', $submission->fresh()->status->value);
         $this->assertSame(0, ModerationReview::count());
@@ -81,7 +84,7 @@ class AdminSubmissionInlineTest extends TestCase
         $submission = CustomerSubmission::factory()->create();
         DB::table('users')->where('id', $submission->sales_id)->update(['role' => 'admin', 'dealer_id' => null]);
         $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
-            ->assertSee('Quan hệ Sales không hợp lệ')->assertDontSee(route('admin.sales.show', $submission->sales_id));
+            ->assertViewHas('selected', fn ($row) => $row->sales->role === UserRole::Admin)->assertDontSee(route('admin.sales.show', $submission->sales_id));
         $this->post(route('admin.submissions.approve', $submission))->assertSessionHasErrors('submission');
         $this->assertSame('pending', $submission->fresh()->status->value);
     }
@@ -152,7 +155,7 @@ class AdminSubmissionInlineTest extends TestCase
         $this->actingAs(User::factory()->admin()->create())->patch(route('admin.submissions.update', ['submission' => $target, 'status' => 'pending']),
             $this->payload($target, ['customer_name' => ['bad'], 'phone' => 'not-a-phone', 'province_code' => '79', 'ward_code' => '00000']))
             ->assertSessionHasErrors(['customer_name', 'phone', 'ward_code']);
-        $this->get(route('admin.submissions.index', ['status' => 'pending']))->assertOk()->assertSee('Chưa lưu được thay đổi.');
+        $this->get(route('admin.submissions.show', $target))->assertOk()->assertSee('Chưa lưu được thay đổi.');
         $this->assertSame(0, SubmissionEdit::count());
     }
 
@@ -183,7 +186,7 @@ class AdminSubmissionInlineTest extends TestCase
     {
         $target = CustomerSubmission::factory()->create();
         Schema::shouldReceive('hasTable')->with('submission_edits')->andReturn(false);
-        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()->assertSee('chờ áp dụng migration nhật ký')->assertDontSee('name="edit_version"', false);
+        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()->assertDontSee('name="edit_version"', false);
         $this->patch(route('admin.submissions.update', $target), $this->payload($target, ['customer_name' => 'Must not save']))->assertSessionHasErrors('submission');
         $this->assertSame($target->customer_name, $target->fresh()->customer_name);
     }
@@ -191,7 +194,8 @@ class AdminSubmissionInlineTest extends TestCase
     public function test_inline_confirmation_only_mutates_after_post_and_does_not_count_twice(): void
     {
         $target = CustomerSubmission::factory()->create();
-        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()->assertSee('data-inline-confirmation', false)->assertSee('Bạn có chắc muốn duyệt khai báo');
+        $this->actingAs(User::factory()->admin()->create())->get(route('admin.submissions.index'))->assertOk()
+            ->assertDontSee('data-inline-confirmation', false)->assertDontSee('Bạn có chắc muốn duyệt khai báo');
         $this->assertSame('pending', $target->fresh()->status->value);
         $filters = ['q' => 'customer', 'status' => 'pending', 'page' => 2];
         $url = route('admin.submissions.approve', ['submission' => $target, ...$filters]);
@@ -238,7 +242,7 @@ class AdminSubmissionInlineTest extends TestCase
 
     public function test_browser_fixtures_for_inline_edit_and_confirmation(): void
     {
-        $target = CustomerSubmission::factory()->create(['customer_name' => 'Khách kiểm thử inline', 'phone' => '0901234567']);
+        $target = CustomerSubmission::factory()->create(['customer_name' => 'Khách kiểm thử inline', 'phone' => '0901234568']);
         $qr = $this->qr();
         $admin = User::factory()->admin()->create();
         $folder = base_path('.laravel-tools/submission-inline/qa');

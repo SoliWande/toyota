@@ -1,46 +1,54 @@
-<x-admin.layout title="Quản lý đại lý">
-    <div class="mb-7 flex flex-wrap items-end justify-between gap-4">
-        <div>
-            <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
-            <h1 class="mt-3 text-3xl font-bold">Quản lý đại lý</h1>
-            <p class="mt-2 text-sm text-slate-600">{{ $dealers->total() }} đại lý phù hợp.</p>
+<x-admin.layout title="Đại lý">
+    @vite(['resources/css/admin-dealers.css', 'resources/js/admin-dealers.js'])
+    @php
+        $number = fn ($value) => number_format($value, 0, ',', '.');
+        $listUrl = fn ($changes = []) => route('admin.dealers.index', array_replace($filters, $changes));
+        $profileUrl = $selected ? app(\App\Services\DealerProfile::class)->url($selected) : null;
+        $items = [];
+        foreach (['' => ['Tất cả', 'all'], 'no_customers' => ['Chưa có khách tháng này', 'no_customers'], 'no_manager' => ['Chưa có quản lý', 'no_manager'], 'inactive' => ['Ngừng tham gia', 'inactive']] as $key => [$label, $count]) {
+            $items[] = ['key' => $key, 'label' => $label, 'count' => $counts[$count], 'alert' => in_array($key, ['no_customers', 'no_manager']), 'href' => $listUrl(['status' => $key, 'page' => null, 'selected' => null])];
+        }
+    @endphp
+    <div class="dc-page" data-dealer-page>
+        <header class="dc-head"><div><h1>Đại lý</h1><p>{{ $number($counts['all']) }} đại lý · {{ $number($counts['active']) }} đang tham gia</p></div><x-admin.button class="dc-add" data-dc-open="dc-create"><img src="{{ asset('admin/icons/c04-plus.png') }}" width="16" height="16" alt="">Thêm đại lý</x-admin.button></header>
+        <x-admin.tabs :items="$items" :active="$filters['status'] ?? ''" />
+        <form class="dc-filters" method="GET" action="{{ route('admin.dealers.index') }}" data-dc-filters>
+            @if (filled($filters['status'] ?? null))<input type="hidden" name="status" value="{{ $filters['status'] }}">@endif
+            <label class="dc-search"><img src="{{ asset('admin/icons/c04-search.png') }}" width="16" height="16" alt=""><input name="q" aria-label="Tên hoặc mã đại lý" placeholder="Tên hoặc mã đại lý" value="{{ $filters['q'] ?? '' }}" maxlength="255"></label>
+            <select name="province" aria-label="Tất cả tỉnh/thành"><option value="">Tất cả tỉnh/thành</option>@foreach ($provinces as $province)<option @selected(($filters['province'] ?? '') === $province)>{{ $province }}</option>@endforeach</select>
+            <select name="sort" aria-label="Sắp xếp"><option value="month" @selected(($filters['sort'] ?? 'month') === 'month')>Sắp xếp: tháng này</option><option value="total" @selected(($filters['sort'] ?? '') === 'total')>Sắp xếp: tổng</option><option value="name" @selected(($filters['sort'] ?? '') === 'name')>Sắp xếp: tên</option></select>
+        </form>
+        <div class="dc-split">
+            <div class="dc-list">
+                <div class="dc-row dc-table-head"><span>ĐẠI LÝ</span><span>TỈNH</span><span>QUẢN LÝ</span><span>THÁNG NÀY</span><span>TỔNG</span></div>
+                @foreach ($dealers as $dealer)
+                    <a @class(['dc-row', 'dc-selected' => $selected?->is($dealer)]) href="{{ $listUrl(['selected' => $dealer->id]) }}" @if ($selected?->is($dealer)) aria-current="true" @endif>
+                        <span class="dc-name"><strong>{{ $dealer->name }}</strong><small>{{ $dealer->code }}</small></span><span class="dc-province">{{ $dealer->province }}</span><span @class(['dc-manager', 'dc-missing' => !$dealer->manager])>{{ $dealer->manager?->name ?? 'Chưa có' }}</span><b @class(['dc-zero' => !$dealer->month_count])>{{ $number($dealer->month_count) }}</b><b @class(['dc-zero' => !$dealer->approved_count])>{{ $number($dealer->approved_count) }}</b>
+                    </a>
+                @endforeach
+                <nav class="dc-pagination" aria-label="Phân trang"><span>{{ $dealers->firstItem() ?? 0 }}–{{ $dealers->lastItem() ?? 0 }} / {{ $number($dealers->total()) }}</span>@if ($dealers->previousPageUrl())<a href="{{ $dealers->previousPageUrl() }}">‹</a>@endif @if ($dealers->nextPageUrl())<a href="{{ $dealers->nextPageUrl() }}">Trang sau ›</a>@else<span aria-disabled="true">Trang sau ›</span>@endif</nav>
+            </div>
+            @if ($selected)
+                <aside class="dc-panel">
+                    <header><div><h2>{{ $selected->name }}</h2><x-admin.badge :variant="$selected->is_active ? 'approved' : 'neutral'">{{ $selected->is_active ? 'Đang tham gia' : 'Ngừng tham gia' }}</x-admin.badge></div><p>{{ $selected->code }} · {{ $selected->province }}</p></header>
+                    <div class="dc-stats"><div><strong>{{ $number($selected->month_count) }}</strong><span>Đã xác minh tháng này</span></div><a href="{{ route('leaderboard', ['period' => 'month']) }}" target="_blank" rel="noopener"><strong>{{ $standing ? '#'.$standing->rank : '—' }}</strong><span>Hạng tháng này</span></a><div><strong>{{ $number($selected->active_sales_count) }}</strong><span>Sales đang làm</span></div></div>
+                    <hr>
+                    <div class="dc-section-head"><h3>THÔNG TIN ĐẠI LÝ</h3><button type="button" data-dc-open="dc-edit"><img src="{{ asset('admin/icons/c04-edit.png') }}" width="13" height="13" alt="">Sửa</button></div>
+                    <dl class="dc-info">
+                        @foreach (['address' => 'Địa chỉ', 'phone' => 'Điện thoại', 'opening_hours' => 'Giờ mở cửa'] as $field => $label)<div><dt>{{ $label }}</dt><dd>{{ $selected->$field }}</dd></div>@endforeach
+                        <div><dt>Facebook, Zalo</dt><dd>@foreach (['facebook_url', 'zalo_url'] as $field)@if ($selected->$field && preg_match('~^https?://~i', $selected->$field))<a href="{{ $selected->$field }}" target="_blank" rel="noopener noreferrer">{{ $selected->$field }}</a>@if ($field === 'facebook_url' && $selected->zalo_url) · @endif @endif @endforeach</dd></div>
+                        <div><dt>Quản lý</dt><dd>{{ $selected->manager?->name }}@if ($selected->manager) · {{ \Illuminate\Support\Str::before($selected->manager->email, '@') }}@…@endif</dd></div>
+                    </dl>
+                    <hr>
+                    <h3>MÃ QR VÀ STANDEE</h3>
+                    <button type="button" class="dc-copy" data-dc-copy="{{ $profileUrl }}"><img src="{{ asset('admin/icons/c04-link.png') }}" width="16" height="16" alt=""><span>…/{{ $selected->slug }}/</span><img src="{{ asset('admin/icons/c04-copy.png') }}" width="16" height="16" alt=""></button>
+                    <div class="dc-downloads">@foreach (['png' => 'QR (PNG)', 'pdf' => 'Standee (PDF)'] as $format => $label)<x-admin.button variant="secondary" size="38" :href="route('admin.dealers.download', [$selected, $format])" data-dc-download :data-dc-toast="($format === 'png' ? 'Đang tải QR ' : 'Đang tải standee ').$selected->name.($format === 'png' ? ' (PNG)' : ' (PDF)')"><img src="{{ asset('admin/icons/c04-download.png') }}" width="16" height="16" alt="">{{ $label }}</x-admin.button>@endforeach</div>
+                    @if ($selected->is_active)<div class="dc-deactivate"><div><strong>Ngừng tham gia chương trình</strong><p>Điểm cũ vẫn giữ.</p></div><x-admin.button variant="danger-outline" size="38" data-dc-open="dc-stop">Ngừng tham gia</x-admin.button></div>@endif
+                </aside>
+            @endif
         </div>
-        <a href="{{ route('admin.dealers.create') }}" class="button-primary">Thêm đại lý</a>
+        @include('admin.dealers.modals')
+        <x-admin.toast id="dc-toast"><span data-dc-toast-message></span></x-admin.toast>
+        <p class="dc-error" data-dc-error role="alert" hidden></p>
     </div>
-    <x-admin-feedback />
-    <form method="GET" action="{{ route('admin.dealers.index') }}" class="mb-6 flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-        <div class="min-w-0 grow">
-            <label for="q" class="text-sm font-medium">Tìm kiếm đại lý</label>
-            <input id="q" name="q" value="{{ $filters['q'] ?? '' }}" maxlength="255" placeholder="Tên, mã, tỉnh/thành phố, điện thoại hoặc địa chỉ" class="form-input">
-        </div>
-        <div><label for="status" class="text-sm font-medium">Trạng thái</label><select id="status" name="status" class="form-input"><option value="">Tất cả</option><option value="active" @selected(($filters['status'] ?? '') === 'active')>Đang hoạt động</option><option value="inactive" @selected(($filters['status'] ?? '') === 'inactive')>Ngừng hoạt động</option></select></div>
-        <button class="button-primary" type="submit">Tìm kiếm</button>
-        <a href="{{ route('admin.dealers.index') }}" class="py-3 text-sm text-slate-600 hover:underline">Bỏ lọc</a>
-    </form>
-    <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
-        <table class="w-full text-left text-sm">
-            <thead class="bg-slate-100 text-slate-600"><tr><th class="p-4" scope="col">Đại lý</th><th class="p-4" scope="col">Liên hệ</th><th class="p-4" scope="col">Sales</th><th class="p-4" scope="col">Trạng thái</th><th class="p-4" scope="col">Thao tác</th></tr></thead>
-            <tbody class="divide-y divide-slate-100">
-                @forelse ($dealers as $dealer)
-                    <tr>
-                        <td class="p-4"><a class="font-semibold hover:text-red-600" href="{{ route('admin.dealers.show', $dealer) }}">{{ $dealer->name }}</a><p class="mt-1 text-slate-500">{{ $dealer->code }}</p></td>
-                        <td class="p-4"><p>{{ $dealer->province ?? 'Chưa có tỉnh/thành phố' }}</p><p class="mt-1 text-slate-500">{{ $dealer->phone ?? 'Chưa có điện thoại' }}</p></td>
-                        <td class="p-4">{{ $dealer->sales_count }}</td>
-                        <td class="whitespace-nowrap p-4"><span class="rounded-full px-3 py-1 text-xs font-semibold {{ $dealer->is_active ? 'bg-green-50 text-green-800' : 'bg-slate-100 text-slate-700' }}">{{ $dealer->is_active ? 'Active' : 'Inactive' }}</span></td>
-                        <td class="p-4"><div class="flex items-center gap-4 whitespace-nowrap">
-                            <a href="{{ route('admin.dealers.edit', $dealer) }}" class="py-2 font-medium text-red-600 hover:underline">Sửa</a>
-                            <form method="POST" action="{{ route('admin.dealers.status', $dealer) }}">
-                                @csrf @method('PATCH')
-                                <input type="hidden" name="is_active" value="{{ $dealer->is_active ? '0' : '1' }}">
-                                <button type="submit" class="rounded-lg border border-slate-200 px-3 py-2 hover:bg-slate-50">{{ $dealer->is_active ? 'Ngừng hoạt động' : 'Kích hoạt' }}</button>
-                            </form>
-                        </div></td>
-                    </tr>
-                @empty
-                    <tr><td colspan="5" class="p-8 text-center text-slate-500">Không tìm thấy đại lý phù hợp.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-    <div class="mt-6">{{ $dealers->links() }}</div>
 </x-admin.layout>

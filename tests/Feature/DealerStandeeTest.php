@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Dealer;
 use App\Models\User;
 use App\Services\DealerProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,6 +16,33 @@ class DealerStandeeTest extends TestCase
     protected function beforeRefreshingDatabase(): void
     {
         TestDatabase::assertIsolated();
+    }
+
+    public function test_admin_downloads_real_canonical_png_and_pdf_including_inactive_dealers(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $dealer = Dealer::factory()->inactive()->create();
+        $profile = app(DealerProfile::class);
+        $png = $this->actingAs($admin)->get(route('admin.dealers.download', [$dealer, 'png']), ['Host' => 'attacker.invalid'])
+            ->assertOk()->assertHeader('Content-Type', 'image/png')->assertHeader('Cache-Control', 'no-store, private');
+        $this->assertSame($profile->qr($dealer), $png->getContent());
+        $pdf = $this->get(route('admin.dealers.download', [$dealer, 'pdf']), ['Host' => 'attacker.invalid'])
+            ->assertOk()->assertHeader('Content-Type', 'application/pdf')
+            ->assertHeader('Content-Disposition', 'attachment; filename="dealer-'.$dealer->id.'-standee-a4.pdf"');
+        $this->assertStringStartsWith('%PDF-1.4', $pdf->getContent());
+        $this->assertStringContainsString(bin2hex($profile->url($dealer)), $pdf->getContent());
+        $this->assertStringNotContainsString('attacker.invalid', $pdf->getContent());
+    }
+
+    public function test_admin_download_routes_require_active_admin_and_reject_unknown_formats(): void
+    {
+        $dealer = Dealer::factory()->create();
+        $url = route('admin.dealers.download', [$dealer, 'pdf']);
+        $this->getJson($url)->assertUnauthorized();
+        foreach ([User::factory()->active()->create(), User::factory()->dealer()->active()->create(), User::factory()->admin()->create(['status' => 'blocked'])] as $user) {
+            $this->actingAs($user)->getJson($url)->assertForbidden();
+        }
+        $this->actingAs(User::factory()->admin()->create())->get('/admin/dealers/'.$dealer->id.'/download/svg')->assertNotFound();
     }
 
     public function test_download_is_a4_pdf_with_canonical_qr_and_logo_and_never_uses_request_host_or_dealer_id(): void
