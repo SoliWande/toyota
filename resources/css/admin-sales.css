@@ -1,0 +1,48 @@
+/* C05 only; the P01 shell and legacy Sales pages retain their styles. */
+@font-face{font-family:Montserrat;font-style:normal;font-weight:100 900;font-display:swap;src:url('../../public/competition/fonts/montserrat-latin.woff2') format('woff2')}
+.ad-admin .sc-page{display:flex;flex-direction:column;gap:20px}
+.ad-admin .sc-page :is(h1,p){margin:0}
+.ad-admin .sc-head{display:flex;gap:16px;align-items:flex-end}
+.ad-admin .sc-head>div{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ad-admin .sc-head h1{font:800 28px/34px Inter,sans-serif;letter-spacing:-.42px}
+.ad-admin .sc-head p{font:400 14px/20px Inter,sans-serif;color:#5e5e66}
+.ad-admin .sc-export{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border:1px solid #e3e3e8;border-radius:999px;background:white;font:600 14px/18px Inter,sans-serif;color:#111;cursor:default}
+.ad-admin .sc-filters{display:flex;gap:8px}
+.ad-admin .sc-search{display:flex;align-items:center;gap:8px;width:300px;height:40px;padding:0 14px;border:1px solid #e3e3e8;background:white;border-radius:12px}
+.ad-admin .sc-search input{min-width:0;width:100%;border:0;outline:0;font:400 13px/18px Inter,sans-serif;background:transparent}
+.ad-admin .sc-search input::placeholder{color:#8e8e93}
+.ad-admin .sc-filters select{width:180px;height:40px;padding:0 38px 0 14px;border:1px solid #e3e3e8;border-radius:12px;background:white url('../../public/admin/icons/c05-down.png') no-repeat right 14px center;background-size:14px;appearance:none;font:400 13px/18px Inter,sans-serif;color:#111}
+.ad-admin .sc-filters select[name=role]{width:160px}
+.ad-admin .sc-table{overflow:hidden;border:1px solid #ededf0;border-radius:20px;background:white}
+.ad-admin .sc-row{display:grid;grid-template-columns:minmax(0,1fr) 130px 180px 90px 100px 130px 32px;gap:16px;align-items:center;padding:14px 20px;border-bottom:1px solid #ededf0;min-height:67px}
+.ad-admin .sc-row>div{min-width:0}
+.ad-admin .sc-table-head{min-height:35px;padding-block:10px;background:#fafafb;font:600 11px/14px Inter,sans-serif;letter-spacing:.66px;color:#8e8e93}
+.ad-admin .sc-row>:nth-child(4),.ad-admin .sc-row>:nth-child(5){text-align:right}
+.ad-admin .sc-person{display:flex;align-items:center;gap:10px}
+.ad-admin .sc-avatar{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#f2f2f5;color:#5e5e66;font:600 13px/18px Inter,sans-serif}
+.ad-admin .sc-person a{min-width:0;color:#111;text-decoration:none}
+.ad-admin .sc-person strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 14px/20px Inter,sans-serif}
+.ad-admin .sc-person small{display:block;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#8e8e93;font:400 12px/16px Inter,sans-serif}
+.ad-admin .sc-dealer{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 13px/18px Inter,sans-serif}
+.ad-admin .sc-score{font:700 15px/20px Montserrat,sans-serif}
+.ad-admin .sc-zero{color:#eb0a1e}
+.ad-admin .sc-rejection{font:500 13px/18px Inter,sans-serif;color:#5e5e66}
+.ad-admin .sc-activity{font:400 13px/18px Inter,sans-serif;color:#5e5e66}
+.ad-admin .sc-never{color:#e08600}
+.ad-admin .sc-ellipsis{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:white}
+.ad-admin .sc-confirming{background:#f2f2f5}
+.ad-admin .sc-ellipsis img{mix-blend-mode:multiply}
+.ad-admin .sc-confirm{display:flex;align-items:center;gap:16px;padding:14px 20px;background:#fff5f6;border-bottom:1px solid #ededf0}
+.ad-admin .sc-lock-icon{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:white}
+.ad-admin .sc-confirm>div{flex:1;min-width:0}
+.ad-admin .sc-confirm strong{display:block;font:600 14px/20px Inter,sans-serif}
+.ad-admin .sc-confirm p{margin-top:2px;font:400 13px/18px Inter,sans-serif;color:#5e5e66}
+.ad-admin .sc-confirm .ad-button{flex:none;padding-inline:14px}
+.ad-admin .sc-pagination{display:flex;align-items:center;gap:8px;padding:12px 20px;font:600 13px/18px Inter,sans-serif;color:#111}
+.ad-admin .sc-pagination>span:first-child{flex:1;color:#5e5e66;font-weight:500}
+.ad-admin .sc-pagination a{color:#111;text-decoration:none}
+.ad-admin .sc-pagination [aria-disabled]{opacity:.4}
+.ad-admin .sc-toast{position:fixed;bottom:24px;left:calc(50% + 124px);transform:translateX(-50%);z-index:40}
+.ad-admin .sc-toast .ad-toast-icon{background:#1e9e4a url('../../public/admin/icons/c05-tick.png') no-repeat center;background-size:14px}
+.ad-admin .sc-toast .ad-toast-icon svg{display:none}
+.ad-admin .sc-error{color:#c4101f;font:400 13px/18px Inter,sans-serif}

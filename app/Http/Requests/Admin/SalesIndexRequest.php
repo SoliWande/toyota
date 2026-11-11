@@ -20,6 +20,9 @@ class SalesIndexRequest extends FormRequest
             'status' => ['nullable', Rule::enum(UserStatus::class)],
             'dealer_id' => ['nullable', 'integer', Rule::exists('dealers', 'id')],
             'q' => ['nullable', 'string', 'max:255'],
+            // Manager scope and high-rejection cohort require separate contracts.
+            'role' => ['nullable', Rule::in(['sales'])],
+            'lock' => ['nullable', 'integer', 'min:1'],
             'page' => ['nullable', 'integer', 'min:1'],
         ];
     }

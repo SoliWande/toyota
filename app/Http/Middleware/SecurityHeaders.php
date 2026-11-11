@@ -13,7 +13,7 @@ class SecurityHeaders
         $response = $next($request);
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-        $response->headers->set('Referrer-Policy', $request->routeIs('dealers.lookup.*') ? 'no-referrer' : 'strict-origin-when-cross-origin');
+        $response->headers->set('Referrer-Policy', $request->routeIs('dealers.lookup.*', 'admin.group-lookup.*') ? 'no-referrer' : 'strict-origin-when-cross-origin');
 
         if ($request->user() !== null || $request->is('login', 'register', 'forgot-password', 'reset-password', 'reset-password/*', 'account/*', 'sales/*', 'admin/*', 'api/user')) {
             $response->headers->set('Cache-Control', 'private, no-store');

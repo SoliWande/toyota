@@ -58,6 +58,7 @@ class RouteServiceProvider extends ServiceProvider
             ];
         });
         RateLimiter::for('public-sales', fn (Request $request) => Limit::perMinute(120)->by('public-sales:'.$request->ip()));
+        RateLimiter::for('admin-group-lookup', fn (Request $request) => Limit::perMinute(30)->by('admin-group-lookup:'.$request->user()->id));
         RateLimiter::for('password-email', fn (Request $request) => Limit::perMinute(5)->by('password-email:'.$request->ip()));
         RateLimiter::for('password-reset', fn (Request $request) => Limit::perMinute(10)->by('password-reset:'.$request->ip()));
         RateLimiter::for('profile-writes', fn (Request $request) => Limit::perMinute(20)->by('profile:'.$request->user()->id));

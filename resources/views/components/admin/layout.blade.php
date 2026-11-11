@@ -2,6 +2,7 @@
 @php
     $user = auth()->user();
     $section = match (true) {
+        request()->routeIs('admin.group-lookup.*') => 'group',
         request()->routeIs('admin.submissions.*') => 'submissions',
         request()->routeIs('admin.dealer-registrations.*') => 'registrations',
         request()->routeIs('admin.dealers.*') => 'dealers',
@@ -9,7 +10,7 @@
         request()->routeIs('admin.awards.*') => 'awards',
         default => 'overview',
     };
-    $sections = ['overview' => 'Tổng quan', 'submissions' => 'Duyệt khách hàng', 'registrations' => 'Duyệt tài khoản', 'dealers' => 'Đại lý', 'sales' => 'Sales', 'awards' => 'Vinh danh'];
+    $sections = ['overview' => 'Tổng quan', 'group' => 'Tra SĐT vào group', 'submissions' => 'Duyệt khách hàng', 'registrations' => 'Duyệt tài khoản', 'dealers' => 'Đại lý', 'sales' => 'Sales', 'awards' => 'Vinh danh'];
     // Queue counts, not demo-filtered metrics or inferred workflow stages.
     $queueCounts = [
         'submissions' => \App\Models\CustomerSubmission::where('status', 'pending')->count(),

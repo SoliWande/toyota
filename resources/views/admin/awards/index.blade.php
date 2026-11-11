@@ -1,43 +1,46 @@
-<x-admin.layout title="Quản lý vinh danh">
-    <a href="{{ route('admin.dashboard') }}" class="text-sm text-slate-500 hover:text-red-600">← Quản trị</a>
-    <h1 class="mt-3 text-3xl font-bold">Awards / Vinh danh</h1>
-    <x-admin-feedback />
-    <form method="POST" action="{{ route('admin.awards.store') }}" class="mt-6 grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2">
-        @csrf
-        <div>
-            <label for="period_type" class="text-sm font-medium">Loại kỳ</label>
-            <select id="period_type" name="period_type" class="form-input" required>
-                @foreach (\App\Enums\AwardPeriod::cases() as $period)
-                    <option value="{{ $period->value }}" @selected(old('period_type') === $period->value)>{{ $period->label() }}</option>
+<x-admin.layout title="Vinh danh">
+    @vite('resources/css/admin-awards.css')
+    @php
+        $periodLabel = fn ($award) => $award->period_type === \App\Enums\AwardPeriod::Monthly
+            ? 'Tháng '.$award->period_start->format('n/Y')
+            : $award->period_type->label().' '.$award->period_start->format('d/m').' – '.$award->period_end->subDay()->format('d/m/Y');
+        $vn = fn ($date) => $date->setTimezone('Asia/Ho_Chi_Minh');
+    @endphp
+    <div class="ac-page">
+        <header class="ac-head"><h1>Vinh danh</h1><p>Mỗi tháng một kỳ, chốt theo giờ Việt Nam. Chỉ công bố sau khi kiểm tra top 3.</p></header>
+        <div class="ac-split">
+            <nav class="ac-periods" aria-label="Các kỳ">
+                @foreach ($awards as $award)
+                    <a href="{{ route('admin.awards.index', array_merge(\Illuminate\Support\Arr::except($filters, ['selected', 'page']), ['selected' => $award->id])) }}" @class(['ac-period', 'ac-period-selected' => $selected?->is($award)]) @if ($selected?->is($award)) aria-current="page" @endif>
+                        <strong>{{ $periodLabel($award) }}</strong>
+                        <small>{{ $award->published_at ? 'Công bố '.$vn($award->published_at)->format('d/m') : 'Chốt số liệu '.$vn($award->period_end)->format('d/m, H:i') }}</small>
+                        @if ($award->published_at)<x-admin.badge variant="approved">Đã công bố</x-admin.badge>@endif
+                    </a>
                 @endforeach
-            </select>
+            </nav>
+            @if ($selected)
+                <section class="ac-detail" data-award-id="{{ $selected->id }}">
+                    <header><h2>Kỳ {{ mb_strtolower($periodLabel($selected)) }}</h2><a href="{{ route('admin.awards.show', $selected) }}" class="ac-preview" target="_blank" rel="noopener noreferrer"><img src="{{ asset('admin/icons/c07-preview.png') }}" width="16" height="16" alt="">Xem trước trang vinh danh</a></header>
+                    <div class="ac-steps">
+                        <div class="ac-step"><span class="ac-step-number">1</span><div><strong>Chốt số liệu</strong><small>{{ $vn($selected->period_end)->format('d/m, H:i') }} giờ VN</small></div></div>
+                        <div class="ac-step"><span class="ac-step-number">2</span><div><strong>Kiểm tra top 3</strong><small>Gọi 5 khách mỗi đại lý</small></div></div>
+                        <div class="ac-step ac-step-publish"><span @class(['ac-step-number', 'ac-complete' => $selected->published_at])>@if ($selected->published_at)<img src="{{ asset('admin/icons/c07-check.png') }}" width="14" height="14" alt="">@else 3 @endif</span><div><strong>Công bố</strong><small>Hiện trên trang Vinh danh</small></div></div>
+                    </div>
+                    <div class="ac-table" role="table" aria-label="Kiểm tra top 3">
+                        <div class="ac-row ac-table-head" role="row"><span role="columnheader">HẠNG</span><span role="columnheader">ĐẠI LÝ</span><span role="columnheader">ĐIỂM</span><span role="columnheader">MẪU GỌI</span><span role="columnheader">KẾT QUẢ</span><span role="columnheader" aria-label="Trạng thái kiểm tra"></span></div>
+                        @foreach ($dealers as $winner)
+                            <div class="ac-row" role="row" data-award-dealer>
+                                <div role="cell" aria-label="Hạng {{ $winner['rank'] }}"><span class="ac-rank ac-rank-{{ $winner['rank'] }}">@if (in_array((int) $winner['rank'], [1, 2, 3], true))<img src="{{ asset('admin/icons/c07-rank-'.$winner['rank'].'.png') }}" width="14" height="14" alt="">@else{{ $winner['rank'] }}@endif</span></div>
+                                <strong role="cell">{{ $winner['dealer_name_snapshot'] }}</strong>
+                                <b role="cell">{{ number_format($winner['score'], 0, ',', '.') }}</b>
+                                <span role="cell" class="ac-no-evidence">—</span><span role="cell" class="ac-no-evidence">—</span><span role="cell"></span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="ac-threshold"><img src="{{ asset('admin/icons/c07-info.png') }}" width="16" height="16" alt=""><p>Ngưỡng loại: sai quá [x]% số khách được gọi (chờ TMV chốt). Không nghe máy 2 lần thì không tính là sai.</p></div>
+                    <footer class="ac-actions"><button type="button" class="ac-call" disabled><img src="{{ asset('admin/icons/c07-phone.png') }}" width="16" height="16" alt="">Mở danh sách gọi</button><div class="ac-spacer"></div><p><img src="{{ asset('admin/icons/c07-lock.png') }}" width="14" height="14" alt="">Mở khi cả 3 đại lý đã kiểm tra xong</p><button type="button" class="ac-publish" disabled>Công bố kỳ</button></footer>
+                </section>
+            @endif
         </div>
-        <div>
-            <label for="period_date" class="text-sm font-medium">Một ngày thuộc kỳ muốn vinh danh</label>
-            <input id="period_date" name="period_date" type="date" required value="{{ old('period_date', now(config('app.timezone'))->toDateString()) }}" class="form-input">
-        </div>
-        <div class="sm:col-span-2">
-            <label for="title" class="text-sm font-medium">Tên kỳ vinh danh (tùy chọn)</label>
-            <input id="title" name="title" maxlength="255" value="{{ old('title') }}" class="form-input">
-        </div>
-        <div class="sm:col-span-2">
-            <p class="mb-4 text-sm text-slate-500">Tuần bắt đầu thứ Hai; tháng bắt đầu ngày 1. Múi giờ {{ config('app.timezone') }}. Kỳ đã tồn tại sẽ được mở lại.</p>
-            <button type="submit" class="button-primary">Tạo bản nháp / Xem kỳ</button>
-        </div>
-    </form>
-    <h2 class="mt-9 text-xl font-bold">Các kỳ vinh danh</h2>
-    <ul class="mt-4 space-y-3">
-        @forelse ($awards as $award)
-            <li class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
-                <div class="min-w-0">
-                    <a href="{{ route('admin.awards.show', $award) }}" class="break-words font-semibold hover:text-red-600">{{ $award->title }}</a>
-                    <p class="mt-2 text-sm text-slate-500">{{ $award->period_type->label() }} · {{ $award->period_start->format('d/m/Y') }} – {{ $award->period_end->subDay()->format('d/m/Y') }}</p>
-                </div>
-                <span class="self-start rounded-full px-3 py-1 text-xs font-semibold {{ $award->published_at ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-800' }}">{{ $award->published_at ? 'Đã công bố' : 'Bản nháp' }}</span>
-            </li>
-        @empty
-            <li class="p-6 text-center text-sm text-slate-500">Chưa có kỳ vinh danh.</li>
-        @endforelse
-    </ul>
-    <div class="mt-5">{{ $awards->links() }}</div>
+    </div>
 </x-admin.layout>

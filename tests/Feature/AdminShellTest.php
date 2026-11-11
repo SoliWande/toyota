@@ -40,15 +40,27 @@ class AdminShellTest extends TestCase
             ['admin.dealers.create', null, 'Tạo đại lý'], ['admin.dealers.edit', $manager->dealer, $manager->dealer->name],
             ['admin.dealers.account.edit', $manager->dealer, $manager->name],
             ['admin.dealer-registrations.index', null, 'Quản trị / Duyệt tài khoản'],
-            ['admin.awards.index', null, 'Tạo bản nháp / Xem kỳ'], ['admin.awards.show', $award, 'Bản nháp — Preview'],
+            ['admin.awards.index', null, 'Quản trị / Vinh danh'], ['admin.awards.show', $award, 'Bản nháp — Preview'],
         ];
         foreach ($pages as [$route, $parameter, $content]) {
-            $this->get(route($route, $parameter))->assertOk()->assertSee($content)
+            $response = $this->get(route($route, $parameter))->assertOk()->assertSee($content)
                 ->assertSee('class="ad-admin"', false)->assertSee('Giờ Việt Nam (UTC+7)')
                 ->assertSee('Đăng xuất')->assertSee('action="'.route('logout').'"', false)
                 ->assertSee('Tra SĐT vào group')->assertSee('Kiểm tra ngẫu nhiên')
-                ->assertDontSee('href="#"', false)->assertDontSee('data-admin-toast', false)
+                ->assertDontSee('href="#"', false)
                 ->assertDontSee('wc-staff-header');
+
+            $dom = new \DOMDocument;
+            @$dom->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+            $xpath = new \DOMXPath($dom);
+            // Business toast hosts may exist; an untouched GET must not display success.
+            $this->assertSame(0, $xpath->query('//*[@data-admin-toast and not(@hidden)]')->length, $route);
+            $this->assertSame(0, $xpath->query('//*[contains(concat(" ", normalize-space(@class), " "), " ad-sidebar ") or contains(concat(" ", normalize-space(@class), " "), " ad-topbar ")]//*[@data-admin-toast]')->length, $route);
+            if ($route === 'admin.submissions.index') {
+                $this->assertSame(1, $xpath->query('//*[@id="cq-toast" and @data-admin-toast and @hidden]')->length);
+                $this->assertSame('', trim($xpath->evaluate('string(//*[@data-cq-toast-message])')));
+                $this->assertSame('', $xpath->evaluate('string(//*[@data-cq-page]/@data-flash-toast)'));
+            }
         }
     }
 

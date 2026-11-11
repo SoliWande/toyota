@@ -3,9 +3,12 @@
 use App\Http\Controllers\AccountRegistrationReviewController;
 use App\Http\Controllers\AccountStatusController;
 use App\Http\Controllers\Admin\AwardController;
+use App\Http\Controllers\Admin\CallAuditClaimController;
+use App\Http\Controllers\Admin\CallAuditController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DealerAccountController;
 use App\Http\Controllers\Admin\DealerController;
+use App\Http\Controllers\Admin\GroupLookupController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\SubmissionReviewController;
 use App\Http\Controllers\Admin\SubmissionVerificationController;
@@ -118,6 +121,15 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('/awards', [DealerAwardController::class, 'index'])->name('awards.index');
     });
     Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'account.active', 'throttle:admin-writes'])->group(function () {
+        Route::get('/call-audits', [CallAuditController::class, 'index'])->name('call-audits.index');
+        Route::get('/call-audits/{batch}', [CallAuditController::class, 'show'])->whereNumber('batch')->name('call-audits.show');
+        Route::get('/call-audits/{batch}/items', [CallAuditController::class, 'items'])->whereNumber('batch')->name('call-audits.items');
+        Route::get('/call-audits/{batch}/items/{item}', [CallAuditController::class, 'item'])->whereNumber(['batch', 'item'])->name('call-audits.item');
+        Route::post('/call-audits/{batch}/items/{item}/claim', [CallAuditClaimController::class, 'claim'])->whereNumber(['batch', 'item'])->name('call-audits.claim');
+        Route::post('/call-audits/{batch}/items/{item}/release', [CallAuditClaimController::class, 'release'])->whereNumber(['batch', 'item'])->name('call-audits.release');
+        Route::get('/group-lookup', [GroupLookupController::class, 'index'])->middleware('throttle:admin-group-lookup')->name('group-lookup.index');
+        Route::post('/group-lookup', [GroupLookupController::class, 'search'])->middleware('throttle:admin-group-lookup')->name('group-lookup.search');
+        Route::post('/group-lookup/verify', [GroupLookupController::class, 'verify'])->middleware('throttle:admin-group-lookup')->name('group-lookup.verify');
         Route::get('/dealer-registrations', App\Http\Controllers\Admin\DealerRegistrationController::class)->name('dealer-registrations.index');
         Route::post('/dealer-registrations/{account}/{action}', [App\Http\Controllers\Admin\DealerRegistrationController::class, 'review'])
             ->whereNumber('account')->whereIn('action', ['approve', 'reject'])->name('dealer-registrations.review');

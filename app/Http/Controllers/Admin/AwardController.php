@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\CreateAwardDraft;
 use App\Enums\AwardPeriod;
+use App\Enums\AwardWinnerType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AwardDraftRequest;
 use App\Models\Award;
@@ -16,16 +17,27 @@ use Illuminate\View\View;
 
 class AwardController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, AwardResults $results): View
     {
         $this->authorize('viewAny', Award::class);
-        $data = $request->validate(['period_type' => ['nullable', Rule::enum(AwardPeriod::class)], 'page' => ['nullable', 'integer', 'min:1']]);
+        $data = $request->validate(['period_type' => ['nullable', Rule::enum(AwardPeriod::class)], 'page' => ['nullable', 'integer', 'min:1'], 'selected' => ['nullable', 'integer', 'min:1']]);
         $query = Award::query();
         if (! empty($data['period_type'])) {
             $query->where('period_type', $data['period_type']);
         }
 
-        return view('admin.awards.index', ['awards' => $query->orderByDesc('period_start')->orderByDesc('id')->paginate(20)->withQueryString()]);
+        // The C07 rail has no pagination controls: all existing periods remain reachable.
+        $awards = $query->orderByDesc('period_start')->orderByDesc('id')->get();
+        $selected = $awards->firstWhere('id', $data['selected'] ?? null) ?? $awards->first();
+        $dealers = collect();
+        if ($selected) {
+            $this->authorize('view', $selected);
+            $dealers = $selected->published_at === null
+                ? $results->preview($selected)['dealers']
+                : $selected->winners()->where('winner_type', AwardWinnerType::Dealer->value)->orderBy('rank')->limit(3)->get();
+        }
+
+        return view('admin.awards.index', compact('awards', 'selected', 'dealers') + ['filters' => $data]);
     }
 
     public function store(AwardDraftRequest $request, CreateAwardDraft $create): RedirectResponse

@@ -21,6 +21,75 @@ class AwardWorkflowTest extends TestCase
         TestDatabase::assertIsolated();
     }
 
+    public function test_c07_read_only_draft_uses_real_top_three_and_private_preview_without_fake_audit(): void
+    {
+        $award = Award::factory()->create(['period_start' => '2026-10-01', 'period_end' => '2026-11-01']);
+        $admin = User::factory()->admin()->create();
+        $sales = User::factory()->active()->create(['name' => 'PRIVATE_INTERNAL_SALES']);
+        CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id, 'submitted_at' => '2026-10-15', 'customer_name' => 'PRIVATE_CUSTOMER']);
+        $response = $this->actingAs($admin)->get(route('admin.awards.index', ['selected' => $award->id]))->assertOk()
+            ->assertViewHas('selected', fn ($row) => $row->is($award))
+            ->assertViewHas('dealers', fn ($rows) => count($rows) === 1 && $rows->first()['score'] === 1)
+            ->assertSee($sales->dealer->name)->assertSee('01/11, 07:00')
+            ->assertDontSee('PRIVATE_INTERNAL_SALES')->assertDontSee('PRIVATE_CUSTOMER')
+            ->assertDontSee('Đang kiểm tra')->assertDontSee('Đang gọi')->assertDontSee('Vượt ngưỡng sai')->assertDontSee('Được đôn lên')
+            ->assertDontSee('data-admin-toast', false)->assertDontSee('<dialog', false);
+        $document = new \DOMDocument;
+        @$document->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+        $xpath = new \DOMXPath($document);
+        $this->assertSame(0, $xpath->query('//*[@class="ac-page"]//form')->length);
+        $this->assertSame(1, $xpath->query('//a[@href="'.route('admin.awards.show', $award).'"]')->length);
+        $this->assertSame(0, $xpath->query('//a[@href="'.route('awards.show', $award).'"]')->length);
+        $this->assertSame(1, $xpath->query('//button[@disabled and contains(@class, "ac-publish")]')->length);
+        $this->assertSame(1, $xpath->query('//button[@disabled and contains(@class, "ac-call")]')->length);
+        $this->assertSame(1, $xpath->query('//*[@data-award-dealer]')->length);
+        $this->assertDatabaseCount('award_winners', 0);
+        $this->assertNull($award->fresh()->published_at);
+        $this->get(route('admin.awards.show', $award))->assertOk()->assertSee('PRIVATE_INTERNAL_SALES');
+        $this->get(route('awards.show', $award))->assertNotFound();
+        $this->post('/admin/awards/'.$award->id.'/publish')->assertNotFound();
+    }
+
+    public function test_c07_published_period_reads_frozen_dealer_snapshot_and_keeps_internal_sales(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $award = Award::factory()->create();
+        $dealer = AwardWinner::factory()->dealer()->create(['award_id' => $award->id, 'score' => 7, 'dealer_name_snapshot' => 'Historic Dealer']);
+        AwardWinner::factory()->create(['award_id' => $award->id, 'winner_name_snapshot' => 'PRIVATE_HISTORIC_SALES']);
+        $award->forceFill(['published_at' => now(), 'published_by' => $admin->id])->save();
+        $before = $award->fresh()->getAttributes();
+        $winners = $award->winners()->get()->toArray();
+        $dealer->dealer->update(['name' => 'Live Dealer renamed']);
+        $this->actingAs($admin)->get(route('admin.awards.index', ['selected' => $award->id]))->assertOk()
+            ->assertSee('Historic Dealer')->assertSee('Đã công bố')->assertDontSee('Live Dealer renamed')->assertDontSee('PRIVATE_HISTORIC_SALES')
+            ->assertViewHas('dealers', fn ($rows) => $rows->count() === 1 && $rows->first()->score === 7);
+        $this->get(route('admin.awards.show', $award))->assertOk()->assertSee('PRIVATE_HISTORIC_SALES');
+        $this->assertSame($before, $award->fresh()->getAttributes());
+        $this->assertSame($winners, $award->winners()->get()->toArray());
+    }
+
+    public function test_c07_rail_keeps_weekly_history_and_all_existing_periods_without_creating_any(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $this->actingAs($admin)->get(route('admin.awards.index'))->assertOk()->assertViewHas('selected', null);
+        $this->assertDatabaseCount('awards', 0);
+        $week = Award::factory()->weekly()->create();
+        for ($index = 0; $index < 21; $index++) {
+            $date = now()->startOfMonth()->subMonths($index);
+            Award::factory()->create(['period_start' => $date, 'period_end' => $date->copy()->addMonth()]);
+        }
+        $this->get(route('admin.awards.index'))->assertOk()->assertViewHas('awards', fn ($rows) => $rows->count() === 22);
+        $this->get(route('admin.awards.index', ['period_type' => 'weekly', 'selected' => $week->id]))->assertOk()
+            ->assertViewHas('awards', fn ($rows) => $rows->count() === 1)
+            ->assertViewHas('selected', fn ($row) => $row->is($week));
+        $this->assertDatabaseCount('awards', 22);
+        $this->assertDatabaseCount('award_winners', 0);
+        foreach ([User::factory()->dealer()->create(), User::factory()->admin()->create(['status' => 'blocked'])] as $actor) {
+            $this->actingAs($actor)->getJson(route('admin.awards.index', ['selected' => $week->id]))->assertForbidden();
+            $this->getJson(route('admin.awards.show', $week))->assertForbidden();
+        }
+    }
+
     #[DataProvider('draftPeriods')]
     public function test_admin_creates_canonical_draft_period_without_trusting_publication_or_winners(string $type, string $date, string $start, string $end): void
     {

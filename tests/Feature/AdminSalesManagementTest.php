@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Actions\ReviewSalesAccount;
 use App\Enums\UserStatus;
+use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\ModerationReview;
 use App\Models\User;
@@ -26,7 +27,7 @@ class AdminSalesManagementTest extends TestCase
     public function test_admin_list_excludes_admin_accounts_and_paginates(): void
     {
         $admin = User::factory()->admin()->create();
-        User::factory()->count(23)->create();
+        User::factory()->active()->count(23)->create();
         $otherAdmin = User::factory()->admin()->create();
 
         $this->actingAs($admin)->get(route('admin.sales.index'))->assertOk()
@@ -51,11 +52,137 @@ class AdminSalesManagementTest extends TestCase
         return [['pending'], ['active'], ['rejected'], ['blocked']];
     }
 
+    public function test_c05_counts_and_filters_keep_manager_out_of_sales_scope(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $active = User::factory()->active()->create();
+        User::factory()->active()->count(2)->create(['status' => 'blocked']);
+        User::factory()->create();
+        $manager = User::factory()->dealer()->create();
+        $this->actingAs($admin)->get(route('admin.sales.index', ['role' => 'sales', 'dealer_id' => $active->dealer_id]))
+            ->assertOk()->assertDontSee($manager->email)->assertSee('Tỉ lệ bị từ chối cao')
+            ->assertViewHas('counts', ['active' => 1, 'blocked' => 2])
+            ->assertViewHas('sales', fn ($sales) => $sales->total() === 1 && $sales->first()->is($active));
+        $this->get(route('admin.sales.index', ['role' => 'dealer']))->assertSessionHasErrors('role');
+        $this->post(route('admin.sales.review', [$manager, 'block']))->assertForbidden();
+        $this->assertSame(UserStatus::Active, $manager->fresh()->status);
+    }
+
+    public function test_c05_month_uses_approved_submitted_at_and_inline_uses_dealer_snapshot(): void
+    {
+        $this->travelTo(now()->setDate(2026, 11, 11)->setTime(12, 0));
+        $admin = User::factory()->admin()->create();
+        $sales = User::factory()->active()->create(['last_login_at' => now()->subHours(2)]);
+        $oldDealer = $sales->dealer;
+        CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id, 'submitted_at' => '2026-11-01 00:00:00']);
+        CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id, 'submitted_at' => '2026-10-31 23:59:59']);
+        CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id, 'submitted_at' => '2026-12-01 00:00:00']);
+        CustomerSubmission::factory()->rejected()->create(['sales_id' => $sales->id]);
+        $sales->forceFill(['dealer_id' => Dealer::factory()->create()->id])->save();
+        CustomerSubmission::factory()->create(['sales_id' => $sales->id]);
+        $this->actingAs($admin)->get(route('admin.sales.index', ['lock' => $sales->id]))->assertOk()
+            ->assertSee('Khoá '.$sales->name.'?')->assertSee('1 khách đã mời vẫn tính cho '.$sales->fresh()->dealer->name)
+            ->assertSee('2 giờ trước')->assertDontSee('38%')
+            ->assertViewHas('sales', fn ($rows) => (int) $rows->first()->month_score === 1 && (int) $rows->first()->invited_count === 1);
+        $this->assertSame(4, CustomerSubmission::where('dealer_id', $oldDealer->id)->count());
+        $this->assertSame(0, ModerationReview::count());
+    }
+
+    public function test_inline_lock_succeeds_once_preserves_customers_scores_and_revokes_access(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sales = User::factory()->active()->create();
+        $customer = CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id]);
+        $before = $customer->fresh()->getAttributes();
+        $url = route('admin.sales.index', ['lock' => $sales->id]);
+        $this->actingAs($admin)->from($url)->post(route('admin.sales.review', [$sales, 'block']))
+            ->assertRedirect($url)->assertSessionHas('sales_blocked', true)
+            ->assertSessionHas('success', 'Đã khoá '.$sales->name.' · link mời hết hiệu lực');
+        $this->get($url)->assertOk()->assertSee('data-sales-success', false)->assertDontSee('data-sales-lock', false);
+        $this->post(route('admin.sales.review', [$sales, 'block']))->assertSessionHasErrors('action');
+        $this->get($url)->assertOk()->assertDontSee('data-sales-success', false);
+        $this->assertSame(1, ModerationReview::count());
+        $this->assertSame($before, $customer->fresh()->getAttributes());
+        $this->get(route('sales.public.show', ['slug' => $sales->public_slug]))->assertNotFound();
+        $this->actingAs($sales->fresh())->get(route('sales.dashboard'))->assertRedirect(route('account.status'));
+        $this->getJson(route('sales.dashboard'))->assertForbidden();
+        $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'reactivate']))->assertSessionHasNoErrors();
+        $this->get(route('admin.sales.edit', $sales))->assertOk();
+        $this->assertSame($before, $customer->fresh()->getAttributes());
+    }
+
+    public function test_lock_confirmation_cannot_select_foreign_roles_or_rows_outside_filter(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $active = User::factory()->active()->create();
+        $manager = User::factory()->dealer()->create();
+        foreach ([['lock' => $manager->id], ['lock' => $active->id, 'status' => 'blocked'], ['lock' => $active->id, 'q' => 'No matching account']] as $query) {
+            $this->actingAs($admin)->get(route('admin.sales.index', $query))->assertOk()->assertDontSee('data-sales-lock', false);
+        }
+        $this->assertSame(0, ModerationReview::count());
+    }
+
+    public function test_c05_ellipsis_selects_only_its_row_and_cancel_preserves_filters_and_page(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $target = User::factory()->active()->create(['name' => 'Matching target']);
+        $others = User::factory()->active()->count(20)->create(['dealer_id' => $target->dealer_id, 'name' => 'Matching other']);
+        $blocked = User::factory()->create(['dealer_id' => $target->dealer_id, 'status' => 'blocked', 'name' => 'Matching blocked']);
+        $filters = ['status' => 'active', 'dealer_id' => $target->dealer_id, 'q' => 'Matching', 'role' => 'sales', 'page' => 2];
+        $xpath = function ($response) {
+            $document = new \DOMDocument;
+            @$document->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+
+            return new \DOMXPath($document);
+        };
+        $queryOf = function ($url) {
+            parse_str(parse_url($url, PHP_URL_QUERY) ?? '', $query);
+
+            return $query;
+        };
+
+        $response = $this->actingAs($admin)->get(route('admin.sales.index', $filters))->assertOk();
+        $links = $xpath($response)->query('//*[@data-sales-open-confirm]');
+        $this->assertSame(1, $links->length);
+        $openUrl = $links->item(0)->getAttribute('href');
+        $this->assertEquals([...$filters, 'lock' => $target->id], $queryOf($openUrl));
+        $opened = $this->get($openUrl)->assertOk();
+        $forms = $xpath($opened)->query('//form[@data-sales-lock]');
+        $this->assertSame(1, $forms->length);
+        $this->assertSame(route('admin.sales.review', [$target, 'block']), $forms->item(0)->getAttribute('action'));
+        $this->assertSame('POST', $forms->item(0)->getAttribute('method'));
+        $cancel = $xpath($opened)->query('//form[@data-sales-lock]//a')->item(0)->getAttribute('href');
+        $this->assertEquals($filters, $queryOf($cancel));
+        $this->get($cancel)->assertOk()->assertDontSee('data-sales-lock', false);
+        foreach ([$others->first()->id, $blocked->id] as $invalidId) {
+            $this->get(route('admin.sales.index', [...$filters, 'lock' => $invalidId]))->assertOk()->assertDontSee('data-sales-lock', false);
+        }
+        $this->get(route('admin.sales.index', [...$filters, 'page' => 1, 'lock' => $target->id]))->assertOk()->assertDontSee('data-sales-lock', false);
+        $this->get(route('admin.sales.index', ['status' => 'blocked', 'lock' => $blocked->id]))->assertOk()
+            ->assertDontSee('data-sales-open-confirm', false)->assertDontSee('data-sales-lock', false);
+        $this->assertSame(UserStatus::Active, $target->fresh()->status);
+        $this->assertSame(0, ModerationReview::count());
+    }
+
+    public function test_inline_lock_requires_csrf(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sales = User::factory()->active()->create();
+        $this->app['env'] = 'local'; // Enable CSRF middleware; connection remains guarded toyota_testing.
+        try {
+            $this->actingAs($admin)->post(route('admin.sales.review', [$sales, 'block']))->assertStatus(419);
+        } finally {
+            $this->app['env'] = 'testing';
+        }
+        $this->assertSame(UserStatus::Active, $sales->fresh()->status);
+        $this->assertSame(0, ModerationReview::count());
+    }
+
     #[DataProvider('searchableFields')]
     public function test_admin_can_search_name_email_and_phone(string $field, string $value, string $search): void
     {
         $admin = User::factory()->admin()->create();
-        $match = User::factory()->create([$field => $value]);
+        $match = User::factory()->active()->create([$field => $value]);
         User::factory()->create();
         $this->actingAs($admin)->get(route('admin.sales.index', ['q' => $search]))->assertOk()
             ->assertViewHas('sales', fn ($sales) => $sales->total() === 1 && $sales->first()->is($match));

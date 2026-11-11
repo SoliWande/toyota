@@ -3,7 +3,7 @@
     $items = [
         ['overview', 'Tổng quan', 'overview', 'admin.dashboard'],
         ['submissions', 'Duyệt khách', 'check', 'admin.submissions.index'],
-        ['group', 'Tra SĐT vào group', 'search', null],
+        ['group', 'Tra SĐT vào group', 'search', 'admin.group-lookup.index'],
         ['registrations', 'Duyệt tài khoản', 'registration', 'admin.dealer-registrations.index'],
         ['dealers', 'Đại lý', 'dealer', 'admin.dealers.index'],
         ['sales', 'Sales', 'sales', 'admin.sales.index'],
