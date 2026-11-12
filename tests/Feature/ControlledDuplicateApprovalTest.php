@@ -205,7 +205,7 @@ class ControlledDuplicateApprovalTest extends TestCase
         $this->assertSame($status, $record->fresh()->status->value);
     }
 
-    public function test_inline_warnings_are_generic_once_and_edit_values_are_retained(): void
+    public function test_legacy_warning_and_c02_validation_preserve_source_and_private_identity(): void
     {
         $first = $this->record(61);
         $other = $this->record(62);
@@ -214,16 +214,22 @@ class ControlledDuplicateApprovalTest extends TestCase
         $page = $this->get(route('admin.submissions.show', $first))->assertOk();
         $this->assertSame(1, substr_count($page->getContent(), SubmissionCollisionAudit::MESSAGES['phone']));
         $this->assertFalse(str_contains($page->getContent(), $other->customer_name));
-        $this->get(route('admin.submissions.index'))->assertOk()->assertViewHas('identityConflicts', fn ($map) => isset($map[$first->id]['phone']));
-        $this->from(route('admin.submissions.index'))->patch(route('admin.submissions.update', $first), $this->edit($first, ['license_plate' => '??invalid']))->assertRedirect();
-        $html = $this->get(route('admin.submissions.index'))->assertOk()->getContent();
+        $queue = route('admin.submissions.index', ['status' => '', 'selected' => $first->id]);
+        $this->get($queue)->assertOk()->assertViewHas('selected', fn ($row) => $row->id === $first->id)->assertViewHas('noDuplicates', false);
+        $before = $first->fresh()->getAttributes();
+        $response = $this->patchJson(route('admin.submissions.update', ['submission' => $first, 'c02' => 1, 'selected' => $first->id]),
+            $this->edit($first, ['license_plate' => '??invalid']));
+        $response->assertUnprocessable()->assertJsonValidationErrors('license_plate');
+        $response->assertDontSee($other->customer_name)->assertDontSee($other->phone);
+        $this->assertSame($before, $first->fresh()->getAttributes());
+        $html = $this->get($queue)->assertOk()->getContent();
         $dom = new DOMDocument;
         @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
         $xpath = new DOMXPath($dom);
-        $input = $xpath->query('//input[@id="edit-plate-'.$first->id.'"]')->item(0);
-        $this->assertTrue($input->getAttribute('value') === '??invalid');
-        $this->assertSame('true', $input->getAttribute('aria-invalid'));
-        $this->assertSame(1, $xpath->query('//*[@id="edit-plate-error-'.$first->id.'"]')->length);
+        $input = $xpath->query('//form[@id="cq-edit-form"]//input[@name="license_plate"]')->item(0);
+        $this->assertNotNull($input);
+        $this->assertSame($first->license_plate, $input->getAttribute('value'));
+        $this->assertSame(1, $xpath->query('//*[@data-cq-field-error="license_plate"]')->length);
     }
 
     public function test_csrf_authorization_and_edit_version_still_apply(): void

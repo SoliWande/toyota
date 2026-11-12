@@ -7,22 +7,19 @@ use App\Models\CustomerSubmission;
 use App\Models\Dealer;
 use App\Models\User;
 use App\Services\CallAudit\CallCommandRejected;
+use App\Services\CallAudit\CallResultPolicy;
 use App\Services\CallAudit\ClaimCoordinator;
 use App\Services\CallAudit\SourceFingerprint;
 use Carbon\CarbonImmutable;
 
 final class ClaimItem
 {
-    public function __construct(private ClaimCoordinator $claims, private SourceFingerprint $fingerprints) {}
+    public function __construct(private ClaimCoordinator $claims, private SourceFingerprint $fingerprints, private CallResultPolicy $results) {}
 
     public function execute(int $batchId, int $itemId, array $input): array
     {
         return $this->claims->run('claim_item', $batchId, $itemId, $input, function (CallAuditItem $item, User $actor, CarbonImmutable $now): array {
-            // Until a call-result contract exists, do not reinterpret any historic attempt/projection.
-            if ($item->attempts()->exists() || $item->queue_state !== 'uncalled' || $item->attempt_count !== 0
-                || $item->latest_outcome !== null || $item->retry_due_at !== null || $item->source_stale_at !== null) {
-                throw new CallCommandRejected('item_not_claimable');
-            }
+            $this->results->assertCallable($item, $now);
             if ($item->claim_owner_id !== null && $item->claim_expires_at > $now) {
                 throw new CallCommandRejected('item_already_claimed');
             }

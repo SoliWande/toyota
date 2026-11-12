@@ -30,20 +30,20 @@ final class SamplingPlanner
         return $this->plan(CallAuditBatch::PURPOSE_GENERAL, $month, null, $seed, $generation);
     }
 
-    public function awardTop3(User $actor, Award $award, ?string $seed = null, int $generation = 1): SamplingPlan
+    public function awardTop3(User $actor, Award $award, ?string $seed = null, int $generation = 1, array $coveredDealers = []): SamplingPlan
     {
         Gate::forUser($actor)->authorize('create', CallAuditBatch::class);
         if (! $award->exists) {
             return $this->blocked(CallAuditBatch::PURPOSE_AWARD, [['code' => 'award_requires_monthly_draft', 'submission_ids' => []]]);
         }
 
-        return DB::transaction(function () use ($award, $seed, $generation) {
+        return DB::transaction(function () use ($award, $seed, $generation, $coveredDealers) {
             $current = Award::find($award->getKey());
             if ($current === null || $current->period_type !== AwardPeriod::Monthly || $current->published_at !== null) {
                 return $this->blocked(CallAuditBatch::PURPOSE_AWARD, [['code' => 'award_requires_monthly_draft', 'submission_ids' => []]]);
             }
 
-            return $this->plan(CallAuditBatch::PURPOSE_AWARD, CarbonImmutable::instance($current->period_start), $current, $seed, $generation);
+            return $this->plan(CallAuditBatch::PURPOSE_AWARD, CarbonImmutable::instance($current->period_start), $current, $seed, $generation, $coveredDealers);
         });
     }
 
@@ -111,13 +111,13 @@ final class SamplingPlanner
         return $selected;
     }
 
-    private function plan(string $purpose, CarbonImmutable $month, ?Award $award, ?string $seed, int $generation): SamplingPlan
+    private function plan(string $purpose, CarbonImmutable $month, ?Award $award, ?string $seed, int $generation, array $coveredDealers = []): SamplingPlan
     {
         if ($generation < 1 || ($seed !== null && strlen($seed) !== 32)) {
             throw new InvalidArgumentException('Invalid sampling generation or seed.');
         }
 
-        return DB::transaction(function () use ($purpose, $month, $award, $seed, $generation) {
+        return DB::transaction(function () use ($purpose, $month, $award, $seed, $generation, $coveredDealers) {
             $baseline = null;
             if ($award !== null) {
                 try {
@@ -135,7 +135,7 @@ final class SamplingPlanner
             }
             $strata = $award === null ? [['key' => 'all', 'dealer_id' => null, 'requested_count' => 60]]
                 : array_map(fn ($dealer) => ['key' => 'dealer:'.$dealer['dealer_id'],
-                    'dealer_id' => $dealer['dealer_id'], 'rank' => $dealer['rank'], 'requested_count' => 5], $baseline['dealers']);
+                    'dealer_id' => $dealer['dealer_id'], 'rank' => $dealer['rank'], 'requested_count' => 5], array_values(array_filter($baseline['dealers'], fn ($dealer) => ! in_array((int) $dealer['dealer_id'], $coveredDealers, true))));
             $dealerIds = array_column($strata, 'dealer_id');
             $candidates = $award === null ? $cohort['candidates']
                 : array_values(array_filter($cohort['candidates'], fn ($row) => in_array($row['dealer_id'], $dealerIds, true)));

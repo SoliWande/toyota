@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\CallAudit\ClaimItem;
+use App\Actions\CallAudit\RecordCallResult;
 use App\Actions\CallAudit\ReleaseClaim;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CallAuditClaimRequest;
@@ -26,8 +27,18 @@ class CallAuditClaimController extends Controller
     {
         $input = $request->validated();
         $input['row_version'] = (int) $input['row_version'];
+        foreach (['answer_1', 'answer_2', 'answer_3'] as $answer) {
+            if (isset($input[$answer])) {
+                $input[$answer] = (bool) $input[$answer];
+            }
+        }
 
         return $input;
+    }
+
+    public function record(CallAuditClaimRequest $request, int $batch, int $item, RecordCallResult $record): JsonResponse
+    {
+        return $this->respond(fn () => $record->execute($batch, $item, $this->input($request)));
     }
 
     private function respond(callable $command): JsonResponse

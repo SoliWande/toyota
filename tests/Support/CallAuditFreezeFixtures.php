@@ -8,6 +8,7 @@ use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use RuntimeException;
 
 final class CallAuditFreezeFixtures
@@ -95,12 +96,29 @@ final class CallAuditFreezeFixtures
                 ->whereIn('dealer_id', $this->ids['dealers'] ?? [])->pluck('id')->all();
             $this->ids['customer_submissions'] = array_values(array_unique(array_merge($this->ids['customer_submissions'] ?? [], $children)));
             $batches = DB::table('call_audit_batches')->whereIn('created_by', $this->ids['users'] ?? [])
-                ->where('create_request_key', 'like', $this->tag.'-%')->pluck('id');
+                ->where(fn ($query) => $query->where('create_request_key', 'like', $this->tag.'-%')
+                    ->orWhereIn('award_id', $this->ids['awards'] ?? []))->pluck('id');
             $items = DB::table('call_audit_items')->whereIn('batch_id', $batches)->pluck('id');
+            if (Schema::hasTable('dealer_penalty_entries')) {
+                $entries = DB::table('dealer_penalty_entries')->whereIn('submission_id', $this->ids['customer_submissions'] ?? [])->pluck('id');
+                DB::table('dealer_penalty_events')->whereIn('entry_id', $entries)->delete();
+                DB::table('dealer_penalty_evidence')->whereIn('entry_id', $entries)->delete();
+                DB::table('dealer_penalty_entries')->whereIn('id', $entries)->delete();
+            }
+            if (Schema::hasTable('award_publications')) {
+                DB::table('award_publications')->whereIn('award_id', $this->ids['awards'] ?? [])->delete();
+            }
+            DB::table('award_winners')->whereIn('award_id', $this->ids['awards'] ?? [])->delete();
             DB::table('call_audit_events')->whereIn('batch_id', $batches)->delete();
             DB::table('call_audit_attempts')->whereIn('item_id', $items)->delete();
             DB::table('call_audit_items')->whereIn('batch_id', $batches)->delete();
-            DB::table('call_audit_batches')->whereIn('id', $batches)->delete();
+            foreach ($batches->sortDesc() as $batchId) {
+                DB::table('call_audit_batches')->where('id', $batchId)->delete();
+            }
+            DB::table('moderation_reviews')->whereIn('customer_submission_id', $this->ids['customer_submissions'] ?? [])->delete();
+            foreach (['submission_verification_audits', 'submission_verification_states'] as $table) {
+                DB::table($table)->whereIn('submission_id', $this->ids['customer_submissions'] ?? [])->delete();
+            }
             foreach (['customer_submissions', 'awards', 'users', 'dealers'] as $table) {
                 DB::table($table)->whereIn('id', $this->ids[$table] ?? [])->delete();
             }

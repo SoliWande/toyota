@@ -41,13 +41,13 @@ class AwardWorkflowTest extends TestCase
         $this->assertSame(1, $xpath->query('//a[@href="'.route('admin.awards.show', $award).'"]')->length);
         $this->assertSame(0, $xpath->query('//a[@href="'.route('awards.show', $award).'"]')->length);
         $this->assertSame(1, $xpath->query('//button[@disabled and contains(@class, "ac-publish")]')->length);
-        $this->assertSame(1, $xpath->query('//button[@disabled and contains(@class, "ac-call")]')->length);
+        $this->assertSame(1, $xpath->query('//button[contains(@class, "ac-call")]')->length);
         $this->assertSame(1, $xpath->query('//*[@data-award-dealer]')->length);
         $this->assertDatabaseCount('award_winners', 0);
         $this->assertNull($award->fresh()->published_at);
         $this->get(route('admin.awards.show', $award))->assertOk()->assertSee('PRIVATE_INTERNAL_SALES');
         $this->get(route('awards.show', $award))->assertNotFound();
-        $this->post('/admin/awards/'.$award->id.'/publish')->assertNotFound();
+        $this->postJson('/admin/awards/'.$award->id.'/publish', ['idempotency_key' => 'not-ready'])->assertStatus(409)->assertJsonPath('error', 'requires_top_level_transaction');
     }
 
     public function test_c07_published_period_reads_frozen_dealer_snapshot_and_keeps_internal_sales(): void

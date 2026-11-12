@@ -15,6 +15,7 @@ use App\Services\CallAudit\FreezeBlocked;
 use App\Services\CallAudit\FreezeClock;
 use App\Services\CallAudit\FreezeResult;
 use App\Services\CallAudit\ManifestCodec;
+use App\Services\CallAudit\ReproductionVerifier;
 use App\Services\CallAudit\SamplingPlanner;
 use App\Services\CallAudit\SourceFingerprint;
 use App\Services\LeaderboardService;
@@ -37,7 +38,7 @@ final class CreateAndFreezeBatch
     ) {}
 
     /** Actor is the authenticated server session; no client cutoff/closed flag/seed/generation. */
-    public function execute(string $purpose, CarbonImmutable $month, string $requestKey, ?int $awardId = null): FreezeResult
+    public function execute(string $purpose, CarbonImmutable $month, string $requestKey, ?int $awardId = null, bool $supplemental = false): FreezeResult
     {
         $actorId = Auth::id();
         if (! $actorId) {
@@ -61,10 +62,13 @@ final class CreateAndFreezeBatch
         $intent = ['purpose' => $purpose, 'monthly_scope_key' => $start->format('Y-m'),
             'period_start' => $start->format('Y-m-d H:i:s'), 'period_end' => $end->format('Y-m-d H:i:s'),
             'award_id' => $awardId, 'generation' => 1, 'policy' => self::POLICY];
+        if ($supplemental) {
+            $intent['supplemental_policy'] = 'once_per_dealer_max64_generations_v1';
+        }
         $payloadDigest = hash_hmac('sha256', 'freeze-intent-v1|'.$this->codec->encode($intent), config('app.key'));
 
         try {
-            return $db->transaction(function () use ($purpose, $month, $requestKey, $awardId, $actorId, $start, $end, $intent, $payloadDigest) {
+            return $db->transaction(function () use ($purpose, $month, $requestKey, $awardId, $actorId, $start, $end, $intent, $payloadDigest, $supplemental) {
                 // All reads before the source locks are current reads, never an old consistent snapshot.
                 if (! DB::table('submission_intake_mutex')->where('id', 1)->lockForUpdate()->first()) {
                     throw new FreezeBlocked('intake_mutex_missing');
@@ -91,8 +95,26 @@ final class CreateAndFreezeBatch
 
                     return $this->result($receipt, false);
                 }
-                if (CallAuditBatch::where('purpose', $purpose)->where('monthly_scope_key', $intent['monthly_scope_key'])
-                    ->where('generation', 1)->lockForUpdate()->first()) {
+                $previous = CallAuditBatch::where('purpose', $purpose)->where('monthly_scope_key', $intent['monthly_scope_key'])
+                    ->orderBy('generation')->lockForUpdate()->get();
+                $covered = [];
+                if ($supplemental) {
+                    if ($purpose !== CallAuditBatch::PURPOSE_AWARD || $previous->isEmpty() || $award === null || $award->published_at !== null) {
+                        throw new FreezeBlocked('supplement_requires_existing_draft_audit');
+                    }
+                    if ($previous->count() >= 64) {
+                        throw new FreezeBlocked('supplement_generation_limit');
+                    }
+                    foreach ($previous as $prior) {
+                        if ((int) $prior->award_id !== $awardId || app(ReproductionVerifier::class)->verify($prior->id)->summary['status'] !== 'VERIFIED') {
+                            throw new FreezeBlocked('prior_sampling_integrity_conflict');
+                        }
+                        foreach ($prior->strata_snapshot_encrypted as $stratum) {
+                            $covered[] = (int) $stratum['dealer_id'];
+                        }
+                    }
+                    $intent['generation'] = (int) $previous->last()->generation + 1;
+                } elseif ($previous->isNotEmpty()) {
                     throw new FreezeBlocked('generation_already_frozen');
                 }
                 $asOf = $this->clock->now();
@@ -111,7 +133,10 @@ final class CreateAndFreezeBatch
                 if ($awardId !== null && ($award === null || ! $award->period_start->equalTo($start) || ! $award->period_end->equalTo($end))) {
                     throw new FreezeBlocked('award_month_mismatch');
                 }
-                $plan = $award === null ? $this->planner->general($actor, $month) : $this->planner->awardTop3($actor, $award);
+                $plan = $award === null ? $this->planner->general($actor, $month) : $this->planner->awardTop3($actor, $award, null, $intent['generation'], $covered);
+                if ($supplemental && ($plan->summary['requested_count'] ?? 0) === 0) {
+                    throw new FreezeBlocked('no_new_dealer_requires_sampling');
+                }
                 if ($plan->summary['status'] !== 'READY') {
                     throw new FreezeBlocked('sampling_blocked');
                 }
@@ -143,10 +168,16 @@ final class CreateAndFreezeBatch
                 if ($frozen < $asOf) {
                     throw new FreezeBlocked('server_clock_moved_backwards');
                 }
+                if ($supplemental) {
+                    $manifest['supplemental_evidence'] = ['policy' => 'once_per_dealer_max64_generations_v1',
+                        'predecessor_batch_id' => (int) $previous->last()->id, 'covered_dealer_ids' => array_values(array_unique($covered)),
+                        'maximum_generation' => 64];
+                }
                 $manifest['freeze_evidence'] = $proof;
                 $manifest['frozen_at'] = $frozen->format('Y-m-d H:i:s.u');
                 $batch = new CallAuditBatch;
-                $batch->forceFill(array_diff_key($intent, ['policy' => true]) + [
+                $batch->forceFill(array_diff_key($intent, ['policy' => true, 'supplemental_policy' => true]) + [
+                    'predecessor_batch_id' => $supplemental ? $previous->last()->id : null,
                     'period_type' => 'monthly', 'calendar_zone' => config('app.timezone'), 'calendar_version' => $manifest['context']['calendar_version'],
                     'approval_cutoff_at' => $asOf, 'cutoff_policy_version' => self::POLICY,
                     'eligibility_as_of' => $asOf, 'frozen_at' => $frozen, 'review_completion_evidence_encrypted' => $proof,

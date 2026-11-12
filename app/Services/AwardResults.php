@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\AwardPeriod;
 use App\Enums\AwardWinnerType;
 use App\Models\Award;
 use Carbon\CarbonImmutable;
@@ -56,6 +57,10 @@ class AwardResults
             $award->id, $award->period_type->value,
             $award->period_start->format('Y-m-d H:i:s'), $award->period_end->format('Y-m-d H:i:s'),
             $results['sales']->all(), $results['dealers']->all(),
+            $award->period_type === AwardPeriod::Monthly
+                ? DB::table('dealer_penalty_events')->join('dealer_penalty_entries', 'dealer_penalty_entries.id', '=', 'dealer_penalty_events.entry_id')
+                    ->where('monthly_scope_key', $award->period_start->format('Y-m'))->orderBy('dealer_penalty_events.id')->pluck('event_digest')->all()
+                : [],
         ], JSON_THROW_ON_ERROR));
     }
 }

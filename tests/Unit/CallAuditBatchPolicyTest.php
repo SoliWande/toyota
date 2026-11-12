@@ -26,7 +26,7 @@ class CallAuditBatchPolicyTest extends TestCase
 
         $this->assertSame($allowed, $policy->viewAny($user));
         $this->assertSame($allowed, $policy->create($user));
-        foreach (['view', 'freeze', 'claim', 'recordAttempt', 'verifyReproduction'] as $ability) {
+        foreach (['view', 'freeze', 'claim', 'recordAttempt', 'verifyReproduction', 'viewCallContact', 'resolveFinding'] as $ability) {
             $this->assertSame($allowed, $policy->$ability($user, $batch), $ability);
         }
         foreach (['viewSensitiveData', 'reproduce', 'update', 'delete', 'correctAttempt', 'void', 'regenerate', 'adjustScore', 'publish'] as $ability) {

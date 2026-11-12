@@ -20,15 +20,18 @@ final class BatchReadModel
     private const ITEM_COLUMNS = ['id', 'batch_id', 'submission_id', 'row_version', 'selection_order', 'dealer_id_snapshot',
         'dealer_snapshot_encrypted', 'source_snapshot_encrypted'];
 
+    public function __construct(private WorkflowReadModel $workflow, private FreezeClock $clock) {}
+
     public function index(User $user, array $filters): array
     {
         $this->authorize($user);
 
         return DB::transaction(function () use ($filters) {
+            $now = $this->clock->now();
             $page = $this->query($filters)->orderByDesc('monthly_scope_key')->orderByDesc('generation')->orderByDesc('id')
                 ->paginate($filters['per_page'] ?? 20, self::BATCH_COLUMNS, 'page', $filters['page'] ?? 1);
 
-            return ['data' => $page->getCollection()->map(fn ($batch) => $this->batch($batch))->all(), 'meta' => $this->pagination($page)];
+            return ['data' => $page->getCollection()->map(fn ($batch) => $this->batch($batch, $this->workflow->read($batch, $now)))->all(), 'meta' => $this->pagination($page)];
         });
     }
 
@@ -38,8 +41,9 @@ final class BatchReadModel
 
         return DB::transaction(function () use ($user, $id, $filters) {
             $batch = $this->find($user, $id, $filters, true);
+            $state = $this->workflow->read($batch, $this->clock->now());
 
-            return ['data' => $this->batch($batch) + ['dealers' => $this->dealers($batch)]];
+            return ['data' => $this->batch($batch, $state) + ['dealers' => $this->dealers($batch, $state)]];
         });
     }
 
@@ -49,21 +53,19 @@ final class BatchReadModel
 
         return DB::transaction(function () use ($user, $id, $filters) {
             $batch = $this->find($user, $id, $filters);
-            $progress = $this->progress($batch);
+            $state = $this->workflow->read($batch, $this->clock->now());
+            $progress = $state['progress'];
             $query = $batch->items();
-            if (($filters['tab'] ?? null) === 'needs_call') {
-                $query->whereDoesntHave('attempts');
-            } elseif (in_array($filters['tab'] ?? null, ['recall', 'completed'], true)) {
-                if ($progress['called_count'] > 0) {
-                    throw new ReadUnavailable('Attempt classification requires the call workflow contract.');
-                }
-                $query->whereRaw('1 = 0');
+            if (isset($filters['tab'])) {
+                $queues = $filters['tab'] === 'completed' ? ['completed', 'finding_pending'] : [$filters['tab']];
+                $ids = array_keys(array_filter($state['states'], fn ($item) => in_array($item['state'], $queues, true)));
+                $query->whereIn('id', $ids);
             }
-            $page = $query->withExists('attempts')->orderBy('selection_order')->orderBy('id')
+            $page = $query->orderBy('selection_order')->orderBy('id')
                 ->paginate($filters['per_page'] ?? 20, self::ITEM_COLUMNS, 'page', $filters['page'] ?? 1);
 
-            return ['data' => $page->getCollection()->map(fn ($item) => $this->item($item))->all(),
-                'meta' => $this->pagination($page), 'batch' => $this->batch($batch), 'tabs' => $this->tabs($progress)];
+            return ['data' => $page->getCollection()->map(fn ($item) => $this->item($item, $state['states'][$item->id]))->all(),
+                'meta' => $this->pagination($page), 'batch' => $this->batch($batch, $state), 'tabs' => $this->tabs($progress)];
         });
     }
 
@@ -73,9 +75,10 @@ final class BatchReadModel
 
         return DB::transaction(function () use ($user, $batchId, $itemId, $filters) {
             $batch = $this->find($user, $batchId, $filters);
-            $item = $batch->items()->select(self::ITEM_COLUMNS)->withExists('attempts')->whereKey($itemId)->firstOrFail();
+            $item = $batch->items()->select(self::ITEM_COLUMNS)->whereKey($itemId)->firstOrFail();
+            $state = $this->workflow->read($batch, $this->clock->now());
 
-            return ['data' => $this->item($item)];
+            return ['data' => $this->item($item, $state['states'][$item->id])];
         });
     }
 
@@ -106,31 +109,12 @@ final class BatchReadModel
         return $batch;
     }
 
-    private function batch(CallAuditBatch $batch): array
+    private function batch(CallAuditBatch $batch, array $state): array
     {
         return ['id' => (int) $batch->id, 'purpose' => $batch->purpose, 'month' => $batch->monthly_scope_key,
             'generation' => (int) $batch->generation, 'frozen_at' => $batch->frozen_at->toIso8601String(),
             'requested_count' => $batch->requested_count, 'actual_count' => $batch->actual_count,
-            'progress' => $this->progress($batch)];
-    }
-
-    private function progress(CallAuditBatch $batch): array
-    {
-        $query = $batch->items();
-        $total = (clone $query)->count();
-        if ($total !== $batch->actual_count) {
-            throw new ReadUnavailable('Frozen item count mismatch.');
-        }
-        $called = (clone $query)->whereHas('attempts')->count();
-
-        return $this->counts($total, $called);
-    }
-
-    private function counts(int $total, int $called): array
-    {
-        return ['called_count' => $called, 'needs_call_count' => $total - $called,
-            'recall_count' => $called > 0 ? null : 0, 'completed_count' => $called > 0 ? null : 0,
-            'is_complete' => false];
+            'progress' => $state['progress']];
     }
 
     private function tabs(array $progress): array
@@ -138,11 +122,11 @@ final class BatchReadModel
         return [
             ['key' => 'needs_call', 'label' => 'Cần gọi', 'count' => $progress['needs_call_count']],
             ['key' => 'recall', 'label' => 'Gọi lại', 'count' => $progress['recall_count']],
-            ['key' => 'completed', 'label' => 'Đã xong', 'count' => $progress['completed_count']],
+            ['key' => 'completed', 'label' => 'Đã xong', 'count' => $progress['completed_count'] + $progress['finding_pending_count']],
         ];
     }
 
-    private function item(CallAuditItem $item): array
+    private function item(CallAuditItem $item, array $state): array
     {
         [$source, $dealer] = $this->snapshots($item);
         $phone = (new PhoneEligibility)->inspect($source['phone'] ?? null, $source['phone_normalized'] ?? null);
@@ -150,14 +134,16 @@ final class BatchReadModel
 
         return ['id' => (int) $item->id, 'row_version' => $item->row_version, 'selection_order' => $item->selection_order,
             'name' => $source['customer_name'] ?? null, 'phone_masked' => $masked,
-            'dealer' => ['id' => (int) $item->dealer_id_snapshot, 'name' => $dealer['name'] ?? null],
-            'state' => $item->attempts_exists ? null : 'needs_call'];
+            'dealer' => ['id' => (int) $item->dealer_id_snapshot, 'name' => $dealer['name'] ?? null]] + $state;
     }
 
-    private function dealers(CallAuditBatch $batch): array
+    private function dealers(CallAuditBatch $batch, array $state): array
     {
         $result = [];
-        $totals = $called = [];
+        $byDealer = [];
+        foreach ($state['items'] as $item) {
+            $byDealer[$item->dealer_id_snapshot][] = $state['states'][$item->id];
+        }
         try {
             if ($batch->purpose === CallAuditBatch::PURPOSE_AWARD) {
                 $names = [];
@@ -170,10 +156,7 @@ final class BatchReadModel
                 }
             }
             foreach ($batch->items()->select(['id', 'batch_id', 'dealer_id_snapshot', 'dealer_snapshot_encrypted'])
-                ->withExists('attempts')->orderBy('selection_order')->get() as $item) {
-                $id = (int) $item->dealer_id_snapshot;
-                $totals[$id] = ($totals[$id] ?? 0) + 1;
-                $called[$id] = ($called[$id] ?? 0) + (int) $item->attempts_exists;
+                ->orderBy('selection_order')->get() as $item) {
                 if (! isset($result[$item->dealer_id_snapshot])) {
                     $dealer = $this->dealerSnapshot($item);
                     $result[$item->dealer_id_snapshot] = ['id' => (int) $item->dealer_id_snapshot,
@@ -184,9 +167,12 @@ final class BatchReadModel
             throw new ReadUnavailable('Private snapshot unavailable.');
         }
         foreach ($result as $id => &$dealer) {
-            $dealer['actual_count'] = $totals[$id] ?? 0;
-            $dealer['progress'] = $this->counts($totals[$id] ?? 0, $called[$id] ?? 0);
-            $dealer['wrong_ratio'] = null;
+            $states = $byDealer[$id] ?? [];
+            $dealer['actual_count'] = count($states);
+            $dealer['progress'] = $this->workflow->counts($states);
+            $answered = count(array_filter($states, fn ($item) => in_array($item['outcome'], ['correct', 'wrong'], true)));
+            $dealer['wrong_ratio_denominator'] = $answered;
+            $dealer['wrong_ratio'] = $answered > 0 ? round(100 * $dealer['progress']['finding_pending_count'] / $answered, 2) : null;
         }
         unset($dealer);
 

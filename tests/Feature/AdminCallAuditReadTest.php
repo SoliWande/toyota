@@ -206,18 +206,16 @@ class AdminCallAuditReadTest extends TestCase
         $this->assertSame([5, 5], array_column($response->json('data.dealers'), 'requested_count'));
     }
 
-    public function test_tabs_ignore_fake_queue_projection_and_only_attempt_rows_count_as_called(): void
+    public function test_inconsistent_projection_or_unknown_attempt_fails_closed_without_affecting_other_purpose(): void
     {
         $this->fixtures->submission($this->fixtures->dealer());
         $batch = $this->freeze();
         $item = $batch->items()->first();
         DB::table('call_audit_items')->where('id', $item->id)->update(['queue_state' => 'completed', 'attempt_count' => 99, 'latest_outcome' => 'wrong']);
         $independent = $this->freeze('award_top3', '2026-10', $this->fixtures->award()->id);
-        $this->read('/'.$batch->id.'/items')->assertOk()->assertJsonPath('data.0.state', 'needs_call')
-            ->assertJsonPath('batch.progress.called_count', 0)->assertJsonPath('tabs.0.count', 1)
-            ->assertJsonPath('tabs.1.count', 0)->assertJsonPath('tabs.2.count', 0);
-        $this->read('/'.$batch->id.'/items', ['tab' => 'recall'])->assertOk()->assertJsonCount(0, 'data');
-        $this->read('/'.$batch->id.'/items', ['tab' => 'completed'])->assertOk()->assertJsonCount(0, 'data');
+        foreach (['', '/'.$batch->id, '/'.$batch->id.'/items', '/'.$batch->id.'/items/'.$item->id] as $path) {
+            $this->read($path)->assertStatus(409)->assertExactJson(['error' => 'audit_read_unavailable']);
+        }
         (new CallAuditAttempt)->forceFill([
             'item_id' => $item->id, 'attempt_no' => 1, 'actor_id' => $this->admin->id,
             'started_at' => '2026-11-10 08:00:00', 'recorded_at' => '2026-11-10 08:01:00',
@@ -225,10 +223,8 @@ class AdminCallAuditReadTest extends TestCase
             'source_fingerprint_used' => $item->source_fingerprint, 'item_version_used' => 1,
             'idempotency_key' => (string) Str::uuid(), 'payload_digest' => str_repeat('a', 64),
         ])->save();
-        $this->read('/'.$batch->id.'/items')->assertOk()->assertJsonPath('batch.progress.called_count', 1)
-            ->assertJsonPath('tabs.0.count', 0)->assertJsonPath('tabs.1.count', null)->assertJsonPath('tabs.2.count', null)
-            ->assertJsonPath('data.0.state', null)->assertJsonPath('batch.progress.is_complete', false);
-        $this->read('/'.$batch->id.'/items', ['tab' => 'needs_call'])->assertOk()->assertJsonCount(0, 'data');
+        $this->read('/'.$batch->id.'/items')->assertStatus(409);
+        $this->read('/'.$batch->id.'/items', ['tab' => 'needs_call'])->assertStatus(409);
         $this->read('/'.$batch->id.'/items', ['tab' => 'completed'])->assertStatus(409);
         $this->read('/'.$independent->id.'/items', ['purpose' => 'award_top3'])->assertOk()
             ->assertJsonPath('batch.progress.called_count', 0)->assertJsonPath('tabs.0.count', 1)

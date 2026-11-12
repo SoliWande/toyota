@@ -32,8 +32,9 @@ class V1WorkflowTest extends TestCase
         $this->travelTo($october);
         $admin = User::factory()->admin()->create();
         $dealer = Dealer::factory()->create();
+        $dealerAccount = User::factory()->create(['role' => 'dealer', 'status' => 'active', 'dealer_id' => $dealer->id]);
         $registration = [
-            'name' => 'Sales QA', 'email' => 'sales-qa@example.test', 'dealer_id' => $dealer->id,
+            'name' => 'Sales QA', 'email' => 'sales-qa@example.test', 'phone' => '0909876543', 'dealer_id' => $dealer->id,
             'password' => 'testing-qa-password', 'password_confirmation' => 'testing-qa-password',
         ];
         $this->post(route('register'), $registration + ['role' => 'admin', 'status' => 'active'])->assertSessionHasErrors(['role', 'status']);
@@ -44,7 +45,8 @@ class V1WorkflowTest extends TestCase
         $this->assertSame('pending', $sales->status->value);
         $this->get(route('sales.dashboard'))->assertRedirect(route('account.status'));
         $this->post(route('logout'))->assertRedirect(route('login'));
-        $this->actingAs($admin)->post(route('admin.sales.review', ['sales' => $sales, 'action' => 'approve']))->assertSessionHasNoErrors();
+        $this->actingAs($admin)->post(route('admin.sales.review', ['sales' => $sales, 'action' => 'approve']))->assertForbidden();
+        $this->actingAs($dealerAccount)->post(route('dealer.staff.review', ['account' => $sales, 'action' => 'approve']))->assertRedirect()->assertSessionHasNoErrors();
         $this->assertSame('active', $sales->fresh()->status->value);
         $this->post(route('logout'));
         $this->post(route('login'), ['email' => $sales->email, 'password' => 'testing-qa-password'])
@@ -52,7 +54,7 @@ class V1WorkflowTest extends TestCase
         $this->get(route('sales.dashboard'))->assertOk();
         $data = [
             'customer_name' => 'Private QA customer', 'facebook_url' => 'https://www.facebook.com/qa.customer.final',
-            'customer_phone' => '0000000000', 'note' => 'Private QA note',
+            'customer_phone' => '0901234567', 'note' => 'Private QA note',
             'vehicle_model' => 'hilux', 'first_registration_year' => 2022, 'vehicle_color' => 'Trắng', 'license_plate' => '29D-428.12',
         ];
         $this->post(route('sales.submissions.store'), $data + ['evidence_image' => UploadedFile::fake()->image('evidence.png')])
@@ -75,7 +77,8 @@ class V1WorkflowTest extends TestCase
         $this->post(route('logout'));
         $this->actingAs($sales->fresh())->put(route('sales.submissions.update', $submission), $data)->assertForbidden();
         $this->delete(route('sales.submissions.destroy', $submission))->assertForbidden();
-        $duplicateData = array_replace($data, ['facebook_url' => 'https://m.facebook.com/QA.Customer.Final/?ref=qa']);
+        $duplicateData = array_replace($data, ['facebook_url' => 'https://m.facebook.com/QA.Customer.Final/?ref=qa',
+            'customer_phone' => '0901234568', 'license_plate' => '29D-428.13']);
         $this->post(route('sales.submissions.store'), $duplicateData + ['evidence_image' => UploadedFile::fake()->image('other.png')])
             ->assertSessionHasNoErrors();
         $duplicate = $sales->submissions()->where('status', 'pending')->sole();

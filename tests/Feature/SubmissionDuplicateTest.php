@@ -12,6 +12,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
 use Tests\Support\TestDatabase;
@@ -80,11 +81,27 @@ class SubmissionDuplicateTest extends TestCase
         $this->get(route('admin.submissions.show', $pending))->assertSee(route('admin.submissions.show', $approved));
     }
 
-    public function test_same_name_and_phone_with_different_facebook_can_both_be_approved(): void
+    public function test_different_facebook_cannot_bypass_duplicate_phone_at_intake(): void
+    {
+        $first = CustomerSubmission::factory()->approved()->create(['phone' => '0901234567'])->fresh();
+        $before = $first->getAttributes();
+        try {
+            CustomerSubmission::factory()->create(['customer_name' => $first->customer_name,
+                'phone' => '+84 901 234 567', 'facebook_url' => 'https://facebook.com/different.profile.uat']);
+            $this->fail('The existing intake guard must reject the same normalized phone.');
+        } catch (ValidationException $error) {
+            $this->assertArrayHasKey('phone', $error->errors());
+        }
+        $this->assertDatabaseCount('customer_submissions', 1);
+        $this->assertDatabaseCount('moderation_reviews', 0);
+        $this->assertSame($before, $first->fresh()->getAttributes());
+    }
+
+    public function test_same_name_with_distinct_phone_and_facebook_can_both_be_approved(): void
     {
         $admin = User::factory()->admin()->create();
         $first = CustomerSubmission::factory()->create(['customer_name' => 'Same Customer', 'phone' => '0901234567', 'submitted_at' => now()->subMonth()]);
-        $second = CustomerSubmission::factory()->create(['customer_name' => $first->customer_name, 'phone' => $first->phone]);
+        $second = CustomerSubmission::factory()->create(['customer_name' => $first->customer_name, 'phone' => '0901234568']);
         $this->actingAs($admin)->post(route('admin.submissions.approve', $first), ['admin_note' => 'Verified manually'])
             ->assertRedirect(route('admin.submissions.show', $first))->assertSessionHasNoErrors();
         $this->get(route('admin.submissions.show', $second))->assertViewHas('duplicate', null);

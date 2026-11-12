@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\LeaderboardPeriod;
 use App\Enums\SubmissionStatus;
 use App\Enums\UserRole;
+use App\Services\CallAudit\MonthlyDealerScores;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,10 @@ class LeaderboardService
 
     public function dealers(LeaderboardPeriod $period, ?CarbonImmutable $at = null): Builder
     {
+        if ($period === LeaderboardPeriod::Month) {
+            return $this->dealersForRange(...$this->bounds($period, $at));
+        }
+
         return $this->ranked($this->dealerScores(...$this->bounds($period, $at)), ['id', 'name', 'code', 'score']);
     }
 
@@ -47,6 +52,12 @@ class LeaderboardService
 
     public function dealersForRange(CarbonImmutable $start, CarbonImmutable $end): Builder
     {
+        [$monthlyStart, $monthlyEnd] = $this->bounds(LeaderboardPeriod::Month, $start);
+        if ($start->equalTo($monthlyStart) && $end->equalTo($monthlyEnd)) {
+            return $this->ranked(app(MonthlyDealerScores::class)->scores($this->dealerScores($start, $end), $monthlyStart),
+                ['id', 'name', 'code', 'score', 'raw_score', 'penalty_points', 'net_score', 'display_score']);
+        }
+
         return $this->ranked($this->dealerScores($start, $end), ['id', 'name', 'code', 'score']);
     }
 

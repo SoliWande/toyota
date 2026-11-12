@@ -25,8 +25,17 @@ class CallAuditClaimRequest extends FormRequest
             'row_version' => ['required', 'integer', 'min:1', 'max:4294967294'],
             'idempotency_key' => ['required', 'string', 'regex:/^[A-Za-z0-9_-]{1,64}$/D'],
         ];
-        if ($this->routeIs('admin.call-audits.release')) {
+        if ($this->routeIs('admin.call-audits.release', 'admin.call-audits.record')) {
             $rules['claim_token'] = ['required', 'string', 'regex:/^[a-f0-9]{64}$/D'];
+        }
+        if ($this->routeIs('admin.call-audits.record')) {
+            $rules += [
+                'outcome' => ['required', Rule::in(['correct', 'wrong', 'no_answer'])],
+                'answer_1' => ['present', 'nullable', 'boolean'],
+                'answer_2' => ['present', 'nullable', 'boolean'],
+                'answer_3' => ['present', 'nullable', 'boolean'],
+                'note' => ['nullable', 'string', 'max:2000'],
+            ];
         }
 
         return $rules;

@@ -63,6 +63,19 @@ final class ReproductionVerifier
                     || ! hash_equals($batch->selection_digest, $this->codec->digest($selection))) {
                     throw new FreezeBlocked('frozen_envelope_mismatch');
                 }
+                if ($batch->generation > 1) {
+                    $supplement = $manifest['supplemental_evidence'] ?? null;
+                    $prior = CallAuditBatch::find($batch->predecessor_batch_id);
+                    if ($batch->purpose !== CallAuditBatch::PURPOSE_AWARD || $batch->generation > 64
+                        || ! is_array($supplement) || ($supplement['policy'] ?? null) !== 'once_per_dealer_max64_generations_v1'
+                        || ($supplement['predecessor_batch_id'] ?? null) !== (int) $batch->predecessor_batch_id
+                        || ($supplement['maximum_generation'] ?? null) !== 64
+                        || $prior === null || $prior->generation !== $batch->generation - 1
+                        || $prior->monthly_scope_key !== $batch->monthly_scope_key || (int) $prior->award_id !== (int) $batch->award_id
+                        || array_intersect(array_column($manifest['strata'], 'dealer_id'), $supplement['covered_dealer_ids'] ?? [])) {
+                        throw new FreezeBlocked('supplemental_history_mismatch');
+                    }
+                }
                 foreach ($selection as $order => $candidate) {
                     $item = $items[$order];
                     if ($item->selection_order !== $order + 1 || (int) $item->submission_id !== $candidate['submission_id']

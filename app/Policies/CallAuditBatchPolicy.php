@@ -39,10 +39,21 @@ class CallAuditBatchPolicy
         return $this->viewAny($user);
     }
 
+    public function resolveFinding(User $user, CallAuditBatch $batch): bool
+    {
+        return $this->viewAny($user);
+    }
+
     // Disclosure and changes to completed history require separate V1 contracts.
     public function viewSensitiveData(User $user, CallAuditBatch $batch): bool
     {
         return false;
+    }
+
+    // Only minimum contact for an owned lease, checked in WorkspaceReadModel.
+    public function viewCallContact(User $user, CallAuditBatch $batch): bool
+    {
+        return $this->viewAny($user);
     }
 
     public function reproduce(User $user, CallAuditBatch $batch): bool

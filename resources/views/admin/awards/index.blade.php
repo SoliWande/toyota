@@ -1,5 +1,5 @@
 <x-admin.layout title="Vinh danh">
-    @vite('resources/css/admin-awards.css')
+    @vite(['resources/css/admin-awards.css', 'resources/js/admin-awards.js'])
     @php
         $periodLabel = fn ($award) => $award->period_type === \App\Enums\AwardPeriod::Monthly
             ? 'Tháng '.$award->period_start->format('n/Y')
@@ -33,12 +33,24 @@
                                 <div role="cell" aria-label="Hạng {{ $winner['rank'] }}"><span class="ac-rank ac-rank-{{ $winner['rank'] }}">@if (in_array((int) $winner['rank'], [1, 2, 3], true))<img src="{{ asset('admin/icons/c07-rank-'.$winner['rank'].'.png') }}" width="14" height="14" alt="">@else{{ $winner['rank'] }}@endif</span></div>
                                 <strong role="cell">{{ $winner['dealer_name_snapshot'] }}</strong>
                                 <b role="cell">{{ number_format($winner['score'], 0, ',', '.') }}</b>
-                                <span role="cell" class="ac-no-evidence">—</span><span role="cell" class="ac-no-evidence">—</span><span role="cell"></span>
+                                @php($audit = $auditDealers->get($winner['dealer_id']))
+                                <span role="cell" class="ac-no-evidence">{{ $audit ? $audit['actual_count'].' khách' : '—' }}</span>
+                                <span role="cell" class="ac-no-evidence">
+                                    @if ($audit)
+                                        @if ($audit['progress']['called_count'] === 0)
+                                            Chưa gọi
+                                        @else
+                                            {{ $audit['progress']['called_count'] }}/{{ $audit['actual_count'] }} đã gọi, {{ $audit['wrong_ratio_denominator'] - $audit['progress']['finding_pending_count'] }} đúng
+                                        @endif
+                                    @else
+                                        —
+                                    @endif
+                                </span><span role="cell"></span>
                             </div>
                         @endforeach
                     </div>
                     <div class="ac-threshold"><img src="{{ asset('admin/icons/c07-info.png') }}" width="16" height="16" alt=""><p>Ngưỡng loại: sai quá [x]% số khách được gọi (chờ TMV chốt). Không nghe máy 2 lần thì không tính là sai.</p></div>
-                    <footer class="ac-actions"><button type="button" class="ac-call" disabled><img src="{{ asset('admin/icons/c07-phone.png') }}" width="16" height="16" alt="">Mở danh sách gọi</button><div class="ac-spacer"></div><p><img src="{{ asset('admin/icons/c07-lock.png') }}" width="14" height="14" alt="">Mở khi cả 3 đại lý đã kiểm tra xong</p><button type="button" class="ac-publish" disabled>Công bố kỳ</button></footer>
+                    <footer class="ac-actions"><button type="button" class="ac-call" @disabled(!$callUrl) data-call-url="{{ $callUrl }}" data-call-command="{{ $callCommand }}" data-award-id="{{ $selected->id }}" data-month="{{ $selected->period_start->format('Y-m') }}"><img src="{{ asset('admin/icons/c07-phone.png') }}" width="16" height="16" alt="">Mở danh sách gọi</button><div class="ac-spacer"></div><p><img src="{{ asset('admin/icons/c07-lock.png') }}" width="14" height="14" alt="">Mở khi cả 3 đại lý đã kiểm tra xong</p><button type="button" class="ac-publish" @disabled(!($publication['can_publish'] ?? false)) data-publish-url="{{ route('admin.awards.publish', $selected) }}" data-fingerprint="{{ $publication['preview_fingerprint'] ?? '' }}">Công bố kỳ</button></footer>
                 </section>
             @endif
         </div>

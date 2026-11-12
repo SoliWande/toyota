@@ -251,9 +251,9 @@ class AdminCallAuditClaimTest extends TestCase
         $this->assertSame(1, $this->batch->events()->count());
     }
 
-    public function test_record_and_correction_actions_are_not_exposed_without_workflow_approval(): void
+    public function test_unapproved_correction_actions_remain_unavailable(): void
     {
-        foreach (['record', 'result', 'retry', 'correct', 'void'] as $action) {
+        foreach (['result', 'retry', 'correct', 'void'] as $action) {
             $this->postJson($this->url($action), ['outcome' => 'wrong', 'answer_1' => false])->assertNotFound();
         }
         $this->assertSame(0, $this->item->attempts()->count());

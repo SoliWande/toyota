@@ -8,7 +8,7 @@
         ['dealers', 'Đại lý', 'dealer', 'admin.dealers.index'],
         ['sales', 'Sales', 'sales', 'admin.sales.index'],
         ['awards', 'Vinh danh', 'trophy', 'admin.awards.index'],
-        ['sampling', 'Kiểm tra ngẫu nhiên', 'phone', null],
+        ['sampling', 'Kiểm tra ngẫu nhiên', 'phone', 'admin.call-audits.workspace'],
     ];
     $initials = collect(preg_split('/\s+/u', trim($user->name)))->take(2)->map(fn ($part) => mb_substr($part, 0, 1))->join('');
 @endphp
