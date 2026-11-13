@@ -17,7 +17,6 @@ use App\Services\LeaderboardService;
 use App\Services\SalesAvatars;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SalesController extends Controller
@@ -89,9 +88,9 @@ class SalesController extends Controller
 
     public function update(UpdateSalesRequest $request, User $sales, SalesAvatars $avatars): RedirectResponse
     {
-        $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getRealPath()) : null;
+        $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getPathname()) : null;
         try {
-            DB::transaction(function () use ($request, $sales, $avatar) {
+            DB::transaction(function () use ($request, $sales, $avatar, $avatars) {
                 $locked = User::whereKey($sales->id)->lockForUpdate()->firstOrFail();
                 $this->authorize('update', $locked);
                 $locked->name = $request->validated('name');
@@ -100,15 +99,13 @@ class SalesController extends Controller
                 if ($avatar !== null) {
                     $previous = $locked->avatar_path;
                     $locked->avatar_path = $avatar;
-                    if ($previous) {
-                        DB::afterCommit(fn () => rescue(fn () => Storage::disk('sales_avatars')->delete($previous)));
-                    }
+                    DB::afterCommit(fn () => rescue(fn () => $avatars->deleteManaged($previous)));
                 }
                 $locked->save();
             });
         } catch (\Throwable $error) {
             if ($avatar !== null) {
-                Storage::disk('sales_avatars')->delete($avatar);
+                rescue(fn () => $avatars->deleteManaged($avatar));
             }
             throw $error;
         }

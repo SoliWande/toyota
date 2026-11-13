@@ -1,3 +1,5 @@
+import './dealer-profile';
+
 document.querySelectorAll('[data-account-password]').forEach(button => {
     const input = document.getElementById(button.getAttribute('aria-controls'));
     button.hidden = false;

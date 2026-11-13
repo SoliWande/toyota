@@ -144,7 +144,8 @@ class CampaignRulesTest extends TestCase
             $this->assertSame(1, $xpath->query('//a[@href="https://legal.example.invalid/privacy"]')->length);
         }
         $this->assertTrue(str_contains($views[0], 'https://legal.example.invalid/data-consent'));
-        $this->assertTrue(str_contains($views[0], config('dealer.consent_notice')));
+        $this->assertStringContainsString('Tôi đồng ý cho Toyota Việt Nam và Ô tô Sài Gòn dùng thông tin trên để xác nhận tham gia cộng đồng.', $views[0]);
+        $this->assertStringNotContainsString(config('dealer.consent_notice'), $views[0]);
     }
 
     public function test_opening_rules_preserves_full_draft_values_id_and_fixed_expiration(): void
@@ -192,7 +193,7 @@ class CampaignRulesTest extends TestCase
         $this->get(route('campaign.rules'))->assertOk();
         $this->post(route('dealers.registrations.store', $dealer->slug), $data)->assertRedirect(route('dealers.registrations.step-two', $dealer->slug));
         $this->assertSame(0, CustomerSubmission::count());
-        $this->get(route('dealers.registrations.step-two', $dealer->slug))->assertSee('Vui lòng đồng ý điều khoản để tiếp tục.');
+        $this->get(route('dealers.registrations.step-two', $dealer->slug))->assertSee('Bạn cần đồng ý điều khoản để gửi đăng ký.');
         $this->post(route('dealers.registrations.store', $dealer->slug), $data + ['consent' => '1'])
             ->assertRedirect(route('dealers.registrations.success', $dealer->slug));
         $submission = CustomerSubmission::sole();

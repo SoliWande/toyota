@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 const base='http://127.0.0.1:8777';
 const award=process.env.P09FINAL_AWARD_ID;
 assert.match(award,/^[0-9]+$/);
-const directory='.laravel-tools/p09-final-publication-browser';
+const directory=process.env.P09FINAL_OUTPUT || '.laravel-tools/p09-final-publication-browser';
 await mkdir(directory,{recursive:true});
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 try {
@@ -36,6 +36,11 @@ try {
   await writeFile(directory+'/supplement-checks.json',JSON.stringify({viewport:1440,liveLaravel:true,commands,batch,errors},null,2));
  } else {
  assert.equal(await page.locator('.ac-publish').isEnabled(),true);
+ assert.equal(await page.locator('.ac-step[aria-current="step"] strong').textContent(),'Công bố');
+ assert.equal(await page.locator('.ac-steps .ac-complete').count(),2);
+ assert.equal(await page.locator('.ac-result-badge .ad-badge-approved').count(),3);
+ assert.equal(await page.locator('.ac-period-selected .ad-badge-pending').textContent(),'Đang kiểm tra');
+ assert.equal(await page.locator('.ac-threshold').textContent().then(t=>t.includes('[x]%')),false);
  assert.equal(await page.locator('[data-admin-toast]').count(),0);
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  await page.screenshot({path:directory+'/c07-ready-1440.png',fullPage:true});
@@ -63,6 +68,8 @@ try {
  await page.waitForFunction(()=>document.querySelector('.ac-period-selected')?.textContent.includes('\u0110\u00e3 c\u00f4ng b\u1ed1'));
  assert.equal(await page.locator('.ac-publish').isDisabled(),true);
  assert.equal(await page.locator('[data-admin-toast]').count(),0);
+ assert.equal(await page.locator('.ac-step[aria-current="step"]').count(),0);
+ assert.equal(await page.locator('.ac-steps .ac-complete').count(),3);
  await page.screenshot({path:directory+'/c07-published-1440.png',fullPage:true});
  assert.deepEqual(errors,[]);
  await writeFile(directory+'/checks.json',JSON.stringify({viewport:1440,liveLaravel:true,postOnlyAfterClick:true,commitBeforePublished:true,doubleClickPosts:posts,errors},null,2));

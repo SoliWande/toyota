@@ -9,6 +9,7 @@ use App\Services\DealerDirectoryProvinces;
 use App\Services\DealerProfile;
 use App\Services\DealerRegistrationDraft;
 use App\Services\LeaderboardService;
+use App\Services\ToyotaRealisticDemo;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -104,11 +105,16 @@ class PublicDealerController extends Controller
         // Historical ranking entries may belong to an inactive Dealer.
         $dealer = Dealer::query()->select([...self::PUBLIC_FIELDS, 'photo_path'])->where('slug', $slug)->firstOrFail();
         $standing = DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::AllTime), 'standing')->where('id', $dealer->id)->first();
+        // D01 uses the existing approved-profile definition and frozen Dealer attribution.
+        // Public owner counts exclude demo records even in a demo-inclusive metrics environment.
+        $dealerOwnerCount = (int) ($leaderboard->dealerScores()->where('dealers.id', $dealer->id)
+            ->whereNotIn('submissions.id', app(ToyotaRealisticDemo::class)->ownedSubmissionIds())
+            ->first()?->score ?? 0);
 
         $draft = $drafts->read($request, $dealer);
 
         return response()->view('dealers.show', [
-            'dealer' => $dealer, 'standing' => $standing,
+            'dealer' => $dealer, 'standing' => $standing, 'dealerOwnerCount' => $dealerOwnerCount,
             'stepOneValues' => $draft['values'] ?? [], 'stepOneErrors' => $draft['errors'] ?? [],
             'duplicatePhone' => $draft['duplicate'] ?? false,
         ])->header('Cache-Control', 'no-store, private');

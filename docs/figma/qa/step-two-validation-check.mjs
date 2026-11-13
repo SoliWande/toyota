@@ -6,7 +6,7 @@ const messages = {
     province_code: 'Vui lòng chọn Tỉnh/Thành phố.', ward_code: 'Vui lòng chọn Phường/Xã.',
     address_line: 'Vui lòng nhập địa chỉ chi tiết.', vehicle_description: 'Vui lòng chọn dòng xe.',
     license_plate: 'Vui lòng nhập biển số xe.', first_registration_year: 'Vui lòng chọn năm đăng ký lần đầu.',
-    facebook_url: 'Vui lòng nhập liên kết Facebook cá nhân.', consent: 'Vui lòng đồng ý điều khoản để tiếp tục.',
+    facebook_url: 'Vui lòng nhập liên kết Facebook cá nhân.', consent: 'Bạn cần đồng ý điều khoản để gửi đăng ký.',
 };
 function fixture(valid = false) {
     let focused;
@@ -58,7 +58,7 @@ for (const [name, value, message] of [
     ['odo', '-1', 'Vui lòng nhập số km hợp lệ.'],
     ['odo', '1.5', 'Vui lòng nhập số km hợp lệ.'],
     ['odo', 'abc', 'Vui lòng nhập số km hợp lệ.'],
-    ['facebook_url', 'facebook.com/groups/synthetic', 'Liên kết Facebook không hợp lệ.'],
+    ['facebook_url', 'facebook.com/groups/synthetic', 'Link chưa đúng. Dán link trang cá nhân, dạng facebook.com/...'],
 ]) {
     const test = fixture(true);
     test.field(name).value = value;

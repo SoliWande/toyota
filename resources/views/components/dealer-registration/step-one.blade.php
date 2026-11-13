@@ -8,15 +8,20 @@
     @if (! $dealer->is_active)
         <div class="dr-invalid-panel">
             <div class="dr-invalid-art"><img src="{{ asset('dealer-registration/qr-invalid.png') }}" width="160" height="160" alt=""></div>
-            <div><h2 id="dr-registration-title">Mã QR không còn hiệu lực</h2><p>Đại lý hiện không tiếp nhận đăng ký mới. Bạn hỏi nhân viên đại lý để được hỗ trợ nhé.</p><a href="{{ route('home') }}" class="dr-button">Về trang Cộng đồng Toyota</a></div>
+            <div><h2 id="dr-registration-title">Mã QR không còn hiệu lực</h2><p>Mã này không dùng được nữa. Bạn hỏi nhân viên đại lý để lấy mã mới nhé.</p><a href="{{ route('home') }}" class="dr-button">Về trang Cộng đồng Toyota</a></div>
         </div>
     @else
+        <section class="dr-group-entry dr-card" aria-labelledby="dr-group-entry-title">
+            <div><p class="dr-group-step">BƯỚC 1/2</p><h2 id="dr-group-entry-title">Vào group Facebook</h2><p>Xin vào group Cộng đồng Toyota Veloz &amp; Hilux bằng Facebook của bạn.</p></div>
+            <div class="dr-group-entry-questions"><strong>Khi xin vào group, bạn sẽ được hỏi:</strong><ol><li>Số điện thoại của bạn</li><li>Biển số xe</li></ol><p>Dùng đúng số điện thoại và biển số này khi đăng ký ở bước 2.</p></div>
+            <div class="dr-group-entry-action"><x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button" /><p>Xin vào group xong, quay lại<br>đây để đăng ký thông tin.</p></div>
+        </section>
         <div class="dr-step-one dr-card">
             <div class="dr-intro">
                 <span class="dr-chip"><x-dealer-registration.icon name="dealer" :size="11" /><span>Đại lý giới thiệu: <strong>{{ $dealer->name }}</strong></span></span>
-                <div class="dr-progress" aria-label="Bước 1 trên 2"><span class="is-complete"></span><span></span></div>
-                <h2 id="dr-registration-title">Đăng ký tham gia</h2>
-                <p>Bước 1/2 · mất khoảng 1 phút, miễn phí</p>
+                <div class="dr-progress" aria-label="Bước 2 trên 2, phần 1 trên 2"><span class="is-complete"></span><span></span></div>
+                <h2 id="dr-registration-title">Đăng ký thông tin</h2>
+                <p>Bước 2/2 · Phần 1/2 · khoảng 1 phút, miễn phí</p>
                 <small class="dr-privacy"><x-dealer-registration.icon name="lock" :size="16" />Chỉ dùng để xác nhận chủ xe, không công khai</small>
             </div>
             <form method="{{ $preview ? 'dialog' : 'POST' }}" @unless ($preview) action="{{ route('dealers.registrations.step-one', $dealer->slug) }}" @endunless class="dr-step-one-fields" data-step-one data-ui-form novalidate>
@@ -27,9 +32,9 @@
                     <x-dealer-registration.field name="phone" label="Số điện thoại" type="tel" :required="true" :value="$values['phone'] ?? ''" :messages="$validationErrors['phone'] ?? []" placeholder="Số điện thoại của bạn" inputmode="tel" autocomplete="tel" maxlength="30" />
                 </div>
                 @if ($duplicatePhone)
-                    <div class="dr-duplicate" role="alert"><div><strong>Số điện thoại này đã đăng ký tham gia cộng đồng.</strong><p>Bạn chưa từng đăng ký? Vui lòng liên hệ đại lý để kiểm tra.</p></div>
-                        <a href="{{ route('dealers.lookup.show', $dealer->slug) }}" class="dr-text-link">Xem trạng thái đăng ký</a>
-                        <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button dr-button-dark" />
+                    <div class="dr-duplicate" role="alert"><div><strong>Số này đã đăng ký. Xem trạng thái để biết bạn còn thiếu bước nào.</strong><p>Bạn chưa từng đăng ký? Vui lòng liên hệ đại lý để kiểm tra.</p></div>
+                        <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-text-link" />
+                        <a href="{{ route('dealers.lookup.show', $dealer->slug) }}" class="dr-button dr-button-dark">Xem trạng thái đăng ký</a>
                     </div>
                 @endif
                 <fieldset class="dr-car-picker dr-field" data-field="vehicle_description">

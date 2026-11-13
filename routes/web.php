@@ -95,6 +95,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::middleware('account.active')->group(function () {
         Route::get('/sales/{sales}/avatar', SalesAvatarController::class)->whereNumber('sales')->name('sales.avatar');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('/profile/avatar', [ProfileController::class, 'avatar'])->middleware('role:dealer')->name('profile.avatar');
         Route::patch('/profile', [ProfileController::class, 'update'])->middleware('throttle:profile-writes')->name('profile.update');
         Route::put('/profile/password', [ProfileController::class, 'password'])->middleware('throttle:password-change')->name('profile.password');
     });

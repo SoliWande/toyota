@@ -2,22 +2,31 @@
 
 namespace App\Services;
 
+use App\Rules\ReadableAvatarImage;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use RuntimeException;
+use Throwable;
 
 class SalesAvatars
 {
     public static function rules(): array
     {
-        return ['bail', 'nullable', 'file', 'image', 'mimetypes:image/jpeg,image/png,image/webp',
-            'mimes:jpg,jpeg,png,webp', 'max:5120', 'dimensions:max_width=4096,max_height=4096'];
+        return ['bail', 'nullable', new ReadableAvatarImage, 'file', 'image', 'mimetypes:image/jpeg,image/png,image/webp',
+            'mimes:jpg,jpeg,png,webp', 'max:5120'];
     }
 
     public function store(string $source, string $disk = 'sales_avatars', int $maxEdge = 512, bool $generatedDemo = false): string
     {
+        if (trim($source) === '' || str_contains($source, "\0") || ! is_file($source) || ! is_readable($source)) {
+            throw new RuntimeException('Cannot read avatar upload.');
+        }
+        $bytes = file_get_contents($source);
+        if ($bytes === false || $bytes === '') {
+            throw new RuntimeException('Cannot read avatar upload.');
+        }
         // Re-encode raster uploads, strip metadata and keep private thumbnails small.
-        $image = imagecreatefromstring(file_get_contents($source));
+        $image = @imagecreatefromstring($bytes);
         if ($image === false) {
             throw new RuntimeException('Cannot decode avatar image.');
         }
@@ -35,8 +44,27 @@ class SalesAvatars
             ob_end_clean();
         }
         $path = ($generatedDemo ? 'demo-' : 'uploaded-').Str::uuid().'.jpg';
-        Storage::disk($disk)->put($path, $contents);
+        try {
+            if (! Storage::disk($disk)->put($path, $contents)) {
+                throw new RuntimeException('Cannot store avatar image.');
+            }
+        } catch (Throwable $exception) {
+            // A failed adapter may have written part of the new file; never touch the old one.
+            rescue(fn () => $this->deleteManaged($path, $disk));
+            throw $exception;
+        }
 
         return $path;
+    }
+
+    public function deleteManaged(?string $path, string $disk = 'sales_avatars'): void
+    {
+        if (! in_array($disk, ['sales_avatars', 'dealer_avatars'], true)
+            || $path === null
+            || ! preg_match('/\A(?:uploaded-|demo-)[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\.jpg\z/iD', $path)) {
+            return;
+        }
+
+        Storage::disk($disk)->delete($path);
     }
 }

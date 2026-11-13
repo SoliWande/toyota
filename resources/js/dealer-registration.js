@@ -31,6 +31,11 @@ export function renderValidation(form, errors = {}, focus = false) {
     const fieldOrder = [...form.elements].map((control) => control.name);
     const entries = Object.entries(errors).filter(([, value]) => value?.length)
         .sort(([left], [right]) => fieldOrder.indexOf(left) - fieldOrder.indexOf(right));
+    const summary = form.querySelector('[data-error-summary]');
+    if (summary) {
+        summary.hidden = entries.length === 0;
+        summary.textContent = `Còn ${entries.length} chỗ cần sửa.`;
+    }
     let first;
     entries.forEach(([name]) => {
         const control = form.elements.namedItem(name);
@@ -62,7 +67,7 @@ export function collectStepTwoErrors(form) {
         province_code: 'Vui lòng chọn Tỉnh/Thành phố.', ward_code: 'Vui lòng chọn Phường/Xã.',
         address_line: 'Vui lòng nhập địa chỉ chi tiết.', vehicle_description: 'Vui lòng chọn dòng xe.',
         license_plate: 'Vui lòng nhập biển số xe.', first_registration_year: 'Vui lòng chọn năm đăng ký lần đầu.',
-        facebook_url: 'Vui lòng nhập liên kết Facebook cá nhân.', consent: 'Vui lòng đồng ý điều khoản để tiếp tục.',
+        facebook_url: 'Vui lòng nhập liên kết Facebook cá nhân.', consent: 'Bạn cần đồng ý điều khoản để gửi đăng ký.',
     };
     for (const [name, message] of Object.entries(required)) {
         const control = form.elements.namedItem(name);
@@ -75,7 +80,7 @@ export function collectStepTwoErrors(form) {
     const odo = form.elements.namedItem('odo');
     if (odo && (!odo.validity.valid || (odo.value !== '' && (!/^\d+$/.test(odo.value) || !Number.isSafeInteger(Number(odo.value)))))) errors.odo = 'Vui lòng nhập số km hợp lệ.';
     const facebook = form.elements.namedItem('facebook_url');
-    if (facebook?.value.trim() && (!facebook.validity.valid || !isPersonalFacebook(facebook.value.trim()))) errors.facebook_url = 'Liên kết Facebook không hợp lệ.';
+    if (facebook?.value.trim() && (!facebook.validity.valid || !isPersonalFacebook(facebook.value.trim()))) errors.facebook_url = 'Link chưa đúng. Dán link trang cá nhân, dạng facebook.com/...';
     const address = form.elements.namedItem('address_line');
     if (address?.value.trim() && !address.validity.valid) errors.address_line = 'Địa chỉ chi tiết không được vượt quá 500 ký tự.';
     const fieldOrder = [...form.elements].map((control) => control.name);
@@ -84,6 +89,7 @@ export function collectStepTwoErrors(form) {
 
 export function initStepTwoValidation(form) {
     const notice = form.querySelector('#dr-step-two-notice');
+    const submitButton = form.querySelector('button[type="submit"]');
     const initialNotice = notice?.textContent;
     const touched = new Set();
     const errors = {};
@@ -108,6 +114,12 @@ export function initStepTwoValidation(form) {
     const update = (event) => {
         const name = event.target.name;
         if (!name || !form.elements.namedItem(name)) return;
+        // The summary can move the submit button while pointer focus is changing.
+        // Let the submit handler render all errors after the click has landed.
+        if (event.type === 'focusout' && event.relatedTarget === submitButton) return;
+        // Text inputs also emit change during blur, before focusout has a relatedTarget.
+        // Validate them on focusout/input; selects and checkboxes still validate on change.
+        if (event.type === 'change' && !['select-one', 'checkbox'].includes(event.target.type)) return;
         if (notice && notice.textContent !== initialNotice) notice.textContent = initialNotice;
         if (event.type === 'focusout' || event.type === 'change') touched.add(name);
         if (!touched.has(name)) return;

@@ -137,3 +137,205 @@ Freeze C08 requested60/actual9 và C07 requested15/actual7 qua API, retry không
 - `ControlledDuplicateApprovalTest`: cập nhật assertion C02 lỗi thời `identityConflicts`/inline-edit IDs sang selected/noDuplicates, PATCH JSON422 và field-error target của modal hiện hữu; vẫn kiểm warning generic trên route legacy, không lộ khách khác, validation không sửa source. Không thêm modal/UI hoặc thay cách xử lý business. Hai FAIL/ERROR upstream ban đầu và lỗi assertion C02 khi đối chiếu đã được chạy lại tới PASS (35/422); không che giấu bằng bỏ test.
 
 **Giới hạn và GO/NO-GO:** GO cho bước chuẩn bị production của **V1 tháng** đã được phê duyệt; chưa phải nghiệm thu toàn repository hoặc GO deploy. Full regression nguyên bộ chưa chạy vì lý do an toàn nêu trên. Đối chiếu Desktop xác nhận bố cục/controls/workflow và dữ liệu thật; không tuyên bố pixel-perfect mọi state: C07 còn chênh lệch cách trình bày bước/badge so với ảnh mẫu và publish enabled giữ style cũ vì chưa có variant rõ, cần review thị giác trước phát hành. Không mô phỏng hàng loại Dealer/threshold[x]% ngoài policy. C08 warning Sai theo wording V1 đã duyệt, không dùng lời Figma cũ như đã hủy xác minh/trừ điểm. Không thay calendar/timezone để làm giống giờ00:00 trong ảnh. Manual UAT, tải production, key rotation/retention và quy trình vận hành vẫn cần kiểm tra trước phát hành; weekly publication/correction/reversal ngoài phạm vi. Không kết nối production, không chạy migration/seed/reset, không thêm phase hoặc báo cáo trung gian.
+
+### Production Readiness — 12/11/2026
+
+**IN PROGRESS.** Rà soát source/release/config và thiết kế trong cùng tracking; không kết nối production, không DDL hoặc deploy. Working tree sạch trước task, HEAD `c5251f2`; trạng thái chưa commit trong nghiệm thu cũ là lịch sử, không còn phản ánh checkout hiện tại. Chưa xác minh hạ tầng/key/backup-restore production.
+
+#### Cập nhật rà soát — 13/11/2026
+
+**NOT READY để deploy production.** Đã hoàn thành rà soát tĩnh và kiểm tra an toàn dưới đây; còn các điều kiện phát hành chưa xác minh. Final UAT **711 tests/9.019 assertions PASS là kết quả lịch sử 12/11**, không chạy lại trong lượt này. Giữ GO chuẩn bị V1 tháng; không mở phase, đổi nghiệp vụ, deploy, migrate, ghi dữ liệu hoặc công bố Award thật. Chỉ cập nhật mục Production Readiness của tài liệu này, không sửa source hay tạo tài liệu trung gian; ưu tiên yêu cầu cụ thể của task so với quy tắc tạo tracking mới trong AGENTS.
+
+**Hiện trạng và bản release**
+
+- Đọc trực tiếp `.git/HEAD` và branch ref: `upgrade/laravel-13`, `c5251f2ff95208ffacade0a11f8e12954a49605d`. Tuy nhiên `git status`, `log`, `diff`, `ls-files` đều bị **dubious ownership**; thử cấu hình theo process cũng không thành công, không sửa global/repository config. Vì vậy phát biểu “working tree sạch” ở đoạn mở là lịch sử, **chưa tái xác minh được**; chưa kết luận đầy đủ file đã commit, đã push hay đã nằm trong release. Ref local không chứng minh trạng thái remote hiện thời; không fetch/network Git.
+- Trước phát hành, chủ repository cần xử lý ownership trong môi trường được tin cậy, kiểm `git status --short`, `git diff --check`, `git log -1`, SHA/tag release và nội dung artifact. Không triển khai từ working tree chưa kiểm chứng. Đối chiếu artifact với đúng source đã UAT; nếu khác, xác định phạm vi kiểm thử lại trên DB cách ly.
+- Artifact phải gồm routes, actions, controllers, FormRequests, models, policies, services, Blade, CSS/JS, 8 migrations, `composer.lock`, `package-lock.json`, `vite.config.js`, `public/build` và static icons/assets được Blade/CSS tham chiếu. Không đưa `.env`, fixtures/test servers, `.laravel-tools`, backup hoặc tài liệu chứa dữ liệu riêng vào webroot public. `vendor` phải được cài từ lock; build assets bị `.gitignore` nên commit source không đủ để có artifact chạy được.
+
+**Migration và dữ liệu cũ — review source, chưa thực thi**
+
+| Thứ tự bắt buộc | Migration trong `database/migrations/` | Phụ thuộc và nhận xét |
+|---|---|---|
+| 1–4 | `2026_11_11_000101_create_call_audit_batches_table.php`; `000102_create_call_audit_items_table.php`; `000103_create_call_audit_attempts_table.php`; `000104_create_call_audit_events_table.php` (cùng prefix ngày) | Batches → items → attempts → events; batches có self-FK predecessor; FK đến awards/users/dealers/customer_submissions và composite FK item/batch, attempt/item. |
+| 5–7 | `2026_11_12_000201_create_dealer_penalty_entries_table.php`; `000202_create_dealer_penalty_evidence_table.php`; `000203_create_dealer_penalty_events_table.php` (cùng prefix ngày) | Entries → evidence → events; evidence phụ thuộc đủ Call Audit và resolution/call events; UNIQUE submission/tháng ngăn debit trùng. |
+| 8 | `2026_11_12_000301_create_award_publications_table.php` | FK awards/users; UNIQUE award, tháng, actor/request; CHECK generation 1–64, tháng, cutoff; publication runtime cần cả audit/ledger. |
+
+- Cả 8 `up()` chỉ CREATE bảng mới và ALTER CHECK trên chính bảng mới; không backfill/update/delete dữ liệu nghiệp vụ cũ. `down()` đều drop bảng, không có guard giữ lịch sử: **không dùng rollback migration như phương án rollback vận hành**.
+- Baseline phải có các migration cũ, đúng kiểu unsigned BIGINT/index/engine của FK, các cột source/attribution/verification hiện hành và **`submission_intake_mutex.id=1`** từ migration `2026_11_03_000023`. Đây là dependency runtime của freeze/penalty/publication; không tự seed lại nếu thiếu. So sánh migration records với SHOW CREATE TABLE trên bản restore và production do người vận hành kiểm; baseline thiếu/drift phải có kế hoạch riêng được review, không chạy toàn bộ pending migrations theo suy đoán.
+- 8 bảng mới rỗng không làm thay đổi winners đã công bố. Award cũ đã published vẫn đọc `AwardWinner` snapshot; không tạo publication evidence giả cho lịch sử cũ. Bảng mới có FK restrictive/NO ACTION nên thao tác xóa users/dealers/submissions/awards đã được tham chiếu có thể bị chặn; cần đưa vào hướng dẫn vận hành.
+- DDL dùng MySQL-specific CHECK/REGEXP/MOD, JSON, composite FK, DATETIME(6); ranking dùng CAST AS SIGNED/window functions. Nền đã UAT là MySQL 8.0.30/InnoDB. Production phải xác minh phiên bản tương thích, CHECK thực sự enforced (MySQL trước 8.0.16 không đủ), FK checks bật, SQL mode/charset/collation, default engine InnoDB, đủ quyền DDL và disk/metadata lock budget. Không coi SQLite/MariaDB tương đương khi chưa rehearsal. Freeze/publication yêu cầu transaction isolation REPEATABLE-READ hoặc SERIALIZABLE.
+- MySQL DDL có implicit commit: nếu CREATE thành công nhưng ALTER CHECK thất bại, migration có thể chưa được ghi trong `migrations` dù bảng đã tồn tại. Dừng ngay, lưu lỗi/SHOW CREATE/migration records; **không chạy lại mù, drop bảng hoặc tự chèn migration record**. DBA đối chiếu schema và dữ liệu, review repair tiến tới schema đúng. Rehearsal cả trường hợp lỗi giữa chừng trên DB restore cách ly.
+- Code monthly ranking/draft đọc ledger trực tiếp, không fallback khi thiếu bảng. Phải chặn traffic/writers trong thời gian đổi code/schema; không để node mới nhận request trước khi đủ schema.
+
+**Cấu hình, quyền và bảo mật**
+
+- Runtime theo `composer.json`: PHP **^8.5**, Laravel **^13.0**. Kiểm `composer check-platform-reqs --no-dev` trên máy đích; PDO MySQL, OpenSSL, mbstring và các extensions theo lock phải đầy đủ. Node local kiểm tra là 22.23.4/npm 10.9.9; build bằng lock trên CI, không copy `node_modules` sang production.
+- `config/app.php`: `APP_KEY`, AES-256-CBC; **giữ nguyên chính xác chuỗi APP_KEY hiện hành**, cùng secret trên mọi web/worker node. `SourceFingerprint::keyId`, HMAC của Call Audit/DealerPenalty/Publication dựa trên khóa hiện tại; đổi khóa hoặc đổi biểu diễn chuỗi khóa có thể làm fail integrity dù giải mã còn được. `config/app.php` chưa khai báo `previous_keys`; chỉ đặt `APP_PREVIOUS_KEYS` không giải quyết xác thực HMAC. Không chạy `key:generate`, không rotate trong đợt deploy này. Backup key/cấu hình mã hóa riêng với quyền hạn chế, khôi phục đúng key cùng DB; không ghi giá trị secret/ciphertext/PII vào log hoặc báo cáo.
+- Trước mở traffic, trên bản restore dùng key tương ứng: giải mã dữ liệu lịch sử hiện có và verify `ReproductionVerifier`, `DealerPenaltyIntegrity::verify`, `PublishAuditedAward::verify` theo các record phù hợp. Không gọi `execute` để kiểm tra đọc. DB chưa có ledger/publication thì ghi “không có record để kiểm chứng lịch sử”, không tạo fake data; kiểm round-trip/chữ ký bằng fixture chỉ trên môi trường cách ly. Đọc ledger tháng và dealer-scores sau deploy phải thành công; lỗi key/integrity phải chặn, không bỏ penalty hoặc sửa chữ ký để vượt lỗi.
+- Routes qua web/CSRF, auth + auth.session, role:admin, account.active, throttle; `CallAuditBatchPolicy`, `DealerPenaltyEntryPolicy`, `AwardPolicy` chỉ cấp quyền tương ứng cho **Admin active**. Capability penalty riêng nhưng V1 hiện cấp cho mọi Admin active, không có ACL vận hành riêng. Writers kiểm actor mới và khóa transaction; giữ nguyên contract này. Không suy từ `CallAuditBatchPolicy::publish=false` rằng Award publish bị khóa: publication dùng `AwardPolicy::publish` và readiness thật.
+- `WorkspaceReadModel`: full phone cần đúng Admin/owned claim/token/version/lease chưa hết và source chưa drift; preview dùng phone masked. Controller penalty/publication trả allowlist, `no-store, private`, không reason/seed/manifest/ciphertext. Admin vẫn được thấy tên/biển số theo workspace được duyệt; không tuyên bố mọi PII bị ẩn. Kiểm HTTPS/proxy/cookie/CSRF và CDN không cache trang/API Admin; public Award không lộ customer contact. `AppServiceProvider` ép debug=false và secure cookie khi production, vẫn phải đặt APP_ENV=production, APP_DEBUG=false, APP_URL=https đúng host.
+- `config/database.php` dùng **DATABASE_URL**, DB_HOST/PORT/DATABASE/USERNAME/PASSWORD/SOCKET; xác minh effective connection, không chỉ xem DB_DATABASE. Không dùng key hay DB test làm production. Tách tài khoản migration có DDL và runtime theo quyền cần thiết.
+- Cache dùng **CACHE_DRIVER** (không phải chỉ CACHE_STORE), mặc định file; queue mặc định sync; session mặc định file. Nếu chọn database cache/jobs/sessions, phải kiểm các bảng tồn tại: repository chưa có migration tạo cache/jobs/sessions/job_batches; không tự sinh migration hay đổi driver. Redis/shared cache phải có prefix riêng; multi-node cần session/cache phù hợp. Restart/drain workers nếu dùng queue; Call Audit/penalty/publication hiện xử lý đồng bộ, không giả định cần job mới.
+- Webroot phải là `public/`; web/worker user đọc code/assets, ghi được `storage/` và `bootstrap/cache/`, không chmod 777; giữ persistent uploads/private storage/session theo hạ tầng. Không expose `.env`, logs/backups; kiểm storage symlink và quyền public/private đúng mục đích. Demo/production-demo flags tắt, không chạy seed/demo commands. Backup ngoài webroot và có bản sao ngoài máy triển khai.
+
+**Đối chiếu Desktop1440**
+
+Đã đọc mới screenshot Figma [C07 164:867](https://www.figma.com/design/yKmWQI6BYJ6dponEnidlsq/Toyota-Community?node-id=164-867), [C08 165:832](https://www.figma.com/design/yKmWQI6BYJ6dponEnidlsq/Toyota-Community?node-id=165-832), session `cd366668-1188-45d8-a572-5d1504a6d904`, so trực quan với ảnh UAT có sẵn `.laravel-tools/p09-final-uat-browser/c07-ready-1440.png`, `c08-calling-1440.png` và source Blade hiện tại. **Không chạy UI/chụp browser mới**, ảnh app là fixture lịch sử, không phải kiểm chứng live checkout hay production.
+
+- C08: khung sidebar/header, tabs, hai cột 420/692px, script, câu hỏi, outcomes và nút lưu nhìn chung tương ứng frame. Số liệu/tên thật khác fixture là hợp lệ; full phone phải theo claim. Warning Sai của Figma nói hủy xác minh/trừ điểm ngay thuộc contract cũ, không áp dụng lại lên V1 confirmed/ledger đã duyệt.
+- C07: source và ảnh còn dùng bước 1 vòng tròn xám thay dấu check xanh của frame; bước 2 chưa có nền/viền active; period chưa published không có badge “Đang kiểm tra”; cột badge kết quả trống. Khung chính/table/actions tương ứng, nhưng **chưa nghiệm thu thị giác**. Enabled publish chưa có variant rõ. Trước release cần nghiệm thu các trạng thái có thật so với Figma; mọi sửa UI chỉ sau khi xác định đúng state/evidence và trong phạm vi được cho phép. Lượt này chỉ sửa tài liệu theo yêu cầu, không âm thầm sửa Blade/CSS.
+- Không thêm loại Dealer/threshold[x]%/đôn hạng theo dữ liệu minh họa Figma; đây là khác biệt nghiệp vụ đã giải thích trong Final UAT. Placeholder threshold hiện vẫn nằm trong Blade C07: cần xác nhận nội dung hiển thị trước release, không coi đó là blocker nghiệp vụ mới hoặc tự đặt ngưỡng. Không đổi timezone/calendar chỉ để ảnh có 00:00 thay vì 07:00.
+
+**Kiểm chứng mới, không ghi DB**
+
+| Lệnh/kiểm tra | Kết quả và giới hạn |
+|---|---|
+| `php vendor/bin/phpunit --no-configuration --bootstrap vendor/autoload.php tests/Unit/DealerPenaltyPolicyTest.php tests/Unit/CallAuditBatchPolicyTest.php --no-progress --do-not-cache-result` | **PASS 26 tests/341 assertions**, PHP 8.5.11/PHPUnit 12.5.40; đã đọc hai lớp extends PHPUnit TestCase thuần, không boot app/kết nối DB/migrate/seed. Chỉ chứng minh policy, không thay kiểm thử HTTP/DB. |
+| `php -l` trên 8 migrations, actions CallAudit + PublishAuditedAward, services CallAudit + AwardPublicationReadiness, policies | **PASS 53 files**; chỉ syntax, không chạy migration. |
+| `node --check resources/js/admin-awards.js`; `node --check resources/js/admin-call-audits.js` | **PASS**; không chứng minh browser workflow. |
+| Đọc `public/build/manifest.json`, kiểm file/css/assets và 5 entry Admin/C07/C08 | **PASS** 49 entries, không thiếu file tham chiếu; `public/hot` không tồn tại. Không chứng minh build khớp source/SHA. `npm ci`/`npm run build` mới **NOT_RUN** để giữ lượt chỉ tài liệu; cần build sạch trong artifact release. |
+| Git/release, production config/DB/backup/restore, tải/timeout | **CHƯA XÁC MINH**; Git bị ownership; không truy cập production. |
+| HTTP smoke/browser mới, encrypted DB round-trip, rehearsal migration, full regression | **NOT_RUN**; không dùng kết quả lịch sử làm kết quả mới, không chạy fixtures hay bootstrap có DB trong lượt này. |
+| Kiểm tài liệu và giới hạn thay đổi | **PASS**: hash toàn bộ phần trước Production Readiness giữ nguyên; hash source app/routes/config/migrations/resources và các manifest dependency/Vite giữ nguyên trước/sau sửa tài liệu. Code fences cân bằng, không trailing whitespace/conflict marker; đủ 8 đường dẫn migration allowlist tồn tại. Không thay thế được Git diff/release verification đang bị chặn. |
+
+**Checklist trước deploy — tất cả mục chưa có bằng chứng phải đóng trước xác nhận GO**
+
+1. [ ] Chốt immutable release SHA/artifact, sạch working tree, đủ source/dependencies/assets, release trước và đường chuyển lại; build sạch/kiểm platform. Xác nhận visual C07 và nội dung còn lệch, manual UAT phù hợp V1; rehearsal tải đại diện/lock timeout của intake mutex và đọc integrity ledger.
+2. [ ] Người vận hành xác minh cấu hình/APP_KEY/driver/quyền/DB engine-isolation-baseline và các migration đã áp dụng; kiểm target không ở trạng thái DDL dở dang. Không yêu cầu gửi secret vào hội thoại.
+3. [ ] Chốt cửa sổ maintenance, RPO/RTO/người quyết định rollback; chặn traffic ghi, drain/dừng workers/scheduler/import và các writer ngoài web. Backup nhất quán toàn DB (kèm triggers/routines/events/migration records), uploads/private storage, secret/config và artifact trước deploy; kiểm checksum, vị trí ngoài webroot, quyền và bản sao ngoài host.
+4. [ ] Restore backup vào **database/host cách ly**, kiểm schema/constraints/counts/checksums, users/awards/winners, key/decryption và ledger/publication nếu đã có; rehearsal đúng 8 migrations theo pending thực tế, smoke V1 trên bản sao và đo thời gian. Không dùng script snapshot fixture UAT làm backup production hay restore đè DB đang phục vụ.
+5. [ ] Khi đã có xác nhận triển khai: đưa maintenance, dừng writers, lấy backup cuối nhất quán; stage code/assets, kiểm migration status/SQL dự kiến, áp dụng allowlist từng migration còn pending, dừng ngay nếu lỗi; kiểm SHOW CREATE/FK/CHECK/migration records sau chạy. Chỉ mở traffic khi schema/code/cache cùng phiên bản.
+6. [ ] Clear/rebuild cache có kiểm soát; không flush shared cache toàn hệ thống hoặc làm mất lock/idempotency khi writers đang chạy. Reload PHP/opcache, restart workers nếu có và kiểm quyền storage/assets. Chạy smoke bên dưới, lưu bằng chứng không chứa PII trước mở traffic/giám sát sau mở.
+
+**Lệnh dự kiến — CHƯA THỰC THI, chỉ sau xác nhận deploy và checklist trên**
+
+Ví dụ shell POSIX trên máy triển khai; `PRODUCTION_DB`, đường backup và MySQL login-path là placeholder phải được người vận hành thay/xác minh. Không đưa password lên command line. Restore-drill chỉ trỏ host/DB cách ly đã được chuẩn bị; nếu máy đích Windows thì chuyển cú pháp shell tương ứng.
+
+```sh
+# CI/release staging: đúng SHA/lock đã chốt, trước chuyển traffic
+composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+composer check-platform-reqs --no-dev
+npm ci
+npm run build
+
+# Maintenance toàn cụm + drain/dừng mọi writer trước backup cuối
+php artisan down
+mysqldump --login-path=production-backup --single-transaction --routines --triggers --events --hex-blob --set-gtid-purged=OFF --result-file=/secure-backups/pre-v1.sql PRODUCTION_DB
+sha256sum /secure-backups/pre-v1.sql
+# Diễn tập riêng trước deploy; tuyệt đối không trỏ restore-drill vào production
+mysql --login-path=restore-drill --database=ISOLATED_RESTORE_DB < /secure-backups/pre-v1.sql
+
+# Trong release directory, với env đúng đích và chưa phục vụ traffic
+php artisan config:clear
+php artisan migrate:status
+```
+
+Allowlist theo thứ tự; trên rehearsal và production chỉ giữ những migration **thực sự pending và chưa có bảng dở dang**. Review toàn bộ SQL `--pretend` trước, sau đó mới chạy vòng apply; lỗi bất kỳ phải dừng. Không chạy migrate toàn repository, test schema helper, migrate:fresh/refresh/reset/rollback hoặc seed.
+
+```sh
+set -e
+MIGRATIONS='
+database/migrations/2026_11_11_000101_create_call_audit_batches_table.php
+database/migrations/2026_11_11_000102_create_call_audit_items_table.php
+database/migrations/2026_11_11_000103_create_call_audit_attempts_table.php
+database/migrations/2026_11_11_000104_create_call_audit_events_table.php
+database/migrations/2026_11_12_000201_create_dealer_penalty_entries_table.php
+database/migrations/2026_11_12_000202_create_dealer_penalty_evidence_table.php
+database/migrations/2026_11_12_000203_create_dealer_penalty_events_table.php
+database/migrations/2026_11_12_000301_create_award_publications_table.php'
+for migration in $MIGRATIONS; do
+  php artisan migrate --path="$migration" --pretend --force
+done
+# CHECKPOINT: review SQL/schema/backup và dừng nếu sai trước vòng apply
+for migration in $MIGRATIONS; do
+  php artisan migrate --path="$migration" --step --force
+done
+php artisan migrate:status
+php artisan route:clear
+php artisan view:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+# Restart workers chỉ khi thực tế dùng queue và đã kiểm cache/prefix
+php artisan queue:restart
+# Switch release atomically/reload PHP-opcache theo hạ tầng đã rehearsal
+# Smoke qua maintenance bypass được kiểm soát trước mở traffic
+php artisan up
+```
+
+`--pretend` chỉ là review SQL dự kiến, không thay rehearsal/FK/CHECK thực tế. Việc chuyển release, dừng/khởi động workers/scheduler, storage link và reload PHP phụ thuộc hạ tầng chưa được cung cấp, chưa có lệnh host cụ thể được xác minh. Maintenance phải áp dụng toàn cụm; không mặc định `artisan down` trên một node đủ chặn mọi writer.
+
+**Smoke sau deploy và rollback**
+
+- Kiểm login active Admin, C07 `/admin/awards`, C08 `/admin/call-audits/workspace` ở 1440px; assets đúng manifest, không dev-server/404/overflow/JS error; cookie HTTPS/CSRF và guest/Dealer/Sales/blocked không đọc Admin API. Kiểm deny CSRF trên endpoint an toàn trong staging; không gửi POST hợp lệ có thể tạo dữ liệu production để smoke.
+- GET có auth `/admin/call-audits/penalties?month=YYYY-MM`, `/admin/call-audits/dealer-scores?month=YYYY-MM`, `/admin/awards/{award}/publication` với tháng/ID hiện hữu đã chọn: response hợp lệ, no-store, không rò PII/evidence/key; ledger khớp trước deploy, raw/penalty/net/display và public leaderboard đúng. Readiness có blocker hợp lệ là bình thường, không yêu cầu `can_publish=true`. Public Award đã published giữ winners/score/cutoff/snapshot trước deploy. Không claim/record/penalty/supplement/freeze/publish thật để thử. Các luồng ghi/idempotency/race chỉ rehearsal trên bản sao cách ly.
+- Trước có dữ liệu mới: rollback code/assets về release đã kiểm tương thích, **giữ schema additive và APP_KEY**; rebuild caches/reload PHP/workers đúng release. Không cần drop 8 bảng để quay code. Phải chắc bản cũ không tính sai điểm hoặc mở publish bỏ qua gate.
+- Sau có audit/penalty/publication mới: dừng writers/maintenance, lưu backup và log incident hiện tại. **Ưu tiên forward fix hoặc bản rollback vẫn đọc/verify ledger và giữ publication snapshots**. Bản cũ không biết penalty có thể hiển thị sai điểm; nếu chưa có bản tương thích thì giữ maintenance, không mở lại bằng code cũ. Không xóa/reverse ledger, sửa winners, re-sign evidence hay công bố lại để che lỗi.
+- Restore backup trước deploy chỉ là phương án disaster recovery do người có thẩm quyền quyết định sau khi đánh giá mất toàn bộ writes sau backup/RPO và khả năng PITR. Restore sang môi trường cách ly trước, kiểm DB + đúng key + uploads rồi chuyển có kiểm soát; giữ bản DB sau sự cố để đối soát/reconcile. Không restore đè nóng hoặc coi rollback DDL/transaction là khôi phục đủ dữ liệu.
+
+**Bước tiếp theo:** đóng các checkbox bằng bằng chứng release/restore/rehearsal/config/visual; cập nhật kết luận ngay trong mục này. Chỉ chuyển READY khi đủ điều kiện và không còn kiểm tra bắt buộc chưa xác minh; người dùng xác nhận triển khai là bước riêng sau đó. Không còn blocker hợp đồng nghiệp vụ V1 đã duyệt; NOT READY ở đây là kết luận vận hành/phát hành, không phủ nhận Final UAT.
+
+#### Final Release Preparation — 13/11/2026
+
+**IN PROGRESS.** Tiếp tục chuẩn bị local trong cùng mục theo yêu cầu; sửa presentation C07 có bằng chứng Figma, build từ lock và kiểm tra liên quan, không mở phase/tài liệu mới. Trước sửa source: Git 2.42 tại `C:/Program Files/Git/cmd/git.exe` chạy được với `-c safe.directory=F:/laragon/www/toyota` chỉ cho từng lệnh, sau khi xác minh owner repository và `.git` đều `OUSB8MG-PC/Admin`; Git 2.37 từ PATH không xử lý exception này đúng trong sandbox. Không sửa global config/ACL/owner hoặc thêm wildcard trust. HEAD `c5251f2ff95208ffacade0a11f8e12954a49605d`, chỉ tài liệu này modified từ lượt readiness trước, không có source edit sẵn. Local origin ref bằng HEAD; `ls-remote` thất bại kết nối GitHub: push hiện thời chưa xác minh, không push/commit tự động. Kết quả kiểm thử mới sẽ cập nhật bên dưới sau thực thi.
+
+**Kết quả: DONE phần sửa/kiểm chứng local; Build READY theo working tree đã test. Git release CHƯA READY vì chưa commit các sửa đổi; production vẫn NOT READY đến khi đóng điều kiện vận hành.** Kết luận này thay thế IN PROGRESS ngay trên và các giới hạn Git/build/visual tương ứng trong lượt readiness trước, giữ nguyên lịch sử. Không coi bản HEAD cũ là đã chứa UI mới hoặc trạng thái remote đã được xác nhận.
+
+**Source đã sửa, không đổi nghiệp vụ:**
+
+- `resources/views/admin/awards/index.blade.php`: step 1 có check khi có frozen audit và readiness không vướng các điều kiện chốt dữ liệu, hoặc kỳ đã published; step 2 active khi đang kiểm tra, hoàn tất khi server cho phép publish hoặc kỳ đã published; step 3 active khi ready, chỉ có check sau published thật. Đây là chỉ báo tiến trình, không phải bổ sung bằng chứng audit cho kỳ legacy. Badge “Đang kiểm tra” ở kỳ đang chọn có audit thật; “Đã công bố” theo published_at. Dùng component badge có sẵn; không thêm nút/modal/API hoặc thay gate publication.
+- Badge kết quả “Đạt” chỉ cho draft có coverage hợp lệ, mẫu thực tế >0 và mọi kết quả đều Correct; underfill không bị ép thành đủ 5, zero sample/no-answer2/Wrong không được gán Correct. “Đang gọi” khi đã có cuộc gọi và vẫn còn needs_call/recall. Không dùng badge loại/đôn hạng theo threshold cũ; không re-certify published winners bằng audit live. Readiness không xác minh được thì không hiện Đạt. Kết quả toàn Correct dùng câu `N/N đúng` có trong Figma.
+- Threshold bỏ duy nhất mệnh đề “Ngưỡng loại: sai quá [x]% … chờ TMV chốt”; giữ nguyên câu Figma **“Không nghe máy 2 lần thì không tính là sai.”** Không thêm copy hoặc tự đặt policy mới.
+- `resources/css/admin-awards.css`: dùng thông số Figma `164:983–1002`: circle 28px/check 14px, complete #1e9e4a, active #fff1f2/border #fbd3d7/circle #eb0a1e, padding14/gap12/radius14; canh badge kết quả sang phải. Tái dùng asset C07 và màu/component hiện hữu; không đổi C08, public pages, controllers/services/policies/schema.
+- `tests/Feature/AwardPublicationFinalTest.php`: thêm 2 ca HTTP kiểm step/badge draft→ready→published và recall/no-answer2 không nhận Đạt. `tests/Browser/p09-publication.mjs`: thêm assert DOM sau commit, step/badge/placeholder và tùy chọn thư mục artifact riêng. Tổng **5 file tracked thay đổi**, gồm 2 source UI, 2 test/harness, 1 tài liệu này; không có phase/tracking/checklist mới.
+
+**Bằng chứng Figma/browser mới:** dùng skill `figma-design-to-code`, đọc design context kèm screenshot C07 `164:867`, session `ea907164-fbdc-44fd-aa56-bf7990ad9f0a`. Đã mở trực quan ảnh mới `.laravel-tools/p09-release-local-browser/c07-ready-1440.png` và `c07-needs-supplement-1440.png`, đối chiếu step/badge/layout với frame. Browser còn chụp `c07-published-1440.png`, `c08-supplement-1440.png`; JSON checks cùng thư mục. Đây là Laravel thật với **fixtures cách ly**, không phải session production/manual UAT TMV. Step active tái dùng style hiện có cho bước hiện tại; enabled publish giữ style hiện hữu do chưa có variant riêng. Không tuyên bố pixel-perfect mọi state; khác biệt dữ liệu, timezone đã duyệt và chính sách loại Dealer cũ không được tái tạo từ ảnh mẫu.
+
+**Tests/lệnh thực chạy trong lượt Final Release Preparation:**
+
+| Kiểm tra | Kết quả mới |
+|---|---|
+| `npm ci --offline --no-audit --no-fund` → `npm run build` | **PASS**: cài sạch 65 packages từ `package-lock.json`/cache local, build 89 modules. Hai lockfiles không đổi. Log `.laravel-tools/p09-release-build.log`. |
+| Composer `validate --no-check-publish`; `install --dry-run --no-scripts --no-plugins --no-interaction`; `check-platform-reqs --no-dev` với network disabled | **PASS exit 0**: composer.json/lock hợp lệ, installed vendor không cần install/update/remove, platform local PHP8.5.11 đạt. Không cài lại vendor, không chạy Composer scripts; CLI Composer cũ có deprecation notices từ thư viện trong PHAR, không coi log sạch warning. Log `.laravel-tools/p09-release-composer.log`. Không chứng minh runtime production. |
+| Preflight đọc-only | **PASS**: APP_ENV testing, exact MySQL TCP127.0.0.1:3306, actual database `toyota_testing`, MySQL8.0.30, FK1/InnoDB; chụp DDL/checksum/counts của23 bảng trước fixtures. Dùng bản helper snapshot hiện hữu đổi output sang `storage/app/private/p09-release-local-20261113/`; không ghi đè baseline UAT, không DDL. |
+| `php vendor/bin/phpunit --bootstrap tests/Fixtures/p09_final_bootstrap.php tests/Feature/AwardPublicationFinalTest.php tests/Feature/AdminShellTest.php tests/Feature/AdminCallAuditUiTest.php --no-progress --display-skipped --do-not-cache-result --log-junit storage/app/private/p09-release-local-20261113/tests.xml` | **45 tests/532 assertions PASS**, 0 fail/error/skipped, 37.606s. Env được pin testing/mysql/127.0.0.1/3306/toyota_testing, TOYOTA_TEST_DATABASE=toyota_testing, DATABASE_URL/DB_URL/DB_SOCKET rỗng, APP_CONFIG_CACHE là test path không tồn tại. Bootstrap chặn CREATE/ALTER/DROP/TRUNCATE/RENAME/FK reset; fixtures chỉ cleanup owned IDs. Không chạy full regression/migrate:fresh/seed/reset. |
+| Browser trong suite trên | **PASS** Chrome headless Desktop1440: ready/error/in-flight/double click/published-after-server-commit; supplemental→đúng C08 batch; C08 claim/release/record/tabs/toast sau response. Không pageerror/overflow trong các ca chạy. Không cộng browser tests lại vào45 tests. `P09FINAL_OUTPUT=.laravel-tools/p09-release-local-browser`. |
+| Syntax/Pint/diff | **PASS** `php -l` file PHP test đã sửa +8 migrations; `node --check tests/Browser/p09-publication.mjs`; `php vendor/bin/pint --test tests/Feature/AwardPublicationFinalTest.php`; `git diff --check`. Blade được compile/render qua HTTP suite và browser. Git có notice CRLF→LF ở CSS, không có whitespace error. |
+| Postflight so baseline mới | **PASS** changed_business_tables=[], source_changes=[] (hash app PHP), migration_rows_added=0; audit4/penalty3/publication đều0.23 bảng giữ counts/checksums/schema, fixture cleanup hoàn tất; không listener8776/8777 còn chạy. Không reset AUTO_INCREMENT. |
+
+**Release Git/Build cụ thể:**
+
+- Đã xác minh toàn bộ source Phase9 chính, 8 migrations, controllers/services/policies/requests/routes/Blade/JS, assets static và dependency locks có trong Git. `git diff HEAD -- app routes config database/migrations composer.json composer.lock package.json package-lock.json vite.config.js` rỗng: không đổi backend/schema/locks. Các thay đổi UI/test vừa nêu **chưa commit**; không tự gộp vào HEAD hay coi là đã push.
+- `public/build/manifest.json`: **49 entries**, đủ **30 Vite inputs**, mọi file/CSS/assets/import/dynamicImport được tham chiếu đều tồn tại; không `public/hot`. Build chạy từ source UI mới trước HTTP/browser, không sửa source UI sau build. Manifest SHA256 `a8291c82f116e8eae6770bbbe45a286bffb20d351cae372bfb5144d26c66b6a4`.
+- Inventory SHA256 **702 files** source/static/build tại `storage/app/private/p09-release-local-20261113/release-inventory.json`, gắn HEAD nền và ghi rõ là **tested working tree, chưa phải committed release**. Đây là bằng chứng build, không phải tracking hoặc gói deploy hoàn chỉnh; không chứa secret/vendor/node_modules. CSS SHA256 `955d0692d53860761affee353221dc9bf944080ef32895b354b4fbe3adeae344`, Blade SHA256 `026d1a56561b281ea4386576051ade48d3ac6486b2e672c2584752ff59602f2d`. Giữ inventory ngoài public, không deploy QA artifacts. Nếu source/lock/assets đổi thì inventory/build/test phải đối chiếu lại.
+- Bước chốt Git còn lại: review/commit đúng5 file, xác minh SHA mới/tag và push qua môi trường có mạng; gắn artifact build với SHA đó. Remote `origin/upgrade/laravel-13` lưu local bằng HEAD, nhưng `git ls-remote --heads origin upgrade/laravel-13` lỗi kết nối github.com:443; **chưa xác minh remote hiện thời**. Không tuyên bố release Git sẵn sàng chỉ vì build PASS.
+
+**8 migrations/lệnh apply:** cả8 file allowlist ở mục trước đã tracked, không đổi so HEAD, syntax PASS; thứ tự FK/dependency và rủi ro partial MySQL DDL giữ như review trước. Không chạy DDL local hoặc production trong lượt này. Khi vận hành, dùng allowlist trước đã lọc theo pending/schema thực tế và **tách review/apply thành hai lần thực thi**, không copy chạy liền hai vòng lịch sử:
+
+```sh
+# Lần 1: maintenance + backup/restore/rehearsal đã đạt; chỉ review
+php artisan migrate:status
+for migration in $MIGRATIONS; do
+  php artisan migrate --path="$migration" --pretend --force || exit 1
+done
+```
+
+Sau khi người vận hành xác nhận SQL đúng8 target hoặc subset pending, không có bảng dở dang và đã có quyết định deploy, mới thực hiện block riêng:
+
+```sh
+# Lần 2: MIGRATIONS là allowlist pending đã duyệt, thứ tự 000101…000301 như trên
+for migration in $MIGRATIONS; do
+  php artisan migrate --path="$migration" --step --force || exit 1
+done
+php artisan migrate:status
+```
+
+**Bàn giao vận hành — chưa xác minh, cần hoàn tất trước GO production:**
+
+1. DB/config/APP_KEY production đúng đích và cùng key/cipher trên mọi node; MySQL InnoDB/CHECK/FK/isolation, baseline và mutex.id1; đọc/verify ciphertext + ledger/publication lịch sử bằng đúng key, không đổi key lúc deploy.
+2. Backup DB/uploads/private storage/key/artifact trước ghi; restore drill vào host/DB cách ly đạt checksum/schema/decryption, chốt RPO/RTO và người quyết định rollback.
+3. Rehearsal migration trên bản restore cách ly, đo lock/time và xử lý DDL lỗi giữa chừng; áp dụng chỉ pending allowlist, không seed/reset/chèn migration record để vượt lỗi.
+4. Kiểm runtime/platform đích, HTTPS/CSRF/permissions/cache/session/queue, maintenance toàn cụm, rebuild cache/reload PHP/workers; smoke read-only Admin/C07/C08/ledger/dealer-scores/public Award và theo dõi errors. Local platform/browser PASS không thay smoke production hoặc manual UAT.
+5. Rollback giữ schema additive/APP_KEY và toàn bộ audit/ledger/publication/winners; chỉ chuyển về code tương thích ledger. Sau có writes mới, ưu tiên forward fix; nếu chưa có bản tương thích thì giữ maintenance. Restore/PITR chỉ theo quyết định có đánh giá mất writes và đối soát, không drop/reverse/re-publish để rollback.
+
+Không deploy/kết nối production/lấy secrets/công bố Award thật. Chỉ các publication fixture trong DB test đã được tạo và cleanup trong suite. Người dùng quyết định triển khai sau khi chốt Git và có bằng chứng cho5 điều kiện vận hành trên.

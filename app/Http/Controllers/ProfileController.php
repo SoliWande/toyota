@@ -17,38 +17,68 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
 class ProfileController extends Controller
 {
     public function edit(Request $request): View
     {
-        return view('profile.edit', ['user' => $request->user()->load('dealer')]);
+        $user = $request->user()->load('dealer');
+
+        return view($user->role === UserRole::Dealer ? 'profile.dealer' : 'profile.edit', ['user' => $user]);
+    }
+
+    public function avatar(Request $request): StreamedResponse
+    {
+        $user = $request->user();
+        abort_unless($user->role === UserRole::Dealer, 403);
+        $disk = Storage::disk('dealer_avatars');
+        abort_unless($user->avatar_path && $disk->exists($user->avatar_path), 404);
+
+        return $disk->response($user->avatar_path, 'avatar.jpg', [
+            'Content-Type' => 'image/jpeg', 'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     public function update(ProfileRequest $request, SalesAvatars $avatars): RedirectResponse
     {
-        $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getRealPath()) : null;
+        $disk = $request->user()->role === UserRole::Dealer ? 'dealer_avatars' : 'sales_avatars';
         try {
-            DB::transaction(function () use ($request, $avatar) {
+            $avatar = $request->hasFile('avatar') ? $avatars->store($request->file('avatar')->getPathname(), $disk) : null;
+        } catch (RuntimeException $exception) {
+            if ($request->user()->role !== UserRole::Dealer) {
+                throw $exception;
+            }
+            report($exception);
+            throw ValidationException::withMessages(['avatar' => 'Không thể lưu ảnh đại diện. Vui lòng thử lại.']);
+        }
+        try {
+            DB::transaction(function () use ($request, $avatar, $disk, $avatars) {
                 $user = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
                 abort_unless($user->status === UserStatus::Active, 403);
+                abort_unless($user->role === $request->user()->role, 403);
                 $user->name = $request->validated('name');
                 if ($user->role === UserRole::Sales) {
                     $user->phone = $request->validated('phone');
+                }
+                if ($user->role === UserRole::Dealer && array_key_exists('phone', $request->validated())) {
+                    $user->phone = $request->validated('phone');
+                }
+                if (in_array($user->role, [UserRole::Sales, UserRole::Dealer], true)) {
                     if ($avatar !== null) {
                         $previous = $user->avatar_path;
                         $user->avatar_path = $avatar;
-                        if ($previous) {
-                            DB::afterCommit(fn () => rescue(fn () => Storage::disk('sales_avatars')->delete($previous)));
-                        }
+                        DB::afterCommit(fn () => rescue(fn () => $avatars->deleteManaged($previous, $disk)));
                     }
                 }
                 $user->save();
             });
         } catch (Throwable $exception) {
             if ($avatar !== null) {
-                Storage::disk('sales_avatars')->delete($avatar);
+                rescue(fn () => $avatars->deleteManaged($avatar, $disk));
             }
             throw $exception;
         }

@@ -28,7 +28,7 @@ export function initCustomerAddressFields(root = document) {
             const provinceCode = province.value;
             retry.hidden = true;
             ward.disabled = true;
-            ward.replaceChildren(new Option(provinceCode ? 'Đang tải Phường/Xã...' : 'Chọn Tỉnh/Thành trước', ''));
+            ward.replaceChildren(new Option(provinceCode ? 'Đang tải Phường/Xã...' : (container.dataset.wardPlaceholder || 'Chọn Tỉnh/Thành trước'), ''));
             status.textContent = provinceCode ? 'Đang tải danh sách Phường/Xã...' : '';
             if (!provinceCode) return;
 
@@ -47,7 +47,7 @@ export function initCustomerAddressFields(root = document) {
                     cache.set(provinceCode, data.wards);
                 }
                 if (currentRequest !== requestId || province.value !== provinceCode) return;
-                ward.replaceChildren(new Option('Chọn Phường/Xã', ''),
+                ward.replaceChildren(new Option(container.dataset.wardPlaceholder || 'Chọn Phường/Xã', ''),
                     ...cache.get(provinceCode).map((item) => new Option(item.name, item.code)));
                 ward.disabled = false;
                 status.textContent = container.closest('[data-step-two]') ? '' : 'Vui lòng chọn Phường/Xã.';

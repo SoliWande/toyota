@@ -1,4 +1,4 @@
-/* B05/B06/B06b and authenticated B09/B10 only. */
+/* B05/B06/B06b, authenticated B09/B10 and Dealer self-profile. */
 .wc-account-mobile-back { display:none; }
 .wc-staff-legacy-site.wc-menu-open { overflow:hidden; }
 .wc-account-site dl,.wc-account-site dd { margin:0; }
@@ -218,4 +218,43 @@
     .wc-staff-site .wc-staff-table-row>div:last-child { grid-column:1/-1; }
     .wc-staff-site .wc-staff-score { text-align:right; }
     .wc-staff-site .wc-staff-score small { display:block; font-size:10px; margin-top:4px; }
+}
+
+/* Dealer self-profile uses the existing B09 account design tokens. */
+.wc-dealer-avatar { position:relative; display:inline-flex; align-items:center; justify-content:center; overflow:hidden; flex:none; width:96px; height:96px; border-radius:50%; background:#f2f2f5; color:#5e5e66; font:600 32px/1 Inter,sans-serif; }
+.wc-dealer-avatar img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.wc-staff-header .wc-dealer-avatar { font:600 13px/1 Inter,sans-serif; }
+.wc-page-profile .wc-profile-grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); align-items:start; gap:24px; }
+.wc-page-profile .wc-profile-card { display:flex; flex-direction:column; min-width:0; gap:24px; margin:0; padding:32px; border:1px solid var(--wc-border); border-radius:24px; background:white; }
+.wc-page-profile .wc-profile-card h2 { font-size:18px; line-height:26px; font-weight:700; }
+.wc-page-profile .wc-profile-identity { display:flex; align-items:center; gap:20px; }
+.wc-page-profile .wc-profile-avatar-wrap { position:relative; flex:none; width:96px; height:96px; }
+.wc-page-profile .wc-profile-preview { position:absolute; inset:0; width:96px; height:96px; border-radius:50%; object-fit:cover; }
+.wc-page-profile .wc-profile-person { min-width:0; }
+.wc-page-profile .wc-profile-person h2 { font-size:24px; line-height:32px; overflow-wrap:anywhere; }
+.wc-page-profile .wc-profile-person p { margin-top:4px; font-size:14px; line-height:22px; color:var(--wc-secondary); overflow-wrap:anywhere; }
+.wc-page-profile .wc-profile-role { display:inline-flex; margin-top:12px; padding:4px 10px; border-radius:999px; background:#fff1f2; color:var(--wc-red); font-size:12px; line-height:18px; font-weight:600; }
+.wc-page-profile .wc-profile-upload { display:flex; flex-direction:column; gap:10px; }
+.wc-page-profile .wc-profile-upload label,.wc-page-profile .wc-profile-field>label,.wc-page-profile .wc-profile-field>span { font-size:14px; line-height:20px; font-weight:600; }
+.wc-page-profile .wc-profile-upload input { width:100%; min-width:0; font:400 13px/20px Inter,sans-serif; color:var(--wc-secondary); }
+.wc-page-profile .wc-profile-upload input::file-selector-button { margin-right:12px; padding:10px 16px; min-height:44px; border:1px solid #e3e3e8; border-radius:999px; background:white; color:var(--wc-text); cursor:pointer; font:600 13px/20px Inter,sans-serif; }
+.wc-page-profile .wc-profile-upload p,.wc-page-profile .wc-profile-field small { font-size:12px; line-height:18px; color:var(--wc-secondary); }
+.wc-page-profile .wc-profile-upload [data-avatar-error] { color:#b91c1c; }
+.wc-page-profile .wc-profile-divider { height:1px; background:var(--wc-border); }
+.wc-page-profile .wc-profile-field { display:flex; flex-direction:column; min-width:0; gap:8px; }
+.wc-page-profile .wc-profile-field input { width:100%; min-width:0; height:52px; padding:14px 16px; border:1px solid #e3e3e8; border-radius:16px; background:#f7f7f9; color:var(--wc-text); font:400 15px/22px Inter,sans-serif; }
+.wc-page-profile .wc-profile-field input:focus-visible { outline:2px solid var(--wc-red); outline-offset:2px; }
+.wc-page-profile .wc-profile-field input[aria-invalid=true] { border-color:var(--wc-red); }
+.wc-page-profile .wc-profile-email { padding:14px 16px; border-radius:16px; background:var(--wc-muted); color:var(--wc-secondary); overflow-wrap:anywhere; font-size:15px; line-height:22px; }
+.wc-page-profile .wc-profile-actions { display:flex; justify-content:flex-end; padding-top:4px; }
+.wc-page-profile .wc-profile-save { display:inline-flex; justify-content:center; align-items:center; min-height:48px; padding:12px 24px; border:0; border-radius:999px; background:var(--wc-red); color:white; font:600 14px/20px Inter,sans-serif; }
+.wc-page-profile .wc-profile-save:hover { background:#c90819; }
+.wc-page-profile .wc-profile-save:disabled { opacity:.6; cursor:wait; }
+.wc-page-profile [hidden] { display:none!important; }
+@media(max-width:767px) {
+    .wc-page-profile .wc-profile-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+    .wc-page-profile .wc-profile-card { padding:24px 20px; gap:20px; }
+    .wc-page-profile .wc-profile-identity { flex-direction:column; align-items:flex-start; gap:16px; }
+    .wc-page-profile .wc-profile-person h2 { font-size:22px; line-height:30px; }
+    .wc-page-profile .wc-profile-save { width:100%; }
 }

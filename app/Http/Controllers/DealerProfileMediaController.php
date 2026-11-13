@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dealer;
+use App\Services\DealerIntroductionContact;
 use App\Services\DealerProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,13 +24,14 @@ class DealerProfileMediaController extends Controller
         ]);
     }
 
-    public function photo(Dealer $dealer): StreamedResponse
+    public function photo(Dealer $dealer, DealerIntroductionContact $contacts): StreamedResponse
     {
-        $disk = Storage::disk('dealer_photos');
-        abort_unless($dealer->photo_path && $disk->exists($dealer->photo_path), 404);
+        $photo = $contacts->photoFor($dealer);
+        abort_unless($photo, 404);
+        $disk = Storage::disk($photo['disk']);
 
-        return $disk->response($dealer->photo_path, 'dealer.jpg', [
-            'Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=300', 'X-Content-Type-Options' => 'nosniff',
+        return $disk->response($photo['path'], 'dealer.jpg', [
+            'Content-Type' => 'image/jpeg', 'Cache-Control' => $photo['manager'] ? 'private, no-store' : 'public, max-age=300', 'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 }

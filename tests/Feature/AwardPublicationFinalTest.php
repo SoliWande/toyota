@@ -476,6 +476,64 @@ class AwardPublicationFinalTest extends TestCase
         }
     }
 
+    public function test_c07_steps_and_badges_follow_verified_readiness_and_publication(): void
+    {
+        $page = $this->c07Document();
+        $this->assertSame(1, $page->query('//div[@aria-current="step"][.//strong[text()="Kiểm tra top 3"]]')->length);
+        $this->assertSame(1, $page->query('//div[contains(@class,"ac-steps")]//img')->length);
+        $this->assertSame(1, $page->query('//a[@aria-current="page"]//span[contains(@class,"ad-badge-pending")]')->length);
+        $this->assertSame(0, $page->query('//span[contains(@class,"ac-result-badge")]/span')->length);
+        $this->assertSame(0, $page->query('//*[contains(text(),"[x]%")]')->length);
+
+        $this->complete();
+        $page = $this->c07Document();
+        $this->assertSame(1, $page->query('//div[@aria-current="step"][.//strong[text()="Công bố"]]')->length);
+        $this->assertSame(2, $page->query('//div[contains(@class,"ac-steps")]//img')->length);
+        $this->assertSame(3, $page->query('//span[contains(@class,"ac-result-badge")]/span[contains(@class,"ad-badge-approved")]')->length);
+
+        $this->publish()->assertOk();
+        $page = $this->c07Document();
+        $this->assertSame(0, $page->query('//div[@aria-current="step"]')->length);
+        $this->assertSame(3, $page->query('//div[contains(@class,"ac-steps")]//img')->length);
+        $this->assertSame(1, $page->query('//a[@aria-current="page"]//span[contains(@class,"ad-badge-approved")]')->length);
+        // Published winners are snapshots; a live audit must not re-certify them as passed.
+        $this->assertSame(0, $page->query('//span[contains(@class,"ac-result-badge")]/span')->length);
+    }
+
+    public function test_c07_recall_is_calling_and_two_no_answers_never_receive_a_pass_badge(): void
+    {
+        $items = $this->batch->items;
+        $this->recordCall($items[0], 'no_answer');
+        $page = $this->c07Document();
+        $this->assertSame(1, $page->query('//span[contains(@class,"ac-result-badge")]/span[contains(@class,"ad-badge-info")]')->length);
+        $this->assertSame(0, $page->query('//span[contains(@class,"ac-result-badge")]/span[contains(@class,"ad-badge-approved")]')->length);
+
+        $this->now = $this->now->addDay();
+        $this->recordCall($items[0], 'no_answer');
+        foreach ($items->skip(1) as $item) {
+            $this->recordCall($item);
+        }
+        $this->assertTrue($this->readiness()['can_publish']);
+        $page = $this->c07Document();
+        $this->assertSame(2, $page->query('//span[contains(@class,"ac-result-badge")]/span[contains(@class,"ad-badge-approved")]')->length);
+        $this->assertSame(0, $page->query('//span[contains(@class,"ac-result-badge")]/span[contains(@class,"ad-badge-info")]')->length);
+    }
+
+    private function c07Document(): \DOMXPath
+    {
+        $response = $this->get('/admin/awards?selected='.$this->award->id)->assertOk();
+        $document = new \DOMDocument;
+        $previous = libxml_use_internal_errors(true);
+        try {
+            $document->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+        }
+
+        return new \DOMXPath($document);
+    }
+
     public function test_browser_existing_call_button_creates_supplement_then_opens_real_c08_scope(): void
     {
         $item = $this->wrong('confirmed');

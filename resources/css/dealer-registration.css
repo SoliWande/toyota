@@ -355,20 +355,48 @@
 .dr-site .dr-chip strong { color:#111; font-weight:600; }
 .dr-site .dr-chip>span { overflow-wrap:anywhere; }
 .dr-site .dr-header-actions .dr-chip { max-width:360px; }
-.dr-site .dr-hero { height:680px; position:relative; overflow:hidden; background:#0a0d12; color:white; }
+@font-face { font-family:D01Inter; font-style:normal; font-weight:400 800; font-display:swap; src:url('../../public/dealer-registration/inter-latin.woff2') format('woff2'); }
+@font-face { font-family:D01Inter; font-style:normal; font-weight:400 800; font-display:swap; src:url('../../public/dealer-registration/inter-vietnamese.woff2') format('woff2'); unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB; }
+@font-face { font-family:D01Montserrat; font-style:normal; font-weight:600 700; font-display:swap; src:url('../../public/competition/fonts/montserrat-latin.woff2') format('woff2'); }
+@font-face { font-family:D01Montserrat; font-style:normal; font-weight:600 700; font-display:swap; src:url('../../public/competition/fonts/montserrat-vietnamese.woff2') format('woff2'); unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB; }
+.dr-site .dr-hero { height:680px; position:relative; overflow:hidden; background:#0a0d12; color:white; font-family:D01Inter,Inter,Arial,sans-serif; }
 .dr-site .dr-hero-art { position:absolute; inset:0; }
 .dr-site .dr-hero-art img { width:100%; height:100%; object-fit:cover; object-position:center; }
 .dr-site .dr-hero-inner { height:100%; position:relative; display:flex; align-items:center; }
 .dr-site .dr-mobile-logo { display:none; }
 .dr-site .dr-hero-copy { width:660px; max-width:100%; display:flex; flex-direction:column; align-items:flex-start; gap:24px; }
-.dr-site .dr-eyebrow { display:flex; align-items:center; gap:12px; font:600 14px/18px Montserrat,Arial,sans-serif; letter-spacing:4.48px; }
+.dr-site .dr-eyebrow { display:flex; align-items:center; gap:12px; font:600 14px/18px D01Montserrat,Montserrat,Arial,sans-serif; letter-spacing:4.48px; }
 .dr-site .dr-eyebrow::before { content:''; display:block; width:28px; height:3px; background:var(--dr-red); }
-.dr-site .dr-hero h1 { font:700 72px/78px Montserrat,Arial,sans-serif; letter-spacing:-1.44px; background:linear-gradient(white,#bfc4d1); background-clip:text; color:transparent; }
+.dr-site .dr-hero h1 { font:700 72px/78px D01Montserrat,Montserrat,Arial,sans-serif; letter-spacing:-1.44px; background:linear-gradient(white,#bfc4d1); background-clip:text; color:transparent; }
 .dr-site .dr-hero-description { font-size:20px; line-height:30px; color:rgba(255,255,255,.8); }
-.dr-site .dr-hero-capsule { display:flex; align-items:center; gap:16px; padding:6px; border:1px solid #ffffff29; border-radius:999px; background:#ffffff14; backdrop-filter:blur(10px); }
-.dr-site .dr-hero-capsule p { padding-right:14px; font-size:16px; line-height:20px; }
+.dr-site .dr-hero-dealer { display:flex; gap:8px; align-items:center; max-width:100%; padding:8px 18px 8px 8px; border:1px solid #ffffff38; border-radius:999px; background:#ffffff1f; backdrop-filter:blur(8px); }
+.dr-site .dr-hero-dealer-icon { display:grid; place-items:center; flex:none; width:36px; height:36px; border-radius:50%; background:#eb0a1e; }
+.dr-site .dr-hero-dealer-icon picture,.dr-site .dr-hero-perk-icon picture { display:flex; }
+.dr-site .dr-hero-dealer>div { min-width:0; }
+.dr-site .dr-hero-dealer small { display:block; font-size:13px; line-height:17px; color:#ffffffc7; }
+.dr-site .dr-hero-dealer strong { display:block; font-size:16px; line-height:21px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.dr-site .dr-hero-perks { display:flex; flex-direction:column; flex:none; gap:14px; width:100%; padding:18px 20px; border:1px solid #ffffff2e; border-radius:24px; background:#ffffff1a; backdrop-filter:blur(10px); }
+.dr-site .dr-hero-perks h2 { font:600 15px/20px D01Inter,Inter,sans-serif; }
+.dr-site .dr-hero-perks ul { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px 12px; margin:0; padding:0; list-style:none; }
+.dr-site .dr-hero-perks li { display:flex; align-items:center; gap:10px; min-width:0; font-size:14.5px; line-height:20px; font-weight:500; }
+.dr-site .dr-hero-perk-icon { display:grid; place-items:center; flex:none; width:34px; height:34px; border-radius:50%; background:#ffffff24; }
+.dr-site .dr-hero-capsule { display:flex; align-items:center; gap:16px; padding:6px 20px 6px 6px; border:1px solid #ffffff29; border-radius:999px; background:#ffffff14; backdrop-filter:blur(10px); }
+.dr-site .dr-hero-capsule .dr-hero-count { flex:none; font-size:16px; line-height:20px; white-space:nowrap; }
+.dr-site .dr-hero-count strong { display:block; font-weight:700; }
 .dr-site .dr-hero-capsule small { display:block; font-size:13px; line-height:18px; color:#ffffffa6; }
 .dr-site .dr-registration { padding-top:48px; }
+.dr-site .dr-group-entry { display:grid; grid-template-columns:340px minmax(0,1fr) max-content; align-items:center; gap:56px; padding:36px 48px; margin-bottom:16px; }
+.dr-site .dr-group-entry>div { min-width:0; }
+.dr-site .dr-group-entry h2 { font-size:32px; line-height:38px; font-weight:800; letter-spacing:-.48px; margin:10px 0; }
+.dr-site .dr-group-entry p { color:var(--dr-secondary); font-size:15px; line-height:22px; }
+.dr-site .dr-group-entry .dr-group-step { color:#eb0a1e; font-size:13px; line-height:18px; font-weight:600; letter-spacing:1.3px; }
+.dr-site .dr-group-entry-questions { display:flex; flex-direction:column; gap:6px; padding:14px 16px; border-radius:16px; background:#eef4ff; font-size:15px; line-height:22px; }
+.dr-site .dr-group-entry-questions strong { color:#1d3f8f; font-weight:600; }
+.dr-site .dr-group-entry-questions ol { padding-left:18px; }
+.dr-site .dr-group-entry-questions p,.dr-site .dr-group-entry-action p { font-size:13px; line-height:18px; }
+.dr-site .dr-group-entry-action { display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
+.dr-site .dr-group-entry-action .dr-button { padding-inline:32px; white-space:nowrap; }
+.dr-site .dr-group-entry-action .dr-button::before { content:''; flex:none; width:18px; height:18px; background:url('../../public/dealer-registration/group-entry-facebook.png') center/contain no-repeat; }
 .dr-site .dr-card { background:white; border-radius:28px; }
 .dr-site .dr-step-one { display:grid; grid-template-columns:340px minmax(0,1fr); gap:56px; padding:40px 48px; box-shadow:0 12px 20px #0000000f; }
 .dr-site .dr-intro { display:flex; flex-direction:column; gap:16px; align-items:flex-start; }
@@ -409,13 +437,13 @@
 .dr-site .dr-section { padding-top:80px; }
 .dr-site .dr-section h2 { font-size:36px; font-weight:800; line-height:42px; letter-spacing:-.72px; }
 .dr-site .dr-section-description { color:var(--dr-secondary); font-size:18px; line-height:26px; margin-top:8px; }
-.dr-site .dr-benefit-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:28px; }
-.dr-site .dr-benefit { background:white; border-radius:28px; overflow:hidden; }
-.dr-site .dr-benefit-photo { display:block; width:100%; height:240px; object-fit:cover; }
-.dr-site .dr-benefit-body { position:relative; padding:40px 28px 28px; }
-.dr-site .dr-benefit-icon { position:absolute; top:-26px; left:28px; width:52px; height:52px; border:4px solid white; border-radius:50%; display:grid; place-items:center; background:#fff1f2; }
-.dr-site .dr-benefit h3 { font-size:18px; font-weight:700; line-height:26px; }
-.dr-site .dr-benefit p { color:var(--dr-secondary); font-size:15px; line-height:22px; margin-top:8px; }
+.dr-site .dr-benefits,.dr-site .dr-benefits :is(h2,h3) { font-family:D01Inter,Inter,Arial,sans-serif; }
+.dr-site .dr-benefit-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px; margin-top:28px; }
+.dr-site .dr-benefit { display:flex; flex-direction:column; background:white; border-radius:24px; overflow:hidden; }
+.dr-site .dr-benefit-photo { display:block; flex:none; width:100%; height:284px; object-fit:cover; }
+.dr-site .dr-benefit-body { position:relative; padding:40px 20px 24px; }
+.dr-site .dr-benefit-icon { position:absolute; top:-24px; left:20px; width:48px; height:48px; border-radius:50%; box-shadow:0 0 0 3px white; display:grid; place-items:center; background:#fff1f2; }
+.dr-site .dr-benefit h3 { font-size:16px; font-weight:600; line-height:23px; letter-spacing:normal; }
 .dr-site .dr-journey { display:grid; grid-template-columns:280px repeat(3,minmax(0,1fr)); align-items:center; gap:24px; padding:48px 56px; background:#1d1d1d; color:white; border-radius:28px; }
 .dr-site .dr-journey>div p { margin-top:8px; }
 .dr-site .dr-journey h2 { font-size:36px; line-height:42px; }
@@ -425,12 +453,17 @@
 .dr-site .dr-journey article:nth-child(2)>span { background:var(--dr-red); }
 .dr-site .dr-journey h3 { font-size:18px; font-weight:600; line-height:24px; margin:14px 0 12px; }
 .dr-site .dr-information { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
-.dr-site .dr-dates { padding:24px 28px; margin-top:20px; background:linear-gradient(110deg,#f3233b,#c40013); color:white; border-radius:24px; }
-.dr-site .dr-dates small { font-size:12px; letter-spacing:1px; }
-.dr-site .dr-dates>div { display:flex; justify-content:space-between; gap:16px; margin-top:18px; }
-.dr-site .dr-dates span { font-size:13px; }
-.dr-site .dr-dates strong { display:block; font:700 28px/34px Montserrat,Arial,sans-serif; letter-spacing:-.28px; }
-.dr-site .dr-dates p { margin-top:14px; font-size:15px; line-height:24px; }
+.dr-site #dr-rules .dr-dates { display:flex; flex-direction:column; gap:18px; overflow:hidden; padding:24px 28px; margin-top:20px; background:linear-gradient(166.7920715372209deg,#f2293a 0%,#b8000f 71.429%); color:white; border-radius:24px; font-family:D01Inter,Inter,Arial,sans-serif; }
+.dr-site #dr-rules .dr-dates-heading { display:flex; align-items:center; gap:8px; }
+.dr-site #dr-rules .dr-dates-heading img { flex:none; }
+.dr-site #dr-rules .dr-dates small { font-size:12px; line-height:16px; font-weight:600; letter-spacing:.96px; color:#ffffffd9; }
+.dr-site #dr-rules .dr-dates-range { display:flex; align-items:flex-end; gap:16px; width:100%; }
+.dr-site #dr-rules :is(.dr-dates-start,.dr-dates-end) { display:flex; flex-direction:column; gap:4px; flex:none; white-space:nowrap; }
+.dr-site #dr-rules .dr-dates-end { align-items:flex-end; text-align:right; }
+.dr-site #dr-rules .dr-dates-range>div>span { font-size:13px; line-height:18px; color:#ffffffbf; }
+.dr-site #dr-rules .dr-dates strong { display:block; font:700 28px/34px D01Montserrat,Montserrat,Arial,sans-serif; letter-spacing:-.28px; }
+.dr-site #dr-rules .dr-dates-line { position:relative; flex:1; min-width:0; height:16px; }
+.dr-site #dr-rules .dr-dates-line::before { content:''; position:absolute; inset-inline:0; top:-.75px; height:1.5px; background:repeating-linear-gradient(to right,#ffffff8c 0 2px,transparent 2px 6px); }
 .dr-site .dr-rules-list { background:white; border-radius:24px; padding:0 20px; margin-top:20px; }
 .dr-site .dr-rules-list details+details { border-top:1px solid #ededf0; }
 .dr-site .dr-rules-list summary { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 0; font-size:14px; font-weight:600; list-style:none; }
@@ -473,9 +506,13 @@
 .dr-site .dr-duplicate>div { flex:1 1 200px; }
 .dr-site .dr-duplicate p { font-size:13px; color:var(--dr-secondary); margin-top:4px; }
 .dr-site .dr-step-two { padding-top:40px; padding-bottom:100px; }
+.dr-site :is(.dr-registration,.dr-step-two,.dr-success-layout),.dr-site :is(.dr-registration,.dr-step-two,.dr-success-layout) :is(h1,h2,h3,label,input,select,button,textarea) { font-family:D01Inter,Inter,Arial,sans-serif; }
+.dr-site .dr-summary-data dd { margin:0; }
 .dr-site .dr-back { display:inline-flex; min-height:32px; align-items:center; color:var(--dr-secondary); font-size:14px; margin-bottom:24px; }
 .dr-site .dr-step-heading { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:28px; }
 .dr-site .dr-step-eyebrow { color:var(--dr-red); font-size:13px; letter-spacing:1px; margin-bottom:8px; }
+.dr-site .dr-step-eyebrow { display:flex; gap:4px; text-transform:uppercase; }
+.dr-site .dr-step-eyebrow>span+span::before { content:'· '; }
 .dr-site .dr-step-heading h1 { font-size:40px; line-height:46px; font-weight:800; letter-spacing:-.8px; }
 .dr-site .dr-step-heading h1+p { color:var(--dr-secondary); font-size:18px; line-height:26px; margin-top:8px; }
 .dr-site .dr-step-heading>.dr-progress { width:246px; margin-bottom:4px; flex:none; }
@@ -506,6 +543,7 @@
 .dr-site .dr-form-submit>.dr-button { flex:none; }
 .dr-site .dr-consent { display:flex!important; align-items:flex-start; gap:12px; font-size:13px!important; line-height:21px!important; color:var(--dr-secondary); margin:0!important; }
 .dr-site .dr-consent input { width:20px; height:20px; flex:none; margin-top:2px; accent-color:var(--dr-red); }
+.dr-site .dr-step-two .dr-form-submit .dr-consent label.dr-consent-text { display:inline; margin:0; font:inherit; color:inherit; }
 .dr-site .dr-sidebar { display:flex; flex-direction:column; gap:16px; min-width:0; }
 .dr-site .dr-side-card { padding:24px; border-radius:24px; background:white; }
 .dr-site .dr-side-card h2 { font-size:16px; line-height:22px; font-weight:600; }
@@ -525,6 +563,11 @@
 .dr-site .dr-dealer-compact .dr-button { padding:10px; min-height:40px; }
 .dr-site .dr-dealer-compact .dr-button>span { display:none; }
 .dr-site .dr-step-two-form>.dr-phase-note { margin-top:24px; }
+.dr-site .dr-step-two-form>.dr-error-summary { margin-bottom:28px; }
+.dr-site .dr-step-two .dr-error-summary { display:flex; align-items:center; gap:10px; background:#ffedef; font-size:15px; line-height:20px; font-weight:600; color:#c4101f; }
+.dr-site .dr-step-two .dr-error-summary::before { content:''; flex:none; width:20px; height:20px; background:url('../../public/dealer-registration/registration-error-summary.png') center/contain no-repeat; }
+.dr-site [data-step-two] .dr-input[aria-invalid=true] { border-color:#eb0a1e; background:#fff1f2; }
+.dr-site .dr-step-two .dr-error { color:#eb0a1e; }
 .dr-site .dr-success-layout { display:grid; grid-template-columns:minmax(0,1fr) 400px; gap:24px; padding-top:48px; padding-bottom:100px; min-height:calc(100svh - 173px); align-items:start; }
 .dr-site .dr-success-heading { display:flex; align-items:center; gap:28px; padding:40px 40px 32px; border-bottom:1px solid #ededf0; }
 .dr-site .dr-success-heading>img { flex:none; }
@@ -554,11 +597,17 @@
 .dr-site .dr-timeline li:not(:last-child)::after { content:''; position:absolute; left:11px; top:28px; bottom:4px; width:2px; background:#e3e3e8; }
 .dr-site .dr-timeline .is-done::before { content:'✓'; display:grid; place-items:center; background:#e7f7ed; color:#16a34a; border:0; font-size:14px; font-weight:700; }
 .dr-site .dr-timeline .is-done::after { background:#bfe6cc; }
-.dr-site .dr-timeline .is-current::before { border:0; background:radial-gradient(circle, #eb0a1e 0 4px, #fff1f2 4px); }
+.dr-site .dr-success-progress .is-current::before { border:0; background:radial-gradient(circle, #2563eb 0 4px, #eff6ff 4px); }
+.dr-site .dr-success-progress .is-current p { color:#1d3f8f; }
+.dr-site .dr-timeline .is-neutral::before { content:'✓'; display:grid; place-items:center; border:0; background:#f2f2f5; color:#8e8e93; font-size:14px; }
+.dr-site .dr-group-action .dr-button { background:white; color:#111; border:1px solid #e3e3e8; }
+.dr-site .dr-group-action .dr-button::before { content:''; flex:none; width:18px; height:18px; background:url('../../public/dealer-registration/group-return-facebook.png') center/contain no-repeat; }
 .dr-site .dr-timeline .is-upcoming strong { color:#8e8e93; }
 .dr-site .dr-timeline p { font-size:13px; line-height:18px; color:#8e8e93; margin-top:3px; }
 @media (min-width:1440px) { .dr-site .dr-container { width:1200px; } }
 @media (max-width:1100px) {
+    .dr-site .dr-group-entry { grid-template-columns:1fr 1fr; gap:24px; padding:32px; }
+    .dr-site .dr-group-entry-action { grid-column:1/-1; }
     .dr-site .dr-header-actions { gap:12px; } .dr-site .dr-header-actions .dr-chip { display:none; }
     .dr-site .dr-step-one { grid-template-columns:280px minmax(0,1fr); gap:28px; padding:32px; }
     .dr-site .dr-journey { grid-template-columns:repeat(3,minmax(0,1fr)); padding:32px; } .dr-site .dr-journey>div { grid-column:1/-1; }
@@ -578,13 +627,19 @@
     .dr-site .dr-car-options { gap:8px; } .dr-site .dr-car-options span { font-size:13px; height:48px; }
     .dr-site .dr-form-actions { flex-direction:column-reverse; align-items:stretch; text-align:center; }
     .dr-site .dr-section { padding-top:48px; } .dr-site .dr-section h2 { font-size:28px; line-height:32px; letter-spacing:-.7px; }
-    .dr-site .dr-dates strong { font-size:22px; line-height:28px; letter-spacing:-.22px; }
+    .dr-site #dr-rules .dr-dates { padding:20px 20px 22px; margin-top:16px; background:linear-gradient(160.6102099232058deg,#f2293a 0%,#b8000f 71.429%); }
+    .dr-site #dr-rules .dr-dates-range { gap:12px; }
+    .dr-site #dr-rules .dr-dates strong { font-size:22px; line-height:28px; letter-spacing:-.22px; }
+    .dr-site #dr-rules .dr-dates-line { height:20px; }
+    .dr-site #dr-rules .dr-dates-line::before { top:2.75px; right:7px; }
+    .dr-site #dr-rules .dr-dates-line::after { content:''; position:absolute; right:0; top:0; width:7px; height:7px; border-radius:50%; background:#ffffff8c; }
+    .dr-site #dr-rules .dr-dates+.dr-rules-list { margin-top:16px; }
     .dr-site .dr-section-description { font-size:15px; line-height:22px; }
-    .dr-site .dr-benefit-grid { display:flex; overflow-x:auto; gap:12px; width:100%; padding:0 16px 8px; scroll-snap-type:x mandatory; margin-top:20px; }
-    .dr-site .dr-benefit { flex:0 0 280px; scroll-snap-align:start; border-radius:24px; }
+    .dr-site .dr-benefits>.dr-container:first-child { width:100%; padding-inline:20px; }
+    .dr-site .dr-benefit-grid { display:flex; overflow-x:auto; gap:12px; width:100%; padding:0 16px 4px; scroll-snap-type:x mandatory; scroll-padding-inline:16px; margin-top:16px; }
+    .dr-site .dr-benefit { flex:0 0 272px; height:304px; scroll-snap-align:start; border-radius:24px; }
     .dr-site .dr-benefit-photo { height:176px; } .dr-site .dr-benefit-body { padding:34px 20px 22px; }
-    .dr-site .dr-benefit-icon { left:20px; } .dr-site .dr-benefit h3 { font-size:16px; line-height:24px; }
-    .dr-site .dr-benefit p { font-size:13px; line-height:20px; }
+    .dr-site .dr-benefit h3 { font-size:17px; line-height:24px; letter-spacing:-.051px; }
     .dr-site .dr-journey { grid-template-columns:1fr; gap:16px; padding:24px; } .dr-site .dr-journey>div { grid-column:auto; }
     .dr-site .dr-journey article { padding:20px; } .dr-site .dr-information { grid-template-columns:1fr; gap:48px; }
     .dr-site .dr-faq { padding:20px; } .dr-site .dr-question,.dr-site .dr-answer p { font-size:13px; line-height:20px; }
@@ -632,6 +687,25 @@
     .dr-site .dr-group-photo { height:120px; } .dr-site .dr-group .dr-button { width:100%; }
 }
 @media (max-width:639px) {
+    .dr-site .dr-step-two { padding-top:24px; }
+    .dr-site .dr-step-two>.dr-back { display:none; }
+    .dr-site .dr-step-heading { display:block; position:relative; margin-bottom:10px; }
+    .dr-site .dr-step-heading .dr-step-eyebrow { justify-content:space-between; gap:8px; margin-bottom:34px; font-size:13px; line-height:18px; text-transform:none; letter-spacing:normal; font-weight:600; }
+    .dr-site .dr-step-eyebrow>span+span { color:#5e5e66; font-weight:400; }
+    .dr-site .dr-step-eyebrow>span+span::before { content:none; }
+    .dr-site .dr-step-heading>.dr-progress { position:absolute; top:24px; width:100%; margin:0; }
+    .dr-site .dr-step-heading>.dr-progress span { height:6px; }
+    .dr-site .dr-duplicate { flex-direction:column; align-items:stretch; }
+    .dr-site .dr-duplicate>div { flex:auto; }
+    .dr-site .dr-duplicate .dr-button { order:1; width:100%; }
+    .dr-site .dr-duplicate .dr-text-link { order:2; text-align:center; }
+    .dr-site .dr-invalid-panel { min-height:600px; justify-content:center; padding:40px 12px; background:transparent; }
+    .dr-site .dr-invalid-art img { width:104px; height:104px; }
+    .dr-site .dr-invalid-panel>div+div { background:transparent; }
+    .dr-site .dr-invalid-panel .dr-button { width:100%; }
+    .dr-site .dr-group-entry { grid-template-columns:1fr; padding:24px; gap:20px; }
+    .dr-site .dr-group-entry h2 { font-size:26px; line-height:32px; }
+    .dr-site .dr-group-entry-action,.dr-site .dr-group-entry-action .dr-button { width:100%; }
     .dr-site.dr-landing .dr-header { display:none; }
     .dr-site.dr-inner .dr-mobile-topbar { display:flex; align-items:center; gap:20px; font-size:17px; font-weight:700; }
     .dr-site.dr-inner .dr-mobile-topbar>span { font-size:28px; font-weight:400; }
@@ -639,13 +713,218 @@
     .dr-site.dr-success .dr-mobile-topbar { display:none; }
     .dr-site.dr-success .dr-header-row>.dr-brand { display:flex; }
     .dr-site.dr-success .dr-brand>span { display:none; }
-    .dr-site .dr-hero { height:780px; } .dr-site .dr-hero-inner { align-items:flex-start; flex-direction:column; padding:24px 8px 0; }
-    .dr-site .dr-mobile-logo { display:block; filter:brightness(0) invert(1); margin-bottom:24px; }
-    .dr-site .dr-hero-copy { gap:16px; } .dr-site .dr-hero h1 { font-size:38px; line-height:42px; letter-spacing:.38px; text-shadow:0 2px 16px #00000d20; }
-    .dr-site .dr-eyebrow { font-size:13px; line-height:18px; letter-spacing:4.16px; }
-    .dr-site .dr-hero-description { font-size:16px; line-height:22px; }
-    .dr-site .dr-hero-capsule { margin-top:0; max-width:100%; } .dr-site .dr-hero-capsule .dr-button { padding:12px 26px; min-height:48px; }
+    .dr-site .dr-hero { height:937px; background:#081022; }
+    .dr-site .dr-hero::before { content:''; position:absolute; inset:0 0 auto; height:337px; z-index:1; pointer-events:none; background:linear-gradient(#081022 0%,#081022 46.588%,#08102200 100%); }
+    .dr-site .dr-hero-art { top:157px; height:780px; }
+    .dr-site .dr-hero-inner { width:100%; align-items:flex-start; flex-direction:column; padding:0; z-index:2; }
+    .dr-site .dr-mobile-logo { display:block; position:absolute; top:24px; left:24px; filter:brightness(0) invert(1); margin:0; height:43.346px; }
+    .dr-site .dr-hero-copy { position:absolute; top:88px; left:24px; width:calc(100% - 48px); gap:12px; }
+    .dr-site .dr-hero h1 { font-size:38px; line-height:42px; letter-spacing:.38px; background-image:linear-gradient(white,#edf2f7,#bdc7d6); text-shadow:0 2px 16px #00000d59; }
+    .dr-site .dr-hero-dealer { position:absolute; top:-65px; right:0; max-width:calc(100% - 90px); padding:6px 14px 6px 6px; }
+    .dr-site .dr-hero-dealer-icon { width:30px; height:30px; }
+    .dr-site .dr-hero-dealer-icon img { width:16px; height:16px; }
+    .dr-site .dr-hero-dealer small { font-size:12px; line-height:16px; }
+    .dr-site .dr-hero-dealer strong { font-size:13px; line-height:17px; }
+    .dr-site .dr-hero-perks { padding:14px 10px; gap:12px; border-radius:20px; }
+    .dr-site .dr-hero-perks h2 { font-size:14px; line-height:19px; }
+    .dr-site .dr-hero-perks ul { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 8px; }
+    .dr-site .dr-hero-perks li { gap:6px; font-size:13px; line-height:17px; }
+    .dr-site .dr-hero-perk-icon { width:24px; height:24px; }
+    .dr-site .dr-hero-perk-icon img { width:14px; height:14px; }
+    .dr-site .dr-eyebrow { gap:10px; font-size:13px; line-height:18px; letter-spacing:4.16px; color:#ffffffeb; }
+    .dr-site .dr-eyebrow::before { width:22px; border-radius:2px; background:#eb0a1f; }
+    .dr-site .dr-hero-description { font-size:15px; line-height:22px; color:#ffffffbf; }
+    .dr-site .dr-hero-capsule { margin-top:0; width:100%; max-width:100%; gap:14px; padding-right:18px; border-color:#ffffff38; background:#ffffff1a; backdrop-filter:blur(7px); }
+    .dr-site .dr-hero-capsule .dr-button { flex:0 1 204px; min-width:0; height:46px; min-height:46px; padding:0 16px 0 20px; font-size:15px; line-height:normal; white-space:nowrap; background:#eb0a1f; }
+    .dr-site .dr-hero-capsule .dr-icon { width:16px; height:16px; }
+    .dr-site .dr-hero-capsule .dr-hero-count { font-size:14px; line-height:normal; }
+    .dr-site .dr-hero-count strong { font-weight:600; }
+    .dr-site .dr-hero-capsule small { font-size:12px; line-height:normal; color:#ffffffb3; }
     .dr-site .dr-hero-art img { object-fit:cover; object-position:center; }
     .dr-site .dr-brand { gap:16px; } .dr-site .dr-brand>span::before { left:-8px; } .dr-site .dr-brand strong { font-size:12px; }
 }
+@media (max-width:359px) {
+    .dr-site .dr-hero-capsule { gap:10px; padding-right:12px; }
+    .dr-site .dr-hero-capsule .dr-button { padding-inline:12px; font-size:14px; gap:6px; }
+}
 @media (prefers-reduced-motion:reduce) { .dr-site *, .dr-site *::before,.dr-site *::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+
+/* Only the registration-success sidebar; shared cards and the left panel stay unchanged. */
+.dr-site .dr-success-sidebar { gap:16px; align-self:start; }
+.dr-site .dr-success-sidebar .dr-success-progress { padding:24px; border:0; border-radius:24px; background:white; }
+.dr-site .dr-success-sidebar .dr-progress-heading { gap:8px; }
+.dr-site .dr-success-sidebar .dr-progress-heading h2 { font-size:16px; font-weight:700; line-height:22px; }
+.dr-site .dr-success-sidebar .dr-status-chip::before { background:#2563eb; }
+.dr-site .dr-success-sidebar .dr-timeline { margin:20px 0 0; }
+.dr-site .dr-success-sidebar .dr-timeline li { min-height:0; padding:2px 0 22px 38px; }
+.dr-site .dr-success-sidebar .dr-timeline li:last-child { padding-bottom:0; }
+.dr-site .dr-success-sidebar .dr-timeline li::before { content:''; display:block; border:0; background:url('../../public/dealer-registration/success-sidebar-neutral.png') center/contain no-repeat; }
+.dr-site .dr-success-sidebar .dr-timeline .is-done::before { background-image:url('../../public/dealer-registration/success-sidebar-done.png'); }
+.dr-site .dr-success-sidebar .dr-timeline .is-current::before { background-image:url('../../public/dealer-registration/success-sidebar-pending.png'); }
+.dr-site .dr-success-sidebar .dr-timeline li::after { border-radius:1px; }
+.dr-site .dr-success-sidebar .dr-timeline .is-done::after { background:#bfe6cc; }
+.dr-site .dr-success-sidebar .dr-timeline strong { font-size:15px; font-weight:600; line-height:20px; }
+.dr-site .dr-success-sidebar .dr-timeline p { font-size:13px; font-weight:400; line-height:18px; }
+.dr-site .dr-success-sidebar .dr-timeline .is-current p { color:#1d3f8f; }
+.dr-site .dr-success-sidebar .dr-success-lookup { display:flex; align-items:center; gap:14px; width:100%; min-width:0; padding:18px 24px 18px 20px; background:white; border-radius:24px; }
+.dr-site .dr-success-sidebar .dr-success-lookup-icon,.dr-site .dr-success-sidebar .dr-success-dealer-icon { display:grid; place-items:center; width:40px; height:40px; flex:none; border-radius:50%; background:#f2f2f5; }
+.dr-site .dr-success-sidebar .dr-success-lookup-copy { display:flex; flex:1; flex-direction:column; gap:2px; min-width:0; }
+.dr-site .dr-success-sidebar .dr-success-lookup-copy strong { font-size:15px; font-weight:600; line-height:20px; }
+.dr-site .dr-success-sidebar .dr-success-lookup-copy>span { color:#8e8e93; font-size:13px; line-height:18px; }
+.dr-site .dr-success-sidebar .dr-success-lookup-copy>.dr-success-mobile-caption { display:none; }
+.dr-site .dr-success-sidebar .dr-success-chevron { flex:none; }
+.dr-site .dr-success-sidebar .dr-success-dealer { display:flex; align-items:center; gap:14px; min-width:0; width:100%; padding:18px 20px; border-radius:24px; background:white; }
+.dr-site .dr-success-sidebar .dr-success-dealer-icon { background:#fff1f2; }
+.dr-site .dr-success-sidebar .dr-success-dealer-copy { display:flex; flex:1; flex-direction:column; gap:2px; min-width:0; overflow-wrap:anywhere; }
+.dr-site .dr-success-sidebar .dr-success-dealer-copy small { color:#8e8e93; font-size:12px; line-height:16px; }
+.dr-site .dr-success-sidebar .dr-success-dealer-copy h2 { font-size:15px; font-weight:600; line-height:20px; }
+.dr-site .dr-success-sidebar .dr-success-call { display:grid; place-items:center; width:40px; height:40px; flex:none; border-radius:50%; background:#f2f2f5; }
+@media (max-width:767px) {
+    .dr-site .dr-success-sidebar .dr-success-progress { padding:19px; border:1px solid #ededf0; border-radius:20px; }
+    .dr-site .dr-success-sidebar .dr-progress-heading { padding-bottom:20px; border-bottom:1px solid #ededf0; }
+    .dr-site .dr-success-sidebar .dr-progress-heading h2 { font-size:15px; line-height:22.5px; }
+    .dr-site .dr-success-sidebar .dr-status-chip { color:#1d4ed8; background:#eff6ff; }
+    .dr-site .dr-success-sidebar .dr-status-chip::before { background:#1d4ed8; }
+    .dr-site .dr-success-sidebar .dr-success-lookup { gap:10px; padding:13px 15px; border:1px solid #ededf0; }
+    .dr-site .dr-success-sidebar .dr-success-lookup-icon { width:18px; height:18px; background:transparent; }
+    .dr-site .dr-success-sidebar .dr-success-lookup-copy { gap:0; }
+    .dr-site .dr-success-sidebar .dr-success-lookup-copy strong { font-size:14px; font-weight:700; line-height:21px; }
+    .dr-site .dr-success-sidebar .dr-success-lookup-copy>.dr-success-desktop-caption { display:none; }
+    .dr-site .dr-success-sidebar .dr-success-lookup-copy>.dr-success-mobile-caption { display:block; color:#5e5e66; font-size:12px; line-height:18px; }
+    .dr-site .dr-success-sidebar .dr-success-dealer { padding:0 4px; border-radius:0; background:transparent; gap:12px; }
+    .dr-site .dr-success-sidebar .dr-success-dealer-icon { display:none; }
+    .dr-site .dr-success-sidebar .dr-success-dealer-copy small { line-height:18px; }
+    .dr-site .dr-success-sidebar .dr-success-dealer-copy h2 { font-size:15px; font-weight:700; line-height:22.5px; }
+    .dr-site .dr-success-sidebar .dr-success-call { width:44px; height:44px; border:1px solid #e3e3e8; background:white; }
+}
+
+/* D02/M02 only. Server/client validation states keep the existing D03 layout. */
+@font-face { font-family:D02Montserrat; font-style:normal; font-weight:700; font-display:swap; src:url('../../public/dealer-registration/montserrat-latin.woff2') format('woff2'); }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-back { display:flex; width:max-content; min-height:20px; margin-bottom:28px; gap:4px; font-weight:600; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-back>span { width:18px; height:18px; font-size:0; background:url('../../public/dealer-registration/d02-back.png') center/contain no-repeat; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-eyebrow { font-weight:600; line-height:18px; letter-spacing:1.3px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading h1+p { font-size:17px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading>.dr-progress { margin-bottom:10px; gap:6px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-progress span { height:6px; border-radius:3px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section h2 { font-size:17px; line-height:22px; letter-spacing:-.085px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-section-help { line-height:20px; margin-bottom:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-field label { font-weight:500; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-field-row { gap:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-input { padding-inline:14px; border-width:0; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) select.dr-input { appearance:none; padding-right:34px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath d='M2 2h4L4 5z' fill='%238e8e93'/%3E%3C/svg%3E"); background-position:right 14px center; background-repeat:no-repeat; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) select.dr-input:has(option:checked[value=""]) { color:#8e8e93; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-selected-car { gap:12px; padding-block:14px; font-size:16px; line-height:22px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-selected-car strong { font-weight:600; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=vehicle_description] { margin-bottom:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-help { font-size:13px; line-height:18px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=odo] { position:relative; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=odo] .dr-input { padding-right:40px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=odo]>.dr-help { position:absolute; top:47px; right:14px; margin:0; color:#8e8e93; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-row { grid-template-columns:minmax(0,1fr) 300px; align-items:start; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-help { display:flex; align-items:flex-start; gap:10px; padding:14px 16px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-help::before { content:''; flex:none; width:18px; height:18px; background:#5e5e66; mask:url('../../public/dealer-registration/info.png') center/contain no-repeat; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit { align-items:center; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent { gap:12px; font-size:14px!important; line-height:21px!important; font-weight:400!important; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent input { appearance:none; position:relative; display:grid; place-items:center; width:22px; height:22px; margin:0; border:1.5px solid #c7c7cc; border-radius:3px; background:white; cursor:pointer; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent input:checked { background:#eb0a1e; border-color:#eb0a1e; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent input:checked::before { content:''; width:10px; height:6px; border:solid white; border-width:0 0 2px 2px; transform:translateY(-1px) rotate(-45deg); }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent input:focus-visible { outline:2px solid #111; outline-offset:3px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent a { color:inherit; text-decoration:none; text-underline-offset:2px; cursor:pointer; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent a:is(:hover,:focus-visible) { text-decoration:underline; }
+.dr-site .dr-step-two .dr-consent a[aria-disabled=true] { cursor:default; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit>.dr-field>.dr-help { margin:8px 0 0 34px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit>.dr-button { width:212px; min-height:54px; padding:16px 40px; font-size:16px; line-height:22px; border-radius:999px; white-space:nowrap; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-side-card h2 { font-size:15px; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-side-heading>a { font-weight:600; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-side-heading>a::before { content:''; display:inline-block; width:14px; height:14px; margin-right:4px; vertical-align:-2px; background:url('../../public/dealer-registration/d02-edit.png') center/contain no-repeat; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-summary-data { margin-top:14px; gap:14px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-summary-data>div { gap:8px; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-after-submit { gap:14px; margin:14px 0 0; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-after-submit li { gap:12px; color:#3a3a40; line-height:20px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-after-submit li::before { color:#5e5e66; font-family:D02Montserrat,Montserrat,Arial,sans-serif; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-compact { padding:18px 24px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-compact .dr-dealer-symbol { position:relative; width:36px; height:36px; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-symbol .dr-icon { visibility:hidden; }
+.dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-symbol::before { content:''; position:absolute; inset:9px; background:#eb0a1e; mask:url('../../public/dealer-registration/dealer.png') center/contain no-repeat; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) :is(.dr-header,.dr-footer) { font-family:D01Inter,Inter,Arial,sans-serif; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-header-row { min-height:71px; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-header-actions { gap:16px; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-header-actions .dr-lookup { padding:8px; font-weight:600; line-height:20px; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-chip>span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-button-small { min-height:44px; padding-block:12px; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-brand strong { font-weight:600; }
+.dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-brand small { color:#5e5e66; }
+@media (min-width:768px) {
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent input:checked { height:17px; }
+}
+@media (max-width:1100px) {
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-row { grid-template-columns:1fr; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit>.dr-button { width:100%; }
+}
+@media (max-width:767px) {
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) { padding-top:20px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true]))>.dr-back { display:none; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading { margin:0 4px 16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading .dr-step-eyebrow { margin-bottom:34px; line-height:19.5px; letter-spacing:0; font-weight:700; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading>.dr-progress { top:28px; margin:0; gap:0; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading>.dr-progress span:first-child { border-radius:3px 0 0 3px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading>.dr-progress span:last-child { border-radius:0 3px 3px 0; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-step-heading h1+p { font-size:15px; line-height:22.5px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section h2 { font-size:13px; line-height:19.5px; letter-spacing:.78px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-field label { font-size:14px; font-weight:600; line-height:21px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-section-help { font-size:13px; line-height:18.2px; margin-bottom:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-field-row { gap:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(-n+2)>.dr-section-help { display:none; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(-n+2)>h2 { margin-bottom:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section>[data-field=vehicle_description] { margin-top:0; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=odo]>.dr-help { top:44px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-selected-car { padding:12px 14px; background:#fef1f2; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-selected-car>.dr-icon { content:url('../../public/dealer-registration/d02-car-mobile.png'); }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-selected-car strong { font-size:15px; line-height:22.5px; font-weight:700; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) [data-field=vehicle_description] { margin-bottom:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(3) { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(3) h2 { grid-row:1; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(3)>.dr-section-help { grid-row:3; margin:-8px 0 0; color:#5e5e66; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-row { display:contents; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-row>.dr-field { grid-row:2; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-facebook-help { grid-row:4; padding:12px 14px; border-radius:24px; line-height:18.85px; background:#f2f2f5; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-section:nth-of-type(3) { margin-bottom:8px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit { padding:16px 4px 16px; gap:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-consent { font-weight:400!important; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-form-submit>.dr-button { height:52px; min-height:52px; padding:0 20px; line-height:16px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-after-submit li::before { font-family:D01Inter,Inter,Arial,sans-serif; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-sidebar>.dr-side-card { display:none; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-sidebar>.dr-dealer-compact { justify-content:center; padding:0 4px; background:transparent; border-radius:0; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-compact>.dr-dealer-symbol { display:none; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-copy { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-copy small { color:#5e5e66; font-size:13px; line-height:19.5px; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-dealer-copy h2 { font-size:13px; line-height:19.5px; font-weight:700; margin:0; }
+    .dr-site .dr-d02:not(:has([aria-invalid=true])) .dr-split { gap:0; }
+    .dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-footer { display:none; }
+    .dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-header-row { width:calc(100% - 16px); min-height:63px; }
+    .dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-mobile-topbar { gap:4px; font-size:16px; line-height:24px; }
+    .dr-site:has(.dr-d02):not(:has(.dr-d02 [aria-invalid=true])) .dr-mobile-topbar>span { display:grid; place-items:center; width:44px; height:44px; font-size:0; background:url('../../public/dealer-registration/d02-back.png') center/22px 22px no-repeat; }
+}
+
+/* D01/M01 full referring dealer card; compact registration cards keep their layout. */
+.dr-site .dr-referring-dealer { min-height:144px; }
+.dr-site .dr-referring-dealer>.dr-dealer-symbol { position:relative; overflow:hidden; }
+.dr-site .dr-referring-dealer .dr-dealer-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.dr-site .dr-referring-dealer .dr-dealer-copy small { display:block; font-size:12px; line-height:16px; font-weight:600; letter-spacing:1.2px; }
+.dr-site .dr-referring-dealer .dr-referring-mobile-label { display:none; }
+.dr-site .dr-referring-dealer .dr-dealer-copy h2 { margin-top:6px; }
+.dr-site .dr-referring-dealer .dr-dealer-meta { gap:12px 24px; line-height:20px; }
+.dr-site .dr-referring-dealer .dr-dealer-call { gap:8px; min-height:48px; padding:14px 24px; font-size:15px; line-height:20px; font-weight:600; background:#f2f2f5; color:#111; }
+@media(max-width:767px) {
+    .dr-site .dr-referring-dealer { display:flex; flex-direction:column; align-items:stretch; flex-wrap:nowrap; gap:16px; padding:24px; }
+    .dr-site .dr-referring-dealer>.dr-dealer-symbol { display:none; }
+    .dr-site .dr-referring-dealer .dr-referring-desktop-label { display:none; }
+    .dr-site .dr-referring-dealer .dr-referring-mobile-label { display:inline; }
+    .dr-site .dr-referring-dealer .dr-dealer-copy { display:flex; flex-direction:column; gap:16px; }
+    .dr-site .dr-referring-dealer .dr-dealer-copy small { font-size:13px; line-height:18px; letter-spacing:0; font-weight:500; color:#5e5e66; }
+    .dr-site .dr-referring-dealer .dr-dealer-copy h2 { margin:0; font-size:24px; line-height:30px; font-weight:700; letter-spacing:-.36px; }
+    .dr-site .dr-referring-dealer .dr-dealer-meta { display:flex; flex-direction:column; gap:16px; margin:0; font-size:15px; line-height:21px; color:#111; }
+    .dr-site .dr-referring-dealer .dr-dealer-meta>span { gap:10px; align-items:flex-start; }
+    .dr-site .dr-referring-dealer .dr-dealer-meta .dr-icon { width:18px; height:18px; margin-top:1.5px; filter:grayscale(1) brightness(.7) contrast(4); }
+    .dr-site .dr-referring-dealer .dr-dealer-call { width:100%; min-height:52px; padding:15px 24px; font-size:16px; line-height:22px; background:#f5f5f7; }
+}
