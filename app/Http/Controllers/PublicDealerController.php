@@ -15,9 +15,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use LogicException;
 
 class PublicDealerController extends Controller
 {
@@ -104,12 +106,25 @@ class PublicDealerController extends Controller
     {
         // Historical ranking entries may belong to an inactive Dealer.
         $dealer = Dealer::query()->select([...self::PUBLIC_FIELDS, 'photo_path'])->where('slug', $slug)->firstOrFail();
-        $standing = DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::AllTime), 'standing')->where('id', $dealer->id)->first();
-        // D01 uses the existing approved-profile definition and frozen Dealer attribution.
-        // Public owner counts exclude demo records even in a demo-inclusive metrics environment.
-        $dealerOwnerCount = (int) ($leaderboard->dealerScores()->where('dealers.id', $dealer->id)
-            ->whereNotIn('submissions.id', app(ToyotaRealisticDemo::class)->ownedSubmissionIds())
-            ->first()?->score ?? 0);
+        $standing = null;
+        $dealerOwnerCount = null;
+        try {
+            // Verify first, including when demo installation/metrics flags are disabled.
+            $ownedSubmissionIds = app(ToyotaRealisticDemo::class)->ownedSubmissionIds();
+            $standing = DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::AllTime), 'standing')->where('id', $dealer->id)->first();
+            // D01 keeps the existing approved count and historical Dealer attribution.
+            $dealerOwnerCount = (int) ($leaderboard->dealerScores()->where('dealers.id', $dealer->id)
+                ->whereNotIn('submissions.id', $ownedSubmissionIds)
+                ->first()?->score ?? 0);
+        } catch (LogicException) {
+            // Unknown metrics are not zero; never publish a partially verified result.
+            $standing = null;
+            $dealerOwnerCount = null;
+            Log::warning('Dealer landing metrics unavailable; demo verification requires operator review.', [
+                'dealer_id' => $dealer->id,
+                'reason' => 'demo_verification_failed',
+            ]);
+        }
 
         $draft = $drafts->read($request, $dealer);
 
