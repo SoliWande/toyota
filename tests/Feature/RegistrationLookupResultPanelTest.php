@@ -31,6 +31,7 @@ class RegistrationLookupResultPanelTest extends TestCase
         $this->withoutVite();
         $dealer = new Dealer;
         $dealer->forceFill(['id' => 1, 'slug' => 'synthetic-panel', 'name' => 'Synthetic Dealer', 'phone' => $phone, 'is_active' => true]);
+        $dealer->exists = true; // Simulate the persisted Dealer used by the actual lookup controller.
         $result = array_replace(['kind' => $kind, 'masked_name' => 'S** O**', 'vehicle' => 'Hilux',
             'group_confirmed' => false, 'reason' => 'Lý do đã được backend xác nhận.',
             'supplement_key' => 'synthetic-view-only', 'verification_version' => str_repeat('a', 64)], $extra);

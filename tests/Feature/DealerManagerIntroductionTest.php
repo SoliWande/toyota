@@ -36,7 +36,7 @@ class DealerManagerIntroductionTest extends TestCase
         Storage::fake('dealer_photos');
     }
 
-    public function test_authorized_manager_avatar_phone_changes_appear_on_dealer_without_copying_fields(): void
+    public function test_authorized_manager_avatar_appears_but_phone_stays_private_without_copying_fields(): void
     {
         $dealer = Dealer::factory()->create(['photo_path' => null, 'phone' => null]);
         $manager = User::factory()->dealer()->create(['dealer_id' => $dealer->id, 'phone' => '0912345678']);
@@ -53,7 +53,7 @@ class DealerManagerIntroductionTest extends TestCase
                 Storage::disk('dealer_avatars')->assertMissing($previous);
             }
             $this->get($url)->assertOk()->assertSee('class="dr-dealer-photo"', false)->assertSee(route('dealers.photo', $dealer->id))
-                ->assertSee('href="tel:'.$phone.'"', false)->assertDontSee($manager->email)->assertDontSee($path);
+                ->assertDontSee('href="tel:', false)->assertDontSee($manager->email)->assertDontSee($path);
             $photo = $this->get(route('dealers.photo', $dealer->id))->assertOk()
                 ->assertHeader('Cache-Control', 'no-store, private')->assertHeader('Content-Type', 'image/jpeg');
             $this->assertSame(Storage::disk('dealer_avatars')->get($path), $photo->streamedContent());
@@ -77,7 +77,7 @@ class DealerManagerIntroductionTest extends TestCase
         $this->assertNull($calls->forDealer($first));
         config(['dealer-registration.manager_contacts' => [$first->slug => $manager->id]]);
         $this->assertNotNull($contacts->photoFor($first));
-        $this->assertSame('0912345678', $calls->forDealer($first));
+        $this->assertNull($calls->forDealer($first));
         $this->assertNull($contacts->photoFor($second));
         $this->assertNull($calls->forDealer($second));
         config(['dealer-registration.manager_contacts' => [$second->slug => $manager->id]]);
@@ -102,7 +102,7 @@ class DealerManagerIntroductionTest extends TestCase
         $this->assertSame('official.jpg', $dealer->fresh()->photo_path);
         $this->assertSame('02812345678', app(DealerCallPhone::class)->forDealer($dealer));
         config(['dealer-registration.approved_call_phones' => []]);
-        $this->assertNull(app(DealerCallPhone::class)->forDealer($dealer));
+        $this->assertSame('02812345678', app(DealerCallPhone::class)->forDealer($dealer));
     }
 
     public function test_missing_invalid_inactive_or_wrong_role_contacts_fail_closed(): void

@@ -56,7 +56,7 @@ class DealerLandingRegistrationTest extends TestCase
         $url = app(DealerProfile::class)->url($dealer);
         $qr = $this->get(route('dealers.qr', ['dealer' => $dealer, 'download' => 1]))->assertOk()->getContent();
         $dealer->update(['name' => 'New Dealer Name', 'address' => 'New Dealer Address']);
-        $this->get($url)->assertOk()->assertDontSee($dealer->phone)->assertDontSee('href="tel:', false);
+        $this->get($url)->assertOk()->assertSee($dealer->phone)->assertSee('href="tel:', false);
         config(['dealer-registration.approved_call_phones' => [$dealer->slug => $dealer->phone]]);
         $this->get($url)->assertOk()->assertSee('New Dealer Name')->assertSee($dealer->phone)
             ->assertSee('href="tel:'.$dealer->phone.'"', false)->assertSee('name="vehicle_description"', false)

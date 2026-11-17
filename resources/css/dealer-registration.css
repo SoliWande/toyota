@@ -561,7 +561,7 @@
 .dr-site .dr-dealer-compact .dr-dealer-copy small { letter-spacing:0; font-size:12px; }
 .dr-site .dr-dealer-compact .dr-dealer-copy h2 { font-size:15px; font-weight:600; line-height:20px; letter-spacing:normal; margin-top:2px; }
 .dr-site .dr-dealer-compact .dr-button { padding:10px; min-height:40px; }
-.dr-site .dr-dealer-compact .dr-button>span { display:none; }
+.dr-site .dr-dealer-compact .dr-button>span { display:inline; }
 .dr-site .dr-step-two-form>.dr-phase-note { margin-top:24px; }
 .dr-site .dr-step-two-form>.dr-error-summary { margin-bottom:28px; }
 .dr-site .dr-step-two .dr-error-summary { display:flex; align-items:center; gap:10px; background:#ffedef; font-size:15px; line-height:20px; font-weight:600; color:#c4101f; }
@@ -778,7 +778,7 @@
 .dr-site .dr-success-sidebar .dr-success-dealer-copy { display:flex; flex:1; flex-direction:column; gap:2px; min-width:0; overflow-wrap:anywhere; }
 .dr-site .dr-success-sidebar .dr-success-dealer-copy small { color:#8e8e93; font-size:12px; line-height:16px; }
 .dr-site .dr-success-sidebar .dr-success-dealer-copy h2 { font-size:15px; font-weight:600; line-height:20px; }
-.dr-site .dr-success-sidebar .dr-success-call { display:grid; place-items:center; width:40px; height:40px; flex:none; border-radius:50%; background:#f2f2f5; }
+.dr-site .dr-success-sidebar .dr-success-call { display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:14px 24px; border-radius:999px; background:#f2f2f5; color:#111; font-size:15px; line-height:20px; font-weight:600; }
 @media (max-width:767px) {
     .dr-site .dr-success-sidebar .dr-success-progress { padding:19px; border:1px solid #ededf0; border-radius:20px; }
     .dr-site .dr-success-sidebar .dr-progress-heading { padding-bottom:20px; border-bottom:1px solid #ededf0; }
@@ -795,7 +795,7 @@
     .dr-site .dr-success-sidebar .dr-success-dealer-icon { display:none; }
     .dr-site .dr-success-sidebar .dr-success-dealer-copy small { line-height:18px; }
     .dr-site .dr-success-sidebar .dr-success-dealer-copy h2 { font-size:15px; font-weight:700; line-height:22.5px; }
-    .dr-site .dr-success-sidebar .dr-success-call { width:44px; height:44px; border:1px solid #e3e3e8; background:white; }
+    .dr-site .dr-success-sidebar .dr-success-call { min-height:52px; }
 }
 
 /* D02/M02 only. Server/client validation states keep the existing D03 layout. */
@@ -927,4 +927,17 @@
     .dr-site .dr-referring-dealer .dr-dealer-meta>span { gap:10px; align-items:flex-start; }
     .dr-site .dr-referring-dealer .dr-dealer-meta .dr-icon { width:18px; height:18px; margin-top:1.5px; filter:grayscale(1) brightness(.7) contrast(4); }
     .dr-site .dr-referring-dealer .dr-dealer-call { width:100%; min-height:52px; padding:15px 24px; font-size:16px; line-height:22px; background:#f5f5f7; }
+}
+
+/* Dealer phone lists: each number keeps its own visible call action. */
+.dr-site .dr-dealer-calls { display:flex; flex-wrap:wrap; gap:8px; min-width:0; max-width:100%; }
+.dr-site .dr-referring-dealer>.dr-dealer-calls { flex:0 1 auto; max-width:560px; justify-content:flex-end; }
+.dr-site .dr-dealer-card.dr-dealer-compact,.dr-site .dr-success-sidebar .dr-success-dealer { flex-wrap:wrap; }
+.dr-site .dr-dealer-compact>.dr-dealer-calls,.dr-site .dr-success-dealer>.dr-dealer-calls { flex:1 0 100%; }
+.dr-site .dr-dealer-calls>a { flex:1 1 auto; max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+.dr-site .dr-dealer-card.dr-dealer-compact .dr-dealer-call { gap:8px; padding:14px 24px; min-height:48px; font-size:15px; line-height:20px; }
+.dr-site .dr-success-sidebar .dr-success-call:hover { background:#e3e3e8; }
+@media (max-width:767px) {
+    .dr-site .dr-referring-dealer>.dr-dealer-calls { flex:auto; width:100%; }
+    .dr-site .dr-dealer-calls>a { flex-basis:100%; }
 }

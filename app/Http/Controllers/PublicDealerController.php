@@ -79,8 +79,8 @@ class PublicDealerController extends Controller
         $model = Dealer::select([...self::PUBLIC_FIELDS, 'photo_path'])->findOrFail($dealer);
         $photoUrl = $model->photo_path && Storage::disk('dealer_photos')->exists($model->photo_path) ? route('dealers.photo', $model->id) : null;
         unset($model->photo_path);
-        $phone = $phones->forDealer($model);
-        if ($phone === null) {
+        $callPhones = $phones->allForDealer($model);
+        if ($callPhones === []) {
             unset($model->phone);
         }
         $standing = DB::query()->fromSub($leaderboard->dealers(LeaderboardPeriod::AllTime), 'standing')->where('id', $model->id)->first();
@@ -94,7 +94,7 @@ class PublicDealerController extends Controller
         }
 
         return response()->view('dealers.competition', ['dealer' => $model, 'standing' => $standing,
-            'months' => $months, 'phone' => $phone, 'photoUrl' => $photoUrl])->header('Cache-Control', 'no-store, private');
+            'months' => $months, 'phones' => $callPhones, 'photoUrl' => $photoUrl])->header('Cache-Control', 'no-store, private');
     }
 
     public function legacy(int $dealer, DealerProfile $profile): RedirectResponse

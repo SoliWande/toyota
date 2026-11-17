@@ -611,3 +611,6 @@
 @media (max-width:374px) {
     .competition-site .wc-d-filters .wc-d-province,.competition-site .wc-d-sort-controls { width:100%; }
 }
+
+.competition-site .wc-d-call { width:100%; min-height:48px; font-size:15px; line-height:20px; color:#111; overflow-wrap:anywhere; }
+.competition-site .wc-d-call:hover { background:#e3e3e8; }

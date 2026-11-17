@@ -57,21 +57,21 @@ class DealerRegistrationSuccessPresentationTest extends TestCase
         }
     }
 
-    public function test_success_dealer_call_uses_only_the_existing_exact_phone_approval(): void
+    public function test_success_dealer_call_uses_dealer_phone_without_legacy_approval(): void
     {
         $this->withoutVite();
         $dealer = (new Dealer)->forceFill(['slug' => 'synthetic-success-dealer', 'name' => 'Synthetic Success Dealer',
             'is_active' => true, 'phone' => '0990000007']);
         $dealer->exists = true;
         config(['dealer-registration.approved_call_phones' => []]);
-        $this->assertStringNotContainsString('class="dr-success-call"', view('dealers.registration.success', compact('dealer'))->render());
+        $this->assertStringContainsString('class="dr-success-call"', view('dealers.registration.success', compact('dealer'))->render());
         config(['dealer-registration.approved_call_phones' => [$dealer->slug => '0990000007']]);
         $html = view('dealers.registration.success', compact('dealer'))->render();
         $dom = new DOMDocument;
         @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
         $call = (new DOMXPath($dom))->query('//a[@class="dr-success-call"]')->item(0);
         $this->assertSame('tel:0990000007', $call->getAttribute('href'));
-        $this->assertSame('Gọi đại lý', $call->getAttribute('aria-label'));
+        $this->assertSame('Gọi đại lý 0990000007', $call->getAttribute('aria-label'));
         $this->assertStringNotContainsString('1900xxxx', $html);
     }
 }

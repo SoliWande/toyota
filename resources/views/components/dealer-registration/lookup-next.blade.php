@@ -1,7 +1,7 @@
 @props(['result', 'dealer', 'values' => []])
 @php($kind = $result['kind'])
-@php($contactPhone = preg_replace('/[^0-9+]/', '', $dealer->phone ?? ''))
-@php($hasDealerPhone = preg_match('/^\+?[0-9]{8,15}$/D', $contactPhone))
+@php($contactPhones = app(\App\Services\DealerCallPhone::class)->allForDealer($dealer))
+@php($hasDealerPhone = count($contactPhones) > 0)
 @if ($kind === 'draft')
     <h3>Còn một bước nữa</h3><p>Điền thông tin xe và Facebook, mất khoảng 1 phút.</p>
     <a class="dr-button" href="{{ route('dealers.registrations.step-two', $dealer->slug) }}">Tiếp tục đăng ký</a>
@@ -19,7 +19,7 @@
         <h3>Liên hệ để bổ sung thông tin</h3><p>Vui lòng liên hệ Dealer hoặc Admin. Tra cứu không cấp quyền chỉnh sửa hồ sơ; cập nhật trực tuyến cần phiên đăng ký còn hiệu lực.</p>
     @endif
 @elseif ($kind === 'blocked')
-    <div class="dr-lookup-blocked-message"><h3>Chưa thể xác nhận đăng ký của bạn</h3><p><span class="dr-lookup-blocked-mobile-reason">{{ $result['reason'] }} </span>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ $dealer->phone }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p></div>
+    <div class="dr-lookup-blocked-message"><h3>Chưa thể xác nhận đăng ký của bạn</h3><p><span class="dr-lookup-blocked-mobile-reason">{{ $result['reason'] }} </span>@if ($hasDealerPhone)Nếu đây là xe của bạn, gọi đại lý {{ implode(', ', $contactPhones) }} để được hỗ trợ.@else Vui lòng liên hệ Dealer hoặc Admin để được hỗ trợ đối chiếu thông tin.@endif</p></div>
 @elseif ($kind === 'not_requested')
     <h3>Bước tiếp theo: vào group</h3><p>@if (!empty($values['phone']) && !empty($values['license_plate']))Khi xin vào group, trả lời số điện thoại {{ $values['phone'] }} và biển số {{ $values['license_plate'] }}.@else Khi xin vào group, trả lời đúng số điện thoại và biển số bạn đã đăng ký.@endif</p>
     <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Vào group Facebook" class="dr-button" />
@@ -28,5 +28,5 @@
     <x-dealer-registration.link :url="config('dealer-registration.group_url')" :group="true" label="Mở group Facebook" class="dr-button dr-button-dark" />
 @endif
 @if ($kind === 'blocked' || ($kind === 'supplement' && ! isset($result['supplement_key'])))
-    @if ($hasDealerPhone)<a class="dr-button dr-button-muted" href="tel:{{ $contactPhone }}">Gọi đại lý {{ $dealer->phone }}</a>@endif
+    @if ($hasDealerPhone)<div class="dr-dealer-calls">@foreach ($contactPhones as $contactPhone)<a class="dr-button dr-button-muted" href="tel:{{ $contactPhone }}">Gọi đại lý {{ $contactPhone }}</a>@endforeach</div>@endif
 @endif

@@ -42,13 +42,13 @@ class CompetitionDealerTest extends TestCase
         CustomerSubmission::factory()->approved()->create(['sales_id' => $sales->id, 'customer_name' => 'PRIVATE_CUSTOMER', 'notes' => 'PRIVATE_SUBMISSION']);
         $url = route('dealers.competition', $dealer);
         $response = $this->get($url)->assertOk()->assertSee($dealer->name)->assertSee('Thành viên mới 3 tháng gần nhất')
-            ->assertDontSee($dealer->phone)->assertDontSee('href="tel:', false)
+            ->assertSee($dealer->phone)->assertSee('href="tel:', false)
             ->assertDontSee('PRIVATE_STAFF')->assertDontSee('PRIVATE_PHONE')->assertDontSee('PRIVATE_NOTE')
             ->assertDontSee('PRIVATE_CUSTOMER')->assertDontSee('PRIVATE_SUBMISSION')->assertDontSee($sales->email);
         $this->assertSame(1, (int) $response->viewData('standing')->score);
         $response->assertViewMissing('customers')->assertViewMissing('sales');
         $this->assertArrayNotHasKey('photo_path', $response->viewData('dealer')->toArray());
-        $this->assertArrayNotHasKey('phone', $response->viewData('dealer')->toArray());
+        $this->assertSame(['0901234567'], $response->viewData('phones'));
         $this->assertSame(1, (int) app(LeaderboardService::class)->dealers(LeaderboardPeriod::AllTime)->sole()->score);
         $this->get(route('dealers.index'))->assertOk()->assertDontSee($dealer->phone)->assertSee($url, false);
         $this->get(route('dealers.show', $dealer))->assertRedirect(app(DealerProfile::class)->url($dealer))->assertStatus(301);
@@ -57,18 +57,36 @@ class CompetitionDealerTest extends TestCase
         $this->get(route('dealers.competition', 999999999))->assertNotFound();
     }
 
-    public function test_phone_requires_exact_approval_and_inactive_dealer_has_no_intake_or_call_cta(): void
+    public function test_phone_uses_current_dealer_numbers_and_inactive_dealer_has_no_intake_or_call_cta(): void
     {
         $dealer = Dealer::factory()->create(['phone' => '0901234567']);
         config(['dealer-registration.approved_call_phones' => [$dealer->slug => '0901234567']]);
         $this->get(route('dealers.competition', $dealer))->assertOk()->assertSee('href="tel:0901234567"', false)
             ->assertSee(route('dealers.profile', $dealer->slug).'#registration', false);
         $dealer->forceFill(['phone' => '0901234568'])->save();
-        $this->get(route('dealers.competition', $dealer))->assertOk()->assertDontSee('href="tel:', false)->assertDontSee($dealer->phone);
+        $this->get(route('dealers.competition', $dealer))->assertOk()->assertSee('href="tel:0901234568"', false)->assertSee($dealer->phone);
         $dealer->forceFill(['is_active' => false, 'phone' => '0901234567'])->save();
         $this->get(route('dealers.competition', $dealer))->assertOk()->assertSee('Đại lý hiện ngừng nhận đăng ký.')
             ->assertDontSee('href="tel:', false)->assertDontSee('#registration', false);
         $this->get(route('dealers.index'))->assertOk()->assertDontSee($dealer->name);
+    }
+
+    public function test_detail_and_landing_use_all_dealer_numbers_and_never_manager_fallback(): void
+    {
+        $raw = '02583891999, 0912909032';
+        $dealer = Dealer::factory()->create(['phone' => $raw]);
+        $manager = User::factory()->dealer()->create(['dealer_id' => $dealer->id, 'phone' => '0987654321']);
+        config(['dealer-registration.manager_contacts' => [$dealer->slug => $manager->id]]);
+        foreach ([route('dealers.competition', $dealer), app(DealerProfile::class)->url($dealer)] as $url) {
+            $html = $this->get($url)->assertOk()->assertSee('href="tel:02583891999"', false)
+                ->assertSee('href="tel:0912909032"', false)->assertDontSee('0987654321')->getContent();
+            $this->assertSame(2, substr_count($html, 'href="tel:'));
+        }
+        $this->assertSame($raw, $dealer->fresh()->phone);
+        $dealer->update(['phone' => null]);
+        foreach ([route('dealers.competition', $dealer), app(DealerProfile::class)->url($dealer)] as $url) {
+            $this->get($url)->assertOk()->assertDontSee('href="tel:', false)->assertDontSee('0987654321');
+        }
     }
 
     public function test_three_month_chart_uses_submitted_at_approved_snapshot_dealer_and_exact_month_bounds(): void

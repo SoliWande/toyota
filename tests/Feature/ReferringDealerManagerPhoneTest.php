@@ -31,17 +31,18 @@ class ReferringDealerManagerPhoneTest extends TestCase
     public function test_manager_phone_updates_normalizes_and_stays_separate_from_dealer_hotline(): void
     {
         $this->assertTrue(Schema::hasColumn('users', 'phone'));
-        $dealer = Dealer::factory()->create(['phone' => '02812345678']);
+        $dealer = Dealer::factory()->create(['phone' => '02583891999, 0912909032']);
         $manager = User::factory()->dealer()->create(['dealer_id' => $dealer->id, 'phone' => '0912345678']);
         $this->actingAs($manager)->get(route('profile.edit'))->assertOk()->assertSee('Số điện thoại')->assertSee('value="0912345678"', false);
         $this->patch(route('profile.update'), ['name' => 'Quản lý mới', 'phone' => '+84 (98) 765-4321'])->assertRedirect()->assertSessionHasNoErrors();
         $this->assertSame('0987654321', $manager->fresh()->phone);
-        $this->assertSame('02812345678', $dealer->fresh()->phone);
+        $this->assertSame('02583891999, 0912909032', $dealer->fresh()->phone);
         $this->actingAs($manager->fresh())->get(route('profile.edit'))->assertSee('value="0987654321"', false);
         $this->patch(route('profile.update'), ['name' => 'Giữ số'])->assertSessionHasNoErrors();
         $this->assertSame('0987654321', $manager->fresh()->phone);
         $this->patch(route('profile.update'), ['name' => 'Xóa số', 'phone' => ''])->assertSessionHasNoErrors();
         $this->assertNull($manager->fresh()->phone);
+        $this->assertSame('02583891999, 0912909032', $dealer->fresh()->phone);
     }
 
     #[DataProvider('invalidPhones')]
@@ -109,7 +110,7 @@ class ReferringDealerManagerPhoneTest extends TestCase
                 ->assertDontSee('account-only.jpg')->assertDontSee('0912345678');
         }
         $dealer->update(['phone' => '02812345678']);
-        $this->get(app(DealerProfile::class)->url($dealer))->assertOk()->assertDontSee('href="tel:', false);
+        $this->get(app(DealerProfile::class)->url($dealer))->assertOk()->assertSee('href="tel:02812345678"', false);
         config(['dealer-registration.approved_call_phones' => [$dealer->slug => '02812345678']]);
         $this->get(app(DealerProfile::class)->url($dealer))->assertSee('href="tel:02812345678"', false);
     }

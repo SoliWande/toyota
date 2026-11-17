@@ -1,1 +1,1 @@
-<x-competition.dealer-profile :dealer="$dealer" :standing="$standing" :months="$months" :phone="$phone" :photo-url="$photoUrl" />
+<x-competition.dealer-profile :dealer="$dealer" :standing="$standing" :months="$months" :phones="$phones" :photo-url="$photoUrl" />

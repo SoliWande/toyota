@@ -1,7 +1,7 @@
 @php
     // Only the session-authorized confirmation DTO supplies the answers below.
     $confirmation = $confirmation ?? null;
-    $callPhone = app(\App\Services\DealerCallPhone::class)->forDealer($dealer);
+    $callPhones = app(\App\Services\DealerCallPhone::class)->allForDealer($dealer);
 @endphp
 <x-dealer-registration.layout :dealer="$dealer" title="Đăng ký thành công!" :success="true" :preview="$preview ?? false">
     <div class="dr-container dr-success-layout">
@@ -49,7 +49,7 @@
             <section class="dr-success-dealer" aria-label="Đại lý giới thiệu">
                 <span class="dr-success-dealer-icon"><img src="{{ asset('dealer-registration/success-sidebar-dealer.png') }}" width="18" height="18" alt=""></span>
                 <div class="dr-success-dealer-copy"><small>Đăng ký qua đại lý</small><h2>{{ $dealer->name }}</h2></div>
-                @if ($callPhone)<a href="tel:{{ $callPhone }}" class="dr-success-call" aria-label="Gọi đại lý"><img src="{{ asset('dealer-registration/success-sidebar-phone.png') }}" width="18" height="18" alt=""></a>@endif
+                @if ($callPhones)<div class="dr-dealer-calls">@foreach ($callPhones as $callPhone)<a href="tel:{{ $callPhone }}" class="dr-success-call" aria-label="Gọi đại lý {{ $callPhone }}"><img src="{{ asset('dealer-registration/success-sidebar-phone.png') }}" width="18" height="18" alt=""><span>Gọi đại lý {{ $callPhone }}</span></a>@endforeach</div>@endif
             </section>
         </aside>
     </div>

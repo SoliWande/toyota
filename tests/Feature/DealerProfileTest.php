@@ -31,8 +31,8 @@ class DealerProfileTest extends TestCase
         CustomerSubmission::factory()->rejected()->create(['sales_id' => $active->id]);
         config(['dealer-registration.approved_call_phones' => []]);
         $this->get(app(DealerProfile::class)->url($dealer))->assertOk()
-            ->assertDontSee($dealer->phone)->assertDontSee('href="tel:', false);
-        // Public phone approval belongs only to this test Dealer and exact number.
+            ->assertSee($dealer->phone)->assertSee('href="tel:', false);
+        // Dealer phone is public independently of the legacy approval configuration.
         config(['dealer-registration.approved_call_phones' => [$dealer->slug => $dealer->phone]]);
         foreach ([false, true] as $json) {
             $response = ($json ? $this->getJson(app(DealerProfile::class)->url($dealer)) : $this->get(app(DealerProfile::class)->url($dealer)))->assertOk()

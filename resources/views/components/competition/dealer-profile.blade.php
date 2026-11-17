@@ -1,4 +1,4 @@
-@props(['dealer', 'standing' => null, 'months' => [], 'phone' => null, 'photoUrl' => null])
+@props(['dealer', 'standing' => null, 'months' => [], 'phones' => [], 'photoUrl' => null])
 <x-competition.layout :title="$dealer->name.' | Toyota Competition'" :sticky-footer="true" :dealer-profile="true">
 <article class="wc-container wc-d-profile">
     <a class="wc-d-back" href="{{ route('dealers.index') }}"><x-competition.dealer-icon name="back-18" :size="18" />Tất cả đại lý</a>
@@ -13,9 +13,9 @@
     </div>
     <aside class="wc-d-contact" aria-label="Liên hệ đại lý"><h2>LIÊN HỆ ĐẠI LÝ</h2>
         <div class="wc-d-contact-row"><span class="wc-d-desktop"><x-competition.dealer-icon name="pin-20" :size="20" /></span><span class="wc-d-mobile"><x-competition.dealer-icon name="pin-18" :size="18" /></span><p>{{ $dealer->address ?: 'Chưa cập nhật địa chỉ' }}</p></div>
-        @if ($phone)<div class="wc-d-contact-row"><span class="wc-d-desktop"><x-competition.dealer-icon name="phone-20" :size="20" /></span><span class="wc-d-mobile"><x-competition.dealer-icon name="phone-18" :size="18" /></span><a href="tel:{{ $phone }}" aria-label="Gọi đại lý {{ $dealer->name }}">{{ $dealer->phone }}</a></div>@endif
+        @foreach ($phones as $phone)<div class="wc-d-contact-row"><span class="wc-d-desktop"><x-competition.dealer-icon name="phone-20" :size="20" /></span><span class="wc-d-mobile"><x-competition.dealer-icon name="phone-18" :size="18" /></span><span>{{ $phone }}</span></div>@endforeach
         @if (filled($dealer->opening_hours))<div class="wc-d-contact-row"><span class="wc-d-desktop"><x-competition.dealer-icon name="clock-20" :size="20" /></span><span class="wc-d-mobile"><x-competition.dealer-icon name="clock-18" :size="18" /></span><p>{{ $dealer->opening_hours }}</p></div>@endif
-        @if ($phone)<a class="wc-d-call" href="tel:{{ $phone }}"><x-competition.dealer-icon name="phone-20" :size="20" />Gọi đại lý</a>@endif
+        @foreach ($phones as $phone)<a class="wc-d-call" href="tel:{{ $phone }}"><x-competition.dealer-icon name="phone-20" :size="20" />Gọi đại lý {{ $phone }}</a>@endforeach
     </aside></div>
 </article>
 </x-competition.layout>
