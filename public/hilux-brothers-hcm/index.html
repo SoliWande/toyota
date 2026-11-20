@@ -644,6 +644,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offse
       '<span class="hot-name">' + HOTLINE_TEN + '</span>' +
       '<a class="hot-num" href="tel:' + HOTLINE_SO.replace(/\s/g, '') + '">' + HOTLINE_SO + '</a>';
 
+    try { if (window.fbq) fbq('track', 'Lead'); } catch (e) {}
+
     if (state === 'fail') {
       $('doneEyebrow').textContent = 'Chưa gửi được';
       $('doneTitle').textContent = 'Đường truyền đang lỗi';
@@ -655,7 +657,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offse
     }
 
     if (state === 'ok') {
-      try { if (window.fbq) fbq('track', 'Lead'); } catch (e) {}
+      try { if (window.fbq) fbq('track', 'CompleteRegistration'); } catch (e) {}
       try { if (window.gtag) gtag('event', 'generate_lead', { event_category: 'dang_ky', event_label: 'mini_off_hcm_29_11' }); } catch (e) {}
     }
 

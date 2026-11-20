@@ -521,6 +521,10 @@ var GOOGLE_FORM = {
     var btn = $('submit'); btn.disabled = true; btn.textContent = 'Đang gửi…';
     if (!cfgReady) { setTimeout(done, 700); return; }   // DEMO: không lưu dữ liệu
 
+    try {
+          if (window.fbq) fbq('track', 'Lead');
+    } catch (e) {}
+
     var n = parseInt(g.value,10);
     var data = {
       name: $('f-name').value.trim(),
@@ -545,8 +549,9 @@ var GOOGLE_FORM = {
     ifr.addEventListener('load', function(){
       if (finished) return;
       finished = true;
+      
       try {
-          if (window.fbq) fbq('track', 'Lead');
+          if (window.fbq) fbq('track', 'CompleteRegistration');
       } catch (e) {}
       try {
           if (window.gtag) gtag('event', 'generate_lead', {
