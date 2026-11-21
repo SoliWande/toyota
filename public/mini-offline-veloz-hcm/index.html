@@ -294,7 +294,7 @@ gtag('config', 'G-4WHK43ETS9');
     <div class="side">
       <p class="eyebrow">Đăng ký</p>
       <h2>Giữ chỗ cho anh em và người đi cùng</h2>
-      <p>Điền form để BTC chuẩn bị đón tiếp và quà check-in chu đáo nhất. Anh em có thể đăng ký lái thử xe ngay trong form.</p>
+      <p>Điền form để BTC chuẩn bị chỗ ngồi, đón tiếp và quà check-in chu đáo nhất. Đi cùng người nhà, bạn bè thì anh em ghi số người đi cùng nhé.</p>
       <div>
         <span class="pill">08:30 – 11:30</span><span class="pill">Thứ Bảy 28/11/2026</span><span class="pill">GOEN Cát Lái</span>
       </div>
@@ -324,14 +324,6 @@ gtag('config', 'G-4WHK43ETS9');
           <div class="error">Anh em vui lòng điền dòng xe và biển số (hoặc “Chưa có”).</div>
         </div>
 
-        <div class="field" data-f="td">
-          <span class="q" id="q-td" style="display:block;font-weight:800;font-size:14px;text-transform:uppercase;margin-bottom:8px">AE đăng ký lái thử xe <span class="req">*</span></span>
-          <div class="choices" role="radiogroup" aria-labelledby="q-td">
-            <label class="choice"><input type="radio" name="td" value="Toyota Veloz Cross"><span>Toyota Veloz Cross</span></label>
-            <label class="choice"><input type="radio" name="td" value="Khác"><span>Khác</span></label>
-          </div>
-          <div class="error">Anh em vui lòng chọn một lựa chọn.</div>
-        </div>
 
         <div class="field" data-f="guests">
           <label class="q" for="f-guests">Số lượng người đi cùng <span class="req">*</span></label>
@@ -344,26 +336,17 @@ gtag('config', 'G-4WHK43ETS9');
           <div class="error">Số người đi cùng từ 0 đến 10.</div>
         </div>
 
-        <div class="field" data-f="gtd" id="gtd-field" hidden>
-          <span class="q" id="q-gtd" style="display:block;font-weight:800;font-size:14px;text-transform:uppercase;margin-bottom:4px">Người đi cùng đăng ký lái thử xe <span class="req">*</span></span>
-          <p class="hint">Để BTC sắp xếp đón tiếp chu đáo nhất.</p>
-          <div class="choices" role="radiogroup" aria-labelledby="q-gtd">
-            <label class="choice"><input type="radio" name="gtd" value="Toyota Veloz Cross"><span>Toyota Veloz Cross</span></label>
-            <label class="choice"><input type="radio" name="gtd" value="Khác"><span>Khác</span></label>
-          </div>
-          <div class="error">Anh em vui lòng chọn một lựa chọn cho người đi cùng.</div>
-        </div>
 
         <div class="field" data-f="consent">
           <label class="consent">
             <input id="f-consent" type="checkbox" required>
-            <span>Tôi đồng ý để BTC Hội Anh Em Toyota Veloz sử dụng thông tin trên để liên hệ về sự kiện, và chuyển cho đại lý Toyota để sắp xếp lái thử nếu tôi đăng ký lái thử.</span>
+            <span>Tôi đồng ý để BTC Hội Anh Em Toyota Veloz sử dụng thông tin trên để liên hệ về sự kiện.</span>
           </label>
           <div class="error">Anh em vui lòng đồng ý để BTC liên hệ.</div>
         </div>
 
         <button class="btn btn-primary submit" type="submit" id="submit">Gửi đăng ký</button>
-        <p class="note">Thông tin chỉ dùng cho sự kiện này và việc sắp xếp lái thử.</p>
+        <p class="note">Thông tin chỉ dùng cho việc tổ chức sự kiện này.</p>
       </form>
 
       <div class="thanks" id="thanks" role="status" aria-live="polite">
@@ -434,18 +417,17 @@ gtag('config', 'G-4WHK43ETS9');
    Khi chưa điền action, trang chạy chế độ DEMO: hiện màn cảm ơn, KHÔNG lưu.
    ===================================================================== */
 var GOOGLE_FORM = {
-  action: "https://docs.google.com/forms/d/e/1FAIpQLSfS6vJgdL0A-9Kl2Co8y-8_5jw5gpZjeFGAQBZ155u8LZ52DQ/formResponse",                 // VD: "https://docs.google.com/forms/d/e/1FAIpQL.../formResponse"
+  action: "https://docs.google.com/forms/d/e/1FAIpQLSfS6vJgdL0A-9Kl2Co8y-8_5jw5gpZjeFGAQBZ155u8LZ52DQ/formResponse",
   entries: {
-      name:   "entry.708520356",
-      phone:  "entry.1007173923",
-      car:    "entry.770433618",
-      td:     "entry.1423193931",
-      guests: "entry.252274558",
-      gtd:    "entry.1676589098",
-      source: "entry.1679475632"
+    name:   "entry.708520356",               // HỌ TÊN                          VD: "entry.111111111"
+    phone:  "entry.1007173923",               // SỐ ĐIỆN THOẠI
+    car:    "entry.770433618",               // DÒNG XE ĐANG ĐI + BIỂN SỐ
+    guests: "entry.252274558",               // SỐ LƯỢNG NGƯỜI ĐI CÙNG
+    source: "entry.1679475632"                // (tuỳ chọn) câu hỏi ẩn "Nguồn" để truy vết mã giới thiệu
   },
   defaultSource: "BMPV-EVENT-MINIOFF-HCM-2811"
 };
+
 /* ===================================================================== */
 
 (function(){
@@ -471,8 +453,8 @@ var GOOGLE_FORM = {
   var source = GOOGLE_FORM.defaultSource;
   try { var r = new URLSearchParams(location.search).get('ref'); if (r) source = r.slice(0,60); } catch(e){}
 
-  var g = $('f-guests'), gField = $('gtd-field');
-  function syncGuests(){ gField.hidden = !(parseInt(g.value,10) > 0); }
+  var g = $('f-guests');
+  function syncGuests(){}
   $('g-minus').addEventListener('click', function(){ g.value = Math.max(0,(parseInt(g.value,10)||0)-1); syncGuests(); });
   $('g-plus').addEventListener('click', function(){ g.value = Math.min(10,(parseInt(g.value,10)||0)+1); syncGuests(); });
   g.addEventListener('input', syncGuests);
@@ -492,10 +474,8 @@ var GOOGLE_FORM = {
     chk('name', $('f-name').value.trim().length < 2);
     chk('phone', !/^0\d{9}$/.test(phone));
     chk('car', $('f-car').value.trim().length < 2);
-    chk('td', !radio('td'));
     var n = parseInt(g.value,10);
     chk('guests', isNaN(n) || n < 0 || n > 10);
-    chk('gtd', n > 0 && !radio('gtd'));
     chk('consent', !$('f-consent').checked);
     if (first) { var el = document.querySelector('[data-f="'+first+'"]'); el.scrollIntoView({behavior:'smooth',block:'center'}); var i = el.querySelector('input'); if (i) i.focus({preventScroll:true}); }
     return !bad;
@@ -504,7 +484,7 @@ var GOOGLE_FORM = {
   ['f-name','f-phone','f-car'].forEach(function(id){
     $(id).addEventListener('input', function(){ this.closest('.field').classList.remove('invalid'); });
   });
-  document.querySelectorAll('input[type=radio],#f-consent').forEach(function(el){
+  document.querySelectorAll('#f-consent').forEach(function(el){
     el.addEventListener('change', function(){ this.closest('.field').classList.remove('invalid'); });
   });
 
@@ -530,9 +510,7 @@ var GOOGLE_FORM = {
       name: $('f-name').value.trim(),
       phone: $('f-phone').value.trim(),
       car: $('f-car').value.trim(),
-      td: radio('td'),
       guests: String(n),
-      gtd: n > 0 ? radio('gtd') : 'Khác',
       source: source
     };
     var name = 'gf_' + Date.now();
@@ -549,7 +527,6 @@ var GOOGLE_FORM = {
     ifr.addEventListener('load', function(){
       if (finished) return;
       finished = true;
-      
       try {
           if (window.fbq) fbq('track', 'CompleteRegistration');
       } catch (e) {}
